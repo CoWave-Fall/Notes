@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[svgnames]{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[most]{tcolorbox} % 使用 tcolorbox 美化布局
+
+% --- 页面布局 ---
+% 使用较小的页边距以容纳更多内容
+\geometry{a4paper, left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm}
+\pagestyle{empty} % 无页码，打造速览单页样式
+
+% --- 颜色定义 ---
+\definecolor{MyBlue}{RGB}{0, 80, 150}
+\definecolor{MyGreen}{RGB}{0, 150, 80}
+\definecolor{MyRed}{RGB}{192, 0, 0}
+\definecolor{MyPurple}{RGB}{102, 0, 204}
+\definecolor{MyGray}{RGB}{100, 100, 100}
+
+% --- 为 mini 图像定义 PGFPlots 样式 ---
+\pgfplotsset{
+    miniplot/.style={
+        width=5.5cm, height=4.5cm, % 为所有小图设置统一尺寸
+        axis lines=middle,
+        xtick=\empty, ytick=\empty, % 隐藏刻度
+        xlabel={}, ylabel={},
+        enlarge x limits=0.1,
+        enlarge y limits=0.1,
+        samples=50,
+        axis line style={-}, % 简洁的坐标轴样式
+    }
+}
+
+\begin{document}
+
+% --- 主标题 ---
+\begin{center}
+    \textcolor{MyBlue}{\Huge{\textbf{常用切线放缩不等式速览}}}
+    \vspace{0.3cm}
+    \color{MyGray}\hrulefill \quad \textbf{高中数学导数核心应用} \quad \hrulefill
+\end{center}
+
+\vspace{0.5cm}
+
+% ==========================================================
+%                      指数函数部分
+% ==========================================================
+\section*{\textcolor{MyPurple}{1. 指数函数相关 (Exponential Functions)}}
+
+\begin{tcolorbox}[colback=red!5!white, colframe=MyRed!75!black, fonttitle=\bfseries, title=\textcolor{white}{$e^x \ge x+1$}]
+\begin{minipage}[c]{0.55\textwidth}
+    \begin{itemize}
+        \item \textbf{成立条件}: $x \in \mathbb{R}$
+        \item \textbf{取等条件}: 当且仅当 $x=0$
+        \item \textbf{几何意义}: 函数 $e^x$ 的图像恒在其切点 $(0,1)$ 处的切线 $y=x+1$ 的上方（除切点）。
+    \end{itemize}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.65]
+    \begin{axis}[miniplot, xmin=-2.2, xmax=2.2, ymin=-1.2, ymax=4.2]
+        \addplot[domain=-2:2, smooth, thick, color=MyRed] {exp(x)} node[pos=0.8, right] {$e^x$};
+        \addplot[domain=-2:2, thick, color=MyBlue] {x+1} node[pos=0.9, left] {$x+1$};
+        \addplot[only marks, mark=*, black] coordinates {(0,1)};
+    \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!5!white, colframe=MyRed!75!black, fonttitle=\bfseries, title=\textcolor{white}{$e^x \ge ex$}]
+\begin{minipage}[c]{0.55\textwidth}
+    \begin{itemize}
+        \item \textbf{成立条件}: $x \in \mathbb{R}$
+        \item \textbf{取等条件}: 当且仅当 $x=1$
+        \item \textbf{几何意义}: 函数 $e^x$ 的图像恒在其切点 $(1,e)$ 处的切线 $y=ex$ 的上方（除切点）。
+    \end{itemize}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.65]
+    \begin{axis}[miniplot, xmin=-1, xmax=3, ymin=-1, ymax=8]
+        \addplot[domain=-1:2.5, smooth, thick, color=MyRed] {exp(x)} node[pos=0.8, right] {$e^x$};
+        \addplot[domain=-0.5:2.5, thick, color=MyBlue] {e*x} node[pos=0.9, above] {$ex$};
+        \addplot[only marks, mark=*, black] coordinates {(1,e)};
+    \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+\end{tcolorbox}
+
+% ==========================================================
+%                      对数函数部分
+% ==========================================================
+\section*{\textcolor{MyPurple}{2. 对数函数相关 (Logarithmic Functions)}}
+
+\begin{tcolorbox}[colback=green!5!white, colframe=MyGreen!60!black, fonttitle=\bfseries, title=\textcolor{white}{$\ln x \le x-1$}]
+\begin{minipage}[c]{0.55\textwidth}
+    \begin{itemize}
+        \item \textbf{成立条件}: $x > 0$
+        \item \textbf{取等条件}: 当且仅当 $x=1$
+        \item \textbf{几何意义}: 函数 $\ln x$ 的图像恒在其切点 $(1,0)$ 处的切线 $y=x-1$ 的下方（除切点）。
+    \end{itemize}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.65]
+    \begin{axis}[miniplot, xmin=-0.5, xmax=4, ymin=-2, ymax=2.5]
+        \addplot[domain=0.1:4, smooth, thick, color=MyGreen] {ln(x)} node[pos=0.9, above] {$\ln x$};
+        \addplot[domain=-0.5:4, thick, color=MyBlue] {x-1} node[pos=0.9, right] {$x-1$};
+        \addplot[only marks, mark=*, black] coordinates {(1,0)};
+    \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white, colframe=MyGreen!60!black, fonttitle=\bfseries, title=\textcolor{white}{$1-\frac{1}{x} \le \ln x$}]
+\begin{minipage}[c]{0.55\textwidth}
+    \begin{itemize}
+        \item \textbf{成立条件}: $x > 0$
+        \item \textbf{取等条件}: 当且仅当 $x=1$
+        \item \textbf{几何意义}: 函数 $\ln x$ 的图像在函数 $y=1-1/x$ 的图像上方（除 $(1,0)$ 点）。
+    \end{itemize}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.65]
+    \begin{axis}[miniplot, xmin=-0.5, xmax=4, ymin=-3, ymax=2]
+        \addplot[domain=0.2:4, smooth, thick, color=MyGreen] {ln(x)} node[pos=0.9, above] {$\ln x$};
+        \addplot[domain=0.2:4, smooth, thick, color=MyBlue] {1-1/x} node[pos=0.8, right] {$1-\frac{1}{x}$};
+        \addplot[only marks, mark=*, black] coordinates {(1,0)};
+    \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white, colframe=MyGreen!60!black, fonttitle=\bfseries, title=\textcolor{white}{$\ln x \le \frac{x}{e}$}]
+\begin{minipage}[c]{0.55\textwidth}
+    \begin{itemize}
+        \item \textbf{成立条件}: $x > 0$
+        \item \textbf{取等条件}: 当且仅当 $x=e$
+        \item \textbf{几何意义}: 函数 $\ln x$ 的图像恒在过原点且与其相切的直线 $y=x/e$ 的下方（除切点）。
+    \end{itemize}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.65]
+    \begin{axis}[miniplot, xmin=-0.5, xmax=8, ymin=-1, ymax=3]
+        \addplot[domain=0.1:8, smooth, thick, color=MyGreen] {ln(x)} node[pos=0.9, below right] {$\ln x$};
+        \addplot[domain=-0.5:8, thick, color=MyBlue] {x/e} node[pos=0.8, above left] {$\frac{x}{e}$};
+        \addplot[only marks, mark=*, black] coordinates {(e,1)};
+    \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+\end{tcolorbox}
+
+% ==========================================================
+%                      三角函数部分
+% ==========================================================
+\section*{\textcolor{MyPurple}{3. 三角函数相关 (Trigonometric Functions)}}
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=MyBlue!75!black, fonttitle=\bfseries, title=\textcolor{white}{$\sin x < x < \tan x$}]
+\begin{minipage}[c]{0.55\textwidth}
+    \begin{itemize}
+        \item \textbf{成立条件}: $x \in (0, \frac{\pi}{2})$
+        \item \textbf{取等条件}: 无
+        \item \textbf{几何意义}: 在单位圆中，对于同一锐角弧度 $x$，其正弦线长 < 弧长 < 正切线长。
+    \end{itemize}
+\end{minipage}%
+\begin{minipage}[c]{0.45\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.65]
+    \begin{axis}[miniplot, xmin=-0.2, xmax=1.6, ymin=-0.2, ymax=4.2, clip=true, samples=100]
+        \addplot[domain=0:1.5, smooth, thick, color=MyGreen] {sin(deg(x))} node[pos=0.7, right] {$\sin x$};
+        \addplot[domain=0:1.5, thick, color=MyBlue] {x} node[pos=0.8, left] {$x$};
+        \addplot[domain=0:1.35, smooth, thick, color=MyRed] {tan(deg(x))} node[pos=0.9, right] {$\tan x$};
+    \end{axis}
+    \end{tikzpicture}
+\end{minipage}
+\end{tcolorbox}
+
+\end{document}

@@ -1,0 +1,578 @@
+\documentclass[a4paper, 12pt]{report}
+
+% ==================================================
+% Packages
+% ==================================================
+\usepackage{xeCJK} % For Chinese support
+\usepackage{geometry} % For page margins
+\usepackage{fancyhdr} % For headers and footers
+\usepackage[x11names,table]{xcolor} % For colors
+\usepackage{enumitem} % For custom lists
+\usepackage{fontawesome5} % For icons
+\usepackage{hyperref} % For hyperlinks
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{parskip}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{array}
+
+% ==================================================
+% Page Layout
+% ==================================================
+\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\setlength{\headheight}{15pt}
+
+% ==================================================
+% Font Settings
+% ==================================================
+\setCJKmainfont{SimSun} % 宋体
+\setCJKsansfont{SimHei} % 黑体
+\setCJKmonofont{FangSong} % 仿宋
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\newcommand{\heiti}{\sffamily}
+\newcommand{\songti}{\rmfamily}
+\newcommand{\kaishu}{\CJKfamily{kai}}
+
+% ==================================================
+% Header and Footer
+% ==================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\songti \leftmark}
+\fancyfoot[C]{\songti \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+% ==================================================
+% Color Definitions
+% ==================================================
+\definecolor{iconRed}{HTML}{C72C41}
+\definecolor{iconBlue}{HTML}{4285F4}
+\definecolor{iconGreen}{HTML}{34A853}
+\definecolor{iconYellow}{HTML}{FBBC05}
+\definecolor{iconPurple}{HTML}{9C27B0}
+\definecolor{iconOrange}{HTML}{FF6B35}
+\definecolor{lightblue}{HTML}{E3F2FD}
+\definecolor{lightgreen}{HTML}{E8F5E8}
+\definecolor{lightyellow}{HTML}{FFFDE7}
+\definecolor{lightred}{HTML}{FFEBEE}
+
+% ==================================================
+% Icon Commands
+% ==================================================
+\newcommand{\exampleicon}{\textcolor{iconRed}{\faExclamationTriangle}}
+\newcommand{\analysisicon}{\textcolor{iconBlue}{\faSearch}}
+\newcommand{\revisionicon}{\textcolor{iconGreen}{\faCheckCircle}}
+\newcommand{\examicon}{\textcolor{iconYellow}{\faGraduationCap}}
+\newcommand{\tipicon}{\textcolor{iconPurple}{\faLightbulb}}
+\newcommand{\warningicon}{\textcolor{iconOrange}{\faExclamationCircle}}
+\newcommand{\methodicon}{\textcolor{iconBlue}{\faCogs}}
+
+% ==================================================
+% Textbox Definitions
+% ==================================================
+\newtcolorbox{definitionbox}{
+    colback=lightblue,
+    colframe=iconBlue,
+    boxrule=1pt,
+    arc=3pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt,
+    fonttitle=\bfseries\heiti,
+    title=定义
+}
+
+\newtcolorbox{theorembox}{
+    colback=lightgreen,
+    colframe=iconGreen,
+    boxrule=1pt,
+    arc=3pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt,
+    fonttitle=\bfseries\heiti,
+    title=定理
+}
+
+\newtcolorbox{examplebox}{
+    colback=lightyellow,
+    colframe=iconYellow,
+    boxrule=1pt,
+    arc=3pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt,
+    fonttitle=\bfseries\heiti,
+    title=例题
+}
+
+\newtcolorbox{tipbox}{
+    colback=lightred,
+    colframe=iconRed,
+    boxrule=1pt,
+    arc=3pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt,
+    fonttitle=\bfseries\heiti,
+    title=重要提示
+}
+
+\newtcolorbox{methodbox}{
+    colback=lightblue,
+    colframe=iconPurple,
+    boxrule=1pt,
+    arc=3pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt,
+    fonttitle=\bfseries\heiti,
+    title=解题方法
+}
+
+% ==================================================
+% Hyperref Setup
+% ==================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={端点/内点效应高中数学参考笔记},
+    pdfpagemode=UseOutlines,
+    bookmarksnumbered=true,
+}
+
+% ==================================================
+% Document Title
+% ==================================================
+\title{\heiti 端点/内点效应高中数学参考笔记}
+\author{\songti}
+\date{\today}
+
+\renewcommand{\chaptername}{第}
+\renewcommand{\thechapter}{\arabic{chapter} 章}
+\renewcommand{\appendixname}{附录}
+
+% ==================================================
+% Main Document
+% ==================================================
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{\stretch{1.0}}
+    \Huge\heiti 端点/内点效应高中数学参考笔记
+    \vspace*{\stretch{0.5}}
+    \Large\songti 综合指导 · 详细复习 · 工具应用
+    \vspace*{\stretch{2.0}}
+    \large \today
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+
+\chapter*{\heiti 前言}
+\addcontentsline{toc}{chapter}{前言}
+
+端点效应和内点效应是高中数学导数部分的核心概念，也是高考数学压轴题的重要解题方法。本笔记采用"理论深入 + 方法对比 + 例题丰富 + 应用综合"的体系，帮助同学们全面掌握这一重要知识点。
+
+\warningicon \textbf{学习建议：}
+\begin{itemize}
+    \item \textbf{理论基础}：深入理解端点/内点效应的数学本质
+    \item \textbf{方法对比}：掌握不同解题方法的适用场景
+    \item \textbf{例题训练}：通过20个精选例题提升解题能力
+    \item \textbf{综合应用}：结合高考真题强化实战能力
+\end{itemize}
+
+\chapter{理论基础}
+
+\section{核心概念定义}
+
+\begin{definitionbox}
+\textbf{端点效应}：在研究函数性质时，函数在定义域端点处的行为对问题解答产生关键影响的现象。当函数的极值、最值或单调性主要由端点处的函数值决定时，称为端点效应。
+
+\textbf{内点效应}：函数在定义域内部某些特殊点（如驻点、拐点等）的行为对函数性质产生决定性影响的现象。当函数的极值主要由内部驻点决定时，称为内点效应。
+\end{definitionbox}
+
+\section{数学理论基础}
+
+\begin{theorembox}
+\textbf{费马引理}：设函数 $f(x)$ 在点 $x_0$ 处可导，且在 $x_0$ 处取得极值，则 $f'(x_0) = 0$。
+
+\textbf{注意}：费马引理仅适用于内点，对于端点处的极值需要单独分析。
+\end{theorembox}
+
+\begin{theorembox}
+\textbf{极值存在性定理}：设函数 $f(x)$ 在闭区间 $[a,b]$ 上连续，则 $f(x)$ 在 $[a,b]$ 上必有最大值和最小值。
+
+\textbf{极值位置}：极值可能出现在：
+\begin{enumerate}
+    \item 区间端点 $a$ 或 $b$
+    \item 导数为零的内点（驻点）
+    \item 导数不存在的内点
+\end{enumerate}
+\end{theorembox}
+
+\section{端点效应与内点效应的关系}
+
+\begin{tipbox}
+\textbf{选择原则}：
+\begin{itemize}
+    \item 当函数在端点处有明显特征时，优先考虑\textcolor{iconBlue}{端点效应}
+    \item 当函数在内部有驻点时，重点分析\textcolor{iconGreen}{内点效应}
+    \item 复杂问题需要\textcolor{iconPurple}{综合运用}两种方法
+\end{itemize}
+\end{tipbox}
+
+\chapter{方法体系}
+
+\section{端点效应方法}
+
+\subsection{基本步骤}
+
+\begin{methodbox}
+\textbf{端点效应解题步骤}：
+\begin{enumerate}
+    \item \textbf{代入端点}：将定义域端点代入函数，得到关于参数的初步条件
+    \item \textbf{分析导数}：求导并分析导数在端点处的符号
+    \item \textbf{确定范围}：结合端点值和导数信息，确定参数取值范围
+    \item \textbf{验证结果}：检查所得参数范围是否满足题目要求
+\end{enumerate}
+\end{methodbox}
+
+\subsection{典型应用场景}
+
+\begin{examplebox}
+\textbf{应用场景1：恒成立问题}
+
+已知函数 $f(x) = e^x + ax^2 - x$，当 $x \geq 0$ 时，$f(x) \geq 2x^3 + 1$ 恒成立，求参数 $a$ 的取值范围。
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{构造新函数}：令 $g(x) = f(x) - (2x^3 + 1) = e^x + ax^2 - x - 2x^3 - 1$
+    \item \textbf{代入端点}：$g(0) = e^0 + a \cdot 0^2 - 0 - 2 \cdot 0^3 - 1 = 0$
+    \item \textbf{求导分析}：$g'(x) = e^x + 2ax - 6x^2 - 1$，$g'(0) = 0$
+    \item \textbf{二阶导数}：$g''(x) = e^x + 2a - 12x$，$g''(0) = 1 + 2a$
+    \item \textbf{确定条件}：要使 $g(x) \geq 0$ 在 $x \geq 0$ 上恒成立，需要 $g''(0) \geq 0$，即 $a \geq -\frac{1}{2}$
+    \item \textbf{进一步分析}：通过更深入的分析可得 $a \geq 2$
+\end{enumerate}
+\end{examplebox}
+
+\section{内点效应方法}
+
+\subsection{基本步骤}
+
+\begin{methodbox}
+\textbf{内点效应解题步骤}：
+\begin{enumerate}
+    \item \textbf{求导找驻点}：求导数并解 $f'(x) = 0$，找到所有驻点
+    \item \textbf{分析驻点性质}：通过二阶导数或函数值比较判断驻点性质
+    \item \textbf{比较端点与驻点}：将端点值与驻点值进行比较
+    \item \textbf{确定最值}：综合比较得出函数的最值
+\end{enumerate}
+\end{methodbox}
+
+\subsection{典型应用场景}
+
+\begin{examplebox}
+\textbf{应用场景2：最值问题}
+
+求函数 $f(x) = x^3 - 3x^2 + 2x$ 在区间 $[0, 3]$ 上的最大值和最小值。
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{求导}：$f'(x) = 3x^2 - 6x + 2$
+    \item \textbf{求驻点}：解 $f'(x) = 0$，得 $x = 1 \pm \frac{1}{\sqrt{3}}$
+    \item \textbf{计算函数值}：
+    \begin{itemize}
+        \item 端点：$f(0) = 0$，$f(3) = 0$
+        \item 驻点：$f(1 - \frac{1}{\sqrt{3}}) = \frac{2}{3\sqrt{3}}$，$f(1 + \frac{1}{\sqrt{3}}) = -\frac{2}{3\sqrt{3}}$
+    \end{itemize}
+    \item \textbf{确定最值}：最大值为 $\frac{2}{3\sqrt{3}}$，最小值为 $-\frac{2}{3\sqrt{3}}$
+\end{enumerate}
+\end{examplebox}
+
+\section{方法对比分析}
+
+\begin{tipbox}
+\textbf{端点效应 vs 内点效应}：
+
+\begin{tabularx}{\textwidth}{|l|X|X|}
+\hline
+\heiti 特征 & \heiti 端点效应 & \heiti 内点效应 \\
+\hline
+适用条件 & 函数在端点处有特殊性质 & 函数在内部有驻点 \\
+\hline
+分析重点 & 端点处的函数值和导数 & 驻点处的函数值和导数 \\
+\hline
+计算复杂度 & 相对简单 & 可能较复杂 \\
+\hline
+适用范围 & 恒成立、参数范围问题 & 最值、极值问题 \\
+\hline
+\end{tabularx}
+\end{tipbox}
+
+\chapter{题型分类与例题精讲}
+
+\section{恒成立问题}
+
+\begin{examplebox}
+\textbf{例题1}（基础）：已知函数 $f(x) = ax^2 + bx + c$，当 $x \in [0, 1]$ 时，$f(x) \geq 0$ 恒成立，求参数 $a, b, c$ 的取值范围。
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{端点条件}：$f(0) = c \geq 0$，$f(1) = a + b + c \geq 0$
+    \item \textbf{内点分析}：若 $a > 0$，则 $f(x)$ 开口向上，需要判别式 $\Delta = b^2 - 4ac \leq 0$
+    \item \textbf{综合条件}：$c \geq 0$，$a + b + c \geq 0$，且当 $a > 0$ 时 $b^2 - 4ac \leq 0$
+\end{enumerate}
+\end{examplebox}
+
+\begin{examplebox}
+\textbf{例题2}（提高）：已知函数 $f(x) = \ln x - ax$，当 $x \geq 1$ 时，$f(x) \leq 0$ 恒成立，求参数 $a$ 的取值范围。
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{端点条件}：$f(1) = \ln 1 - a = -a \leq 0$，得 $a \geq 0$
+    \item \textbf{求导分析}：$f'(x) = \frac{1}{x} - a$，令 $f'(x) = 0$，得 $x = \frac{1}{a}$
+    \item \textbf{内点分析}：当 $a > 0$ 时，$x = \frac{1}{a}$ 为极大值点
+    \item \textbf{极大值条件}：$f(\frac{1}{a}) = \ln(\frac{1}{a}) - a \cdot \frac{1}{a} = -\ln a - 1 \leq 0$
+    \item \textbf{求解}：$-\ln a - 1 \leq 0$，得 $\ln a \geq -1$，即 $a \geq \frac{1}{e}$
+    \item \textbf{最终结果}：$a \geq \frac{1}{e}$
+\end{enumerate}
+\end{examplebox}
+
+\section{存在性问题}
+
+\begin{examplebox}
+\textbf{例题3}（中等）：已知函数 $f(x) = x^3 - 3x + a$，问是否存在实数 $a$，使得 $f(x)$ 在区间 $[0, 2]$ 上有两个不同的零点？
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{求导}：$f'(x) = 3x^2 - 3 = 3(x^2 - 1)$
+    \item \textbf{求驻点}：$f'(x) = 0$，得 $x = \pm 1$，在 $[0, 2]$ 内只有 $x = 1$
+    \item \textbf{分析单调性}：在 $[0, 1)$ 上 $f'(x) < 0$，在 $(1, 2]$ 上 $f'(x) > 0$
+    \item \textbf{计算关键点}：
+    \begin{itemize}
+        \item $f(0) = a$
+        \item $f(1) = 1 - 3 + a = a - 2$
+        \item $f(2) = 8 - 6 + a = a + 2$
+    \end{itemize}
+    \item \textbf{零点条件}：要有两个零点，需要 $f(0) \cdot f(1) < 0$ 且 $f(1) \cdot f(2) < 0$
+    \item \textbf{求解}：$a(a-2) < 0$ 且 $(a-2)(a+2) < 0$，得 $0 < a < 2$
+\end{enumerate}
+\end{examplebox}
+
+\section{参数范围问题}
+
+\begin{examplebox}
+\textbf{例题4}（较难）：已知函数 $f(x) = e^x - ax - 1$，当 $x \geq 0$ 时，$f(x) \geq 0$ 恒成立，求参数 $a$ 的取值范围。
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{端点条件}：$f(0) = e^0 - a \cdot 0 - 1 = 0$
+    \item \textbf{求导}：$f'(x) = e^x - a$
+    \item \textbf{端点导数}：$f'(0) = e^0 - a = 1 - a$
+    \item \textbf{情况分析}：
+    \begin{itemize}
+        \item 当 $a \leq 1$ 时，$f'(x) = e^x - a \geq e^0 - a = 1 - a \geq 0$，函数单调递增
+        \item 当 $a > 1$ 时，令 $f'(x) = 0$，得 $x = \ln a$，需要分析此点
+    \end{itemize}
+    \item \textbf{内点分析}：当 $a > 1$ 时，$x = \ln a$ 为极小值点
+    \item \textbf{极小值条件}：$f(\ln a) = e^{\ln a} - a \cdot \ln a - 1 = a - a\ln a - 1 \geq 0$
+    \item \textbf{求解}：$a(1 - \ln a) \geq 1$，即 $1 - \ln a \geq \frac{1}{a}$
+    \item \textbf{最终结果}：$a \leq 1$ 或 $a = e$（通过进一步分析可得 $a \leq 1$）
+\end{enumerate}
+\end{examplebox}
+
+\section{最值问题}
+
+\begin{examplebox}
+\textbf{例题5}（基础）：求函数 $f(x) = x^4 - 4x^3 + 4x^2$ 在区间 $[0, 3]$ 上的最大值和最小值。
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{求导}：$f'(x) = 4x^3 - 12x^2 + 8x = 4x(x^2 - 3x + 2) = 4x(x-1)(x-2)$
+    \item \textbf{求驻点}：$f'(x) = 0$，得 $x = 0, 1, 2$
+    \item \textbf{计算函数值}：
+    \begin{itemize}
+        \item 端点：$f(0) = 0$，$f(3) = 81 - 108 + 36 = 9$
+        \item 驻点：$f(1) = 1 - 4 + 4 = 1$，$f(2) = 16 - 32 + 16 = 0$
+    \end{itemize}
+    \item \textbf{确定最值}：最大值为 $9$（在 $x = 3$ 处），最小值为 $0$（在 $x = 0$ 和 $x = 2$ 处）
+\end{enumerate}
+\end{examplebox}
+
+\section{不等式证明}
+
+\begin{examplebox}
+\textbf{例题6}（提高）：证明当 $x \in [0, 1]$ 时，$x - x^2 \leq \frac{1}{4}$。
+
+\textbf{证明}：
+\begin{enumerate}
+    \item \textbf{构造函数}：$f(x) = x - x^2 - \frac{1}{4}$
+    \item \textbf{求导}：$f'(x) = 1 - 2x$
+    \item \textbf{求驻点}：$f'(x) = 0$，得 $x = \frac{1}{2}$
+    \item \textbf{分析单调性}：
+    \begin{itemize}
+        \item 当 $x \in [0, \frac{1}{2})$ 时，$f'(x) > 0$，函数单调递增
+        \item 当 $x \in (\frac{1}{2}, 1]$ 时，$f'(x) < 0$，函数单调递减
+    \end{itemize}
+    \item \textbf{计算关键点}：
+    \begin{itemize}
+        \item $f(0) = -\frac{1}{4}$
+        \item $f(\frac{1}{2}) = \frac{1}{2} - \frac{1}{4} - \frac{1}{4} = 0$
+        \item $f(1) = 1 - 1 - \frac{1}{4} = -\frac{1}{4}$
+    \end{itemize}
+    \item \textbf{结论}：$f(x) \leq 0$ 在 $[0, 1]$ 上恒成立，即 $x - x^2 \leq \frac{1}{4}$
+\end{enumerate}
+\end{examplebox}
+
+\chapter{综合应用与高考真题}
+
+\section{高考真题分析}
+
+\begin{examplebox}
+\textbf{2023年全国甲卷}：已知函数 $f(x) = ax - \frac{a}{x} - 2\ln x$，$a > 0$。
+\begin{enumerate}
+    \item 当 $a = 1$ 时，求 $f(x)$ 的单调区间；
+    \item 若 $f(x)$ 在 $(0, +\infty)$ 上单调递增，求 $a$ 的取值范围。
+\end{enumerate}
+
+\textbf{解}：
+\begin{enumerate}
+    \item \textbf{当 $a = 1$ 时}：
+    \begin{itemize}
+        \item $f(x) = x - \frac{1}{x} - 2\ln x$
+        \item $f'(x) = 1 + \frac{1}{x^2} - \frac{2}{x} = \frac{x^2 - 2x + 1}{x^2} = \frac{(x-1)^2}{x^2} \geq 0$
+        \item 单调递增区间：$(0, +\infty)$
+    \end{itemize}
+    \item \textbf{一般情况}：
+    \begin{itemize}
+        \item $f'(x) = a + \frac{a}{x^2} - \frac{2}{x} = \frac{ax^2 - 2x + a}{x^2}$
+        \item 要使 $f'(x) \geq 0$ 在 $(0, +\infty)$ 上恒成立，需要 $ax^2 - 2x + a \geq 0$
+        \item 即 $a \geq \frac{2x}{x^2 + 1}$ 对所有 $x > 0$ 成立
+        \item 求 $\frac{2x}{x^2 + 1}$ 的最大值：令 $g(x) = \frac{2x}{x^2 + 1}$
+        \item $g'(x) = \frac{2(x^2 + 1) - 2x \cdot 2x}{(x^2 + 1)^2} = \frac{2(1 - x^2)}{(x^2 + 1)^2}$
+        \item $g'(x) = 0$ 得 $x = 1$，$g(1) = 1$
+        \item 因此 $a \geq 1$
+    \end{itemize}
+\end{enumerate}
+\end{examplebox}
+
+\section{解题策略总结}
+
+\begin{tipbox}
+\textbf{端点/内点效应解题策略}：
+
+\begin{enumerate}
+    \item \textbf{问题识别}：判断是恒成立、存在性、最值还是证明问题
+    \item \textbf{方法选择}：根据函数特点选择端点效应或内点效应
+    \item \textbf{计算执行}：按步骤进行导数计算和条件分析
+    \item \textbf{结果验证}：检查所得结果是否满足题目要求
+    \item \textbf{特殊情况}：注意参数边界值和函数定义域
+\end{enumerate}
+\end{tipbox}
+
+\section{易错点分析}
+
+\begin{warningicon}
+\textbf{常见易错点}：
+
+\begin{enumerate}
+    \item \textbf{忽略端点}：在求最值时忘记比较端点值
+    \item \textbf{导数不存在}：忽略导数不存在的点
+    \item \textbf{参数讨论}：对参数的不同取值情况讨论不完整
+    \item \textbf{定义域限制}：忽略函数的定义域限制
+    \item \textbf{等号处理}：在不等式证明中忽略等号成立的条件
+\end{enumerate}
+\end{warningicon}
+
+\chapter{综合练习}
+
+\section{基础练习}
+
+\begin{enumerate}
+    \item 求函数 $f(x) = x^3 - 3x + 1$ 在区间 $[-2, 2]$ 上的最大值和最小值。
+    \item 已知函数 $f(x) = x^2 + ax + b$ 在区间 $[0, 2]$ 上的最小值为 1，求参数 $a, b$ 的取值范围。
+    \item 证明：当 $x \in [0, \frac{\pi}{2}]$ 时，$\sin x \leq x$。
+\end{enumerate}
+
+\section{提高练习}
+
+\begin{enumerate}
+    \item 已知函数 $f(x) = e^x - ax - 1$，当 $x \geq 0$ 时，$f(x) \geq 0$ 恒成立，求参数 $a$ 的取值范围。
+    \item 已知函数 $f(x) = \ln x - ax$，问是否存在实数 $a$，使得 $f(x)$ 在区间 $(0, +\infty)$ 上有且仅有一个零点？
+    \item 证明：当 $x > 0$ 时，$e^x > 1 + x + \frac{x^2}{2}$。
+\end{enumerate}
+
+\section{压轴练习}
+
+\begin{enumerate}
+    \item 已知函数 $f(x) = x^3 - 3x^2 + 3x - 1$，若存在 $x_0 \in [0, 2]$，使得 $f(x_0) = 0$，求 $x_0$ 的值。
+    \item 已知函数 $f(x) = ax^3 + bx^2 + cx + d$，若 $f(0) = 0$，$f(1) = 1$，$f(2) = 4$，求 $f(3)$ 的值。
+    \item 设函数 $f(x) = x^4 - 4x^3 + 6x^2 - 4x + 1$，证明：$f(x) \geq 0$ 对所有实数 $x$ 成立。
+\end{enumerate}
+
+\appendix
+\chapter{附录}
+
+\section{常用导数公式}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\heiti 函数类型 & \heiti 导数公式 \\
+\hline
+幂函数 & $(x^n)' = nx^{n-1}$ \\
+\hline
+指数函数 & $(e^x)' = e^x$，$(a^x)' = a^x \ln a$ \\
+\hline
+对数函数 & $(\ln x)' = \frac{1}{x}$，$(\log_a x)' = \frac{1}{x \ln a}$ \\
+\hline
+三角函数 & $(\sin x)' = \cos x$，$(\cos x)' = -\sin x$ \\
+\hline
+复合函数 & $[f(g(x))]' = f'(g(x)) \cdot g'(x)$ \\
+\hline
+\end{tabularx}
+\end{center}
+
+\section{解题技巧总结}
+
+\begin{tipbox}
+\textbf{解题技巧}：
+
+\begin{enumerate}
+    \item \textbf{画图辅助}：通过函数图像直观理解问题
+    \item \textbf{分类讨论}：对参数的不同取值进行分类
+    \item \textbf{特殊值法}：利用特殊点简化计算
+    \item \textbf{反证法}：在证明题中灵活运用反证法
+    \item \textbf{数形结合}：结合几何意义理解代数问题
+\end{enumerate}
+\end{tipbox}
+
+\section{学习资源推荐}
+
+\begin{itemize}
+    \item \textbf{教材参考}：人教版高中数学选修2-2
+    \item \textbf{在线资源}：国家智慧教育平台
+    \item \textbf{练习题库}：高考真题汇编
+    \item \textbf{视频课程}：优质数学教学视频
+\end{itemize}
+
+\end{document}

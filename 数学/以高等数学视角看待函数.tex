@@ -1,0 +1,358 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                       %
+%       以高等数学视角看待函数 - 高中数学核心概念复习笔记       %
+%                                                       %
+%       作者: Gemini                                    %
+%       日期: 2025年9月10日                              %
+%       编译方式: XeLaTeX                               %
+%                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, a4paper]{article}
+
+%=========== 页面与字体设置 ===========
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+\usepackage{setspace}
+\onehalfspacing
+
+%=========== 中文与颜色支持 ===========
+\usepackage{xeCJK}
+\usepackage{fontspec}
+\usepackage[x11names]{xcolor}
+\setmainfont{Times New Roman} % 设置英文字体
+\setCJKmainfont{SimSun} % 设置中文字体为宋体
+\setCJKsansfont{SimHei} % 设置无衬线字体为黑体
+\setCJKmonofont{FangSong} % 设置等宽字体为仿宋
+
+%=========== 数学公式与定理环境 ===========
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+%=========== 图形绘制 ===========
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc}
+
+%=========== 标题与章节样式 ===========
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{DodgerBlue4}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{DarkOrange4}}{\thesubsection}{1em}{}
+
+%=========== *新增* 彩色文本框支持 ===========
+\usepackage{tcolorbox} % <-- 这里是修正的地方
+
+%=========== 定理环境定义 ===========
+\newtheoremstyle{mytheoremstyle}
+  {\topsep}   % 上方空间
+  {\topsep}   % 下方空间
+  {\itshape}  % 正文字体
+  {}          % 缩进量
+  {\bfseries\color{RoyalBlue4}} % 定理头字体
+  {.}         % 定理头后的标点
+  {.5em}      % 定理头后的空间
+  {}          % 定理头规范
+\theoremstyle{mytheoremstyle}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{definition}{定义}[section]
+\newtheorem{corollary}{推论}[theorem]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{example}{示例}[section]
+
+%=========== 自定义颜色 ===========
+\definecolor{myblue}{RGB}{0, 82, 155}
+\definecolor{mygreen}{RGB}{0, 150, 136}
+\definecolor{myorange}{RGB}{255, 87, 34}
+\definecolor{myred}{RGB}{192, 28, 40}
+
+%=========== 文档开始 ===========
+\begin{document}
+
+\title{\Huge\bfseries\color{myblue} 以高等数学视角看待函数}
+\author{\large\bfseries Gemini -- Google AI}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+    \noindent
+    本笔记旨在从一个更广阔、更深入的视角，重新审视高中数学的核心概念——函数。我们将不仅仅满足于“是什么”，而是要去探索“为什么”和“怎么样”。内容涵盖从基本的函数变换，到抽象函数的性质推理，希望能帮助同学们构建一个更加系统和深刻的函数知识体系，为未来的高等数学学习打下坚实的基础。
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+%--------------------------------------------------
+% 第一部分：函数的本质与对应法则
+%--------------------------------------------------
+\section{函数的本质：从对应法则到“黑箱”模型}
+
+从高等数学的观点看，函数本质上是一种特殊的\textbf{映射（Mapping）}。
+
+\begin{definition}[函数]
+    设 $A, B$ 是两个非空数集，如果存在一个对应法则 $f$，使得对于 $A$ 中的任意一个数 $x$，在集合 $B$ 中都有唯一确定的数 $y$ 和之对应，那么就把对应法则 $f$ 叫作从 $A$ 到 $B$ 的一个\textbf{函数（Function）}。记作：
+    \[ y = f(x), \quad x \in A \]
+    其中，$x$ 称为\textbf{自变量}，$y$ 称为\textbf{因变量}，集合 $A$ 称为函数的\textbf{定义域}，所有函数值 $y$ 构成的集合 $\{ y | y=f(x), x \in A \}$ 称为函数的\textbf{值域}。
+\end{definition}
+
+\begin{itemize}
+    \item \textbf{核心三要素：} 定义域、值域、对应法则。三者缺一不可。
+    \item \textbf{“黑箱”模型：} 我们可以把对应法则 $f$ 想象成一个“黑箱”。你输入一个定义域内的 $x$（原料），它就输出一个唯一确定的 $y$（产品）。我们关注的是输入与输出之间的确定关系，有时并不需要知道黑箱内部的具体构造。这正是“抽象函数”问题的思想来源。
+\end{itemize}
+
+%--------------------------------------------------
+% 第二部分：函数图像的变换
+%--------------------------------------------------
+\section{函数图像变换：坐标系的思想}
+
+函数图像的变换是高中数学的重点和难点。其核心思想是：\textbf{改变坐标系中的“度量衡”}。
+
+\subsection{平移变换: $f(x-a)$ 的来历与含义}
+
+对于函数 $y = f(x)$，我们如何得到 $y = f(x-a)$ 的图像？
+
+\subsubsection{演绎推理：新旧坐标的转换}
+\begin{enumerate}
+    \item 我们的目标是绘制函数 $y' = f(x')$ 的图像，只不过这里的 $y' = y$，$x' = x-a$。
+    \item 这相当于建立了一个新的坐标系 $(x', y')$。新坐标系的原点 $(x'=0, y'=0)$ 在旧坐标系 $(x,y)$ 中是哪里呢？
+          \begin{itemize}
+              \item 由 $x' = x - a = 0 \Rightarrow x=a$
+              \item 由 $y' = y = 0 \Rightarrow y=0$
+          \end{itemize}
+          所以，新坐标系的原点在旧坐标系的 $(a,0)$ 点。
+    \item 我们在新坐标系 $(x', y')$ 中画出最基本的 $y' = f(x')$。这与在旧坐标系 $(x, y)$ 中画出 $y=f(x)$ 是一模一样的。
+    \item 但是，由于新坐标系的原点是旧坐标系的 $(a,0)$ 点，所以整个图像相当于在旧坐标系中向\textbf{右}平移了 $a$ 个单位（如果 $a>0$）。
+\end{enumerate}
+
+\begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title={\large \bfseries 结论：左右平移法则}]
+    对于函数 $y=f(x)$：
+    \begin{itemize}
+        \item 函数 $y = f(x-a)$ 的图像，是由 $y=f(x)$ 的图像\textbf{向右}平移 $a$ 个单位得到的 ($a>0$)。
+        \item 函数 $y = f(x+a)$ 的图像，是由 $y=f(x)$ 的图像\textbf{向左}平移 $a$ 个单位得到的 ($a>0$)。
+    \end{itemize}
+    简记为：“\textbf{左加右减}”。
+\end{tcolorbox}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    % 坐标轴
+    \draw[->, thick] (-4,0) -- (4,0) node[below] {$x$};
+    \draw[->, thick] (0,-1) -- (0,4) node[left] {$y$};
+    \draw[dashed, gray] (-4,2) -- (4,2);
+
+    % 原始函数 f(x) = x^2
+    \draw[blue, thick, domain=-2:2, samples=100] plot (\x, {\x*\x}) node[right] {$y=f(x)=x^2$};
+    \fill[blue] (0,0) circle (1.5pt);
+    \node[blue, below right] at (0,0) {$O(0,0)$};
+
+    % 平移后的函数 f(x-2) = (x-2)^2
+    \draw[red, thick, domain=0:4, samples=100] plot (\x, {(\x-2)*(\x-2)}) node[right] {$y=f(x-2)$};
+    \fill[red] (2,0) circle (1.5pt);
+    \node[red, below right] at (2,0) {$(a,0)=(2,0)$};
+
+    % 辅助箭头
+    \draw[->, ultra thick, myorange] (0.5, 2.5) -- (1.5, 2.5) node[midway, above] {向右平移 $a=2$};
+\end{tikzpicture}
+\caption{$y=x^2$ 与 $y=(x-2)^2$ 的图像关系}
+\end{figure}
+
+
+\subsection{伸缩变换：$Af(wx)$ 的含义}
+
+伸缩变换改变的是坐标轴的“刻度”。
+\begin{itemize}
+    \item $y = A f(x)$: \textbf{纵向伸缩}。$A>1$ 时伸长为原来的 $A$ 倍；$0<A<1$ 时缩短为原来的 $A$ 倍。
+    \item $y = f(wx)$: \textbf{横向伸缩}。$w>1$ 时缩短为原来的 $1/w$ 倍；$0<w<1$ 时伸长为原来的 $1/w$ 倍。
+\end{itemize}
+推理方式与平移变换类似，都是通过建立新旧坐标系的转换关系。对于 $y=f(wx)$，令 $x'=wx$，则 $x=x'/w$。新坐标系 $x'$ 轴上的一个单位长度，对应旧坐标系 $x$ 轴上的 $1/w$ 个单位长度，因此图像被横向压缩。
+
+\begin{tcolorbox}[colback=green!5!white, colframe=green!65!black, title={\large \bfseries 结论：伸缩变换法则}]
+    对于函数 $y=f(x)$：
+    \begin{itemize}
+        \item $y = Af(x)$: 纵向伸缩到原来的 $A$ 倍，简记为“\textbf{纵伸}”。
+        \item $y = f(wx)$: 横向伸缩到原来的 $1/w$ 倍，简记为“\textbf{横缩}”。
+    \end{itemize}
+\end{tcolorbox}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    % 坐标轴
+    \draw[->, thick] (-4,0) -- (4,0) node[below] {$x$};
+    \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+    \node at (pi/2, -0.2) {$\frac{\pi}{2}$};
+    \node at (pi, -0.2) {$\pi$};
+    \node at (-pi/2, -0.2) {$-\frac{\pi}{2}$};
+    \node at (-pi, -0.2) {$-\pi$};
+    \node at (0.2, 1) {$1$};
+    \node at (0.3, -1) {$-1$};
+
+    % 原始函数 f(x) = sin(x)
+    \draw[blue, thick, domain=-pi:pi, samples=100] plot (\x, {sin(\x r)}) node[right, yshift=-10] {$y=\sin(x)$};
+
+    % 伸缩后的函数 f(2x) = sin(2x)
+    \draw[red, thick, domain=-pi:pi, samples=100] plot (\x, {sin(2*\x r)}) node[right, yshift=-20] {$y=\sin(2x)$};
+
+    % 辅助说明
+    \node[red, above] at (pi/4, 1) {周期变为 $\pi$};
+    \node[blue, above] at (pi/2, 1) {原周期 $2\pi$};
+    
+\end{tikzpicture}
+\caption{$y=\sin(x)$ 与 $y=\sin(2x)$ 的图像关系（横向压缩）}
+\end{figure}
+
+%--------------------------------------------------
+% 第三部分：函数性质的深刻理解
+%--------------------------------------------------
+\section{函数性质的深刻理解：对称性与周期性}
+
+\subsection{对称性与周期性的关系：$f(x) + f(x+b) = 0$ 意味着什么？}
+我们来分析这个抽象的函数方程：$f(x) + f(x+b) = 0$。
+
+\subsubsection{第一层含义：周期性}
+\begin{enumerate}
+    \item 由 $f(x+b) = -f(x)$，我们可以继续推导：
+    \[ f(x+2b) = f((x+b)+b) = -f(x+b) = -(-f(x)) = f(x) \]
+    \item 根据周期函数的定义，我们发现 $2b$ 是函数 $f(x)$ 的一个\textbf{周期}。
+\end{enumerate}
+
+\subsubsection{第二层含义：对称性}
+\begin{enumerate}
+    \item 我们来考察 $x$ 与 $x+b$ 的中点。中点的横坐标是 $\frac{x+(x+b)}{2} = x + \frac{b}{2}$。
+    \item 方程 $f(x) = -f(x+b)$ 表明，在对称中心 $x_0$ 左右对称的两个点 $x_0-t$ 和 $x_0+t$ 处的函数值互为相反数。
+    \item 设 $x_0 = \frac{b}{2}$。令 $x = \frac{b}{2} - t$，则 $x+b = \frac{b}{2} + t$。
+    \item 原方程变为 $f(\frac{b}{2}-t) + f(\frac{b}{2}+t) = 0$。
+    \item 这个形式表明，函数 $y=f(x)$ 的图像关于点 $(\frac{b}{2}, 0)$ \textbf{中心对称}。
+\end{enumerate}
+
+\begin{tcolorbox}[colback=red!5!white, colframe=red!75!black, title={\large \bfseries 结论：$f(x)+f(x+b)=c$ 的内涵}]
+    一般地，对于函数方程 $f(x)+f(x+b)=c$：
+    \begin{itemize}
+        \item 函数图像关于点 $(\frac{b}{2}, \frac{c}{2})$ \textbf{中心对称}。
+        \item 函数具有周期性，周期为 $T=2b$。
+    \end{itemize}
+    特别地，当 $c=0$ 时，对称中心为 $(\frac{b}{2}, 0)$。
+\end{tcolorbox}
+
+\begin{example}
+函数 $f(x) = \sin(x)$ 满足 $f(x) + f(x+\pi) = \sin(x) + \sin(x+\pi) = \sin(x) - \sin(x) = 0$。
+这里 $b = \pi, c=0$。
+\begin{itemize}
+    \item 图像关于点 $(\frac{\pi}{2}, 0)$ 中心对称。
+    \item 周期为 $T=2\pi$。
+\end{itemize}
+\end{example}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.2]
+    \draw[->, thick] (-0.5,0) -- (2*pi+0.5,0) node[below] {$x$};
+    \draw[->, thick] (0,-1.5) -- (0,1.5) node[left] {$y$};
+    \draw[blue, thick, domain=0:2*pi, samples=100] plot (\x, {sin(\x r)}) node[right] {$y=\sin(x)$};
+
+    % 标记点
+    \fill[red] (pi/2, 0) circle (2pt) node[below right] {对称中心 $(\frac{\pi}{2}, 0)$};
+    \fill[mygreen] (pi, 0) circle (2pt) node[below] {$\pi$};
+    \fill[mygreen] (2*pi, 0) circle (2pt) node[below] {$2\pi$};
+
+    % 对称点示例
+    \def\xone{pi/4}
+    \def\xtwo{pi/4+pi}
+    \draw[dashed, gray] (\xone, {sin(\xone r)}) -- (\xtwo, {sin(\xtwo r)});
+    \fill[black] (\xone, {sin(\xone r)}) circle (1.5pt) node[above] {$A$};
+    \fill[black] (\xtwo, {sin(\xtwo r)}) circle (1.5pt) node[below] {$B$};
+\end{tikzpicture}
+\caption{$f(x)+f(x+\pi)=0$ 在 $y=\sin(x)$ 上的体现}
+\end{figure}
+
+%--------------------------------------------------
+% 第四部分：函数的复合与抽象函数
+%--------------------------------------------------
+\section{函数的复合与抽象函数}
+
+\subsection{复合函数 $f(g(x))$ 是什么？}
+
+复合函数可以看作是“黑箱”的串联。
+
+\begin{definition}[复合函数]
+    设函数 $y=f(u)$ 的定义域为 $D_f$，函数 $u=g(x)$ 的定义域为 $D_g$，且其值域 $R_g \subseteq D_f$。则由 $y=f(g(x))$ 所确定的函数称为由函数 $u=g(x)$ 和 $y=f(u)$ 复合而成的\textbf{复合函数}。其中 $u$ 称为\textbf{中间变量}。
+\end{definition}
+
+\begin{center}
+\begin{tikzpicture}
+    \node[draw, rectangle, minimum height=1cm, minimum width=2cm, fill=orange!20] (g) {$u=g(x)$};
+    \node[draw, rectangle, minimum height=1cm, minimum width=2cm, fill=cyan!20, right=2cm of g] (f) {$y=f(u)$};
+    
+    \draw[-{Stealth[length=3mm, width=2mm]}] ($(g.west)+(-1,0)$) node[left] {$x \in D_g$} -- (g.west);
+    \draw[-{Stealth[length=3mm, width=2mm]}] (g.east) -- node[above] {$u \in R_g$} (f.west);
+    \draw[-{Stealth[length=3mm, width=2mm]}] (f.east) -- ($(f.east)+(1,0)$) node[right] {$y \in R_f$};
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{复合函数的关键问题}
+\begin{enumerate}
+    \item \textbf{定义域问题：} 求 $f(g(x))$ 的定义域，必须满足两个条件：
+    \begin{itemize}
+        \item $x$ 必须在内层函数 $g(x)$ 的定义域内，即 $x \in D_g$。
+        \item 内层函数的值域 $g(x)$ 必须在外层函数 $f(u)$ 的定义域内，即 $g(x) \in D_f$。
+    \end{itemize}
+    \item \textbf{单调性问题：}
+    \begin{itemize}
+        \item 设 $u=g(x), y=f(u)$。如果 $g(x)$ 和 $f(u)$ 在相应区间上单调性\textbf{相同}（同增或同减），则复合函数 $y=f(g(x))$ 为\textbf{增函数}。
+        \item 如果 $g(x)$ 和 $f(u)$ 在相应区间上单调性\textbf{相反}（一增一减），则复合函数 $y=f(g(x))$ 为\textbf{减函数}。
+        \item 简记为：“\textbf{同增异减}”。
+    \end{itemize}
+\end{enumerate}
+
+\subsection{抽象函数是什么？}
+\textbf{抽象函数}是指没有给出具体解析式，只给出部分性质或关系的函数。解决抽象函数问题的核心，就是紧扣定义，将给定的性质（如奇偶性、单调性、周期性、特殊函数值等）作为解题的“已知条件”，进行严密的逻辑推理。
+
+\begin{example}
+    已知定义在 $\mathbb{R}$ 上的函数 $f(x)$ 满足 $f(x+y) = f(x)+f(y)$，且当 $x>0$ 时 $f(x)>0$。
+    \begin{enumerate}
+        \item 求 $f(0)$ 的值。
+        \item 证明 $f(x)$ 是奇函数。
+        \item 证明 $f(x)$ 在 $\mathbb{R}$ 上是增函数。
+    \end{enumerate}
+\end{example}
+\begin{proof}
+    \begin{enumerate}
+        \item \textbf{求 $f(0)$：} \\
+              在 $f(x+y) = f(x)+f(y)$ 中，令 $x=y=0$，得 $f(0+0) = f(0)+f(0)$，即 $f(0)=2f(0)$。\\
+              解得 $f(0) = 0$。
+        \item \textbf{证明奇偶性：} \\
+              在 $f(x+y) = f(x)+f(y)$ 中，令 $y=-x$，得 $f(x-x) = f(x)+f(-x)$。\\
+              即 $f(0) = f(x)+f(-x)$。因为 $f(0)=0$，所以 $f(x)+f(-x)=0$，即 $f(-x)=-f(x)$。\\
+              故 $f(x)$ 是奇函数。
+        \item \textbf{证明单调性：} \\
+              设 $x_1, x_2 \in \mathbb{R}$，且 $x_1 < x_2$。则 $x_2 - x_1 > 0$。\\
+              $f(x_2) - f(x_1) = f(x_2) + f(-x_1)$ （因为 $f(x)$ 是奇函数） \\
+              令 $x=x_2, y=-x_1$ 代入原方程，似乎不奏效。我们换个思路。\\
+              $f(x_2) = f((x_2-x_1)+x_1) = f(x_2-x_1) + f(x_1)$。\\
+              所以 $f(x_2) - f(x_1) = f(x_2-x_1)$。\\
+              因为 $x_2-x_1 > 0$，根据题设，当自变量大于0时函数值大于0，所以 $f(x_2-x_1) > 0$。\\
+              即 $f(x_2) - f(x_1) > 0$，也就是 $f(x_2) > f(x_1)$。\\
+              故 $f(x)$ 在 $\mathbb{R}$ 上是增函数。
+    \end{enumerate}
+\end{proof}
+\begin{tcolorbox}[colback=purple!5!white, colframe=purple!75!black, title={\large \bfseries 抽象函数解题技巧}]
+    解决抽象函数问题的关键在于\textbf{赋值法}和\textbf{结构变换}。
+    \begin{itemize}
+        \item \textbf{赋值法}：巧妙地选取特殊值（如 $0, 1, -1, x, -x$ 等）代入已知等式，以求得特定函数值或揭示函数性质。
+        \item \textbf{结构变换}：将待求的目标，通过代数变形，凑成已知函数方程的结构，从而利用其性质。例如证明单调性时，将 $f(x_2)$ 变为 $f((x_2-x_1)+x_1)$ 的形式。
+    \end{itemize}
+    常见的抽象函数模型有：
+    \begin{itemize}
+        \item \textbf{正比例函数模型} ($f(x)=kx$): $f(x+y) = f(x)+f(y)$
+        \item \textbf{指数函数模型} ($f(x)=a^x$): $f(x+y) = f(x)f(y)$
+        \item \textbf{对数函数模型} ($f(x)=\log_a x$): $f(xy) = f(x)+f(y)$
+        \item \textbf{幂函数模型} ($f(x)=x^n$): $f(xy) = f(x)f(y)$
+    \end{itemize}
+    在解决选择填空题时，可以利用这些模型进行快速判断。
+\end{tcolorbox}
+
+\section{结语}
+函数是描述变量之间依赖关系的数学模型，是整个高中数学乃至高等数学的基石。希望本笔记能够帮助同学们跳出题海，从更高的视角审视和理解函数的内在规律与核心思想。掌握了这些思想，无论是面对熟悉的题型还是陌生的挑战，都能够更加从容不迫，游刃有余。
+
+\end{document}

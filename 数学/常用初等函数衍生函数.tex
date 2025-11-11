@@ -1,0 +1,277 @@
+\documentclass[a4paper, 12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\usepackage{geometry}
+\geometry{a4paper, left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+
+\usepackage{fontspec} % XeLaTeX 字体设置
+\usepackage{xeCJK}    % XeLaTeX 中文支持
+\setCJKmainfont{Noto Serif CJK SC} % 设置中文字体，您可以根据自己系统安装的字体更改
+
+\usepackage{amsmath} % 数学公式
+\usepackage{amssymb} % 数学符号
+\usepackage{graphicx} % 插入图片
+\usepackage{xcolor}  % 颜色支持
+\usepackage{pgfplots} % 强大的绘图宏包
+\pgfplotsset{compat=1.17} % 设置 pgfplots 版本兼容性
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta} % TikZ 库
+
+\usepackage[most]{tcolorbox} % 强大的彩色文本框宏包
+
+%----------------------------------------------------------------------------------------
+%   定义颜色
+%----------------------------------------------------------------------------------------
+\definecolor{myblue}{RGB}{55, 126, 184}
+\definecolor{mygreen}{RGB}{77, 175, 74}
+\definecolor{myred}{RGB}{228, 26, 28}
+\definecolor{myorange}{RGB}{255, 127, 0}
+\definecolor{mypurple}{RGB}{152, 78, 163}
+\definecolor{mybrown}{RGB}{166, 86, 40}
+\definecolor{backgroundcolor}{RGB}{245, 245, 245}
+\definecolor{gridcolor}{RGB}{210, 210, 210}
+\definecolor{axiscolor}{RGB}{100, 100, 100}
+
+%----------------------------------------------------------------------------------------
+%   标题设置
+%----------------------------------------------------------------------------------------
+
+\title{\Huge \bfseries \textcolor{myblue}{常用初等函数衍生函数}}
+\author{\large 高中数学参考笔记 (修订版)}
+\date{\today}
+
+%----------------------------------------------------------------------------------------
+%   文档开始
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\section*{第一组：指数函数与幂函数的乘除}
+
+%--- 函数 f(x) = xe^x ---
+\begin{tcolorbox}[
+    enhanced,
+    sidebyside, % 左右布局
+    sidebyside align=center,
+    colback=mygreen!5!white,
+    colframe=mygreen!75!black,
+    title=$f(x) = xe^x$,
+    fonttitle=\bfseries,
+]
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, height=6cm,
+            axis lines=middle, axis line style={axiscolor, -{Stealth[length=2mm]}},
+            xlabel={$x$}, ylabel={$y$},
+            xmin=-3, xmax=2, ymin=-0.5, ymax=2,
+            grid=major, grid style={gridcolor, dashed},
+            samples=100,
+        ]
+        \addplot[mygreen, thick, domain=-3:2] {x*exp(x)};
+        \node[circle, fill=mygreen, inner sep=1.5pt] at (axis cs:-1, {-1/exp(1)}) {};
+        \node[above right, color=mygreen, font=\small] at (axis cs:-1, {-1/exp(1)}) {$(-1, -1/e)$};
+        \end{axis}
+    \end{tikzpicture}
+    \tcblower % 切换到右侧内容
+    \textbf{定义域：} $\mathbb{R}$ \\
+    \textbf{导函数：} $f'(x) = (x+1)e^x$ \\
+    \textbf{分析：} 令 $f'(x) = 0$, 得 $x=-1$。
+    \begin{itemize}
+        \item $x<-1$, $f'(x)<0$, 单调递减。
+        \item $x>-1$, $f'(x)>0$, 单调递增。
+    \end{itemize}
+    \textbf{极小值点：} \textcolor{mygreen}{\textbf{$(-1, -1/e)$}}。
+\end{tcolorbox}
+
+%--- 函数 f(x) = x/e^x ---
+\begin{tcolorbox}[
+    enhanced,
+    sidebyside, % 左右布局
+    sidebyside align=center,
+    colback=myred!5!white,
+    colframe=myred!75!black,
+    title=$f(x) = \frac{x}{e^x} = xe^{-x}$,
+    fonttitle=\bfseries,
+]
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, height=6cm,
+            axis lines=middle, axis line style={axiscolor, -{Stealth[length=2mm]}},
+            xlabel={$x$}, ylabel={$y$},
+            xmin=-1, xmax=4, ymin=-0.5, ymax=0.5,
+            grid=major, grid style={gridcolor, dashed},
+            samples=100,
+        ]
+        \addplot[myred, thick, domain=-1:4] {x/exp(x)};
+        \node[circle, fill=myred, inner sep=1.5pt] at (axis cs:1, {1/exp(1)}) {};
+        \node[above right, color=myred, font=\small] at (axis cs:1, {1/exp(1)}) {$(1, 1/e)$};
+        \end{axis}
+    \end{tikzpicture}
+    \tcblower % 切换到右侧内容
+    \textbf{定义域：} $\mathbb{R}$ \\
+    \textbf{导函数：} $f'(x) = (1-x)e^{-x}$ \\
+    \textbf{分析：} 令 $f'(x) = 0$, 得 $x=1$。
+    \begin{itemize}
+        \item $x<1$, $f'(x)>0$, 单调递增。
+        \item $x>1$, $f'(x)<0$, 单调递减。
+    \end{itemize}
+    \textbf{极大值点：} \textcolor{myred}{\textbf{$(1, 1/e)$}}。
+\end{tcolorbox}
+
+\newpage
+\section*{第二组：对数函数与幂函数的乘除}
+
+%--- 函数 f(x) = xlnx ---
+\begin{tcolorbox}[
+    enhanced,
+    sidebyside, % 左右布局
+    sidebyside align=center,
+    colback=mypurple!5!white,
+    colframe=mypurple!75!black,
+    title=$f(x) = x\ln x$,
+    fonttitle=\bfseries,
+]
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, height=6cm,
+            axis lines=middle, axis line style={axiscolor, -{Stealth[length=2mm]}},
+            xlabel={$x$}, ylabel={$y$},
+            xmin=0, xmax=2, ymin=-0.5, ymax=1,
+            grid=major, grid style={gridcolor, dashed},
+            samples=100,
+        ]
+        \addplot[mypurple, thick, domain=0.01:2] {x*ln(x)};
+        \node[circle, fill=mypurple, inner sep=1.5pt] at (axis cs:{1/exp(1)}, {-1/exp(1)}) {};
+        \node[above right, color=mypurple, font=\small] at (axis cs:{1/exp(1)}, {-1/exp(1)}) {$(1/e, -1/e)$};
+        \end{axis}
+    \end{tikzpicture}
+    \tcblower % 切换到右侧内容
+    \textbf{定义域：} $\{x \mid x>0\}$ \\
+    \textbf{导函数：} $f'(x) = \ln x + 1$ \\
+    \textbf{分析：} 令 $f'(x) = 0$, 得 $x=1/e$。
+    \begin{itemize}
+        \item $0 < x < 1/e$, $f'(x)<0$, 单调递减。
+        \item $x > 1/e$, $f'(x)>0$, 单调递增。
+    \end{itemize}
+    \textbf{极小值点：} \textcolor{mypurple}{\textbf{$(1/e, -1/e)$}}。
+\end{tcolorbox}
+
+%--- 函数 f(x) = lnx/x ---
+\begin{tcolorbox}[
+    enhanced,
+    sidebyside, % 左右布局
+    sidebyside align=center,
+    colback=mybrown!5!white,
+    colframe=mybrown!75!black,
+    title=$f(x) = \frac{\ln x}{x}$,
+    fonttitle=\bfseries,
+]
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, height=6cm,
+            axis lines=middle, axis line style={axiscolor, -{Stealth[length=2mm]}},
+            xlabel={$x$}, ylabel={$y$},
+            xmin=0, xmax=8, ymin=-0.5, ymax=0.5,
+            grid=major, grid style={gridcolor, dashed},
+            samples=100,
+        ]
+        \addplot[mybrown, thick, domain=0.05:8] {ln(x)/x};
+        \node[circle, fill=mybrown, inner sep=1.5pt] at (axis cs:{exp(1)}, {1/exp(1)}) {};
+        \node[above right, color=mybrown, font=\small] at (axis cs:{exp(1)}, {1/exp(1)}) {$(e, 1/e)$};
+        \end{axis}
+    \end{tikzpicture}
+    \tcblower % 切换到右侧内容
+    \textbf{定义域：} $\{x \mid x>0\}$ \\
+    \textbf{导函数：} $f'(x) = \frac{1 - \ln x}{x^2}$ \\
+    \textbf{分析：} 令 $f'(x) = 0$, 得 $x=e$。
+    \begin{itemize}
+        \item $0 < x < e$, $f'(x)>0$, 单调递增。
+        \item $x > e$, $f'(x)<0$, 单调递减。
+    \end{itemize}
+    \textbf{极大值点：} \textcolor{mybrown}{\textbf{$(e, 1/e)$}}。
+\end{tcolorbox}
+
+\newpage
+\section*{第三组：经典模型函数}
+
+%--- 函数 f(x) = e^x/x ---
+\begin{tcolorbox}[
+    enhanced,
+    sidebyside, % 左右布局
+    sidebyside align=center,
+    colback=myblue!5!white,
+    colframe=myblue!75!black,
+    title=$f(x) = \frac{e^x}{x}$,
+    fonttitle=\bfseries,
+]
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, height=6cm,
+            axis lines=middle, axis line style={axiscolor, -{Stealth[length=2mm]}},
+            xlabel={$x$}, ylabel={$y$},
+            xmin=-2, xmax=3, ymin=-2, ymax=8,
+            grid=major, grid style={gridcolor, dashed},
+            samples=100,
+        ]
+        \addplot[myblue, thick, domain=0.05:3] {exp(x)/x};
+        \addplot[myblue, thick, domain=-2:-0.1] {exp(x)/x};
+        \node[circle, fill=myblue, inner sep=1.5pt] at (axis cs:1, {exp(1)}) {};
+        \node[below right, color=myblue, font=\small] at (axis cs:1, {exp(1)}) {$(1, e)$};
+        \end{axis}
+    \end{tikzpicture}
+    \tcblower % 切换到右侧内容
+    \textbf{定义域：} $\{x \in \mathbb{R} \mid x \neq 0\}$ \\
+    \textbf{导函数：} $f'(x) = \frac{e^x(x-1)}{x^2}$ \\
+    \textbf{分析：} 令 $f'(x) = 0$, 得 $x=1$。
+    \begin{itemize}
+        \item $x<1$ ($x \neq 0$), $f'(x)<0$, 单调递减。
+        \item $x>1$, $f'(x)>0$, 单调递增。
+    \end{itemize}
+    \textbf{极小值点：} \textcolor{myblue}{\textbf{$(1, e)$}}。
+\end{tcolorbox}
+
+%--- 函数 f(x) = x/lnx ---
+\begin{tcolorbox}[
+    enhanced,
+    sidebyside, % 左右布局
+    sidebyside align=center,
+    colback=myorange!5!white,
+    colframe=myorange!75!black,
+    title=$f(x) = \frac{x}{\ln x}$,
+    fonttitle=\bfseries,
+]
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\linewidth, height=6cm,
+            axis lines=middle, axis line style={axiscolor, -{Stealth[length=2mm]}},
+            xlabel={$x$}, ylabel={$y$},
+            xmin=0, xmax=6, ymin=-2, ymax=6,
+            grid=major, grid style={gridcolor, dashed},
+            samples=100,
+        ]
+        \addplot[myorange, thick, domain=1.05:6] {x/ln(x)};
+        \addplot[myorange, thick, domain=0.01:0.95] {x/ln(x)};
+        \node[circle, fill=myorange, inner sep=1.5pt] at (axis cs:{exp(1)}, {exp(1)}) {};
+        \node[above right, color=myorange, font=\small] at (axis cs:{exp(1)}, {exp(1)}) {$(e, e)$};
+        \end{axis}
+    \end{tikzpicture}
+    \tcblower % 切换到右侧内容
+    \textbf{定义域：} $\{x \mid x>0, x \neq 1\}$ \\
+    \textbf{导函数：} $f'(x) = \frac{\ln x - 1}{(\ln x)^2}$ \\
+    \textbf{分析：} 令 $f'(x) = 0$, 得 $x=e$。
+    \begin{itemize}
+        \item $0<x<1$ 或 $1<x<e$, $f'(x)<0$, 单调递减。
+        \item $x>e$, $f'(x)>0$, 单调递增。
+    \end{itemize}
+    \textbf{极小值点：} \textcolor{myorange}{\textbf{$(e, e)$}}。
+\end{tcolorbox}
+
+
+\end{document}

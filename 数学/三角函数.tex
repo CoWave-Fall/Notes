@@ -1,0 +1,471 @@
+% !TEX program = xelateDtx
+\documentclass[a4paper, 11pt]{ctexart}
+
+% --- 包的引入 ---
+\usepackage{amsmath, amssymb} % 数学公式
+\usepackage{xcolor}          % 颜色支持
+\usepackage{tikz}            % 绘图
+\usetikzlibrary{arrows.meta, positioning, intersections, quotes}
+\usepackage{geometry}        % 页面边距设置
+\usepackage[most]{tcolorbox} % 带颜色的文本框
+\usepackage{caption}         % 支持 \captionof 命令
+
+% --- 页面与颜色设置 ---
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm} % 设置页边距
+
+% 定义颜色（兼容黑白打印）
+\definecolor{myblue}{RGB}{0, 112, 192}
+\definecolor{mygreen}{RGB}{0, 176, 80}
+\definecolor{myorange}{RGB}{247, 150, 70}
+\definecolor{myred}{RGB}{200, 0, 0}
+\definecolor{mygray}{gray}{0.95}
+
+% --- 超链接设置 (解决方案) ---
+\usepackage[colorlinks=true, linkcolor=myblue, citecolor=mygreen, urlcolor=myred]{hyperref} % 彩色文字链接，移除方框
+
+% --- 定理、定义、例题环境设置 (移除了 breakable 选项) ---
+\newtcolorbox{theorembox}[1]{
+    colback=myblue!5!white,
+    colframe=myblue!75!black,
+    fonttitle=\bfseries,
+    title=定理：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=myblue!75!black,
+        sharp corners
+    }
+}
+
+\newtcolorbox{definitionbox}[1]{
+    colback=mygreen!5!white,
+    colframe=mygreen!75!black,
+    fonttitle=\bfseries,
+    title=定义：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=mygreen!75!black,
+        sharp corners
+    }
+}
+
+\newtcolorbox{examplebox}[1]{
+    colback=myorange!5!white,
+    colframe=myorange!75!black,
+    fonttitle=\bfseries,
+    title=技巧与应用：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=myorange!75!black,
+        sharp corners
+    }
+}
+
+
+% --- 文档开始 ---
+\begin{document}
+
+\title{\Huge \bfseries \color{myblue} 三角函数}
+\author{Gemini AI}
+\date{\today}
+\maketitle
+
+\tableofcontents
+\newpage
+
+% =============================================
+\section{三角函数的定义与三角函数线}
+% =============================================
+
+\begin{definitionbox}{任意角的三角函数}
+在平面直角坐标系中，设角 $\alpha$ 的顶点为原点 $O$，始边为 $x$ 轴的非负半轴。在角 $\alpha$ 的终边上任取一点 $P(x, y)$（非原点），点 $P$ 到原点的距离为 $r = \sqrt{x^2+y^2}$。我们定义以下六个三角函数：
+
+\begin{align*}
+    \text{正弦 (Sine):} \quad & \sin\alpha = \frac{y}{r} & \quad \quad \text{余割 (Cosecant):} \quad & \csc\alpha = \frac{r}{y} \\
+    \text{余弦 (Cosine):} \quad & \cos\alpha = \frac{x}{r} & \quad \quad \text{正割 (Secant):} \quad & \sec\alpha = \frac{r}{x} \\
+    \text{正切 (Tangent):} \quad & \tan\alpha = \frac{y}{x} & \quad \quad \text{余切 (Cotangent):} \quad & \cot\alpha = \frac{x}{y}
+\end{align*}
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.5]
+    % 坐标轴
+    \draw[->, thick] (-1.5,0) -- (1.5,0) node[right] {$x$};
+    \draw[->, thick] (0,-1.5) -- (0,1.5) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+
+    % 单位圆
+    \draw[thin, myblue] (0,0) circle (1);
+
+    % 角度与点P
+    \def\angle{35} % 定义角度
+    \coordinate (P) at (\angle:1);
+    \coordinate (M) at (\angle:1cm and 0cm);
+
+    % 三角函数线 (标签位置已修正)
+    \draw[myred, very thick] (M) -- (P) node[midway, right=4pt, color=myred] {$\sin\alpha$};
+    \draw[mygreen, very thick] (0,0) -- (M) node[midway, below=2pt, color=mygreen] {$\cos\alpha$};
+    
+    % 辅助线 (标签位置已修正)
+    \draw[->, thick, myorange] (0.5,0) arc (0:\angle:0.5cm) node[midway, right] {$\alpha$};
+    \draw[thick, ->] (0,0) -- (P) node[above right=2pt] {$P(x,y)$};
+    \draw[dashed] (P) -- (M) node [below] {$M$};
+    \draw[dashed] (0,0) -- (P) node [pos=0.6, above, sloped] {$r=1$};
+    
+    % 正切线
+    \coordinate (T) at (1, {tan(\angle)});
+    \draw[thick] (1,-1.5) -- (1,1.5);
+    \draw[myorange, very thick] (1,0) -- (T) node[midway, right=2pt, color=myorange] {$\tan\alpha$};
+    \draw[dashed] (P) -- (T);
+
+    \node at (1, -0.1) {$A(1,0)$};
+\end{tikzpicture}
+\captionof{figure}{单位圆中的三角函数线}
+\end{center}
+
+% =============================================
+\section{同角三角函数的基本关系}
+% =============================================
+
+\begin{theorembox}{同角三角函数关系}
+对于任意角 $\alpha$，若其三角函数有意义，则以下关系恒成立：
+\begin{itemize}
+    \item \textbf{平方关系 (Pythagorean Identities)}
+    \begin{equation}
+        \sin^2\alpha + \cos^2\alpha = 1
+    \end{equation}
+    由此可推导：
+    \[ \tan^2\alpha + 1 = \sec^2\alpha \quad \quad \quad 1 + \cot^2\alpha = \csc^2\alpha \]
+
+    \item \textbf{商关系 (Quotient Identities)}
+    \begin{equation}
+        \tan\alpha = \frac{\sin\alpha}{\cos\alpha} \quad (\cos\alpha \neq 0)
+    \end{equation}
+    \[ \cot\alpha = \frac{\cos\alpha}{\sin\alpha} \quad (\sin\alpha \neq 0) \]
+
+    \item \textbf{倒数关系 (Reciprocal Identities)}
+    \[ \tan\alpha \cdot \cot\alpha = 1 \quad \quad \sin\alpha \cdot \csc\alpha = 1 \quad \quad \cos\alpha \cdot \sec\alpha = 1 \]
+\end{itemize}
+\end{theorembox}
+
+% =============================================
+\section{诱导公式}
+% =============================================
+
+\begin{theorembox}{诱导公式}
+诱导公式的本质是利用单位圆的对称性，将任意角的三角函数转化为锐角三角函数。其记忆口诀为：“\textbf{奇变偶不变，符号看象限}”。
+\begin{itemize}
+    \item \textbf{“偶不变”}：$k\pi \pm \alpha$ 的形式，函数名不变。
+    \begin{align*}
+        \sin(\pi - \alpha) &= \sin\alpha & \cos(\pi - \alpha) &= -\cos\alpha & \tan(\pi - \alpha) &= -\tan\alpha \\
+        \sin(\pi + \alpha) &= -\sin\alpha & \cos(\pi + \alpha) &= -\cos\alpha & \tan(\pi + \alpha) &= \tan\alpha \\
+        \sin(2\pi - \alpha) &= -\sin\alpha & \cos(2\pi - \alpha) &= \cos\alpha & \tan(2\pi - \alpha) &= -\tan\alpha \\
+        \sin(-\alpha) &= -\sin\alpha & \cos(-\alpha) &= \cos\alpha & \tan(-\alpha) &= -\tan\alpha 
+    \end{align*}
+    \item \textbf{“奇变”}：$\frac{k\pi}{2} \pm \alpha$ (k为奇数)的形式，正弦变余弦，余弦变正弦，正切变余切。
+    \begin{align*}
+        \sin\left(\frac{\pi}{2} - \alpha\right) &= \cos\alpha & \cos\left(\frac{\pi}{2} - \alpha\right) &= \sin\alpha & \tan\left(\frac{\pi}{2} - \alpha\right) &= \cot\alpha \\
+        \sin\left(\frac{\pi}{2} + \alpha\right) &= \cos\alpha & \cos\left(\frac{\pi}{2} + \alpha\right) &= -\sin\alpha & \tan\left(\frac{\pi}{2} + \alpha\right) &= -\cot\alpha \\
+        \sin\left(\frac{3\pi}{2} - \alpha\right) &= -\cos\alpha & \cos\left(\frac{3\pi}{2} - \alpha\right) &= -\sin\alpha & \tan\left(\frac{3\pi}{2} - \alpha\right) &= \cot\alpha \\
+        \sin\left(\frac{3\pi}{2} + \alpha\right) &= -\cos\alpha & \cos\left(\frac{3\pi}{2} + \alpha\right) &= \sin\alpha & \tan\left(\frac{3\pi}{2} + \alpha\right) &= -\cot\alpha 
+    \end{align*}
+    \item \textbf{“符号看象限”}：把 $\alpha$ 视为锐角，判断原函数在 $k\pi \pm \alpha$ 或 $\frac{k\pi}{2} \pm \alpha$ 所在象限的符号，赋给新函数。
+\end{itemize}
+\end{theorembox}
+
+\begin{examplebox}{诱导公式的逆用}
+    诱导公式不仅可以用来化简，还可以反向使用，实现“角”的转化和函数名的统一。
+    \begin{itemize}
+        \item $\sin\alpha = \cos\left(\frac{\pi}{2} - \alpha\right)$
+        \item $\cos\alpha = \sin\left(\frac{\pi}{2} - \alpha\right) = \sin\left(\frac{\pi}{2} + \alpha\right)$
+        \item $-\sin\alpha = \cos\left(\frac{\pi}{2} + \alpha\right)$
+    \end{itemize}
+    这是辅助角公式等变换的基础。例如，统一 $\sin(x)$ 和 $\cos(x)$：
+    \[ \sin x + \cos x = \sin x + \sin\left(\frac{\pi}{2} + x\right) \]
+\end{examplebox}
+
+\newpage
+% =============================================
+\section{三角函数的图像与性质}
+% =============================================
+
+\begin{center}
+\begin{tikzpicture}[domain=-2.2*pi:2.2*pi, samples=200, scale=1]
+    % Axes
+    \draw[->, thick] (-2.3*pi, 0) -- (2.3*pi, 0) node[right] {$x$};
+    \draw[->, thick] (0, -1.5) -- (0, 1.5) node[above] {$y$};
+
+    % Ticks
+    \foreach \x/\xtext in {-2*pi/-2\pi, -1.5*pi/-\frac{3\pi}{2}, -pi/-\pi, -0.5*pi/-\frac{\pi}{2}, 0.5*pi/\frac{\pi}{2}, pi/\pi, 1.5*pi/\frac{3\pi}{2}, 2*pi/2\pi}
+        \draw (\x, 0.1) -- (\x, -0.1) node[below] {$\xtext$};
+    \draw (0,0) node[below left] {$O$};
+    \draw (0,1) -- (-0.1, 1) node[left] {$1$}; 
+    \draw (0,-1) -- (-0.1, -1) node[left] {$-1$};
+    
+    % Waves and Labels (Corrected)
+    \draw[myblue, thick, smooth] plot (\x, {sin(\x r)});
+    \node[myblue, below right] at (0.5*pi, 1) {$y=\sin x$};
+    
+    \draw[myred, thick, smooth, dashed] plot (\x, {cos(\x r)});
+    \node[myred, above] at (0, 1) {$y=\cos x$};
+\end{tikzpicture}
+\captionof{figure}{正弦函数与余弦函数图像}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    % Axes
+    \draw[->, thick] (-1.5*pi-0.2, 0) -- (1.5*pi+0.2, 0) node[right] {$x$};
+    \draw[->, thick] (0, -4) -- (0, 4) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+
+    % Ticks
+    \foreach \x/\xtext in {-pi/-\pi, -pi/2/-\frac{\pi}{2}, pi/2/\frac{\pi}{2}, pi/\pi}
+    {
+        \draw (\x, 0.1) -- (\x, -0.1) node[below] {$\xtext$};
+    }
+    
+    % Asymptotes
+    \draw[dashed, mygray] (-1.5*pi, -4) -- (-1.5*pi, 4);
+    \draw[dashed, mygray] (-0.5*pi, -4) -- (-0.5*pi, 4);
+    \draw[dashed, mygray] (0.5*pi, -4) -- (0.5*pi, 4);
+    \draw[dashed, mygray] (1.5*pi, -4) -- (1.5*pi, 4);
+
+    % Tangent plot
+    \clip (-1.5*pi-0.1, -4) rectangle (1.5*pi+0.1, 4);
+    % Plot in segments to avoid asymptote calculation errors
+    \draw[mygreen, thick, smooth, domain=-1.5*pi+0.02:-0.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
+    \draw[mygreen, thick, smooth, domain=-0.5*pi+0.02:0.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
+    \draw[mygreen, thick, smooth, domain=0.5*pi+0.02:1.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
+    
+    \node[color=mygreen, right] at (0.8, tan(0.8 r)) {$y=\tan x$};
+\end{tikzpicture}
+\captionof{figure}{正切函数图像}
+\end{center}
+
+
+% =============================================
+\section{三角恒等变换}
+% =============================================
+
+% ---------------------------------------------
+\subsection{和差角公式}
+% ---------------------------------------------
+\begin{theorembox}{和差角公式}
+\begin{align*}
+    \sin(\alpha \pm \beta) &= \sin\alpha\cos\beta \pm \cos\alpha\sin\beta \tag{$S_{\alpha\pm\beta}$} \\
+    \cos(\alpha \pm \beta) &= \cos\alpha\cos\beta \mp \sin\alpha\sin\beta \tag{$C_{\alpha\pm\beta}$} \\
+    \tan(\alpha \pm \beta) &= \frac{\tan\alpha \pm \tan\beta}{1 \mp \tan\alpha\tan\beta} \tag{$T_{\alpha\pm\beta}$}
+\end{align*}
+\end{theorembox}
+
+% ---------------------------------------------
+\subsection{倍角公式及其推论}
+% ---------------------------------------------
+\begin{theorembox}{倍角公式}
+\begin{align*}
+    \sin(2\alpha) &= 2\sin\alpha\cos\alpha \\
+    \cos(2\alpha) &= \cos^2\alpha - \sin^2\alpha = 2\cos^2\alpha - 1 = 1 - 2\sin^2\alpha \\
+    \tan(2\alpha) &= \frac{2\tan\alpha}{1 - \tan^2\alpha}
+\end{align*}
+\end{theorembox}
+
+\begin{examplebox}{倍角公式的重要推论（降幂/升幂）}
+\begin{itemize}
+    \item \textbf{降幂公式}
+        \begin{align*}
+            \cos^2\alpha &= \frac{1 + \cos(2\alpha)}{2} \\
+            \sin^2\alpha &= \frac{1 - \cos(2\alpha)}{2}
+        \end{align*}
+    \item \textbf{万能公式} (用 $\tan(\alpha/2)$ 表示所有三角函数)
+        \[ \sin\alpha = \frac{2\tan(\alpha/2)}{1+\tan^2(\alpha/2)}, \quad \cos\alpha = \frac{1-\tan^2(\alpha/2)}{1+\tan^2(\alpha/2)}, \quad \tan\alpha = \frac{2\tan(\alpha/2)}{1-\tan^2(\alpha/2)} \]
+    \item \textbf{半角正切的有理化公式}
+        \[ \tan\left(\frac{\alpha}{2}\right) = \frac{1 - \cos\alpha}{\sin\alpha} = \frac{\sin\alpha}{1 + \cos\alpha} \]
+\end{itemize}
+\end{examplebox}
+
+% ---------------------------------------------
+\subsection{辅助角公式}
+% ---------------------------------------------
+\begin{theorembox}{辅助角公式 $a\sin x + b\cos x$}
+该公式用于将形如 $a\sin x + b\cos x$ 的表达式化为单一的三角函数 $A\sin(x+\varphi)$ 或 $A\cos(x-\varphi)$。
+\[ a\sin x + b\cos x = \sqrt{a^2+b^2} \left(\frac{a}{\sqrt{a^2+b^2}}\sin x + \frac{b}{\sqrt{a^2+b^2}}\cos x\right) \]
+令 $\cos\varphi = \frac{a}{\sqrt{a^2+b^2}}$, $\sin\varphi = \frac{b}{\sqrt{a^2+b^2}}$, 则 $\tan\varphi = \frac{b}{a}$。
+\begin{equation}
+    a\sin x + b\cos x = \sqrt{a^2+b^2} \sin(x+\varphi)
+\end{equation}
+其中角 $\varphi$ 的终边经过点 $(a,b)$。
+\end{theorembox}
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    \draw[->, thick] (0,0) -- (3,0) node[right] {$x$};
+    \draw[->, thick] (0,0) -- (0,2.5) node[above] {$y$};
+    \draw[->, thick] (0,0) -- (2.5, 2) node [above right] {$P(a,b)$};
+    \draw (0.5,0) arc (0:38.66:0.5) node[midway, right] {$\varphi$};
+    \draw[dashed] (2.5,2) -- (2.5,0) node[below]{$a$};
+    \draw[dashed] (2.5,2) -- (0,2) node[left]{$b$};
+    \node at (0,0) [below left] {$O$};
+    \node at (1.25, 1) [below left] {$\sqrt{a^2+b^2}$};
+\end{tikzpicture}
+\end{center}
+
+% ---------------------------------------------
+\subsection{积化和差与和差化积公式}
+% ---------------------------------------------
+\begin{theorembox}{积化和差与和差化积公式}
+\begin{itemize}
+    \item \textbf{积化和差}
+    \begin{align*}
+        \sin\alpha\cos\beta &= \frac{1}{2}[\sin(\alpha+\beta) + \sin(\alpha-\beta)] \\
+        \cos\alpha\sin\beta &= \frac{1}{2}[\sin(\alpha+\beta) - \sin(\alpha-\beta)] \\
+        \cos\alpha\cos\beta &= \frac{1}{2}[\cos(\alpha+\beta) + \cos(\alpha-\beta)] \\
+        \sin\alpha\sin\beta &= -\frac{1}{2}[\cos(\alpha+\beta) - \cos(\alpha-\beta)]
+    \end{align*}
+    \item \textbf{和差化积}
+    \begin{align*}
+        \sin A + \sin B &= 2\sin\frac{A+B}{2}\cos\frac{A-B}{2} \\
+        \sin A - \sin B &= 2\cos\frac{A+B}{2}\sin\frac{A-B}{2} \\
+        \cos A + \cos B &= 2\cos\frac{A+B}{2}\cos\frac{A-B}{2} \\
+        \cos A - \cos B &= -2\sin\frac{A+B}{2}\sin\frac{A-B}{2}
+    \end{align*}
+\end{itemize}
+\end{theorembox}
+
+
+\newpage
+% =============================================
+\section{核心解题思想与技巧}
+% =============================================
+
+% ---------------------------------------------
+\subsection{齐次关系：知一求三}
+% ---------------------------------------------
+\begin{examplebox}{“齐次”思想的应用}
+在三角函数中，$\sin\alpha$ 和 $\cos\alpha$ 的关系类似于代数中的 $a$ 和 $b$。利用 $(a+b)^2$, $(a-b)^2$, $ab$, $a^2+b^2$ 这四个式子中，知二可求二的代数关系。在三角函数中，由于 $\sin^2\alpha + \cos^2\alpha = 1$ 是恒成立的，所以我们实际上是“知一求三”。
+
+\textbf{问题模型}：已知 $\sin\alpha + \cos\alpha = m$，求 $\sin\alpha - \cos\alpha$, $\sin\alpha\cos\alpha$ 的值。
+
+\textbf{解题步骤}：
+\begin{enumerate}
+    \item \textbf{求 $\sin\alpha\cos\alpha$}：
+    将已知式两边平方：
+    \[ (\sin\alpha + \cos\alpha)^2 = m^2 \]
+    \[ \sin^2\alpha + 2\sin\alpha\cos\alpha + \cos^2\alpha = m^2 \]
+    \[ 1 + 2\sin\alpha\cos\alpha = m^2 \implies \sin\alpha\cos\alpha = \frac{m^2-1}{2} \]
+
+    \item \textbf{求 $\sin\alpha - \cos\alpha$}：
+    利用平方差关系：
+    \[ (\sin\alpha - \cos\alpha)^2 = \sin^2\alpha - 2\sin\alpha\cos\alpha + \cos^2\alpha = 1 - 2\sin\alpha\cos\alpha \]
+    将上一步的结果代入：
+    \[ (\sin\alpha - \cos\alpha)^2 = 1 - 2\left(\frac{m^2-1}{2}\right) = 1 - (m^2-1) = 2 - m^2 \]
+    因此，
+    \[ \sin\alpha - \cos\alpha = \pm\sqrt{2-m^2} \]
+    (注意：最终结果的正负需要根据角 $\alpha$ 所在的象限来确定。)
+\end{enumerate}
+\textbf{示例}：已知 $\sin\alpha + \cos\alpha = \frac{1}{5}$，且 $\alpha \in (0, \pi)$，求 $\sin\alpha - \cos\alpha$。
+\begin{itemize}
+    \item $2\sin\alpha\cos\alpha = \left(\frac{1}{5}\right)^2 - 1 = -\frac{24}{25} \implies \sin\alpha\cos\alpha = -\frac{12}{25} < 0$。
+    因为 $\alpha \in (0, \pi)$，$\sin\alpha > 0$，所以 $\cos\alpha < 0$。角 $\alpha$ 在第二象限。
+    \item $(\sin\alpha - \cos\alpha)^2 = 2 - (\frac{1}{5})^2 = \frac{49}{25}$。
+    \item $\sin\alpha - \cos\alpha = \pm\frac{7}{5}$。
+    \item 因为 $\alpha$ 在第二象限，$\sin\alpha > 0$, $\cos\alpha < 0$，所以 $\sin\alpha - \cos\alpha > 0$。
+    故 $\sin\alpha - \cos\alpha = \frac{7}{5}$。
+\end{itemize}
+\end{examplebox}
+
+% ---------------------------------------------
+\subsection{弦化切与切化弦}
+% ---------------------------------------------
+\begin{examplebox}{弦切互化技巧}
+\textbf{弦化切}：当一个分式表达式的分子分母都是关于 $\sin\alpha$ 和 $\cos\alpha$ 的一次齐次式时，可以通过分子分母同除以 $\cos\alpha$ 来简化计算。
+
+\textbf{示例}：计算 $\frac{\sin\alpha - 2\cos\alpha}{3\sin\alpha + 4\cos\alpha}$，已知 $\tan\alpha = 3$。
+\[ \frac{\sin\alpha - 2\cos\alpha}{3\sin\alpha + 4\cos\alpha} = \frac{\frac{\sin\alpha}{\cos\alpha} - 2\frac{\cos\alpha}{\cos\alpha}}{3\frac{\sin\alpha}{\cos\alpha} + 4\frac{\cos\alpha}{\cos\alpha}} = \frac{\tan\alpha - 2}{3\tan\alpha + 4} = \frac{3-2}{3(3)+4} = \frac{1}{13} \]
+
+\textbf{切化弦}：将式子中的 $\tan\alpha$ 全部换成 $\frac{\sin\alpha}{\cos\alpha}$，然后通分化简。这在证明恒等式时非常常用。
+\end{examplebox}
+
+% =============================================
+\section{三角形内的三角函数结论}
+% =============================================
+\begin{theorembox}{三角形内常用结论}
+在任意 $\triangle ABC$ 中，有 $A+B+C=\pi$。由此可得：
+\begin{itemize}
+    \item \textbf{角的关系}：
+        \[ A+B = \pi - C \quad \implies \quad \frac{A+B}{2} = \frac{\pi}{2} - \frac{C}{2} \]
+    \item \textbf{诱导公式的应用}：
+        \begin{align*}
+            \sin(A+B) &= \sin(\pi - C) = \sin C \\
+            \cos(A+B) &= \cos(\pi - C) = -\cos C \\
+            \tan(A+B) &= \tan(\pi - C) = -\tan C \\
+            \sin\left(\frac{A+B}{2}\right) &= \sin\left(\frac{\pi}{2} - \frac{C}{2}\right) = \cos\frac{C}{2} \\
+            \cos\left(\frac{A+B}{2}\right) &= \cos\left(\frac{\pi}{2} - \frac{C}{2}\right) = \sin\frac{C}{2}
+        \end{align*}
+    \item \textbf{重要恒等式}：若 $A+B+C=\pi$，则
+        \begin{equation}
+            \tan A + \tan B + \tan C = \tan A \tan B \tan C
+        \end{equation}
+        \textbf{推论}：若 $\tan A + \tan B + \tan C > 0$，则 $\triangle ABC$ 为锐角三角形。若 $\tan A \tan B \tan C > 0$，则也为锐角三角形。
+\end{itemize}
+\end{theorembox}
+
+% =============================================
+\section{解三角不等式}
+% =============================================
+\begin{examplebox}{解不等式 $\sin x > \cos x$}
+解这类不等式通常有两种方法：
+\begin{enumerate}
+    \item \textbf{图像法}：在同一坐标系中画出 $y=\sin x$ 和 $y=\cos x$ 的图像。不等式 $\sin x > \cos x$ 的解集即为 $y=\sin x$ 图像在 $y=\cos x$ 图像上方的部分对应的 $x$ 的取值范围。
+    
+    \begin{center}
+    \begin{tikzpicture}[domain=-pi/2:2*pi, samples=200, scale=1.2]
+        \draw[->] (-pi/2-0.2, 0) -- (2*pi+0.2, 0) node[right] {$x$};
+        \draw[->] (0,-1.2) -- (0,1.2) node[above] {$y$};
+        
+        \draw[myblue, thick] plot (\x, {sin(\x r)});
+        \draw[myred, dashed, thick] plot (\x, {cos(\x r)});
+        
+        \fill[myblue!20, domain=pi/4:5*pi/4] plot(\x, {sin(\x r)}) -- (5*pi/4, {cos(5*pi/4 r)}) -- plot[domain=5*pi/4:pi/4] (\x, {cos(\x r)}) -- (pi/4, {sin(pi/4 r)});
+
+        \draw[dotted] (pi/4, -1.2) node[below] {$\frac{\pi}{4}$} -- (pi/4, {sin(pi/4 r)});
+        \draw[dotted] (5*pi/4, -1.2) node[below] {$\frac{5\pi}{4}$} -- (5*pi/4, {sin(5*pi/4 r)});
+        \node at (pi*1.2, 1) {\color{myblue}\Large $\sin x > \cos x$};
+    \end{tikzpicture}
+    \end{center}
+    从图中可以看出，在一个周期内，解集为 $x \in \left(\frac{\pi}{4}, \frac{5\pi}{4}\right)$。
+    所以通解为：$x \in \left(2k\pi + \frac{\pi}{4}, 2k\pi + \frac{5\pi}{4}\right), k \in \mathbb{Z}$。
+
+    \item \textbf{单位圆法}：在单位圆上，$\sin x = y_P$, $\cos x = x_P$。不等式 $\sin x > \cos x$ 转化为 $y_P > x_P$。直线 $y=x$ 与单位圆的交点所对应的角为 $\frac{\pi}{4}$ 和 $\frac{5\pi}{4}$。在单位圆上位于直线 $y=x$ 上方的弧所对应的角的范围即为解集。
+    
+    \begin{center}
+    \begin{tikzpicture}[scale=1.5]
+        \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$};
+        \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
+        \draw[thin, mygray] (0,0) circle (1);
+        \draw[dashed] (-1.2, -1.2) -- (1.2, 1.2) node[right] {$y=x$};
+        
+        \coordinate (A) at (45:1);
+        \coordinate (B) at (225:1);
+        
+        \draw[myblue, very thick] (A) arc (45:225:1);
+        \node[color=myblue, below right] at (A) {$P(\cos x, \sin x)$};
+        \node at (-1, 1) {\color{myblue}\Large $y > x$};
+
+        \draw[->, dotted] (0.5,0) arc (0:45:0.5);
+        \node at (0.8,0.2) {$\frac{\pi}{4}$};
+        \draw[->, dotted, dashed] (0.7,0) arc (0:225:0.7);
+        \node at (-0.3, -0.7) {$\frac{5\pi}{4}$};
+    \end{tikzpicture}
+    \end{center}
+    单位圆法同样得到解集为 $x \in \left(2k\pi + \frac{\pi}{4}, 2k\pi + \frac{5\pi}{4}\right), k \in \mathbb{Z}$。
+\end{enumerate}
+\end{examplebox}
+
+
+\end{document}
+% --- 文档结束 ---

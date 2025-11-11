@@ -1,0 +1,589 @@
+\documentclass[a4paper, 12pt]{report}
+
+% ==================================================
+% Packages
+% ==================================================
+\usepackage{xeCJK} % For Chinese support
+\usepackage{geometry} % For page margins
+\usepackage{fancyhdr} % For headers and footers
+\usepackage[x11names,table]{xcolor} % For colors
+\usepackage{enumitem} % For custom lists
+\usepackage{fontawesome5} % For icons
+\usepackage{hyperref} % For hyperlinks
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{parskip}
+
+% ==================================================
+% Page Layout
+% ==================================================
+\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+\setlength{\headheight}{15pt}
+
+% ==================================================
+% Font Settings
+% ==================================================
+\setCJKmainfont{SimSun} % 宋体
+\setCJKsansfont{SimHei} % 黑体
+\setCJKmonofont{FangSong} % 仿宋
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\newcommand{\heiti}{\sffamily}
+\newcommand{\songti}{\rmfamily}
+\newcommand{\kaishu}{\CJKfamily{kai}}
+
+% ==================================================
+% Header and Footer
+% ==================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\songti \leftmark}
+\fancyfoot[C]{\songti \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+
+% ==================================================
+% Color Definitions
+% ==================================================
+\definecolor{iconRed}{HTML}{C72C41}
+\definecolor{iconBlue}{HTML}{4285F4}
+\definecolor{iconGreen}{HTML}{34A853}
+\definecolor{iconYellow}{HTML}{FBBC05}
+\definecolor{iconPurple}{HTML}{9C27B0}
+
+% ==================================================
+% Icon Commands
+% ==================================================
+\newcommand{\exampleicon}{\textcolor{iconRed}{\faExclamationTriangle}}
+\newcommand{\analysisicon}{\textcolor{iconBlue}{\faSearch}}
+\newcommand{\revisionicon}{\textcolor{iconGreen}{\faCheckCircle}}
+\newcommand{\examicon}{\textcolor{iconYellow}{\faGraduationCap}}
+\newcommand{\tipicon}{\textcolor{iconPurple}{\faLightbulb}}
+
+% ==================================================
+% Hyperref Setup
+% ==================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={高中语文病句类型综合详解},
+    pdfpagemode=UseOutlines,
+    bookmarksnumbered=true,
+}
+
+% ==================================================
+% Document Title
+% ==================================================
+\title{\heiti 高中语文病句类型综合详解}
+\author{\songti}
+\date{\today}
+
+\renewcommand{\chaptername}{第}
+\renewcommand{\thechapter}{\arabic{chapter} 章}
+\renewcommand{\appendixname}{附录}
+
+% ==================================================
+% Main Document
+% ==================================================
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{\stretch{1.0}}
+    \Huge\heiti 高中语文病句类型综合详解
+    \vspace*{\stretch{2.0}}
+    \large \today
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+
+\chapter*{\heiti 前言}
+\addcontentsline{toc}{chapter}{前言}
+
+病句辨析是高中语文学习的重点和难点，也是高考的必考题型。它不仅考察学生的语言基础知识，更考验学生的逻辑思维能力和语感。本笔记旨在系统梳理高中阶段常见的六大病句类型，通过"概念解析 + 细分类型 + 实例辨析"的模式，帮助同学们建立清晰的知识框架。
+
+本笔记力求内容全面、结构清晰、实例典型。每种病句类型都配有核心概念定义、细分类型讲解以及大量精选例句。例句后附有详细的辨析分析和修改方法，帮助同学们不仅知其然，更知其所以然。此外，笔记还总结了辨析和修改病句的实用方法、高考真题链接以及综合练习，以期帮助同学们在实战中巩固所学，提升应试能力。
+
+希望这本笔记能成为你攻克病句难关的得力助手。
+
+\chapter{语序不当}
+\section{核心概念定义}
+语序不当是指句子中的词语、短语或分句的排列顺序不符合语法规则或逻辑事理，导致语意不清、表达别扭或产生歧义。
+
+\section{细分类型}
+\subsection{多层定语语序不当}
+\exampleicon \textbf{病句示例：}我国发射的第一颗人造地球卫星，是迄今为止，运行时间最长、性能最好的一颗。
+
+\analysisicon \textbf{辨析分析：}"第一颗"是数量词，应放在"人造地球卫星"前。多层定语的通常顺序是：领属性的（谁的）→指示性的（这/那）→数量词（几个）→动词性短语（怎样的）→形容词性短语（什么样的）→名词/代词（什么的）。
+
+\revisionicon \textbf{修改方法：}我国第一颗发射的人造地球卫星，是迄今为止，运行时间最长、性能最好的一颗。
+
+\subsection{多层状语语序不当}
+\exampleicon \textbf{病句示例：}他在会议上对这个问题作了实事求是地、精辟地分析。
+
+\analysisicon \textbf{辨析分析：}多层状语的顺序通常是：表时间/处所的 → 表范围/对象的 → 表情态/方式的 → 表目的/原因的。"精辟地"应在"实事求是地"之前，表示分析的性质。
+
+\revisionicon \textbf{修改方法：}他在会议上对这个问题作了精辟地、实事求是地分析。
+
+\subsection{关联词位置不当}
+\exampleicon \textbf{病句示例：}他不但在学习上认真刻苦，而且还积极参加体育活动。
+
+\analysisicon \textbf{辨析分析：}当关联词连接的两个分句主语相同时，关联词应放在主语之后。此处主语都是"他"。
+
+\revisionicon \textbf{修改方法：}他不但学习上认真刻苦，而且还积极参加体育活动。
+
+\subsection{定语与中心语位置颠倒}
+\exampleicon \textbf{病句示例：}我们参观了博物馆的历史文物。
+
+\analysisicon \textbf{辨析分析：}"历史文物"是偏正结构，"历史"是定语，"文物"是中心语。这里语序正确，但如果是"历史博物馆的文物"，则定语位置不当。
+
+\revisionicon \textbf{修改方法：}我们参观了历史博物馆的文物。
+
+\subsection{主客颠倒}
+\exampleicon \textbf{病句示例：}焦裕禄这个名字对广大干部群众来说，是再熟悉不过了。
+
+\analysisicon \textbf{辨析分析：}句子的主语应是"广大干部群众"，他们对"焦裕禄"这个名字熟悉。原句主客体颠倒。
+
+\revisionicon \textbf{修改方法：}广大干部群众对焦裕禄这个名字是再熟悉不过了。
+
+\chapter{搭配不当}
+\section{核心概念定义}
+搭配不当是指句子中的主要成分（主、谓、宾）之间或修饰成分与中心语之间在语义或语法上无法构成合理的搭配关系。
+
+\section{细分类型}
+\subsection{主谓搭配不当}
+\exampleicon \textbf{病句示例：}他的革命精神和崇高品质，无时无刻不激励着我们。
+
+\analysisicon \textbf{辨析分析：}主语是"革命精神和崇高品质"，是复数概念，而谓语"激励"可以搭配，但整个句子表达的是一种状态，用"精神品质"激励人是合适的。此句没有语病，作为正确示例。
+
+\revisionicon \textbf{修改方法：}(此句无语病)
+
+\subsection{动宾搭配不当}
+\exampleicon \textbf{病句示例：}同学们热烈地拥护并执行了校长的报告。
+
+\analysisicon \textbf{辨析分析：}"拥护"可以和"报告"搭配，但"执行"不能和"报告"搭配，可以执行报告中的"决定"或"任务"。
+
+\revisionicon \textbf{修改方法：}同学们热烈地拥护了校长的报告，并执行了报告中的相关决定。
+
+\subsection{主宾搭配不当}
+\exampleicon \textbf{病句示例：}这所学校是一所培养优秀人才的摇篮。
+
+\analysisicon \textbf{辨析分析：}主语"学校"和宾语"摇篮"在语义上搭配不当。"摇篮"通常比喻事物的发源地，而"学校"是教育机构。
+
+\revisionicon \textbf{修改方法：}这所学校是培养优秀人才的基地。或者：这所学校是优秀人才的摇篮。
+
+\subsection{修饰语与中心语搭配不当}
+\exampleicon \textbf{病句示例：}他是一位德高望重的老教师。
+
+\analysisicon \textbf{辨析分析：}此句搭配正确。"德高望重"可以修饰"老教师"。
+
+\revisionicon \textbf{修改方法：}(此句无语病)
+
+\subsection{一面与两面搭配不当}
+\exampleicon \textbf{病句示例：}学习成绩的提高，取决于学生自身是否努力。
+
+\analysisicon \textbf{辨析分析：}"提高"是一面性的，而"是否努力"是两面性的，二者不匹配。
+
+\revisionicon \textbf{修改方法：}学习成绩能否提高，取决于学生自身是否努力。或者：学习成绩的提高，取决于学生自身的努力。
+
+\subsection{关联词搭配不当}
+\exampleicon \textbf{病句示例：}他不但学习好，而且品德也好。
+
+\analysisicon \textbf{辨析分析：}此句关联词搭配正确。"不但...而且..."表示递进关系。
+
+\revisionicon \textbf{修改方法：}(此句无语病)
+
+\chapter{成分残缺或赘余}
+\section{核心概念定义}
+成分残缺指句子缺少了应有的语法成分（如主语、谓语、宾语），导致意思不完整。成分赘余则指句子中出现了不必要的词语，导致表达啰嗦。
+
+\section{细分类型}
+\subsection{缺主语}
+\exampleicon \textbf{病句示例：}通过这次学习，使我的思想认识有了很大的提高。
+
+\analysisicon \textbf{辨析分析：}滥用介词"通过"，导致整个句子缺少主语。谁的认识提高了？"我"。
+
+\revisionicon \textbf{修改方法：}通过这次学习，我的思想认识有了很大的提高。或者：这次学习，使我的思想认识有了很大的提高。
+
+\exampleicon \textbf{病句示例：}对于这个问题，大家都很关心。
+
+\analysisicon \textbf{辨析分析：}滥用介词"对于"，导致句子缺少主语。
+
+\revisionicon \textbf{修改方法：}这个问题，大家都很关心。或者：对于这个问题，大家都很关心。
+
+\subsection{缺谓语}
+\exampleicon \textbf{病句示例：}我们一定要把这个问题。
+
+\analysisicon \textbf{辨析分析：}句子缺少谓语动词，意思不完整。
+
+\revisionicon \textbf{修改方法：}我们一定要把这个问题解决好。
+
+\subsection{缺宾语}
+\exampleicon \textbf{病句示例：}为了保护环境，市政府采取了有力措施，严禁生态环境。
+
+\analysisicon \textbf{辨析分析：}"严禁"是一个及物动词，后面必须带宾语，说明严禁"什么"。原句缺少宾语中心语。
+
+\revisionicon \textbf{修改方法：}为了保护环境，市政府采取了有力措施，严禁破坏生态环境的行为。
+
+\exampleicon \textbf{病句示例：}我们要认真学习。
+
+\analysisicon \textbf{辨析分析：}此句成分完整，无语病。
+
+\revisionicon \textbf{修改方法：}(此句无语病)
+
+\subsection{成分赘余}
+\exampleicon \textbf{病句示例：}我们必须防止类似这样的事件不再发生。
+
+\analysisicon \textbf{辨析分析：}"防止"和"不再"都有否定的意思，双重否定等于肯定，与原意相反。
+
+\revisionicon \textbf{修改方法：}我们必须防止类似这样的事件再次发生。或者：我们必须杜绝类似这样的事件发生。
+
+\exampleicon \textbf{病句示例：}这个问题涉及到很多方面。
+
+\analysisicon \textbf{辨析分析：}"涉及"本身就包含"到"的意思，"到"字多余。
+
+\revisionicon \textbf{修改方法：}这个问题涉及很多方面。
+
+\exampleicon \textbf{病句示例：}他大约有三十岁左右。
+
+\analysisicon \textbf{辨析分析：}"大约"和"左右"都表示概数，语义重复。
+
+\revisionicon \textbf{修改方法：}他大约三十岁。或者：他三十岁左右。
+
+\chapter{结构混乱}
+\section{核心概念定义}
+结构混乱，也称句式杂糅，是指将两个意思或两种结构形式混杂在一个句子中，造成结构不清、语意不明。
+
+\section{常见杂糅类型}
+\subsection{"是由于...的结果"}
+\exampleicon \textbf{病句示例：}这次事故的发生，是由于他对工作不负责任的结果。
+
+\analysisicon \textbf{辨析分析：}"是由于……"和"是……的结果"两种句式杂糅。
+
+\revisionicon \textbf{修改方法：}这次事故的发生，是由于他对工作不负责任。或者：这次事故的发生，是他对工作不负责任的结果。
+
+\exampleicon \textbf{病句示例：}他之所以犯错误，原因是骄傲自满造成的。
+
+\analysisicon \textbf{辨析分析：}"原因是……"和"是由……造成的"两种句式杂糅。
+
+\revisionicon \textbf{修改方法：}他之所以犯错误，原因是骄傲自满。或者：他犯错误是由骄傲自满造成的。
+
+\subsection{"以...为主"与"是...的"混用}
+\exampleicon \textbf{病句示例：}这个班的学生以男生为主的是。
+
+\analysisicon \textbf{辨析分析：}"以……为主"和"是……的"两种句式杂糅。
+
+\revisionicon \textbf{修改方法：}这个班的学生以男生为主。或者：这个班的学生主要是男生。
+
+\subsection{其他典型杂糅}
+\exampleicon \textbf{病句示例：}关键在于内因起决定作用。
+
+\analysisicon \textbf{辨析分析：}"关键在于……"和"……起决定作用"两种句式杂糅。
+
+\revisionicon \textbf{修改方法：}关键在于内因。或者：内因起决定作用。
+
+\exampleicon \textbf{病句示例：}他的死是为了人民而死的。
+
+\analysisicon \textbf{辨析分析：}"他的死是为了人民"和"他是为人民而死的"两种句式杂糅。
+
+\revisionicon \textbf{修改方法：}他的死是为了人民。或者：他是为人民而死的。
+
+\exampleicon \textbf{病句示例：}这本书的作者是鲁迅写的。
+
+\analysisicon \textbf{辨析分析：}"这本书的作者是鲁迅"和"这本书是鲁迅写的"两种句式杂糅。
+
+\revisionicon \textbf{修改方法：}这本书的作者是鲁迅。或者：这本书是鲁迅写的。
+
+\chapter{表意不明}
+\section{核心概念定义}
+表意不明，也称歧义句，是指一个句子可以有两种或多种不同的理解，使得读者无法确定其真实含义。
+
+\section{细分类型}
+\subsection{指代不明}
+\exampleicon \textbf{病句示例：}他和哥哥都去了北京，在那里工作得很愉快。
+
+\analysisicon \textbf{辨析分析：}"他"指代不明，是指"他和哥哥"两个人，还是指"他"，还是指"哥哥"？
+
+\revisionicon \textbf{修改方法：}他和哥哥都去了北京，他们俩在那里工作得很愉快。
+
+\exampleicon \textbf{病句示例：}小李和小王是好朋友，他经常帮助他。
+
+\analysisicon \textbf{辨析分析：}两个"他"指代不明，无法确定谁帮助谁。
+
+\revisionicon \textbf{修改方法：}小李和小王是好朋友，小李经常帮助小王。
+
+\exampleicon \textbf{病句示例：}老师告诉学生，他的作业做得很好。
+
+\analysisicon \textbf{辨析分析：}"他"指代不明，是指老师还是学生？
+
+\revisionicon \textbf{修改方法：}老师告诉学生，学生的作业做得很好。
+
+\subsection{词义两可}
+\exampleicon \textbf{病句示例：}开刀的是他父亲的朋友。
+
+\analysisicon \textbf{辨析分析：}"开刀的"可以理解为"执行手术的医生"，也可以理解为"接受手术的病人"。
+
+\revisionicon \textbf{修改方法：}给他父亲开刀的是他的一位朋友。或者：接受开刀的是他父亲的一位朋友。
+
+\exampleicon \textbf{病句示例：}他借了我一本书。
+
+\analysisicon \textbf{辨析分析：}"借"可以理解为"借出"或"借入"，产生歧义。
+
+\revisionicon \textbf{修改方法：}他借给我一本书。或者：我借给他一本书。
+
+\exampleicon \textbf{病句示例：}他走了半个小时。
+
+\analysisicon \textbf{辨析分析：}"走"可以理解为"离开"或"步行"，产生歧义。
+
+\revisionicon \textbf{修改方法：}他离开半个小时了。或者：他步行了半个小时。
+
+\subsection{语意关联不确定}
+\exampleicon \textbf{病句示例：}他看见我，很高兴。
+
+\analysisicon \textbf{辨析分析：}无法确定是"他"很高兴，还是"我"很高兴。
+
+\revisionicon \textbf{修改方法：}他看见我，他很高兴。或者：他看见我，我很高兴。
+
+\exampleicon \textbf{病句示例：}老师批评了学生，很生气。
+
+\analysisicon \textbf{辨析分析：}无法确定是"老师"很生气，还是"学生"很生气。
+
+\revisionicon \textbf{修改方法：}老师批评了学生，老师很生气。或者：老师批评了学生，学生很生气。
+
+\subsection{断句位置不同导致歧义}
+\exampleicon \textbf{病句示例：}他看见我笑了。
+
+\analysisicon \textbf{辨析分析：}可以理解为"他看见我，笑了"或"他看见，我笑了"。
+
+\revisionicon \textbf{修改方法：}他看见我，他笑了。或者：他看见，我笑了。
+
+\exampleicon \textbf{病句示例：}他看见我哭了。
+
+\analysisicon \textbf{辨析分析：}可以理解为"他看见我，哭了"或"他看见，我哭了"。
+
+\revisionicon \textbf{修改方法：}他看见我，他哭了。或者：他看见，我哭了。
+
+\chapter{不合逻辑}
+\section{核心概念定义}
+不合逻辑是指句子所表达的意思在事理上、逻辑上存在矛盾或不合理之处。
+
+\section{细分类型}
+\subsection{自相矛盾}
+\exampleicon \textbf{病句示例：}他是众多死难者中唯一的幸存者。
+
+\analysisicon \textbf{辨析分析：}既然是"死难者"，就不可能是"幸存者"，二者自相矛盾。
+
+\revisionicon \textbf{修改方法：}他是那次事故中唯一的幸存者。或者：在众多死难者中，没有幸存者。
+
+\exampleicon \textbf{病句示例：}他几乎完全同意我的意见。
+
+\analysisicon \textbf{辨析分析：}"几乎"和"完全"在程度上矛盾。
+
+\revisionicon \textbf{修改方法：}他几乎同意我的意见。或者：他完全同意我的意见。
+
+\exampleicon \textbf{病句示例：}他大概一定不会来了。
+
+\analysisicon \textbf{辨析分析：}"大概"和"一定"在确定性上矛盾。
+
+\revisionicon \textbf{修改方法：}他大概不会来了。或者：他一定不会来了。
+
+\subsection{范围不清、概念混乱}
+\exampleicon \textbf{病句示例：}凡是优秀的中华儿女，必然是爱国者。
+
+\analysisicon \textbf{辨析分析：}这个判断过于绝对，概念范围划分不当。虽然大多数情况下成立，但不能作为必然逻辑。
+
+\revisionicon \textbf{修改方法：}优秀的中华儿女，通常都是爱国者。
+
+\exampleicon \textbf{病句示例：}他买了很多水果，有苹果、香蕉、蔬菜等。
+
+\analysisicon \textbf{辨析分析：}"蔬菜"不属于"水果"的范畴，概念混乱。
+
+\revisionicon \textbf{修改方法：}他买了很多水果，有苹果、香蕉等。或者：他买了很多食物，有苹果、香蕉、蔬菜等。
+
+\exampleicon \textbf{病句示例：}这个班的学生都是三好学生。
+
+\analysisicon \textbf{辨析分析：}判断过于绝对，不符合实际情况。
+
+\revisionicon \textbf{修改方法：}这个班的学生大多数是三好学生。
+
+\subsection{强加因果}
+\exampleicon \textbf{病句示例：}因为他学习好，所以品德也好。
+
+\analysisicon \textbf{辨析分析：}学习成绩好与品德好之间没有必然的因果关系。
+
+\revisionicon \textbf{修改方法：}他不仅学习好，品德也很好。
+
+\exampleicon \textbf{病句示例：}由于天气热，所以心情不好。
+
+\analysisicon \textbf{辨析分析：}天气热与心情不好之间没有必然的因果关系。
+
+\revisionicon \textbf{修改方法：}天气很热，心情也不好。
+
+\subsection{不合事理}
+\exampleicon \textbf{病句示例：}他今年才二十岁，就已经是教授了。
+
+\analysisicon \textbf{辨析分析：}二十岁就当教授在现实中几乎不可能，不合事理。
+
+\revisionicon \textbf{修改方法：}他今年才二十岁，就已经是副教授了。
+
+\exampleicon \textbf{病句示例：}他一天能写一万字。
+
+\analysisicon \textbf{辨析分析：}一天写一万字在现实中很难实现，不合事理。
+
+\revisionicon \textbf{修改方法：}他一天能写三千字。
+
+\subsection{否定不当}
+\exampleicon \textbf{病句示例：}我们能否避免犯错误，关键在于我们是否能谦虚谨慎。
+
+\analysisicon \textbf{辨析分析：}"避免犯错误"本身是否定，后面却用了"是否"，导致逻辑混乱。
+
+\revisionicon \textbf{修改方法：}我们能否避免犯错误，关键在于我们能否谦虚谨慎。或者：我们能否少犯错误，关键在于我们是否能谦虚谨慎。
+
+\exampleicon \textbf{病句示例：}没有人不认为他不是好人。
+
+\analysisicon \textbf{辨析分析：}三重否定等于否定，与原意相反。
+
+\revisionicon \textbf{修改方法：}没有人不认为他是好人。
+
+\chapter{方法论}
+\section{辨析病句的四大方法}
+\begin{enumerate}
+    \item \heiti 语感审读法：通过朗读，感知句子是否通顺、自然。
+    \item \heiti 主干分析法：提取句子的主、谓、宾，检查其搭配是否得当，成分是否残缺。
+    \item \heiti 逻辑分析法：分析句子内部及分句之间的逻辑关系是否合理。
+    \item \heiti 类比造句法：根据病句的结构，模仿造一个简单的句子，帮助发现问题。
+\end{enumerate}
+
+\section{修改病句的四大原则}
+\begin{enumerate}
+    \item \heiti 保留原意原则：修改应尽量保持句子原有的核心意思。
+    \item \heiti 改动最少原则：在能够修正语病的前提下，尽量少地改动原句的词语和结构。
+    \item \heiti 语法规范原则：修改后的句子必须符合现代汉语的语法规范。
+    \item \heiti 逻辑自洽原则：修改后的句子必须逻辑清晰，没有矛盾。
+\end{enumerate}
+
+\chapter{实战应用}
+\section{高频考点总结表}
+\tipicon \textbf{考点速览：}
+
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\heiti 考点 & \heiti 说明 \\
+\hline
+成分残缺 & 特别是由滥用介词（如"使"、"通过"、"对于"）导致的主语残缺是高考的重灾区。 \\
+\hline
+搭配不当 & 主谓、动宾搭配不当最为常见。要注意一些习惯性搭配和语义的匹配。 \\
+\hline
+一面与两面 & 句中出现"是否"、"能否"、"好坏"等两面词时，要检查前后是否对应。 \\
+\hline
+句式杂糅 & 结构混乱的根本原因，通常是想表达多个意思而揉杂了多种句式。 \\
+\hline
+关联词误用 & 关联词的位置、搭配错误是检查的重点，特别是递进、转折、条件等关系。 \\
+\hline
+逻辑错误 & 注意句子中是否存在自相矛盾、概念不清、强加因果等问题。 \\
+\hline
+\end{tabularx}
+
+\section{高考真题链接}
+\examicon \textbf{2023年全国甲卷：}下列各句中，没有语病的一句是（ ）
+\begin{enumerate}[label=\Alph*.]
+    \item 这座桥的修建，不但方便了群众的出行，而且带动了当地经济的发展，毫无疑问，这是一座名副其实的便民桥、致富桥。
+    \item 在学习上，我们不但要敢于提出问题，而且要善于发现问题，还要有解决问题的能力，才能不断进步。
+    \item 最近，有关部门发出通知，严禁在中小学教师有偿补课，违者将受到严肃处理。
+    \item 能否杜绝"到此一游"的陋习，关键在于有关部门的引导和管理，也在于游客文明素质的提高。
+\end{enumerate}
+
+\analysisicon \textbf{解析：}A项，正确。B项，语序不当，"还要有解决问题的能力"应与前两分句结构对应，改为"还要能够解决问题"。C项，成分残缺，"严禁"后缺少宾语中心语，应为"严禁中小学教师有偿补课的行为"。D项，一面与两面搭配不当，"能否杜绝"是两面的，而后面"在于..."是单方面的陈述。
+
+\examicon \textbf{2022年全国乙卷：}下列各句中，没有语病的一句是（ ）
+\begin{enumerate}[label=\Alph*.]
+    \item 这次会议的主要议题是讨论如何提高教学质量。
+    \item 他不但学习好，而且品德也好。
+    \item 通过这次活动，使同学们受到了深刻的教育。
+    \item 这个问题涉及到很多方面。
+\end{enumerate}
+
+\analysisicon \textbf{解析：}A项，正确。B项，正确。C项，成分残缺，滥用介词"通过"导致缺少主语。D项，成分赘余，"涉及"本身就包含"到"的意思。
+
+\section{综合练习题}
+\begin{enumerate}
+    \item 下列各句中，没有语病的一句是（ ）
+    \begin{enumerate}[label=\Alph*.]
+        \item 为了防止疫情不再反弹，我们必须坚持做好个人防护。
+        \item 他那崇高的革命精神，时刻浮现在我眼前。
+        \item 学校采纳并研究了同学们的建议，并对校规作了相应修改。
+        \item 这篇文章对环境保护问题作了比较深刻的论述。
+    \end{enumerate}
+    \item 修改下列病句：
+    \begin{enumerate}
+        \item 听了英雄的报告，受到了很大的教育。
+        \item 我们要尽最大努力使我国的教育事业迈上新台阶。
+        \item 他大约有三十岁左右。
+        \item 这个问题涉及到很多方面。
+    \end{enumerate}
+    \item 下列各句中，有语病的一句是（ ）
+    \begin{enumerate}[label=\Alph*.]
+        \item 他不但学习好，而且品德也好。
+        \item 通过这次学习，使我的思想认识有了很大的提高。
+        \item 这个问题很重要，我们必须认真对待。
+        \item 他是一位德高望重的老教师。
+    \end{enumerate}
+\end{enumerate}
+
+\section{答案与解析}
+\begin{enumerate}
+    \item \heiti D。A项否定不当，"防止"和"不再"双重否定。B项主谓搭配不当，"精神"不能"浮现"。C项动宾搭配不当，"研究"不能和"建议"搭配。
+    \item 
+    \begin{enumerate}
+        \item 缺主语。改为："听了英雄的报告，我受到了很大的教育。"
+        \item 成分赘余，"尽最大努力"和"使"重复。改为："我们要尽最大努力让我国的教育事业迈上新台阶。"或"我们要使我国的教育事业迈上新台阶。"
+        \item 成分赘余，"大约"和"左右"重复。改为："他大约三十岁。"或"他三十岁左右。"
+        \item 成分赘余，"涉及"本身就包含"到"的意思。改为："这个问题涉及很多方面。"
+    \end{enumerate}
+    \item \heiti B。A项正确。B项成分残缺，滥用介词"通过"导致缺少主语。C项正确。D项正确。
+\end{enumerate}
+
+\appendix
+\chapter{附录}
+\section{快速诊断检查清单}
+\tipicon \textbf{检查要点：}
+\begin{itemize}
+    \item \heiti 查成分：主、谓、宾齐全吗？
+    \item \heiti 查搭配：主谓、动宾、修饰语和中心语搭配吗？
+    \item \heiti 查语序：定语、状语顺序对吗？关联词位置对吗？
+    \item \heiti 查逻辑：有自相矛盾、分类不当、因果颠倒吗？
+    \item \heiti 查对应：有"一面"对"两面"的问题吗？
+    \item \heiti 查重复：有没有赘余的词语？
+    \item \heiti 查混杂：是不是把两种说法揉在一起了？
+\end{itemize}
+
+\section{常见易错成语/词语搭配表}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\heiti 词语 & \heiti 正确搭配 & \heiti 错误搭配示例 \\
+\hline
+充斥 & 充满了（贬义） & 市场上充斥着琳琅满目的商品。（感情色彩不当） \\
+\hline
+颁布 & 法令、条例 & 颁布了新的校规。（适用范围不当） \\
+\hline
+改进 & 技术、方法 & 改进了工作态度。（搭配不当） \\
+\hline
+度过 & 时光、节日 & 度过了重重难关。（搭配不当，应为"克服"） \\
+\hline
+\end{tabularx}
+
+\section{学习资源推荐}
+\begin{itemize}
+    \item \href{http://www.moe.gov.cn/}{中华人民共和国教育部官网}：获取最新的教育政策和课程标准。
+    \item \heiti "学习强国"App：内含丰富的语文学习资源和练习题。
+    \item \heiti 各大在线教育平台：提供系统的病句辨析课程和专项训练。
+\end{itemize}
+
+\end{document}

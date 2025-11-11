@@ -1,0 +1,754 @@
+% !TEX program = xelatex
+% !TEX encoding = UTF-8
+% ============================================
+% 固定速度抛射的包络线
+% 数学笔记 XeLaTeX 模板
+% ============================================
+
+\documentclass[a4paper, 11pt]{ctexart}
+
+% ============================================
+% 包的引入
+% ============================================
+
+% 数学公式与符号
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage{mathtools} % 增强的数学工具
+
+% 页面设置
+\usepackage{geometry}
+\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+
+% 颜色支持
+\usepackage{xcolor}
+
+% 绘图支持
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, intersections, quotes, calc}
+
+% 彩色文本框
+\usepackage[most]{tcolorbox}
+
+% 超链接
+\usepackage[colorlinks=true, linkcolor=myblue, citecolor=mygreen, urlcolor=myred]{hyperref}
+
+% 图片支持
+\usepackage{graphicx}
+
+% 其他工具
+\usepackage{caption} % 支持 \captionof 命令
+\usepackage{enumitem} % 增强的列表环境
+
+% ============================================
+% 颜色定义（兼容黑白打印）
+% ============================================
+\definecolor{myblue}{RGB}{0, 112, 192}
+\definecolor{mygreen}{RGB}{0, 176, 80}
+\definecolor{myorange}{RGB}{247, 150, 70}
+\definecolor{myred}{RGB}{200, 0, 0}
+\definecolor{mypurple}{RGB}{152, 78, 163}
+\definecolor{mygray}{gray}{0.95}
+
+% ============================================
+% 定理、定义、例题环境设置
+% ============================================
+
+% 定理环境
+\newtcolorbox{theorembox}[1]{
+    colback=myblue!5!white,
+    colframe=myblue!75!black,
+    fonttitle=\bfseries,
+    title=定理：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=myblue!75!black,
+        sharp corners
+    }
+}
+
+% 定义环境
+\newtcolorbox{definitionbox}[1]{
+    colback=mygreen!5!white,
+    colframe=mygreen!75!black,
+    fonttitle=\bfseries,
+    title=定义：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=mygreen!75!black,
+        sharp corners
+    }
+}
+
+% 例题/技巧与应用环境
+\newtcolorbox{examplebox}[1]{
+    colback=myorange!5!white,
+    colframe=myorange!75!black,
+    fonttitle=\bfseries,
+    title=技巧与应用：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=myorange!75!black,
+        sharp corners
+    }
+}
+
+% 引理环境
+\newtcolorbox{lemmabox}[1]{
+    colback=mypurple!5!white,
+    colframe=mypurple!75!black,
+    fonttitle=\bfseries,
+    title=引理：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=mypurple!75!black,
+        sharp corners
+    }
+}
+
+% 注意/提醒环境
+\newtcolorbox{notebox}[1]{
+    colback=mygray,
+    colframe=myred!75!black,
+    fonttitle=\bfseries,
+    title=注意：#1,
+    enhanced,
+    attach boxed title to top left={xshift=1cm, yshift=-2mm},
+    top=8mm,
+    boxed title style={
+        colback=myred!75!black,
+        sharp corners
+    }
+}
+
+% ============================================
+% 标题格式设置
+% ============================================
+\usepackage{titlesec}
+\titleformat{\section}
+    {\Large\bfseries\color{myblue}}
+    {\thesection}{1em}{}
+\titleformat{\subsection}
+    {\large\bfseries\color{myorange}}
+    {\thesubsection}{1em}{}
+
+% ============================================
+% 数学定理环境（使用 amsthm）
+% ============================================
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{definition}{定义}[section]
+\newtheorem{lemma}{引理}[section]
+\newtheorem{corollary}{推论}[theorem]
+\newtheorem{example}{例题}[section]
+
+% ============================================
+% 文档开始
+% ============================================
+\begin{document}
+
+% 标题页
+\title{\Huge \bfseries \color{myblue} 固定速度抛射的包络线}
+\author{数学笔记}
+\date{\today}
+\maketitle
+
+% 目录
+\tableofcontents
+\newpage
+
+% ============================================
+% 1. 引言与问题背景
+% ============================================
+\section{引言与问题背景}
+
+\begin{definitionbox}{包络线}
+\textbf{包络线（Envelope）}是指与一族曲线都相切的曲线。在几何上，包络线是这族曲线的“边界”，它恰好与族中的每一条曲线在某一点相切。
+
+对于抛体运动，如果我们从同一点以相同的初速度 $v_0$ 但不同的抛射角 $\theta$ 抛出多个质点，这些质点的轨迹形成一族抛物线。这族抛物线的包络线就是一条特殊的曲线，它表示在给定初速度下，质点能够到达的所有位置点的边界。
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % 坐标轴
+    \draw[->, thick] (-0.5,0) -- (5,0) node[right] {$x$};
+    \draw[->, thick] (0,-0.5) -- (0,3.5) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+    
+    % 抛射点
+    \fill[myred] (0,0) circle (3pt) node[below left] {抛射点};
+    
+    % 多条不同角度的轨迹（示意）
+    \foreach \angle in {15, 30, 45, 60, 75}
+    {
+        \pgfmathsetmacro{\vzero}{3}
+        \pgfmathsetmacro{\g}{9.8}
+        \pgfmathsetmacro{\tantheta}{tan(\angle)}
+        \pgfmathsetmacro{\costheta}{cos(\angle)}
+        \pgfmathsetmacro{\sintheta}{sin(\angle)}
+        \pgfmathsetmacro{\xmax}{2*\vzero*\vzero*\sintheta*\costheta/\g}
+        \pgfmathsetmacro{\ymax}{\vzero*\vzero*\sintheta*\sintheta/(2*\g)}
+        
+        \draw[myblue!40, thin, domain=0:\xmax, samples=50] 
+            plot (\x, {\x*\tantheta - \g*\x*\x/(2*\vzero*\vzero*\costheta*\costheta)});
+    }
+    
+    % 包络线（抛物线）
+    \pgfmathsetmacro{\vzero}{3}
+    \pgfmathsetmacro{\g}{9.8}
+    \pgfmathsetmacro{\hmax}{\vzero*\vzero/(2*\g)}
+    \draw[myred, very thick, domain=0:4.5, samples=100] 
+        plot (\x, {\hmax - \g*\x*\x/(2*\vzero*\vzero)});
+    \node[myred, above] at (2.5, 1.2) {包络线};
+    
+    % 标注
+    \node[myblue, right] at (4.5, 0.3) {轨迹族};
+\end{tikzpicture}
+\captionof{figure}{包络线的直观理解：多条轨迹的边界}
+\end{center}
+
+\subsection{问题的物理意义}
+
+在抛体运动中，如果我们固定初速度 $v_0$，只改变抛射角 $\theta$，那么：
+\begin{itemize}
+    \item 不同的抛射角对应不同的轨迹抛物线
+    \item 这些轨迹形成一个“轨迹族”
+    \item 包络线表示在给定初速度下，质点能够到达的所有位置点的\textbf{边界}
+    \item 包络线内部的区域是“可达区域”，外部的区域是“不可达区域”
+\end{itemize}
+
+这个问题在军事、体育、工程等领域都有重要应用，例如：
+\begin{itemize}
+    \item 确定炮弹的射程范围
+    \item 分析投掷物体的可达区域
+    \item 设计安全防护区域
+\end{itemize}
+
+% ============================================
+% 2. 抛体运动基础回顾
+% ============================================
+\section{抛体运动基础回顾}
+
+\begin{definitionbox}{抛体运动的参数方程}
+设质点从原点 $O(0,0)$ 以初速度 $v_0$、抛射角 $\theta$（与水平方向夹角）抛出，重力加速度为 $g$（方向竖直向下）。
+
+\textbf{运动分解：}
+\begin{itemize}
+    \item 水平方向：匀速直线运动，初速度 $v_{0x} = v_0\cos\theta$
+    \item 竖直方向：匀变速直线运动，初速度 $v_{0y} = v_0\sin\theta$，加速度 $-g$
+\end{itemize}
+
+\textbf{参数方程（以时间 $t$ 为参数）：}
+\begin{align}
+    x(t) &= v_0\cos\theta \cdot t \label{eq:x}\\
+    y(t) &= v_0\sin\theta \cdot t - \frac{1}{2}gt^2 \label{eq:y}
+\end{align}
+
+其中 $t \geq 0$，且 $y(t) \geq 0$（落地前）。
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % 坐标轴
+    \draw[->, thick] (-0.3,0) -- (4,0) node[right] {$x$};
+    \draw[->, thick] (0,-0.3) -- (0,2.5) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+    
+    % 抛射点和速度矢量
+    \fill[myred] (0,0) circle (2pt);
+    \draw[->, myred, very thick] (0,0) -- (1.5, 1.3) node[midway, above left] {$v_0$};
+    \draw[->, myblue, thick] (0,0) -- (1.5, 0) node[midway, below] {$v_{0x}$};
+    \draw[->, mygreen, thick] (0,0) -- (0, 1.3) node[midway, left] {$v_{0y}$};
+    
+    % 角度标注
+    \draw (0.4, 0) arc (0:40:0.4);
+    \node at (0.6, 0.15) {$\theta$};
+    
+    % 轨迹
+    \pgfmathsetmacro{\vzero}{2}
+    \pgfmathsetmacro{\g}{9.8}
+    \pgfmathsetmacro{\angle}{40}
+    \pgfmathsetmacro{\tantheta}{tan(\angle)}
+    \pgfmathsetmacro{\costheta}{cos(\angle)}
+    \pgfmathsetmacro{\sintheta}{sin(\angle)}
+    \pgfmathsetmacro{\xmax}{2*\vzero*\vzero*\sintheta*\costheta/\g}
+    
+    \draw[myorange, very thick, domain=0:\xmax, samples=100] 
+        plot (\x, {\x*\tantheta - \g*\x*\x/(2*\vzero*\vzero*\costheta*\costheta)});
+    
+    % 关键点标注
+    \pgfmathsetmacro{\ymax}{\vzero*\vzero*\sintheta*\sintheta/(2*\g)}
+    \pgfmathsetmacro{\xmax}{2*\vzero*\vzero*\sintheta*\costheta/\g}
+    \fill[myred] (0.5*\xmax, \ymax) circle (2pt) node[above] {最高点};
+    \fill[myred] (\xmax, 0) circle (2pt) node[below right] {落地点};
+    
+    % 标注
+    \node[myorange, right] at (3, 1) {轨迹};
+\end{tikzpicture}
+\captionof{figure}{抛体运动的速度分解与轨迹}
+\end{center}
+
+\subsection{轨迹方程}
+
+从参数方程 \eqref{eq:x} 和 \eqref{eq:y} 中消去参数 $t$，得到轨迹方程：
+
+由 $x = v_0\cos\theta \cdot t$ 得 $t = \frac{x}{v_0\cos\theta}$，代入 $y$ 的表达式：
+
+\begin{align}
+    y &= v_0\sin\theta \cdot \frac{x}{v_0\cos\theta} - \frac{1}{2}g\left(\frac{x}{v_0\cos\theta}\right)^2 \nonumber\\
+    &= x\tan\theta - \frac{gx^2}{2v_0^2\cos^2\theta} \nonumber\\
+    &= x\tan\theta - \frac{gx^2}{2v_0^2}(1 + \tan^2\theta) \label{eq:trajectory}
+\end{align}
+
+这是一个关于 $x$ 的二次函数，轨迹为抛物线。
+
+\textbf{重要结论：}
+\begin{itemize}
+    \item 射程（水平距离）：$R = \frac{v_0^2\sin(2\theta)}{g}$，当 $\theta = 45°$ 时取得最大值 $R_{\max} = \frac{v_0^2}{g}$
+    \item 最大高度：$H = \frac{v_0^2\sin^2\theta}{2g}$，当 $\theta = 90°$ 时取得最大值 $H_{\max} = \frac{v_0^2}{2g}$
+\end{itemize}
+
+% ============================================
+% 3. 固定速度抛射的轨迹族
+% ============================================
+\section{固定速度抛射的轨迹族}
+
+当我们固定初速度 $v_0$，让抛射角 $\theta$ 变化时，得到一族轨迹曲线。
+
+\begin{definitionbox}{轨迹族}
+对于固定的初速度 $v_0$，抛射角 $\theta$ 作为参数，轨迹方程 \eqref{eq:trajectory} 可以写成：
+\begin{equation}
+    y = x\tan\theta - \frac{gx^2}{2v_0^2}(1 + \tan^2\theta), \quad \theta \in \left(0, \frac{\pi}{2}\right) \label{eq:family}
+\end{equation}
+
+这表示一个以 $\theta$（或 $\tan\theta$）为参数的曲线族。每条曲线对应一个特定的抛射角。
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % 坐标轴
+    \draw[->, thick] (-0.5,0) -- (5.5,0) node[right] {$x$};
+    \draw[->, thick] (0,-0.5) -- (0,3.5) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+    
+    % 抛射点
+    \fill[myred] (0,0) circle (3pt);
+    
+    % 多条不同角度的轨迹
+    \pgfmathsetmacro{\vzero}{3}
+    \pgfmathsetmacro{\g}{9.8}
+    
+    \foreach \angle in {15, 25, 35, 45, 55, 65, 75}
+    {
+        \pgfmathsetmacro{\tantheta}{tan(\angle)}
+        \pgfmathsetmacro{\costheta}{cos(\angle)}
+        \pgfmathsetmacro{\sintheta}{sin(\angle)}
+        \pgfmathsetmacro{\xmax}{2*\vzero*\vzero*\sintheta*\costheta/\g}
+        
+        \draw[myblue!50, thin, domain=0:\xmax, samples=50] 
+            plot (\x, {\x*\tantheta - \g*\x*\x*(1+\tantheta*\tantheta)/(2*\vzero*\vzero)});
+    }
+    
+    % 特殊角度标注
+    \pgfmathsetmacro{\angle}{45}
+    \pgfmathsetmacro{\tantheta}{tan(\angle)}
+    \pgfmathsetmacro{\sintheta}{sin(\angle)}
+    \pgfmathsetmacro{\costheta}{cos(\angle)}
+    \pgfmathsetmacro{\xmax}{2*\vzero*\vzero*\sintheta*\costheta/\g}
+    \draw[mygreen, thick, domain=0:\xmax, samples=50] 
+        plot (\x, {\x*\tantheta - \g*\x*\x*(1+\tantheta*\tantheta)/(2*\vzero*\vzero)});
+    \node[mygreen, above] at (0.5*\xmax, 0.5) {$\theta=45°$};
+    
+    % 标注
+    \node[myblue, right] at (5, 0.5) {轨迹族};
+\end{tikzpicture}
+\captionof{figure}{固定初速度 $v_0$ 下不同抛射角的轨迹族}
+\end{center}
+
+\subsection{轨迹族的特点}
+
+观察轨迹族，我们可以发现：
+\begin{itemize}
+    \item 所有轨迹都从同一点 $(0,0)$ 出发
+    \item 不同角度的轨迹有不同的射程和最大高度
+    \item 这些轨迹之间存在一条\textbf{包络线}，它是所有轨迹的边界
+    \item 包络线内部的区域是可达区域，外部是不可达区域
+\end{itemize}
+
+% ============================================
+% 4. 包络线的数学推导
+% ============================================
+\section{包络线的数学推导}
+
+\begin{definitionbox}{包络线的数学定义}
+设曲线族由方程 $F(x, y, \alpha) = 0$ 给出，其中 $\alpha$ 是参数。如果存在一条曲线 $C$，使得：
+\begin{enumerate}
+    \item $C$ 上的每一点都在族中某条曲线上
+    \item $C$ 在每一点都与族中经过该点的曲线相切
+\end{enumerate}
+则称 $C$ 为该曲线族的\textbf{包络线}。
+
+包络线的求法：联立方程组
+\begin{equation}
+    \begin{cases}
+        F(x, y, \alpha) = 0 \\
+        \frac{\partial F}{\partial \alpha}(x, y, \alpha) = 0
+    \end{cases}
+\end{equation}
+消去参数 $\alpha$，即可得到包络线的方程。
+\end{definitionbox}
+
+\subsection{包络线的推导过程}
+
+对于抛体运动的轨迹族，我们使用 $\tan\theta$ 作为参数会更方便。设 $k = \tan\theta$，则轨迹方程 \eqref{eq:family} 变为：
+
+\begin{equation}
+    F(x, y, k) = y - xk + \frac{gx^2}{2v_0^2}(1 + k^2) = 0 \label{eq:F}
+\end{equation}
+
+对参数 $k$ 求偏导数：
+
+\begin{equation}
+    \frac{\partial F}{\partial k} = -x + \frac{gx^2}{2v_0^2} \cdot 2k = -x + \frac{gx^2k}{v_0^2} = 0 \label{eq:partial}
+\end{equation}
+
+由 \eqref{eq:partial} 得：
+\begin{equation}
+    -x + \frac{gx^2k}{v_0^2} = 0 \quad \Rightarrow \quad x\left(-1 + \frac{gxk}{v_0^2}\right) = 0
+\end{equation}
+
+当 $x = 0$ 时，对应抛射点，不是包络线上的点（除起点外）。因此：
+\begin{equation}
+    -1 + \frac{gxk}{v_0^2} = 0 \quad \Rightarrow \quad k = \frac{v_0^2}{gx} \label{eq:k}
+\end{equation}
+
+将 \eqref{eq:k} 代入 \eqref{eq:F}：
+
+\begin{align}
+    y &= x \cdot \frac{v_0^2}{gx} - \frac{gx^2}{2v_0^2}\left(1 + \left(\frac{v_0^2}{gx}\right)^2\right) \nonumber\\
+    &= \frac{v_0^2}{g} - \frac{gx^2}{2v_0^2}\left(1 + \frac{v_0^4}{g^2x^2}\right) \nonumber\\
+    &= \frac{v_0^2}{g} - \frac{gx^2}{2v_0^2} - \frac{gx^2}{2v_0^2} \cdot \frac{v_0^4}{g^2x^2} \nonumber\\
+    &= \frac{v_0^2}{g} - \frac{gx^2}{2v_0^2} - \frac{v_0^2}{2g} \nonumber\\
+    &= \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}
+\end{align}
+
+\begin{theorembox}{抛体运动轨迹族的包络线方程}
+从同一点以固定初速度 $v_0$、不同抛射角 $\theta$ 抛出的质点，其轨迹族的包络线方程为：
+\begin{equation}
+    y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2} \label{eq:envelope}
+\end{equation}
+
+这是一个开口向下的抛物线，其性质为：
+\begin{itemize}
+    \item 顶点：$\left(0, \frac{v_0^2}{2g}\right)$，这是竖直上抛能达到的最大高度
+    \item 对称轴：$x = 0$（$y$ 轴）
+    \item 与 $x$ 轴的交点：$x = \pm \frac{v_0^2}{g}$，这是水平抛射的最大射程
+\end{itemize}
+\end{theorembox}
+
+\subsection{推导方法的说明}
+
+我们也可以直接从轨迹方程出发，使用另一种方法：
+
+将轨迹方程 \eqref{eq:trajectory} 整理为关于 $\tan\theta$ 的二次方程：
+\begin{equation}
+    \frac{gx^2}{2v_0^2}\tan^2\theta - x\tan\theta + \left(y + \frac{gx^2}{2v_0^2}\right) = 0
+\end{equation}
+
+对于给定的点 $(x, y)$，如果它位于某条轨迹上，则上述关于 $\tan\theta$ 的方程有实数解，判别式 $\Delta \geq 0$：
+
+\begin{align}
+    \Delta &= x^2 - 4 \cdot \frac{gx^2}{2v_0^2} \cdot \left(y + \frac{gx^2}{2v_0^2}\right) \nonumber\\
+    &= x^2 - \frac{2gx^2}{v_0^2}\left(y + \frac{gx^2}{2v_0^2}\right) \nonumber\\
+    &= x^2 - \frac{2gx^2y}{v_0^2} - \frac{g^2x^4}{v_0^4} \geq 0
+\end{align}
+
+整理得：
+\begin{equation}
+    y \leq \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}
+\end{equation}
+
+等号成立时，点 $(x, y)$ 恰好在包络线上，这与 \eqref{eq:envelope} 一致。
+
+% ============================================
+% 5. 包络线的性质与应用
+% ============================================
+\section{包络线的性质与应用}
+
+\subsection{包络线的几何性质}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % 坐标轴
+    \draw[->, thick] (-4,0) -- (4,0) node[right] {$x$};
+    \draw[->, thick] (0,-0.5) -- (0,3.5) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+    
+    % 抛射点
+    \fill[myred] (0,0) circle (3pt) node[below left] {抛射点};
+    
+    % 多条轨迹（较淡）
+    \pgfmathsetmacro{\vzero}{3}
+    \pgfmathsetmacro{\g}{9.8}
+    
+    \foreach \angle in {10, 20, 30, 40, 50, 60, 70, 80}
+    {
+        \pgfmathsetmacro{\tantheta}{tan(\angle)}
+        \pgfmathsetmacro{\costheta}{cos(\angle)}
+        \pgfmathsetmacro{\sintheta}{sin(\angle)}
+        \pgfmathsetmacro{\xmax}{2*\vzero*\vzero*\sintheta*\costheta/\g}
+        
+        \draw[myblue!30, very thin, domain=0:\xmax, samples=50] 
+            plot (\x, {\x*\tantheta - \g*\x*\x*(1+\tantheta*\tantheta)/(2*\vzero*\vzero)});
+    }
+    
+    % 包络线（粗线）
+    \pgfmathsetmacro{\hmax}{\vzero*\vzero/(2*\g)}
+    \pgfmathsetmacro{\xmax}{\vzero*\vzero/\g}
+    \draw[myred, very thick, domain=-\xmax:\xmax, samples=100] 
+        plot (\x, {\hmax - \g*\x*\x/(2*\vzero*\vzero)});
+    
+    % 标注顶点
+    \fill[myred] (0, \hmax) circle (3pt);
+    \draw[dashed, mygray] (0, 0) -- (0, \hmax) node[midway, left] {$\frac{v_0^2}{2g}$};
+    \node[myred, above] at (0, \hmax) {顶点};
+    
+    % 标注与x轴交点
+    \fill[myred] (\xmax, 0) circle (3pt);
+    \fill[myred] (-\xmax, 0) circle (3pt);
+    \draw[dashed, mygray] (\xmax, 0) -- (\xmax, 0.3);
+    \draw[dashed, mygray] (-\xmax, 0) -- (-\xmax, 0.3);
+    \node[below] at (\xmax, 0) {$\frac{v_0^2}{g}$};
+    \node[below] at (-\xmax, 0) {$-\frac{v_0^2}{g}$};
+    
+    % 可达区域（阴影）
+    \fill[mygreen!20, domain=-\xmax:\xmax, samples=100] 
+        plot (\x, {\hmax - \g*\x*\x/(2*\vzero*\vzero)}) -- (-\xmax, 0) -- (\xmax, 0) -- cycle;
+    
+    \node[mygreen, right] at (2, 1.5) {可达区域};
+    \node[myred, above] at (0, 2.5) {包络线};
+\end{tikzpicture}
+\captionof{figure}{包络线的几何性质与可达区域}
+\end{center}
+
+\begin{theorembox}{包络线的几何性质}
+包络线 $y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}$ 具有以下性质：
+
+\begin{enumerate}
+    \item \textbf{顶点}：$\left(0, \frac{v_0^2}{2g}\right)$
+    \begin{itemize}
+        \item 这是竖直上抛（$\theta = 90°$）能达到的最大高度
+        \item 也是所有轨迹中能达到的最高点
+    \end{itemize}
+    
+    \item \textbf{对称轴}：$x = 0$（$y$ 轴）
+    \begin{itemize}
+        \item 包络线关于 $y$ 轴对称
+        \item 这反映了抛体运动的对称性
+    \end{itemize}
+    
+    \item \textbf{与坐标轴的交点}：
+    \begin{itemize}
+        \item 与 $y$ 轴交点：$(0, \frac{v_0^2}{2g})$
+        \item 与 $x$ 轴交点：$(\pm \frac{v_0^2}{g}, 0)$
+        \item 水平距离 $\frac{v_0^2}{g}$ 是水平抛射（$\theta = 0°$）的最大射程
+    \end{itemize}
+    
+    \item \textbf{开口方向}：向下
+    \begin{itemize}
+        \item 包络线是开口向下的抛物线
+        \item 包络线内部的区域是可达区域
+    \end{itemize}
+\end{enumerate}
+\end{theorembox}
+
+\subsection{物理意义}
+
+包络线的物理意义非常重要：
+
+\begin{itemize}
+    \item \textbf{可达区域的边界}：包络线内部的区域表示在给定初速度 $v_0$ 下，质点能够到达的所有位置点
+    \item \textbf{不可达区域}：包络线外部的区域表示无论以什么角度抛射，都无法到达
+    \item \textbf{最优抛射角}：包络线上的每个点都对应一个特定的抛射角，这个角度是到达该点的唯一角度（或两个对称角度）
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % 坐标轴
+    \draw[->, thick] (-0.3,0) -- (3.5,0) node[right] {$x$};
+    \draw[->, thick] (0,-0.3) -- (0,2.5) node[above] {$y$};
+    \node at (0,0) [below left] {$O$};
+    
+    % 速度矢量分解示意图
+    \fill[myred] (0,0) circle (2pt) node[below left] {抛射点};
+    
+    % 多个不同角度的速度矢量
+    \foreach \angle in {15, 30, 45, 60, 75}
+    {
+        \pgfmathsetmacro{\vlen}{1.5}
+        \pgfmathsetmacro{\vx}{\vlen*cos(\angle)}
+        \pgfmathsetmacro{\vy}{\vlen*sin(\angle)}
+        
+        \draw[->, myblue!50, thick] (0,0) -- (\vx, \vy);
+        \draw[->, mygreen!50, thin, dashed] (0,0) -- (\vx, 0);
+        \draw[->, myorange!50, thin, dashed] (\vx, 0) -- (\vx, \vy);
+    }
+    
+    % 标注
+    \draw[->, myred, very thick] (0,0) -- (1.2, 1.2) node[midway, above left] {$v_0$};
+    \draw[->, mygreen, thick] (0,0) -- (1.2, 0) node[midway, below] {$v_0\cos\theta$};
+    \draw[->, myorange, thick] (1.2, 0) -- (1.2, 1.2) node[midway, right] {$v_0\sin\theta$};
+    
+    \node[myblue, right] at (2.5, 1.5) {不同角度的初速度};
+    \node[mygreen, right] at (2.5, 1.2) {水平分量};
+    \node[myorange, right] at (2.5, 0.9) {竖直分量};
+\end{tikzpicture}
+\captionof{figure}{不同抛射角的速度分解}
+\end{center}
+
+% ============================================
+% 6. 例题与应用
+% ============================================
+\section{例题与应用}
+
+\begin{examplebox}{例题1：求包络线方程}
+\textbf{题目：}从原点以初速度 $v_0 = 20\text{ m/s}$ 抛出质点，重力加速度 $g = 10\text{ m/s}^2$。求所有可能轨迹的包络线方程，并确定可达区域。
+
+\textbf{解：}
+
+\textbf{步骤1：}写出轨迹族方程
+
+设抛射角为 $\theta$，轨迹方程为：
+\[ y = x\tan\theta - \frac{gx^2}{2v_0^2}(1 + \tan^2\theta) \]
+
+代入 $v_0 = 20$，$g = 10$：
+\[ y = x\tan\theta - \frac{10x^2}{2 \times 20^2}(1 + \tan^2\theta) = x\tan\theta - \frac{x^2}{80}(1 + \tan^2\theta) \]
+
+\textbf{步骤2：}使用包络线求法
+
+设 $k = \tan\theta$，则：
+\[ F(x, y, k) = y - xk + \frac{x^2}{80}(1 + k^2) = 0 \]
+
+对 $k$ 求偏导：
+\[ \frac{\partial F}{\partial k} = -x + \frac{x^2k}{40} = 0 \]
+
+当 $x \neq 0$ 时：
+\[ k = \frac{40}{x} \]
+
+\textbf{步骤3：}代入求包络线方程
+
+\[ y = x \cdot \frac{40}{x} - \frac{x^2}{80}\left(1 + \left(\frac{40}{x}\right)^2\right) = 40 - \frac{x^2}{80} - \frac{1600}{80} = 40 - \frac{x^2}{80} - 20 = 20 - \frac{x^2}{80} \]
+
+\textbf{答案：}包络线方程为 $y = 20 - \frac{x^2}{80}$。
+
+\textbf{步骤4：}分析可达区域
+
+\begin{itemize}
+    \item 顶点：$(0, 20)$，最大高度为 $20$ 米
+    \item 与 $x$ 轴交点：$x = \pm 40$，最大水平距离为 $40$ 米
+    \item 可达区域：包络线下方（包括边界）的区域
+\end{itemize}
+\end{examplebox}
+
+\begin{examplebox}{例题2：判断点是否可达}
+\textbf{题目：}在例题1的条件下，判断点 $P(30, 10)$ 是否可达？如果可达，求到达该点的抛射角。
+
+\textbf{解：}
+
+\textbf{方法1：}判断点是否在包络线下方
+
+包络线方程为 $y = 20 - \frac{x^2}{80}$。
+
+当 $x = 30$ 时，包络线上的 $y$ 值为：
+\[ y = 20 - \frac{30^2}{80} = 20 - \frac{900}{80} = 20 - 11.25 = 8.75 \]
+
+点 $P(30, 10)$ 的 $y$ 坐标为 $10 > 8.75$，说明该点在包络线上方，\textbf{不可达}。
+
+\textbf{方法2：}使用判别式法
+
+将点 $P(30, 10)$ 代入轨迹方程：
+\[ 10 = 30\tan\theta - \frac{30^2}{80}(1 + \tan^2\theta) \]
+
+整理得：
+\[ 10 = 30k - \frac{900}{80}(1 + k^2) = 30k - \frac{45}{4}(1 + k^2) \]
+
+\[ 40 = 120k - 45(1 + k^2) = 120k - 45 - 45k^2 \]
+
+\[ 45k^2 - 120k + 85 = 0 \]
+
+判别式：
+\[ \Delta = 120^2 - 4 \times 45 \times 85 = 14400 - 15300 = -900 < 0 \]
+
+判别式小于零，说明不存在实数解，因此点 $P(30, 10)$ \textbf{不可达}。
+\end{examplebox}
+
+\begin{examplebox}{例题3：求到达包络线上某点的抛射角}
+\textbf{题目：}在例题1的条件下，求到达包络线上点 $Q(20, 15)$ 的抛射角。
+
+\textbf{解：}
+
+\textbf{步骤1：}验证点在包络线上
+
+当 $x = 20$ 时，包络线上的 $y$ 值为：
+\[ y = 20 - \frac{20^2}{80} = 20 - 5 = 15 \]
+
+点 $Q(20, 15)$ 确实在包络线上。
+
+\textbf{步骤2：}求对应的 $k = \tan\theta$
+
+由包络线的推导过程，$k = \frac{v_0^2}{gx} = \frac{40}{20} = 2$
+
+\textbf{步骤3：}求抛射角
+
+\[ \theta = \arctan(2) \approx 63.4° \]
+
+\textbf{答案：}到达点 $Q(20, 15)$ 的抛射角约为 $63.4°$。
+
+\textbf{验证：}将 $\theta = \arctan(2)$ 代入轨迹方程验证即可。
+\end{examplebox}
+
+\begin{notebox}{重要注意事项}
+\begin{enumerate}
+    \item \textbf{包络线的适用范围}：包络线方程是在理想条件下推导的（忽略空气阻力、假设重力加速度恒定等）。实际应用中需要考虑这些因素。
+    
+    \item \textbf{可达区域的判断}：判断点 $(x, y)$ 是否可达，只需检查是否满足 $y \leq \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}$。
+    
+    \item \textbf{包络线上的点}：包络线上的每个点（除顶点外）通常对应两个对称的抛射角，一个在 $0°$ 到 $45°$ 之间，一个在 $45°$ 到 $90°$ 之间。
+    
+    \item \textbf{最大射程}：虽然单个轨迹的最大射程在 $\theta = 45°$ 时取得，但包络线与 $x$ 轴的交点对应的是水平抛射（$\theta = 0°$）的射程。
+    
+    \item \textbf{单位一致性}：计算时注意物理量的单位要一致，通常使用国际单位制（SI）。
+\end{enumerate}
+\end{notebox}
+
+% ============================================
+% 总结
+% ============================================
+\section{总结}
+
+本笔记介绍了固定速度抛射的包络线问题，主要内容包括：
+
+\begin{itemize}
+    \item \textbf{包络线的概念}：与一族曲线都相切的曲线，表示可达区域的边界
+    \item \textbf{抛体运动基础}：参数方程、轨迹方程、射程和最大高度
+    \item \textbf{轨迹族}：固定初速度、不同抛射角形成的抛物线族
+    \item \textbf{包络线方程}：$y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}$
+    \item \textbf{几何性质}：顶点、对称轴、与坐标轴的交点
+    \item \textbf{应用}：判断点是否可达、求最优抛射角等
+\end{itemize}
+
+包络线问题将数学中的曲线族理论与物理中的抛体运动相结合，是数学物理交叉应用的典型例子。掌握包络线的求法和性质，有助于深入理解抛体运动的本质特征。
+
+% ============================================
+% 文档结束
+% ============================================
+\end{document}
+
+
