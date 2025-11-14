@@ -8,40 +8,21 @@
 %                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[12pt, a4paper]{article}
+\documentclass[a4paper,12pt]{ctexart}
 
-%=========== 页面与字体设置 ===========
-\usepackage{geometry}
+\input{../mathnote-preamble.tex}
+
 \geometry{a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
-\usepackage{setspace}
 \onehalfspacing
 
-%=========== 中文与颜色支持 ===========
-\usepackage{xeCJK}
-\usepackage{fontspec}
-\usepackage[x11names]{xcolor}
-\setmainfont{Times New Roman} % 设置英文字体
-\setCJKmainfont{SimSun} % 设置中文字体为宋体
-\setCJKsansfont{SimHei} % 设置无衬线字体为黑体
-\setCJKmonofont{FangSong} % 设置等宽字体为仿宋
+\setmainfont{Times New Roman}
+\setCJKmainfont{SimSun}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{FangSong}
 
-%=========== 数学公式与定理环境 ===========
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-
-%=========== 图形绘制 ===========
-\usepackage{tikz}
 \usetikzlibrary{arrows.meta, positioning, calc}
-
-%=========== 标题与章节样式 ===========
-\usepackage{titlesec}
 \titleformat{\section}{\Large\bfseries\color{DodgerBlue4}}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\bfseries\color{DarkOrange4}}{\thesubsection}{1em}{}
-
-%=========== *新增* 彩色文本框支持 ===========
-\usepackage{tcolorbox} % <-- 这里是修正的地方
 
 %=========== 定理环境定义 ===========
 \newtheoremstyle{mytheoremstyle}
@@ -69,9 +50,13 @@
 %=========== 文档开始 ===========
 \begin{document}
 
-\title{\Huge\bfseries\color{myblue} 以高等数学视角看待函数}
-\author{\large\bfseries Gemini -- Google AI}
-\date{\today}
+\renewcommand{\notetitle}{以高等数学视角看待函数}
+\renewcommand{\noteauthor}{Gemini -- Google AI}
+\renewcommand{\notedate}{\today}
+
+\title{\Huge\bfseries\color{myblue} \notetitle}
+\author{\noteauthor}
+\date{\notedate}
 \maketitle
 
 \begin{abstract}

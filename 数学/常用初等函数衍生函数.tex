@@ -1,26 +1,11 @@
-\documentclass[a4paper, 12pt]{article}
+\documentclass[a4paper,12pt]{ctexart}
 
-%----------------------------------------------------------------------------------------
-%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
+\input{../mathnote-preamble.tex}
 
-\usepackage{geometry}
 \geometry{a4paper, left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
-
-\usepackage{fontspec} % XeLaTeX 字体设置
-\usepackage{xeCJK}    % XeLaTeX 中文支持
-\setCJKmainfont{Noto Serif CJK SC} % 设置中文字体，您可以根据自己系统安装的字体更改
-
-\usepackage{amsmath} % 数学公式
-\usepackage{amssymb} % 数学符号
-\usepackage{graphicx} % 插入图片
-\usepackage{xcolor}  % 颜色支持
-\usepackage{pgfplots} % 强大的绘图宏包
-\pgfplotsset{compat=1.17} % 设置 pgfplots 版本兼容性
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta} % TikZ 库
-
-\usepackage[most]{tcolorbox} % 强大的彩色文本框宏包
+\setCJKmainfont{Noto Serif CJK SC}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta}
 
 %----------------------------------------------------------------------------------------
 %   定义颜色
@@ -39,9 +24,13 @@
 %   标题设置
 %----------------------------------------------------------------------------------------
 
-\title{\Huge \bfseries \textcolor{myblue}{常用初等函数衍生函数}}
-\author{\large 高中数学参考笔记 (修订版)}
-\date{\today}
+\renewcommand{\notetitle}{常用初等函数衍生函数}
+\renewcommand{\noteauthor}{高中数学参考笔记 (修订版)}
+\renewcommand{\notedate}{\today}
+
+\title{\Huge \bfseries \textcolor{myblue}{\notetitle}}
+\author{\large \noteauthor}
+\date{\notedate}
 
 %----------------------------------------------------------------------------------------
 %   文档开始

@@ -1,28 +1,8 @@
-\documentclass[a4paper, 12pt]{report}
+\documentclass[a4paper,12pt]{ctexrep}
 
-% ==================================================
-% Packages
-% ==================================================
-\usepackage{xeCJK} % For Chinese support
-\usepackage{geometry} % For page margins
-\usepackage{fancyhdr} % For headers and footers
-\usepackage[x11names,table]{xcolor} % For colors
-\usepackage{enumitem} % For custom lists
-\usepackage{fontawesome5} % For icons
-\usepackage{hyperref} % For hyperlinks
-\usepackage{amsmath, amssymb, amsthm} % Math packages
-\usepackage{mathtools} % Enhanced math tools
-\usepackage{tabularx} % Advanced tables
-\usepackage{graphicx} % Graphics
-\usepackage{tikz} % Drawing
-\usepackage{tcolorbox} % Colored boxes
-\usepackage{parskip} % Paragraph spacing
-\usepackage{booktabs} % Professional tables
-\usepackage{array} % Enhanced arrays
-\usepackage{multirow} % Multi-row cells
-\usepackage{float} % Float positioning
-\usepackage{listings} % Code listings
-\usepackage{xparse} % Advanced commands
+\input{../mathnote-preamble.tex}
+\usepackage{multirow}
+\usepackage{float}
 
 % ==================================================
 % Page Layout
@@ -93,12 +73,6 @@
 % ==================================================
 % Math Commands
 % ==================================================
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\C}{\mathbb{C}}
-
 % 导数符号
 \newcommand{\deriv}[2]{\frac{d#1}{d#2}}
 \newcommand{\pderiv}[2]{\frac{\partial#1}{\partial#2}}
@@ -107,9 +81,6 @@
 \newcommand{\isomorphic}{\cong}
 \newcommand{\homomorphic}{\simeq}
 
-% ==================================================
-% Custom Boxes
-% ==================================================
 \newtcolorbox{definitionbox}[1][]{
     colback=bgLightBlue,
     colframe=mathBlue,
@@ -198,9 +169,13 @@
 % ==================================================
 % Document Title
 % ==================================================
-\title{\heiti 在导数问题中构造同构函数}
-\author{\songti 高中数学参考笔记}
-\date{\today}
+\renewcommand{\notetitle}{在导数问题中构造同构函数}
+\renewcommand{\noteauthor}{\songti 高中数学参考笔记}
+\renewcommand{\notedate}{\today}
+
+\title{\heiti \notetitle}
+\author{\noteauthor}
+\date{\notedate}
 
 \renewcommand{\chaptername}{第}
 \renewcommand{\thechapter}{\arabic{chapter} 章}

@@ -1,26 +1,6 @@
-\documentclass[a4paper, 12pt]{report}
+\documentclass[a4paper,12pt]{ctexrep}
 
-% ==================================================
-% Packages
-% ==================================================
-\usepackage{xeCJK} % For Chinese support
-\usepackage{geometry} % For page margins
-\usepackage{fancyhdr} % For headers and footers
-\usepackage[x11names,table]{xcolor} % For colors
-\usepackage{enumitem} % For custom lists
-\usepackage{fontawesome5} % For icons
-\usepackage{hyperref} % For hyperlinks
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{tabularx}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{parskip}
-\usepackage{tcolorbox}
-\usepackage{booktabs}
-\usepackage{array}
+\input{../mathnote-preamble.tex}
 
 % ==================================================
 % Page Layout
@@ -161,9 +141,13 @@
 % ==================================================
 % Document Title
 % ==================================================
-\title{\heiti 端点/内点效应高中数学参考笔记}
-\author{\songti}
-\date{\today}
+\renewcommand{\notetitle}{端点/内点效应高中数学参考笔记}
+\renewcommand{\noteauthor}{\songti 高中数学参考笔记}
+\renewcommand{\notedate}{\today}
+
+\title{\heiti \notetitle}
+\author{\noteauthor}
+\date{\notedate}
 
 \renewcommand{\chaptername}{第}
 \renewcommand{\thechapter}{\arabic{chapter} 章}

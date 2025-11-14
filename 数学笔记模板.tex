@@ -1,260 +1,293 @@
-% !TEX program = xelatex
-% !TEX encoding = UTF-8
-% ============================================
-% 数学笔记 XeLaTeX 模板 v0.0.1
-% 基于现有数学笔记的结构和风格
-% ============================================
+% --------------------------------------------------
+% 模板排版速览
+% 1. 封面为第一页，标题/概览/标签同页；目录独立页，章节用 \clearpage + 提示文本过渡。
+% 2. section/subsection/subsubsection 使用无衬线粗体 + accent/secondary/inkgray 配色，行距 1.15，段前 0.35em，禁孤行寡行。
+% 3. itemize/enumerate 自带彩色竖条（accent/secondary），roadmap 继续使用 ModeBadge。
+% 4. 彩色盒仅保留 definition/theorem/example/proof 等核心内容，其余说明采用普通段落。
+% 5. listings 代码块使用 surfacegrid 浅灰底 + 自定义语法色。
+% 6. 提供 screenToneXX / printToneXX 16 色预设与 pure cyan，\MathNoteEnablePrint 自动切换 accent。
+% 7. 页眉：标题 > 节名；页脚：外侧 “当前页 cyan 斜杠 总页数”，链接屏幕彩色无边框，印刷 hidelinks。
+% 8. 中文逗号替换为半角逗号+空格，club/widow penalty 10000，TikZ/盒子线宽 0.4pt。
+% --------------------------------------------------
+\documentclass[a4paper,11pt]{ctexart}
+\input{mathnote-preamble.tex}
 
-\documentclass[a4paper, 11pt]{ctexart}
 
-% ============================================
-% 包的引入
-% ============================================
+% 可选：如果主输出介质为 CMYK，请解除注释
+\MathNoteEnablePrint
+% 可选：解除注释以显示右上角审核标记
+\MathNoteEnableReviewStamp
 
-% 数学公式与符号
-\usepackage{amsmath, amssymb, amsthm, amsfonts}
-\usepackage{mathtools} % 增强的数学工具
-
-% 页面设置
-\usepackage{geometry}
-\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
-
-% 颜色支持
-\usepackage{xcolor}
-
-% 绘图支持
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning, intersections, quotes, calc}
-
-% 彩色文本框
-\usepackage[most]{tcolorbox}
-
-% 超链接
-\usepackage[colorlinks=true, linkcolor=myblue, citecolor=mygreen, urlcolor=myred]{hyperref}
-
-% 图片支持
-\usepackage{graphicx}
-
-% 其他工具
-\usepackage{caption} % 支持 \captionof 命令
-\usepackage{enumitem} % 增强的列表环境
-\usepackage{microtype} % 更好的文字微调
-\usepackage{fancyhdr} % 页眉页脚
-\usepackage{lastpage} % 总页数引用
-
-% ============================================
-% 颜色定义（兼容黑白打印）
-% ============================================
-\definecolor{myblue}{RGB}{0, 112, 192}
-\definecolor{mygreen}{RGB}{0, 176, 80}
-\definecolor{myorange}{RGB}{247, 150, 70}
-\definecolor{myred}{RGB}{200, 0, 0}
-\definecolor{mypurple}{RGB}{152, 78, 163}
-\definecolor{mygray}{gray}{0.95}
-
-% ============================================
-% 全局排版与辅助命令
-% ============================================
-\linespread{1.2}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.6em}
-\setlength{\headheight}{14pt}
-\setlist[itemize]{leftmargin=1.7em}
-\setlist[enumerate]{leftmargin=1.9em}
-\numberwithin{equation}{section}
-
-\newcommand{\notetitle}{数学笔记标题}
-\newcommand{\noteauthor}{作者姓名}
-\newcommand{\notedate}{\today}
-
-% 常用数学集合与符号
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\dd}{\mathop{}\!\mathrm{d}}
-\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
-\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
-
-% 关键词高亮
-\newcommand{\keyword}[1]{\textcolor{myorange}{\textbf{#1}}}
-
-% ============================================
-% 定理、定义、例题环境设置
-% ============================================
-
-\tcbset{
-    mathnote/.style={
-        enhanced,
-        breakable,
-        boxrule=0.8pt,
-        colback=#1!5!white,
-        colframe=#1!75!black,
-        fonttitle=\bfseries,
-        top=8mm,
-        left=1.2em,
-        right=1.2em,
-        bottom=1em,
-        attach boxed title to top left={xshift=1cm, yshift=-2mm},
-        sharp corners,
-        boxed title style={
-            sharp corners,
-            colback=#1!75!black
-        }
-    }
+\renewcommand{\notetitle}{现代数学笔记模板}
+\renewcommand{\noteauthor}{示例编写者}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{sRGB 屏幕 / CMYK 印刷 双栈工作流}
+\renewcommand{\noteversion}{Release~0.0.1}
+\newcommand{\TemplateMiniHeading}[1]{%
+  \par\smallskip%
+  \noindent\textbf{#1}\par\smallskip%
 }
 
-% 定理环境
-\newtcolorbox{theorembox}[1]{mathnote=myblue,title=定理：#1}
-
-% 定义环境
-\newtcolorbox{definitionbox}[1]{mathnote=mygreen,title=定义：#1}
-
-% 例题/技巧与应用环境
-\newtcolorbox{examplebox}[1]{mathnote=myorange,title=技巧与应用：#1}
-
-% 引理环境
-\newtcolorbox{lemmabox}[1]{mathnote=mypurple,title=引理：#1}
-
-% 注意/提醒环境
-\newtcolorbox{notebox}[1]{mathnote=myred,title=注意：#1,colback=mygray}
-
-% 总结思路环境
-\newtcolorbox{summarybox}[1]{mathnote=myblue,title=总结：#1,colback=myblue!3!white}
-
-% ============================================
-% 标题格式设置
-% ============================================
-\usepackage{titlesec}
-\titleformat{\section}
-    {\Large\bfseries\color{myblue}}
-    {\thesection}{1em}{}
-\titleformat{\subsection}
-    {\large\bfseries\color{myorange}}
-    {\thesubsection}{1em}{}
-
-% ============================================
-% 数学定理环境（使用 amsthm）
-% ============================================
-\theoremstyle{definition}
-\newtheorem{theorem}{定理}[section]
-\newtheorem{definition}{定义}[section]
-\newtheorem{lemma}{引理}[section]
-\newtheorem{corollary}{推论}[theorem]
-\newtheorem{example}{例题}[section]
-
-% ============================================
-% 页眉页脚
-% ============================================
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\color{myblue}\notetitle}
-\fancyhead[R]{\color{myorange}\leftmark}
-\fancyfoot[L]{\noteauthor}
-\fancyfoot[R]{\thepage/\pageref{LastPage}}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
-
-\fancypagestyle{plain}{%
-    \fancyhf{}
-    \fancyfoot[L]{\noteauthor}
-    \fancyfoot[R]{\thepage/\pageref{LastPage}}
-    \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0.4pt}
-}
-
-% ============================================
-% 文档开始
-% ============================================
 \begin{document}
 
-% 标题页
-\title{\Huge \bfseries \color{myblue} \notetitle}
-\author{\noteauthor}
-\date{\notedate}
-\maketitle
+\thispagestyle{empty}
 
-% 目录
+\PageTag[secondary]{Screen \& CMYK}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+\textcolor{inkgray}{\sffamily\small 概述}
+\begin{itemize}
+  \item 封面信息块纵向居中且右对齐，配合 \texttt{\textbackslash PageTag} 在第一页就交代版本、主题与工作流；
+  \item 正文借助 \texttt{\textbackslash ModeBadge}、\texttt{roadmap} 与 \texttt{focuspoints} 将推导、例题、复盘串联成可追踪的阅读路径；
+  \item \texttt{\textbackslash MathNoteEnablePrint} 与新的 \texttt{\textbackslash MathNoteEnableReviewStamp} 控制器分别处理双介质配色与审核状态，方便在不同输出之间快速切换。
+\end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
 \tableofcontents
-\newpage
 
-% ============================================
-% 正文内容示例
-% ============================================
+\clearpage
+\section{模板导览}
 
-\section{第一部分：基础概念}
+\TemplateMiniHeading{模板愿景}
+\begin{description}[style=multiline, labelwidth=2.6cm, labelsep=0.9em, leftmargin=3.5cm]
+  \item[{\ModeBadge{清晰层级}}] 章节色条配合 \keyword{summarybox} / \keyword{focuspoints}，将「主题 \(\rightarrow\) 推演 \(\rightarrow\) 复盘」三层信息嵌入同一页；
+  \item[{\ModeBadge{现代配色}}] \DualMode{默认 sRGB 提供 8\%--10\% accent 背景 + 0.4\,pt 轮廓}{启用 CMYK 后切换到油墨友好色，浓度全部控制在 75\%K 以下，避免套印抖动};
+  \item[{\ModeBadge{结构完备}}] \texttt{roadmap}、\texttt{PageTag} 与 MathNote 盒子形成「页眉索引 + 侧栏提示 + 结尾摘要」的完整导览；
+  \item[{\ModeBadge{重点突出}}] \keyword{主结论}、\inlinehint{提示} 与 TikZ mathnote lines 共用 accent/\allowbreak secondary 色，屏幕与印刷都能保持统一语气。
+\end{description}
 
-\subsection{基本定义}
+\paragraph*{立即可用的步骤}
+\begin{enumerate}
+    \item 在导言区覆盖 \texttt{\textbackslash notetitle}、\texttt{\textbackslash noteauthor}、\texttt{\textbackslash notesubtitle}、\texttt{\textbackslash noteversion}，页眉页脚会自动同步；
+    \item \ScreenOnly{保持默认即可获得针对 LCD/OLED 的柔和高对比；}
+          \PrintOnly{当前已处于印刷模式；}
+          如需切换介质，调用 \texttt{\textbackslash MathNote\allowbreak Enable\allowbreak Print} 并在加载新包后使用 \texttt{\textbackslash MathNote\allowbreak Refresh\allowbreak Colors}；
+    \item 使用 \texttt{definitionbox/\allowbreak theorembox/\allowbreak summarybox} 组织主论述，\texttt{focuspoints} 记录操作；必要时用 \texttt{\textbackslash Page\allowbreak Tag} 标出专题；
+    \item 通过 \texttt{roadmap}、\texttt{ModeBadge}、\texttt{\textbackslash inlinehint} 铺设阅读轨迹，兼顾课堂展示与 PDF 分享。
+\end{enumerate}
 
-\begin{definitionbox}{基本概念示例}
-这是一个定义环境的示例。你可以在这里放置数学定义、概念说明等内容。
+\paragraph*{双模式提示}
+\begin{itemize}
+    \item \texttt{\textbackslash ScreenOnly}、\texttt{\textbackslash PrintOnly} 与 \texttt{\textbackslash DualMode\{屏幕\}\{印刷\}} 可直接在段落内写出差异化说明；
+    \item \texttt{\textbackslash MathNote\allowbreak Enable\allowbreak Print} 将链接切换为 \texttt{hidelinks}，确保 CMYK 输出不出现深色实框；
+    \item 若章节中需要刷新色板（如 TikZ 外部化后），调用 \texttt{\textbackslash MathNote\allowbreak Refresh\allowbreak Colors} 即可；
+    \item 先完成导言区设置再进入正文，页眉页脚才会在第一页显示最新信息。
+\end{itemize}
 
-例如：设 $f: \R \to \R$ 是一个函数，若存在常数 $M$ 使得 $\abs{f(x)} \le M$，则称 $f$ 有界。记向量范数 $\norm{\mathbf{v}}_2$ 表示欧几里得范数，积分时使用 $\dd x$ 可以保持格式统一。
+\paragraph*{编译栈互操作}
+\begin{description}
+    \item[MikTeX] 选择 \XeLaTeX，引擎会在首次运行时安装 \texttt{tcolorbox}、\texttt{tabularx} 等依赖；Windows 端建议额外安装 Noto / LXGW 字体；
+    \item[\XeLaTeX] 模板原生支持 \texttt{fontspec} 特性，\texttt{latexmk -xelatex} 可获得一次性编译体验；
+    \item[Arch Linux] 使用 \texttt{texlive-full} 或保证 \texttt{texlive-latexextra} + \texttt{texlive-langchinese} 已安装；推荐指令 \texttt{sudo pacman -S noto-fonts-cjk noto-fonts}。
+\end{description}
+
+\clearpage
+\section{导航与工作流}
+
+\subsection{三步搭建}
+\begin{roadmap}
+  \RoadmapStep{\emph{设定元数据：} 定义 \texttt{\textbackslash note\allowbreak title}、\texttt{\textbackslash note\allowbreak subtitle}、\texttt{\textbackslash note\allowbreak version} 并使用 \texttt{\textbackslash Page\allowbreak Tag} 标记主题，便于课堂演示或 PDF 浏览器快速定位；}
+  \RoadmapStep{\emph{选择介质：} 屏幕阅读保持默认；印刷稿在 \texttt{\textbackslash begin\{document\}} 之前调用 \texttt{\textbackslash MathNote\allowbreak Enable\allowbreak Print}，必要时 \texttt{\textbackslash MathNote\allowbreak Refresh\allowbreak Colors} 同步晚加载包；}
+  \RoadmapStep{\emph{组合信息块：} 以 \texttt{definitionbox/\allowbreak theorembox} 承载主体推导，用 \texttt{summarybox} 收束要点，辅以 \texttt{focuspoints}、\texttt{roadmap}、\texttt{ModeBadge} 布局提示。}
+\end{roadmap}
+
+\subsection{介质护栏}
+\begin{itemize}
+    \item \texttt{\textbackslash ScreenOnly} 与 \texttt{\textbackslash PrintOnly} 可嵌入段落用于交代电子版交互或印刷裁切等额外信息；
+    \item \texttt{\textbackslash DualMode\{屏幕描述\}\{印刷描述\}} 让同一行文字随模式切换内容，例如色彩百分比或导出分辨率；
+    \item 统一的调色逻辑让色条、标题、链接在两种模式下保持语义一致，减少手动调色成本。
+\end{itemize}
+
+\subsection{页眉页脚与标签}
+\noindent 页眉左侧固定输出 \texttt{\textbackslash note\allowbreak title}，右侧展示当前节标题；\\
+页脚包含 \texttt{\textbackslash note\allowbreak author}、当前页/总页与 \texttt{\textbackslash note\allowbreak version}。
+\par\noindent
+长文档可叠加 \texttt{\textbackslash Page\allowbreak Tag} 或自定义 \texttt{\textbackslash Section\allowbreak Tag}，在数字阅读器与 CMYK 小册子上都能快速定位章节。
+
+\clearpage
+\section{色彩与信息密度}
+
+\subsection{屏幕 / 印刷配色策略}
+\paragraph*{双栈调色板}
+\begin{itemize}
+    \item \DualMode{屏幕模式使用 sRGB 低饱和主色，\texttt{accentbg} 仅占 8\% 亮度}{印刷模式将 \texttt{accent} 替换为对应 CMYK 值，油墨总量控制在 $<260\%$，同时保持明度一致}；
+    \item TikZ \texttt{mathnote lines} 与盒子共享 accent/inkgray 线宽与透明度，确保跨平台图文一致；
+    \item 行距与 \texttt{\textbackslash parskip} 设计为屏幕优先，但在印刷输出中保持 1.15 倍行距，避免文字发虚。
+\end{itemize}
+
+\subsection{预设调色盘}
+\paragraph*{屏幕 sRGB}
+\noindent 使用 \texttt{screenToneXX} 可以快速取到 16 色矩阵，每种色块的语义名称如下：\\
+{\setlength{\tabcolsep}{0pt}%
+\begin{tabular}{@{}p{0.24\linewidth}@{\hspace{0.4em}}p{0.24\linewidth}@{\hspace{0.4em}}p{0.24\linewidth}@{\hspace{0.4em}}p{0.24\linewidth}@{}}
+\MathNotePaletteSwatch{screenTone01}{Tone 01 深靛} & \MathNotePaletteSwatch{screenTone02}{Tone 02 标准蓝} & \MathNotePaletteSwatch{screenTone03}{Tone 03 信号蓝} & \MathNotePaletteSwatch{screenTone04}{Tone 04 天空蓝} \\
+\MathNotePaletteSwatch{screenTone05}{Tone 05 青绿} & \MathNotePaletteSwatch{screenTone06}{Tone 06 深青} & \MathNotePaletteSwatch{screenTone07}{Tone 07 森林绿} & \MathNotePaletteSwatch{screenTone08}{Tone 08 苔藓绿} \\
+\MathNotePaletteSwatch{screenTone09}{Tone 09 金枝} & \MathNotePaletteSwatch{screenTone10}{Tone 10 日光黄} & \MathNotePaletteSwatch{screenTone11}{Tone 11 琥珀} & \MathNotePaletteSwatch{screenTone12}{Tone 12 鲜橙} \\
+\MathNotePaletteSwatch{screenTone13}{Tone 13 赤陶} & \MathNotePaletteSwatch{screenTone14}{Tone 14 赭红} & \MathNotePaletteSwatch{screenTone15}{Tone 15 亮紫} & \MathNotePaletteSwatch{screenTone16}{Tone 16 暗紫}
+\end{tabular}}
+
+\paragraph*{印刷 CMYK}
+\noindent 调用 \texttt{printToneXX} 可获得与上表配套的油墨比例，方便检查纸本输出的整体语气：\\
+{\setlength{\tabcolsep}{0pt}%
+\begin{tabular}{@{}p{0.24\linewidth}@{\hspace{0.4em}}p{0.24\linewidth}@{\hspace{0.4em}}p{0.24\linewidth}@{\hspace{0.4em}}p{0.24\linewidth}@{}}
+\MathNotePaletteSwatch{printTone01}{Print 01 石墨蓝} & \MathNotePaletteSwatch{printTone02}{Print 02 冷钴} & \MathNotePaletteSwatch{printTone03}{Print 03 钢蓝} & \MathNotePaletteSwatch{printTone04}{Print 04 瓷蓝} \\
+\MathNotePaletteSwatch{printTone05}{Print 05 青瓷} & \MathNotePaletteSwatch{printTone06}{Print 06 海松绿} & \MathNotePaletteSwatch{printTone07}{Print 07 深绿} & \MathNotePaletteSwatch{printTone08}{Print 08 常春藤} \\
+\MathNotePaletteSwatch{printTone09}{Print 09 稻谷} & \MathNotePaletteSwatch{printTone10}{Print 10 秋叶} & \MathNotePaletteSwatch{printTone11}{Print 11 琥珀金} & \MathNotePaletteSwatch{printTone12}{Print 12 琉璃橙} \\
+\MathNotePaletteSwatch{printTone13}{Print 13 赭橙} & \MathNotePaletteSwatch{printTone14}{Print 14 绛红} & \MathNotePaletteSwatch{printTone15}{Print 15 品红} & \MathNotePaletteSwatch{printTone16}{Print 16 皇家紫}
+\end{tabular}}
+
+\subsection{重点层级}
+\begin{enumerate}
+    \item \keyword{主结论} 使用 accent 色凸显标题与定理结果；
+    \item \inlinehint{提示} 以 secondary 色嵌入段内或 focuspoints；
+    \item \ModeBadge{标签} 适合为步骤、模式或 TODO 打上语义标识；
+    \item \texttt{accentbg} 与 \texttt{surfacegrid} 控制信息密度，概念框使用浅网格，正文保持纯白。
+\end{enumerate}
+
+\subsection{引用与链接}
+\ModeBadge{屏幕} 模式下 hyperref 采用彩色链接以凸显交互；当 \ModeBadge[secondary]{CMYK} 被启用时，链接自动 \texttt{hidelinks} 并在段后给出提示行，避免纸本出现深色块。
+
+\clearpage
+\section{版式骨架与信息块}
+
+\subsection{栅格与节奏}
+\paragraph*{十二列隐形网格}
+\begin{itemize}
+    \item 版心使用 12 列结构：正文占 8 列，色条与侧栏占 4 列，保证屏幕与纸面都有呼吸感；
+    \item 所有盒子统一 0.4\,pt 轮廓线；\inlinehint{surfacegrid} 仅在概念框中启用，以形成柔和对比；
+    \item \texttt{\textbackslash setstretch\{1.15\}} + \texttt{\textbackslash parskip} 分隔让扫描式阅读更流畅，印刷时无需额外调节。
+\end{itemize}
+
+\subsection{信息块组合}
+\paragraph*{MathNote box 家族}
+{%
+\begingroup
+\sloppy\emergencystretch=3em
+\begin{itemize}
+    \item \texttt{definitionbox} / \texttt{theorembox} / \texttt{lemmabox}：\\
+          用于核心论述，色条与标题色直接映射语义；
+    \item \texttt{examplebox} / \texttt{proofbox}：\\
+          与主盒共享网格参数并支持跨页断开，色条自动延伸；
+    \item \texttt{summarybox} / \texttt{conceptbox} / \texttt{warningbox}：\\
+          承担总结、背景与风险提示，文字密度可通过 \texttt{surface} 或 \texttt{highlightbg} 控制；
+    \item \texttt{focuspoints} 与 \texttt{roadmap}：\\
+          负责列出操作路径，搭配 \texttt{ModeBadge} 标注状态。
+\end{itemize}
+ \endgroup
+}
+
+\subsection{导航与索引}
+\begin{lemmabox}{侧边索引}
+利用 \inlinehint{SectionTag}、\texttt{\textbackslash PageTag} 或自定义图标，可以在长文中快速定位命题族。多页示例自动分页且保留左侧色条，适合打印后裁切。
+\end{lemmabox}
+
+\clearpage
+\section{推演路径示例}
+
+\subsection{定义与排查}
+\begin{definitionbox}{有界函数}
+设 $f:\R\to\R$。若存在常数 $M>0$ 使得 $\abs{f(x)}\le M$ 对所有 $x\in\R$ 均成立，则称 $f$ 为 \keyword{有界函数}。
+\\[0.4em]
+\medskip\textcolor{inkgray}{\sffamily\small 排查路径}
+\begin{focuspoints}
+    \item 计算 $\displaystyle\lim_{x\to\pm\infty}f(x)$ 并比较左右极限，确认尾部一致性；
+    \item 借助几何束缚或构造 $\norm{f}_{\infty}$，在图像上标记安全带；
+    \item 在局部细化时可引入 \inlinehint{对数/幂缩放}，降低曲线在屏幕上的高频抖动。
+\end{focuspoints}
 \end{definitionbox}
 
-\subsection{重要定理}
-
-\begin{theorembox}{重要定理示例}
-这是一个定理环境的示例。你可以在这里放置定理、公式等。
-
-\begin{equation}
-    \sin^2\alpha + \cos^2\alpha = 1
-\end{equation}
+\subsection{定理与证明}
+\begin{theorembox}{毕达哥拉斯恒等式}
+任意实数 $\alpha$ 满足
+\[
+    \sin^2\alpha + \cos^2\alpha = 1.
+\]
+使用浅色衬底与窄色条突出核心公式，可在 CMYK 输出中保持主色色网点倾斜 $15^\circ$，抑制重叠纹理。
 \end{theorembox}
 
-\subsection{应用示例}
+\begin{proofbox}{排版要领}
+\begin{focuspoints}
+    \item \ModeBadge{屏幕} 中公式编号与正文保持同色，避免亮度突变；对齐 \texttt{\textbackslash displaystyle} 可减少阅读器缩放抖动；
+    \item \ModeBadge[secondary]{CMYK} 环境下，页边注色条换成印刷色后仍维持 0.4\,pt 线宽即可保证清晰；
+    \item \texttt{proofbox} 与 \texttt{examplebox} 共用 \texttt{mathnote box} 网格参数，跨页断开时色条自动延续，无需手调。
+\end{focuspoints}
+\end{proofbox}
 
-\begin{examplebox}{解题技巧示例}
-这是一个例题/技巧环境的示例。你可以在这里放置解题方法、技巧说明等。
-
-\textbf{解题步骤：}
+\subsection{例题与复盘}
+\begin{examplebox}{结构化演示}
 \begin{enumerate}
-    \item 第一步：\keyword{审题}，明确已知与所求；
-    \item 第二步：整理公式，必要时写出 $\norm{\cdot}$、$\abs{\cdot}$ 等限制；
-    \item 第三步：计算并验证，记录可复用的思路。
+    \item \emph{读题：} 标记条件、量纲与关注区间；色条提示当前页焦点；
+    \item \emph{构型：} 分块列出目标函数与约束，用 $\abs{\cdot}$、$\norm{\cdot}$ 控制误差；
+    \item \emph{复核：} \inlinehint{页边注} 与正文 baseline 对齐，可直接用于双色印刷裁切。
 \end{enumerate}
 \end{examplebox}
 
-% ============================================
-% TikZ 绘图示例
-% ============================================
-\section{图形示例}
+\paragraph*{推演速览}
+\begin{itemize}
+    \item 列表继承统一行距，避免长段落造成视觉疲劳；
+    \item 数学环境与彩色盒共享配色逻辑，章节切换时无需手动调节；
+    \item 页脚自动输出 “作者 + 当前页/总页 + 版本号”，方便追踪迭代。
+\end{itemize}
+
+\clearpage
+\section{图形与可视化}
+
+\paragraph*{图形风格守则}
+\begin{itemize}
+    \item \texttt{mathnote lines} 结合 \texttt{accentline} 与 \texttt{inkgray} 形成轻量曲线，保证屏幕缩放和印刷放大都不会模糊；
+    \item 坐标轴加粗至 0.9\,pt，辅助线保持 30\% 灰度，双色输出时不会喧宾夺主；
+    \item 关键点使用填充+描边双层结构，与盒子色条在视觉上互为呼应。
+\end{itemize}
 
 \begin{center}
-\begin{tikzpicture}[scale=1]
-    % 坐标轴
-    \draw[->, thick] (-2,0) -- (3,0) node[right] {$x$};
-    \draw[->, thick] (0,-1) -- (0,3) node[above] {$y$};
-    \node at (0,0) [below left] {$O$};
-    
-    % 函数图像示例（抛物线）
-    \draw[myblue, thick, domain=-1.5:2.5, samples=100] plot (\x, {(\x-0.5)^2 + 0.5});
-    \node[myblue, right] at (2, {((2-0.5)^2 + 0.5)}) {$y = f(x)$};
-    
-    % 标注点
-    \fill[myred] (0.5, 0.5) circle (2pt) node[above right] {$(0.5, 0.5)$};
+\begin{tikzpicture}[mathnote lines, scale=1]
+    \draw[->, thick] (-2,0) -- (3.2,0) node[right] {$x$};
+    \draw[->, thick] (0,-1.1) -- (0,3.1) node[above] {$y$};
+    \draw[accentline, line width=0.9pt, domain=-1.5:2.2, samples=140]
+        plot (\x, {(\x-0.3)^2+0.4});
+    \node[accent, above right] at (1.8, {(1.5)^2+0.4}) {$y=f(x)$};
+    \filldraw[surface] (0.4,0.49) circle (2.1pt);
+    \draw[accent, line width=0.7pt] (0.4,0.49) circle (2.1pt);
+    \node[inkgray, above left] at (0.35,0.65) {\inlinehint{关键点}};
+    \draw[inkgray!40, dashed] (-1.6,0.4) -- (2.4,0.4);
+    \draw[inkgray!40, dashed] (0.4,-0.9) -- (0.4,2.4);
 \end{tikzpicture}
-\captionof{figure}{函数图像示例}
+\captionof{figure}{平滑线条 \& CMYK 友好坐标轴}
 \end{center}
 
-% ============================================
-% 注意事项示例
-% ============================================
-\section{注意事项}
+\clearpage
+\section{符号索引与速查}
 
-\begin{notebox}{重要提醒}
-这是一个注意事项环境的示例。你可以在这里放置需要特别提醒的内容。
-\end{notebox}
+\begin{multicols}{2}
+\begin{itemize}
+    \item $\R, \C, \Q, \Z, \N$
+    \item $\dd x,\; \dv{f}{x},\; \pdv{g}{y}$
+    \item $\abs{\cdot}$、$\norm{\cdot}$、$\ceil{\cdot}$、$\floor{\cdot}$
+    \item \keyword{重点} = 主题色文字
+    \item \inlinehint{小提示} = 屏幕/印刷双兼容
+    \item \texttt{mathnote lines} TikZ 样式
+\end{itemize}
+\end{multicols}
 
-\begin{summarybox}{本节要点回顾}
-使用盒子环境可以快速整理概念、定理与技巧；页眉页脚会自动带出标题与章节，便于翻阅；常用命令如 $\R,\C,\abs{\cdot},\norm{\cdot}$ 可以保持公式一致性。
-\end{summarybox}
-
-% ============================================
-% 文档结束
-% ============================================
 \end{document}
-
-
-

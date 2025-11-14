@@ -1,27 +1,6 @@
-\documentclass[a4paper, 12pt]{report}
+\documentclass[a4paper,12pt]{ctexrep}
 
-% ==================================================
-% Packages
-% ==================================================
-\usepackage{xeCJK} % For Chinese support
-\usepackage{geometry} % For page margins
-\usepackage{fancyhdr} % For headers and footers
-\usepackage[x11names,table]{xcolor} % For colors
-\usepackage{enumitem} % For custom lists
-\usepackage{fontawesome5} % For icons
-\usepackage{hyperref} % For hyperlinks
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{mathtools}
-\usepackage{tabularx}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepackage{tcolorbox}
-\usepackage{parskip}
-\usepackage{booktabs}
-\usepackage{array}
+\input{../mathnote-preamble.tex}
 
 % ==================================================
 % Page Layout
@@ -84,9 +63,6 @@
 \newcommand{\warning}[1]{\textcolor{iconRed}{\textbf{注意：#1}}}
 \newcommand{\partialder}[2]{\frac{\partial #1}{\partial #2}}
 
-% ==================================================
-% Theorem Environments
-% ==================================================
 \theoremstyle{definition}
 \newtheorem{definition}{定义}[chapter]
 \newtheorem{theorem}{定理}[chapter]
@@ -99,9 +75,10 @@
 \newtheorem{example}{例题}[chapter]
 \newtheorem{exercise}{练习}[chapter]
 
-% ==================================================
-% TColorBox Environments
-% ==================================================
+\renewcommand{\notetitle}{偏导数思想在含参导数问题中的应用}
+\renewcommand{\noteauthor}{Gemini 数学组}
+\renewcommand{\notedate}{\today}
+
 \newtcolorbox{conceptbox}[1][]{
     colback=lightgray,
     colframe=iconBlue,

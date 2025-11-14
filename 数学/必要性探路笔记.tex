@@ -1,28 +1,13 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt]{ctexart}
 
-% 中文支持
-\usepackage{xeCJK}
+\input{../mathnote-preamble.tex}
+
 \setCJKmainfont{SimSun}
 \setCJKsansfont{SimHei}
 \setCJKmonofont{FangSong}
-
-% 数学环境
-\usepackage{amsmath, amssymb, amsthm}
-\usepackage{mathtools}
-
-% 图形和颜色
-\usepackage{graphicx}
-\usepackage{xcolor}
-\usepackage{tikz}
-\usepackage{pgfplots}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
 \pgfplotsset{compat=1.18}
 
-% 页面布局
-\usepackage{geometry}
-\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
-
-% 超链接
-\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -31,21 +16,12 @@
     pdfborder={0 0 0}
 }
 
-% 列表和枚举
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-
-% 页眉页脚
-\usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{高中数学参考笔记}
 \fancyhead[R]{必要性探路}
 \fancyfoot[C]{\thepage}
 
-% 标题格式
-\usepackage{titlesec}
 \titleformat{\section}{\Large\bfseries\color{blue!80!black}}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\bfseries\color{green!70!black}}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\bfseries\color{red!70!black}}{\thesubsubsection}{1em}{}
@@ -76,10 +52,14 @@
 \newcommand{\keypoint}[1]{\textcolor{accentgreen}{\textbf{#1}}}
 \newcommand{\warning}[1]{\textcolor{accentred}{\textbf{注意：#1}}}
 
-\title{\textbf{\Large 必要性探路方法在高中数学中的应用}\\
+\renewcommand{\notetitle}{必要性探路方法在高中数学中的应用}
+\renewcommand{\noteauthor}{高中数学参考笔记}
+\renewcommand{\notedate}{\today}
+
+\title{\textbf{\Large \notetitle}\\
 \large 综合性·指导性·详细性·复习式·工具与应用风格}
-\author{}
-\date{\today}
+\author{\noteauthor}
+\date{\notedate}
 
 \begin{document}
 

@@ -1,78 +1,19 @@
 % !TEX program = xelateDtx
-\documentclass[a4paper, 11pt]{ctexart}
+\documentclass[a4paper,11pt]{ctexart}
 
-% --- 包的引入 ---
-\usepackage{amsmath, amssymb} % 数学公式
-\usepackage{xcolor}          % 颜色支持
-\usepackage{tikz}            % 绘图
-\usetikzlibrary{arrows.meta, positioning, intersections, quotes}
-\usepackage{geometry}        % 页面边距设置
-\usepackage[most]{tcolorbox} % 带颜色的文本框
-\usepackage{caption}         % 支持 \captionof 命令
+\input{../mathnote-preamble.tex}
 
-% --- 页面与颜色设置 ---
-\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm} % 设置页边距
+\renewcommand{\notetitle}{三角函数}
+\renewcommand{\noteauthor}{Gemini AI}
+\renewcommand{\notedate}{\today}
 
-% 定义颜色（兼容黑白打印）
-\definecolor{myblue}{RGB}{0, 112, 192}
-\definecolor{mygreen}{RGB}{0, 176, 80}
-\definecolor{myorange}{RGB}{247, 150, 70}
-\definecolor{myred}{RGB}{200, 0, 0}
-\definecolor{mygray}{gray}{0.95}
-
-% --- 超链接设置 (解决方案) ---
-\usepackage[colorlinks=true, linkcolor=myblue, citecolor=mygreen, urlcolor=myred]{hyperref} % 彩色文字链接，移除方框
-
-% --- 定理、定义、例题环境设置 (移除了 breakable 选项) ---
-\newtcolorbox{theorembox}[1]{
-    colback=myblue!5!white,
-    colframe=myblue!75!black,
-    fonttitle=\bfseries,
-    title=定理：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myblue!75!black,
-        sharp corners
-    }
-}
-
-\newtcolorbox{definitionbox}[1]{
-    colback=mygreen!5!white,
-    colframe=mygreen!75!black,
-    fonttitle=\bfseries,
-    title=定义：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=mygreen!75!black,
-        sharp corners
-    }
-}
-
-\newtcolorbox{examplebox}[1]{
-    colback=myorange!5!white,
-    colframe=myorange!75!black,
-    fonttitle=\bfseries,
-    title=技巧与应用：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myorange!75!black,
-        sharp corners
-    }
-}
-
+\title{\Huge \bfseries \color{myblue} \notetitle}
+\author{\noteauthor}
+\date{\notedate}
 
 % --- 文档开始 ---
 \begin{document}
 
-\title{\Huge \bfseries \color{myblue} 三角函数}
-\author{Gemini AI}
-\date{\today}
 \maketitle
 
 \tableofcontents

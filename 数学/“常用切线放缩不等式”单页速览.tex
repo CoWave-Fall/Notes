@@ -1,18 +1,14 @@
-\documentclass[11pt]{article}
-\usepackage[UTF8]{ctex}
-\usepackage{amsmath, amssymb}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage[svgnames]{xcolor}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
-\usepackage[most]{tcolorbox} % 使用 tcolorbox 美化布局
+\documentclass[a4paper,11pt]{ctexart}
+
+\input{../mathnote-preamble.tex}
+
+\renewcommand{\notetitle}{常用切线放缩不等式速览}
+\renewcommand{\noteauthor}{高中数学导数核心应用}
+\renewcommand{\notedate}{\today}
 
 % --- 页面布局 ---
 % 使用较小的页边距以容纳更多内容
 \geometry{a4paper, left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm}
-\pagestyle{empty} % 无页码，打造速览单页样式
 
 % --- 颜色定义 ---
 \definecolor{MyBlue}{RGB}{0, 80, 150}

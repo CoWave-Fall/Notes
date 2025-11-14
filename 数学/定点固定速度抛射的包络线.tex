@@ -5,159 +5,21 @@
 % 数学笔记 XeLaTeX 模板
 % ============================================
 
-\documentclass[a4paper, 11pt]{ctexart}
+\documentclass[a4paper,11pt]{ctexart}
 
-% ============================================
-% 包的引入
-% ============================================
+\input{../mathnote-preamble.tex}
 
-% 数学公式与符号
-\usepackage{amsmath, amssymb, amsthm, amsfonts}
-\usepackage{mathtools} % 增强的数学工具
+\renewcommand{\notetitle}{定点固定速度抛射的包络线}
+\renewcommand{\noteauthor}{Gemini 数学组}
+\renewcommand{\notedate}{\today}
 
-% 页面设置
-\usepackage{geometry}
-\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+\title{\Huge \bfseries \color{myblue} \notetitle}
+\author{\noteauthor}
+\date{\notedate}
 
-% 颜色支持
-\usepackage{xcolor}
-
-% 绘图支持
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning, intersections, quotes, calc}
-
-% 彩色文本框
-\usepackage[most]{tcolorbox}
-
-% 超链接
-\usepackage[colorlinks=true, linkcolor=myblue, citecolor=mygreen, urlcolor=myred]{hyperref}
-
-% 图片支持
-\usepackage{graphicx}
-
-% 其他工具
-\usepackage{caption} % 支持 \captionof 命令
-\usepackage{enumitem} % 增强的列表环境
-
-% ============================================
-% 颜色定义（兼容黑白打印）
-% ============================================
-\definecolor{myblue}{RGB}{0, 112, 192}
-\definecolor{mygreen}{RGB}{0, 176, 80}
-\definecolor{myorange}{RGB}{247, 150, 70}
-\definecolor{myred}{RGB}{200, 0, 0}
-\definecolor{mypurple}{RGB}{152, 78, 163}
-\definecolor{mygray}{gray}{0.95}
-
-% ============================================
-% 定理、定义、例题环境设置
-% ============================================
-
-% 定理环境
-\newtcolorbox{theorembox}[1]{
-    colback=myblue!5!white,
-    colframe=myblue!75!black,
-    fonttitle=\bfseries,
-    title=定理：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myblue!75!black,
-        sharp corners
-    }
-}
-
-% 定义环境
-\newtcolorbox{definitionbox}[1]{
-    colback=mygreen!5!white,
-    colframe=mygreen!75!black,
-    fonttitle=\bfseries,
-    title=定义：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=mygreen!75!black,
-        sharp corners
-    }
-}
-
-% 例题/技巧与应用环境
-\newtcolorbox{examplebox}[1]{
-    colback=myorange!5!white,
-    colframe=myorange!75!black,
-    fonttitle=\bfseries,
-    title=技巧与应用：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myorange!75!black,
-        sharp corners
-    }
-}
-
-% 引理环境
-\newtcolorbox{lemmabox}[1]{
-    colback=mypurple!5!white,
-    colframe=mypurple!75!black,
-    fonttitle=\bfseries,
-    title=引理：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=mypurple!75!black,
-        sharp corners
-    }
-}
-
-% 注意/提醒环境
-\newtcolorbox{notebox}[1]{
-    colback=mygray,
-    colframe=myred!75!black,
-    fonttitle=\bfseries,
-    title=注意：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myred!75!black,
-        sharp corners
-    }
-}
-
-% ============================================
-% 标题格式设置
-% ============================================
-\usepackage{titlesec}
-\titleformat{\section}
-    {\Large\bfseries\color{myblue}}
-    {\thesection}{1em}{}
-\titleformat{\subsection}
-    {\large\bfseries\color{myorange}}
-    {\thesubsection}{1em}{}
-
-% ============================================
-% 数学定理环境（使用 amsthm）
-% ============================================
-\theoremstyle{definition}
-\newtheorem{theorem}{定理}[section]
-\newtheorem{definition}{定义}[section]
-\newtheorem{lemma}{引理}[section]
-\newtheorem{corollary}{推论}[theorem]
-\newtheorem{example}{例题}[section]
-
-% ============================================
-% 文档开始
-% ============================================
 \begin{document}
 
 % 标题页
-\title{\Huge \bfseries \color{myblue} 固定速度抛射的包络线}
-\author{数学笔记}
-\date{\today}
 \maketitle
 
 % 目录
@@ -910,4 +772,3 @@
 % 文档结束
 % ============================================
 \end{document}
-
