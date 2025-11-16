@@ -2,12 +2,12 @@
 % 使用 mathnote-preamble.tex 模板，建议用 XeLaTeX 编译两次
 
 \documentclass[a4paper,11pt]{ctexart}
-\input{../mathnote-preamble.tex}
+\input{mathnote-preamble.tex}
 
 % 元信息配置（用于页眉、书签与封面）
 \renewcommand{\notetitle}{高中政治：辩证法入门与进阶}
-\renewcommand{\notesubtitle}{联系·矛盾·发展观的系统学习}
-\renewcommand{\noteauthor}{自学笔记示例}
+\renewcommand{\notesubtitle}{学会在复杂世界中看清变化与关系}
+\renewcommand{\noteauthor}{自学与思考记录}
 \renewcommand{\notedate}{\today}
 \renewcommand{\noteversion}{v1.0}
 
@@ -15,7 +15,7 @@
 
 % 封面
 \thispagestyle{empty}
-\PageTag[secondary]{高中政治·辩证法}
+\PageTag[secondary]{世界观·辩证思维}
 \setcounter{page}{1}
 
 \MathNoteEnableReviewStamp
@@ -39,11 +39,11 @@
 \begin{minipage}{0.84\textwidth}
   \textcolor{inkgray}{\sffamily\small 学习导航}\\[0.4em]
   \begin{focuspoints}
-    \item 从\keyword{联系与发展}的整体视角出发，理解辩证法区别于日常“想当然”的思维方式；
-    \item 掌握\keyword{矛盾分析法}、\keyword{量变—质变规律}、\keyword{否定之否定规律}等核心工具；
-    \item 通过简明\keyword{框架图}和\keyword{对比表}理清易混概念，形成可复用的答题模板；
-    \item 结合\keyword{学习生活实例}与\keyword{高考题型}，学会把抽象哲学语言转化为具体分析步骤；
-    \item 搭建“\keyword{读题—找点—组织语言}”的一条龙流程，实现自学与自我纠错。
+    \item 把辩证法视为\keyword{认识世界的方式}，而不只是考试知识点；
+    \item 通过\keyword{联系、矛盾、发展}三大视角重新观察身边的人和事；
+    \item 用简单的\keyword{图示和表格}整理抽象概念，形成自己的知识地图；
+    \item 学会从\keyword{多角度}看问题，同时判断\keyword{什么更关键}，避免片面化；
+    \item 在日常选择与公共讨论中练习\keyword{辩证思维}，让思想不断更新、升级。
   \end{focuspoints}
 \end{minipage}
 \end{center}
@@ -55,346 +55,387 @@
 \newpage
 
 %==========================
-\section{导学与整体结构}
+\section{导学：为什么要学辩证法？}
 %==========================
 
-\begin{summarybox}{为什么要学辩证法？}
-在高中政治中，辩证法既是\keyword{世界观}（怎么看世界），也是\keyword{方法论}（怎么分析问题）。理解辩证法，可以帮助我们：
+\begin{summarybox}{学习辩证法的三个层次}
+本笔记不以“做题”为目标，而是希望帮助你：
 \begin{itemize}
-  \item 看见事物之间的\keyword{联系}，避免“只盯一面”的片面性；
-  \item 把握事物\keyword{发展变化}的方向与条件，而不只看静止结果；
-  \item 通过\keyword{矛盾分析}找到关键点，从而更有针对性地解决问题；
-  \item 在高考题中用规范语言回答“\inlinehint{为什么}”“\inlinehint{怎么办}”类问题。
+  \item 在\keyword{观念层}：形成“世界是联系着、变化着的”的\keyword{整体图景}；
+  \item 在\keyword{思维层}：遇到复杂问题时，知道可以用\keyword{哪些角度}去分析；
+  \item 在\keyword{实践层}：在\keyword{学习、人际、选择与社会事件}中，养成反思与调整的习惯。
 \end{itemize}
+\inlinehint{做题只是检验思维的一个小场景，本笔记更关心你如何看待真实世界。}
 \end{summarybox}
 
 \begin{roadmap}
-  \RoadmapStep{建立辩证法的整体印象}
-  \RoadmapStep{掌握联系与发展的基本观点}
-  \RoadmapStep{重点突破矛盾分析法}
-  \RoadmapStep{理解量变—质变与否定之否定}
-  \RoadmapStep{构建答题模板与应用步骤}
+  \RoadmapStep{建立“联系与发展”的整体视角}
+  \RoadmapStep{理解矛盾及其在生活中的表现}
+  \RoadmapStep{把握量变—质变与否定之否定}
+  \RoadmapStep{用辩证法重新观察身边世界}
+  \RoadmapStep{将辩证思维变成日常习惯}
 \end{roadmap}
 
-\inlinehint{建议学习顺序：先把每节的“定义盒 + 对比表 + 实例”吃透，再尝试用本章的答题模板分析课本或真题。}
-
-%==========================
-\section{辩证法的基本视角}
-%==========================
-
-\subsection{什么是辩证法？}
-
-\begin{definitionbox}{辩证法的基本含义}
-\keyword{辩证法}是一种关于世界\keyword{普遍联系}和\keyword{永恒发展}的学说，也是人们认识和改造世界的\keyword{科学方法}。用简明话概括：
+\begin{notebox}{使用建议}
 \begin{itemize}
-  \item 世界不是静止的，而是在\keyword{运动变化}中发展；
-  \item 事物不是孤立的，而是处在\keyword{普遍联系}之中；
-  \item 发展不是一帆风顺的，而是通过\keyword{矛盾运动}实现的。
+  \item 每一小节都包含\keyword{定义盒 + 图表 + 实例}，建议按此顺序阅读；
+  \item 图与表不只是“装饰”，而是帮助你\keyword{一眼看到结构}的工具；
+  \item 读完一节后，试着用本节概念描述\inlinehint{当天发生的一件事}，检验是否真正理解；
+  \item 可以在边缘空白处画出\keyword{自己的图示}，把抽象概念画进自己的生活。
+\end{itemize}
+\end{notebox}
+
+%==========================
+\section{世界的底色：联系与发展}
+%==========================
+
+\subsection{世界是普遍联系的}
+
+\begin{definitionbox}{联系的含义与特征}
+\keyword{联系}是指事物内部诸要素之间及事物之间、事物与环境之间的\keyword{相互影响和相互制约}。其基本特征：
+\begin{itemize}
+  \item \keyword{普遍性}：一切事物都处在一定联系中，没有绝对孤立的东西；
+  \item \keyword{多样性}：联系有内部与外部、直接与间接、必然与偶然等不同形式；
+  \item \keyword{条件性}：不同条件下，联系的\inlinehint{强弱、方向和方式}会发生变化。
 \end{itemize}
 \end{definitionbox}
 
-\begin{examplebox}{从“备考”看两种思维方式}
-\textbf{情境：}同样面对高考复习，两位同学的想法不同：
-\begin{itemize}
-  \item 甲：只盯着分数和排名，认为“我现在基础差，肯定追不上”；
-  \item 乙：既看到当前差距，又分析\inlinehint{时间、方法、情绪、资源}等多个因素，制定分阶段提升计划。
-\end{itemize}
-\textbf{分析：}
-\begin{itemize}
-  \item 甲忽视了学习过程中的\keyword{发展性}和多种\keyword{联系因素}，思维更接近\inlinehint{静止、孤立}的看法；
-  \item 乙从多种条件出发，把当前水平看作发展过程中的\keyword{一个阶段}，体现了\keyword{联系和发展的辩证观点}。
-\end{itemize}
-\end{examplebox}
-
-\subsection{辩证法与形而上学的对比}
-
-\begin{summarybox}{两种世界观的对比框架}
-在高中政治中，常用\keyword{辩证法}与\keyword{形而上学}进行对比。可以记成四组关键词：
-\begin{focuspoints}
-  \item \keyword{整体 vs. 孤立}：看不看整体联系；
-  \item \keyword{发展 vs. 静止}：承不承认变化过程；
-  \item \keyword{矛盾 vs. 单一}：看到差异和冲突还是只看统一；
-  \item \keyword{转化 vs. 固化}：承不承认条件改变可以带来方向改变。
-\end{focuspoints}
-\end{summarybox}
-
 \begin{center}
-\begin{tabularx}{0.96\textwidth}{lXX}
+\begin{tabularx}{1.00\textwidth}{lXX}
 \toprule
-视角 & 辩证法思维 & 形而上学思维 \\
+联系类型 & 简要说明 & 生活中的例子 \\
 \midrule
-对事物状态的看法 & 强调事物\keyword{处在变化发展之中}，任何状态都是过程中的一个阶段 & 把事物视为\inlinehint{固定不变}，把某一时刻当成“永远如此” \\
-对事物关系的看法 & 强调\keyword{普遍联系}，从整体中看各部分作用与影响 & 只盯住某一局部或某一个因素，忽视其与环境的联系 \\
-对矛盾的态度 & 承认并重视\keyword{矛盾}，善于找到\keyword{主要矛盾和矛盾的主要方面} & 不是否认矛盾，就是只看到矛盾的一方，做“非黑即白”的判断 \\
-方法论要求 & 要求\keyword{具体问题具体分析}，在联系和发展中寻找解决方案 & 喜欢套用固定结论，容易陷入\inlinehint{绝对化、一刀切、简单类比} \\
+内部联系 & 事物内部各部分之间的关系 & 一个人的\keyword{情绪状态}与\keyword{睡眠、饮食、运动、压力}之间的互动 \\
+外部联系 & 事物与外部环境之间的关系 & 城市空气质量与\keyword{工业排放、交通结构、植被覆盖}等因素的联系 \\
+直接联系 & 不经过中介就能感受到的联系 & 你和\keyword{同桌}的日常互动、合作与冲突 \\
+间接联系 & 通过中介体现出来的联系 & 你和\keyword{远方朋友}之间通过网络、共同爱好而形成的联系 \\
+必然联系 & 在一定条件下一定会发生的联系 & 长期\keyword{真诚沟通}一般会\keyword{加深信任} \\
+偶然联系 & 在偶然因素作用下才发生的联系 & 在公交车上偶然遇见多年未见的同学 \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
 \begin{center}
-\begin{tikzpicture}[mathnote lines, node distance=2.6cm]
-  \node[draw,rounded corners=3pt,fill=surface,inner sep=6pt] (all) {\sffamily\small 世界是\keyword{普遍联系}和\keyword{永恒发展}的整体};
-  \node[draw,rounded corners=3pt,fill=surface,below left of=all,xshift=-0.6cm] (dial) {\sffamily\small 辩证法：\\联系 + 发展 + 矛盾};
-  \node[draw,rounded corners=3pt,fill=surface,below right of=all,xshift=0.6cm] (meta) {\sffamily\small 形而上学：\\孤立 + 静止 + 片面};
-  \draw[->,accent,thick] (all.south west) -- (dial.north);
-  \draw[->,secondary,thick] (all.south east) -- (meta.north);
+\begin{tikzpicture}[mathnote lines,node distance=1.9cm]
+  \node[draw,rounded corners=3pt,fill=surface,inner sep=4pt] (self) {\scriptsize 自己};
+  \node[draw,rounded corners=3pt,fill=surface,above right=of self] (family) {\scriptsize 家庭};
+  \node[draw,rounded corners=3pt,fill=surface,below right=of self] (friends) {\scriptsize 同学与朋友};
+  \node[draw,rounded corners=3pt,fill=surface,above left=of self] (nature) {\scriptsize 自然环境};
+  \node[draw,rounded corners=3pt,fill=surface,below left=of self] (tech) {\scriptsize 科技与网络};
+  \draw[accent,thick] (self) -- (family);
+  \draw[accent,thick] (self) -- (friends);
+  \draw[secondary,thick,dashed] (self) -- (nature);
+  \draw[secondary,thick,dashed] (self) -- (tech);
+  \draw[inkgray,thick,loosely dotted] (family) -- (friends);
+  \draw[inkgray,thick,loosely dotted] (nature) -- (tech);
 \end{tikzpicture}
-\captionof{figure}{两种基本世界观的示意图}
+\captionof{figure}{“我”与世界的多重联系示意图}
 \end{center}
 
-%==========================
-\section{联系与发展的观点}
-%==========================
-
-\subsection{联系的观点}
-
-\begin{definitionbox}{联系的含义与特点}
-\keyword{联系}是指事物内部各要素之间以及事物之间、事物与环境之间的\keyword{相互影响和相互制约}。其主要特点：
+\begin{examplebox}{用“联系的观点”重看一件小事}
+选择是否参加一项社团活动，通常涉及：
 \begin{itemize}
-  \item \keyword{普遍性}：世界上一切事物都处在一定联系之中；
-  \item \keyword{多样性}：联系有直接与间接、内部与外部、必然与偶然等不同形式；
-  \item \keyword{条件性}：不同条件下，联系的\inlinehint{强弱、方向和方式}可能发生变化。
+  \item 内部联系：自己的兴趣、时间管理能力、当前压力水平；
+  \item 外部联系：社团氛围、社团活动与课堂学习之间的安排；
+  \item 必然与偶然：长期参与的积累与偶然一次活动的“惊喜或失望”；
+  \item 条件变化：年级升高、课程难度变化后，原来的安排是否仍然合适。
 \end{itemize}
-\end{definitionbox}
-
-\begin{center}
-\begin{tabularx}{0.96\textwidth}{lXX}
-\toprule
-联系类型 & 简要说明 & 示例 \\
-\midrule
-内部联系 & 同一事物内部诸要素之间的联系 & 一次考试成绩由\keyword{基础、临场状态、审题习惯}等多个内部因素共同决定 \\
-外部联系 & 事物与外部环境之间的联系 & 学习效率还受\keyword{家庭氛围、学校资源、同伴影响}等外在条件制约 \\
-必然联系 & 在一定条件下必然出现的、稳定的联系 & 长期坚持高质量练习\inlinehint{必然}会提高熟练度和正确率 \\
-偶然联系 & 在偶然条件下形成、具有一定偶然性的联系 & 某次蒙对选择题只是\inlinehint{偶然}，不能说明整体水平提高 \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-\begin{examplebox}{分析“网课学习效果”的多重联系}
-网课学习效果和哪些因素有关？尝试从不同类型的\keyword{联系}出发分析：
-\begin{itemize}
-  \item 内部联系：自身\keyword{自律程度、学习习惯、专注时间}等；
-  \item 外部联系：网络环境、家人干扰、老师互动方式等；
-  \item 必然联系：长期高质量的\keyword{听课 + 训练 + 复盘}会带来稳步提升；
-  \item 偶然联系：一两节课\keyword{状态极好或极差}，不能简单外推为“我就这样了”。
-\end{itemize}
-此类题目作答时，可按“\keyword{指出联系} $\rightarrow$ \keyword{举例说明} $\rightarrow$ \keyword{提出建议}”的顺序组织语言。
+练习：回忆你最近做过的一次选择，尝试用\keyword{四种联系}重新描述它。
 \end{examplebox}
 
-\subsection{发展的观点}
+\subsection{世界是不断发展的}
 
-\begin{summarybox}{发展的含义与基本特征}
-从辩证法角度看，\keyword{发展}是事物由低级到高级、由简单到复杂、由旧质到新质的\keyword{前进性变化}。其特点可以记为“三个不”：
+\begin{summarybox}{发展：不是简单的“变”，而是有方向的变化}
+从辩证法角度看，\keyword{发展}是事物由低级到高级、由简单到复杂、由旧质到新质的\keyword{前进性变化}。它通常：
 \begin{itemize}
-  \item \keyword{不是一帆风顺的}：发展包含曲折，前进中有反复；
-  \item \keyword{不是自动完成的}：需要一定的\inlinehint{条件和主观努力}；
-  \item \keyword{不是无方向的}：总体上具有\keyword{上升、前进}的趋势。
+  \item 不是直线，而是\keyword{曲折前进}的；
+  \item 不是自动发生，而需要一定\keyword{条件与努力}；
+  \item 不是毫无方向，而是在总体上呈\keyword{上升趋势}。
 \end{itemize}
 \end{summarybox}
 
 \begin{center}
 \begin{tikzpicture}[mathnote lines,xscale=1.2,yscale=0.8]
   \draw[->,thick] (0,0) -- (6,0) node[right] {时间};
-  \draw[->,thick] (0,0) -- (0,4) node[above] {水平};
-  \draw[accent,thick,smooth] plot coordinates {(0.3,0.6) (1,1.2) (1.8,1.0) (2.5,1.8) (3.3,2.1) (4,2.5) (4.7,2.3) (5.5,3.2)};
-  \node[anchor=west,inkgray] at (3.1,3.0) {\scriptsize 曲折中前进的学习曲线};
+  \draw[->,thick] (0,0) -- (0,4) node[above] {水平 / 状态};
+  \draw[accent,thick,smooth] plot coordinates {(0.3,0.7) (1,1.3) (1.8,1.1) (2.6,2.0) (3.4,2.3) (4.1,2.7) (4.8,2.4) (5.5,3.2)};
+  \node[anchor=west,inkgray] at (3.0,3.0) {\scriptsize 曲折中总体上升的个人成长曲线};
 \end{tikzpicture}
-\captionof{figure}{“曲折上升”的发展示意图}
+\captionof{figure}{“波浪式前进、螺旋式上升”的示意图}
 \end{center}
 
-%==========================
-\section{矛盾分析：从现象到本质}
-%==========================
-
-\subsection{矛盾及其基本规律}
-
-\begin{definitionbox}{矛盾及其两种属性}
-\keyword{矛盾}是指\keyword{事物内部或事物之间}既对立又统一的关系。矛盾具有：
+\begin{examplebox}{从“考试分数”到“长期发展”的视角转换}
+如果只盯着一次考试分数，很容易：
 \begin{itemize}
-  \item \keyword{普遍性}：矛盾存在于一切事物中，贯穿事物发展全过程；
-  \item \keyword{特殊性}：不同事物的矛盾各不相同，同一事物在不同发展阶段的矛盾也不同。
+  \item 用\inlinehint{一次结果}否定自己；
+  \item 忽视\keyword{长期习惯、情绪状态、身体情况}等因素；
+  \item 看不到\keyword{小幅进步}和\keyword{稳定的好习惯}背后的发展趋势。
 \end{itemize}
-把握“\keyword{普遍性}—\keyword{特殊性}”关系，是实现\keyword{具体问题具体分析}的理论依据。
-\end{definitionbox}
-
-\begin{summarybox}{主要矛盾与主要方面}
+如果用“发展的观点”看待自己：
 \begin{itemize}
-  \item \keyword{主要矛盾}：在众多矛盾中，对事物发展起\keyword{主导、决定}作用的矛盾；
-  \item \keyword{次要矛盾}：处于从属地位、影响较小的其他矛盾；
-  \item \keyword{矛盾的主要方面}：在每一对矛盾双方中处于\keyword{支配地位}的一方；
-  \item \keyword{矛盾的次要方面}：处于\inlinehint{相对被动}的一方。
+  \item 会关注\keyword{长期曲线}而不是单点高低；
+  \item 会思考\keyword{哪些做法促进了发展}，哪些习惯需要调整；
+  \item 会更加愿意把当下困难视为\keyword{发展过程中的一个阶段}。
 \end{itemize}
-在分析复杂问题时，应学会\keyword{抓主要矛盾}，并在每一矛盾中注意\keyword{把握主要方面}。
-\end{summarybox}
-
-\begin{center}
-\begin{tabularx}{0.96\textwidth}{lXX}
-\toprule
-矛盾层次 & 典型问题 & 分析提示 \\
-\midrule
-主要矛盾—次要矛盾 & 学习成绩下降，到底是\keyword{心态问题}还是\keyword{方法问题}为主？ & 先列出所有矛盾，再判断哪一矛盾\inlinehint{影响最大、作用最长远} \\
-主要方面—次要方面 & 在“时间不够”和“效率不高”的矛盾中，哪一方更关键？ & 分析哪一方面的改变量更可能\keyword{改变整体状况} \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-\subsection{矛盾分析四步法}
-
-\begin{summarybox}{矛盾分析的操作流程}
-可以把“具体问题具体分析”固化为四步：
-\begin{enumerate}
-  \item \keyword{找矛盾}：问题中\inlinehint{对立的两方面}分别是什么？
-  \item \keyword{划层次}：哪一对矛盾是\keyword{主要矛盾}？哪一方面是\keyword{主要方面}？
-  \item \keyword{看条件}：在什么\inlinehint{具体条件}下，它们的地位和作用会发生变化？
-  \item \keyword{提对策}：针对主要矛盾和主要方面提出\keyword{有侧重点}的解决方案。
-\end{enumerate}
-\end{summarybox}
-
-\begin{center}
-\begin{tikzpicture}[mathnote lines,node distance=1.9cm]
-  \node[draw,rounded corners=3pt,fill=surface,inner sep=5pt] (step1) {\scriptsize 1. 找矛盾};
-  \node[draw,rounded corners=3pt,fill=surface,right=of step1] (step2) {\scriptsize 2. 划层次};
-  \node[draw,rounded corners=3pt,fill=surface,right=of step2] (step3) {\scriptsize 3. 看条件};
-  \node[draw,rounded corners=3pt,fill=surface,right=of step3] (step4) {\scriptsize 4. 提对策};
-  \draw[->,accent,thick] (step1) -- (step2);
-  \draw[->,accent,thick] (step2) -- (step3);
-  \draw[->,accent,thick] (step3) -- (step4);
-\end{tikzpicture}
-\captionof{figure}{矛盾分析四步法流程图}
-\end{center}
-
-\begin{examplebox}{用矛盾分析“玩手机与学习”的冲突}
-\textbf{情境：}备考期间，你发现自己经常“想学习又忍不住刷手机”。尝试用矛盾分析四步法梳理：
-\begin{enumerate}
-  \item 找矛盾：\keyword{提高成绩的需要}与\keyword{即时娱乐的欲望}之间的矛盾；
-  \item 划层次：当前阶段，高考时间临近，“提高成绩”是\keyword{主要矛盾的主要方面}；
-  \item 看条件：无计划、无节制的娱乐会严重\inlinehint{挤占学习时间}，但适度休息有利于恢复精力；
-  \item 提对策：设置固定“刷手机时段”，并用\inlinehint{番茄钟、应用锁}等外部工具帮助控制，将主要精力集中到学习上。
-\end{enumerate}
-答题时，可以用“首先—其次—再次—最后”或“原因—影响—对策”的结构，把上述分析用规范语言表述出来。
 \end{examplebox}
 
 %==========================
-\section{量变—质变与否定之否定}
+\section{矛盾：理解世界张力的钥匙}
 %==========================
 
-\subsection{量变与质变}
+\subsection{什么是矛盾？}
 
-\begin{definitionbox}{量变与质变的基本概念}
+\begin{definitionbox}{矛盾的含义与普遍性}
+\keyword{矛盾}是指事物内部或事物之间\keyword{既对立又统一}的关系。它有两层含义：
 \begin{itemize}
-  \item \keyword{量变}：在事物的\inlinehint{数量、程度、范围}等方面发生的\keyword{渐进性变化}，一般比较缓慢、连续；
-  \item \keyword{质变}：当量变发展到一定程度时，引起事物\keyword{性质、结构、状态}的\keyword{根本变化}。
+  \item \keyword{对立}：双方方向不同、要求不同、彼此制约；
+  \item \keyword{统一}：双方又\inlinehint{相互依存、相互渗透}，共同构成一个整体。
 \end{itemize}
-量变和质变是\keyword{互相渗透、互相转化}的：没有量变的积累就不会发生质变，质变又为新的量变开辟道路。
+矛盾具有\keyword{普遍性}：任何事物内部都有矛盾，这些矛盾推动事物不断发展变化。
 \end{definitionbox}
 
 \begin{center}
-\begin{tabularx}{0.96\textwidth}{lXX}
-\toprule
-类型 & 关键词 & 示例 \\
-\midrule
-量变 & 渐进、积累、数量、程度 & 每天多做几道错题整理，多记几个答题句式 \\
-质变 & 突破、飞跃、性质改变 & 从“看不懂���”到“能独立完整作答”，成绩段位明显上升 \\
-\bottomrule
-\end{tabularx}
+\begin{tikzpicture}[mathnote lines,node distance=2.4cm]
+  \node[draw,rounded corners=3pt,fill=surface,inner sep=5pt] (whole) {\scriptsize 学习生活整体};
+  \node[draw,rounded corners=3pt,fill=surface,below left=of whole] (rest) {\scriptsize 休息 \& 娱乐};
+  \node[draw,rounded corners=3pt,fill=surface,below right=of whole] (study) {\scriptsize 投入学习};
+  \draw[accent,thick,->] (rest) -- (study) node[midway,above,sloped]{\scriptsize 提升效率};
+  \draw[secondary,thick,->] (study) -- (rest) node[midway,below,sloped]{\scriptsize 恢复精力};
+  \draw[inkgray,thick] (whole) -- (rest);
+  \draw[inkgray,thick] (whole) -- (study);
+\end{tikzpicture}
+\captionof{figure}{“学习 vs 休息”中的对立统一}
 \end{center}
 
-\begin{examplebox}{从“刷题”到“真正掌握”的量变—质变}
-刚开始刷题时，你可能\inlinehint{错误很多、速度很慢}，但如果坚持：
+\subsection{主要矛盾与矛盾的主要方面}
+
+\begin{summarybox}{分清“更关键的是什么”}
 \begin{itemize}
-  \item 每道错题都\keyword{纠正原因}，总结对应知识点；
-  \item 定期回顾错题本，观察错误类型是否在\inlinehint{减少或变化}；
-  \item 按章节和题型整理\keyword{解题步骤和常用句式}。
+  \item \keyword{主要矛盾}：在众多矛盾中，对事物发展起\keyword{主导作用}的矛盾；
+  \item \keyword{次要矛盾}：其他影响较小、处于从属地位的矛盾；
+  \item \keyword{矛盾的主要方面}：在一个矛盾中处于\keyword{支配地位}的一方；
+  \item \keyword{矛盾的次要方面}：处于\keyword{相对被动}的一方。
 \end{itemize}
-这些看似不起眼的\keyword{量变}积累到一定程度，就会表现为：
-\begin{itemize}
-  \item 看到题目后能迅速\keyword{判断考点和设问类型}；
-  \item 作答用语更加\keyword{规范、全面、有针对性}；
-  \item 分数出现\keyword{阶段性跃升}——这就是学习中的\keyword{质变}。
-\end{itemize}
-\end{examplebox}
-
-\subsection{否定之否定}
-
-\begin{summarybox}{否定之否定规律的简要理解}
-\keyword{否定之否定}不是简单的“推翻”，而是\keyword{既克服又保留}的扬弃过程。可以记成三个关节点：
-\begin{enumerate}
-  \item \keyword{第一次否定}：旧事物走向灭亡，新事物产生；
-  \item \keyword{第二次否定}：新事物发展中的更高级阶段，对原来的新事物进行\inlinehint{改造和提升}；
-  \item \keyword{结果形态}：既不同于原来的旧事物，又保留了其中的\keyword{合理因素}，形成“\inlinehint{螺旋式上升、波浪式前进}”的过程。
-\end{enumerate}
-\end{summarybox}
-
-\begin{examplebox}{从“旧笔记”到“新框架”的否定之否定}
-\begin{enumerate}
-  \item 第一次否定：你发现原来的课堂笔记\inlinehint{杂乱、难以复习}，于是决定重新整理辩证法内容，建立更清晰的结构；
-  \item 第二次否定：在使用新笔记一段时间后，你根据\keyword{错题反馈和模拟考试}进一步调整结构，增补“答题模板”和“高频错误”板块；
-  \item 结果形态：最终形成一套\keyword{结构清晰、针对性强、可循环使用}的专用笔记，本身就是对过去两版笔记的\keyword{扬弃和提升}。
-\end{enumerate}
-\end{examplebox}
-
-%==========================
-\section{辩证法在高考答题中的应用}
-%==========================
-
-\subsection{常见设问类型与对应工具}
-
-\begin{summarybox}{“看题型选工具”的思路}
-面对辩证法相关题目，可以先判断设问属于哪一种，再选用对应的\keyword{工具与句式}：
+分清这些，是在复杂局面中判断“什么更重要、优先解决什么”的思维基础。
 \end{summarybox}
 
 \begin{center}
 \begin{tabularx}{0.96\textwidth}{lXX}
 \toprule
-设问类型 & 对应辩证法工具 & 作答思路提示 \\
+分析层次 & 说明 & 示例 \\
 \midrule
-“如何全面认识……？” & 联系观点、两点论与重点论 & 从\keyword{多角度列点}，再突出\keyword{主要方面或关键因素} \\
-“如何看待利与弊？” & 矛盾分析、对立统一 & 从\keyword{正反两方面}分析，强调“寓利于弊、趋利避害” \\
-“如何正确处理……关系？” & 主要矛盾与次要矛盾 & 说明\keyword{谁是主要矛盾}，强调“抓住主要矛盾同时兼顾其他矛盾” \\
-“怎样做到稳中求进？” & 量变—质变规律 & 先讲\keyword{打好基础、循序渐进}，再讲\keyword{适时把握质变时机} \\
-“如何持续优化……？” & 否定之否定规律 & 强调在\keyword{阶段性总结中扬弃不足}，实现\keyword{螺旋式上升} \\
+主要矛盾—次要矛盾 & 在众多问题中判断\keyword{当前最核心}的是哪一个 & 备考阶段，\keyword{基础是否扎实}往往比“文具好不好看”更关键 \\
+主要方面—次要方面 & 在一对矛盾中，哪一方\keyword{影响更大} & “努力程度”和“天赋差异”都影响成绩，但\keyword{长期努力}往往起更大作用 \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-\subsection{示例：分析一段材料}
-
-\begin{examplebox}{用辩证思维分析学习计划}
-\textbf{材料：}某班组织“百日学习打卡”活动，有同学认为“只要每天坚持刷题就一定能提高成绩”；也有人认为“活动太累，影响正常生活，没有必要参加”。请运用辩证法知识加以分析。
-
-\textbf{示例思路：}
+\begin{examplebox}{用矛盾分析看待“自律 vs 享乐”}
+当你感觉自己“总是控制不住想刷手机”时，可以尝试：
 \begin{enumerate}
-  \item 联系与发展：既要看到“刷题活动”对\keyword{熟练度、氛围、自律}等积极影响，也要看到\inlinehint{身体健康、心理压力、活动质量}等因素；
-  \item 矛盾分析：当前主要矛盾是“\keyword{提高学习质量}与\keyword{避免形式主义}”之间的矛盾，应把握“\keyword{提高质量}”这一主要方面；
-  \item 量变—质变：合理的每日积累有利于形成\keyword{质的飞跃}，但一味追求数量可能\inlinehint{降低效率、积累负面量变}；
-  \item 否定之否定：可以通过\keyword{调整活动内容和节奏}，保留打卡的\inlinehint{激励和监督}作用，否定其中\inlinehint{机械刷题、疲劳战}等不合理部分，使活动不断优化。
+  \item 找矛盾：\keyword{长期成长的需要} vs \keyword{即时愉悦的吸引}；
+  \item 分层次：在人生较长的时间尺度上，\keyword{成长需要}更接近\keyword{主要矛盾的主要方面}；
+  \item 看条件：是否缺乏其他放松方式？是否给自己安排了\inlinehint{过于紧绷}的计划？
+  \item 提对策：给“愉悦”一个合适的位置，比如设定\keyword{固定休息时段}，避免它占据本应属于成长的时间。
 \end{enumerate}
+\end{examplebox}
 
-\textbf{规范作答示例要点：}
+\subsection{矛盾分析的简单步骤}
+
+\begin{summarybox}{从“觉得乱”到“看清结构”}
+遇到复杂问题时，可以尝试以下\keyword{四步法}：
+\begin{enumerate}
+  \item \keyword{先找矛盾}：有哪些互相拉扯的力量或要求？
+  \item \keyword{再分主次}：哪一对矛盾、哪一方面对结果影响最大？
+  \item \keyword{看清条件}：在什么条件下，矛盾地位可能发生变化？
+  \item \keyword{再想路径}：在承认矛盾存在的前提下，怎样\keyword{合理协调}？
+\end{enumerate}
+\end{summarybox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines,node distance=2.0cm]
+  \node[draw,rounded corners=3pt,fill=surface,inner sep=4pt] (s1) {\scriptsize 1. 找矛盾};
+  \node[draw,rounded corners=3pt,fill=surface,right=of s1] (s2) {\scriptsize 2. 分主次};
+  \node[draw,rounded corners=3pt,fill=surface,right=of s2] (s3) {\scriptsize 3. 看条件};
+  \node[draw,rounded corners=3pt,fill=surface,right=of s3] (s4) {\scriptsize 4. 想路径};
+  \draw[->,accent,thick] (s1) -- (s2);
+  \draw[->,accent,thick] (s2) -- (s3);
+  \draw[->,accent,thick] (s3) -- (s4);
+\end{tikzpicture}
+\captionof{figure}{矛盾分析四步图}
+\end{center}
+
+%==========================
+\section{量变与质变：从一点一滴到关键跃迁}
+%==========================
+
+\subsection{量变：看见细微的积累}
+
+\begin{definitionbox}{量变与质变}
 \begin{itemize}
-  \item 观点句：坚持用\keyword{联系的、发展的、全面的}观点看问题；
-  \item 分析句：既要\keyword{肯定}有利于提高学习质量的积极作用，又要\keyword{看到}可能带来的负面影响；
-  \item 对策句：在\keyword{抓住提高质量这一主要方面}的前提下，\keyword{优化活动设计}，实现\keyword{量变积累到质变飞跃}的良性发展。
+  \item \keyword{量变}：在\inlinehint{数量、程度、范围}上的\keyword{渐进性变化}，一般比较缓慢、连续；
+  \item \keyword{质变}：当量变积累到一定程度时，引起事物\keyword{性质、结构或状态}的\keyword{根本变化}。
+\end{itemize}
+量变与质变\keyword{相互渗透、相互转化}：没有量变的积累就不会发生质变，质变又开启新的量变过程。
+\end{definitionbox}
+
+\begin{center}
+\begin{tabularx}{0.96\textwidth}{lXX}
+\toprule
+类型 & 关键词 & 例子 \\
+\midrule
+量变 & 渐进、累积、微小调整 & 每天多读几页书，每晚提前 10 分钟睡觉 \\
+质变 & 突破、跃迁、状态改变 & 逐渐积累阅读量后，突然发现\keyword{理解力明显提高} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{examplebox}{“坚持练琴”的量变与质变}
+\begin{itemize}
+  \item 量变阶段：每天练习 30 分钟，刚开始觉得枯燥、进展慢；
+  \item 关键点：某一天，你发现\keyword{手指自然而然找到了正确位置}，曲子开始流畅；
+  \item 质变表现：从“勉强完成”到“可以表达情感”，对音乐的理解也发生了变化；
+  \item 新一轮量变：在更高的水平上继续练习，准备迎接下一次质变。
+\end{itemize}
+\end{examplebox}
+
+\subsection{质变：关注“拐点”背后的积累}
+
+\begin{summarybox}{如何在生活中观察量变—质变？}
+可以从三个角度观察：
+\begin{itemize}
+  \item 向过去看：某次明显的“转折”背后，往往有大量\keyword{被忽视的积累}；
+  \item 向现在看：日常一些\inlinehint{看似不起眼的选择}，正在悄悄积累成未来的某种倾向；
+  \item 向未来看：有时需要\keyword{刻意设计}量变路径，为自己创造质变的可能。
+\end{itemize}
+\end{summarybox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines,xscale=1.1,yscale=0.9]
+  \draw[->,thick] (0,0) -- (6,0) node[right] {时间};
+  \draw[->,thick] (0,0) -- (0,4) node[above] {掌握程度};
+  \draw[secondary,thick,smooth] plot coordinates {(0.3,0.4) (1,0.8) (1.8,1.1) (2.5,1.3) (3.2,1.4)};
+  \draw[accent,thick,smooth] plot coordinates {(3.2,1.4) (3.6,2.0) (4.2,2.6) (4.8,2.9) (5.4,3.2)};
+  \draw[dashed,highlight,thick] (3.2,0) -- (3.2,3.4);
+  \node[inkgray,anchor=west] at (3.3,3.1) {\scriptsize 某次“突然开窍”的质变点};
+\end{tikzpicture}
+\captionof{figure}{量变积累到质变的示意图}
+\end{center}
+
+%==========================
+\section{否定之否定：更新与升级的路径}
+%==========================
+
+\subsection{否定之否定的直观理解}
+
+\begin{summarybox}{“否定之否定”不是简单推翻}
+\keyword{否定之否定}指事物在发展过程中经历\keyword{两个连续的否定}，最终达到\keyword{比原来更高级的状态}：
+\begin{enumerate}
+  \item 第一次否定：新事物产生，对旧事物进行\keyword{克服和超越}；
+  \item 第二次否定：更高级的新事物出现，对第一次的新事物再作\keyword{提升与调整}；
+  \item 结果形态：既不同于最初的旧事物，又保留其中\keyword{合理因素}，呈现“螺旋式上升”。
+\end{enumerate}
+\end{summarybox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines]
+  \draw[accent,thick,smooth] plot coordinates {(0,0.6) (1,1.2) (2,0.9) (3,1.6) (4,1.3) (5,2.0)};
+  \node[inkgray] at (0,0.3) {\scriptsize 旧做法};
+  \node[inkgray] at (2,0.5) {\scriptsize 第一次否定后};
+  \node[inkgray] at (5,1.6) {\scriptsize 第二次否定后};
+\end{tikzpicture}
+\captionof{figure}{螺旋式上升的示意曲线}
+\end{center}
+
+\begin{examplebox}{从“旧笔记”到“思维框架”的两次否定}
+\begin{enumerate}
+  \item 第一次否定：你发现原来的课堂笔记零散、难以复习，于是\keyword{否定旧方式}，重新整理重点、画结构图；
+  \item 第二次否定：使用一段时间后，你发现还缺少\inlinehint{连接不同章节的桥}，于是再\keyword{升级为思维导图或概念网络}；
+  \item 结果：新的笔记系统既保留了旧笔记中\keyword{真实的思考痕迹}，又克服了杂乱与重复，更利于长期使用和更新。
+\end{enumerate}
+\end{examplebox}
+
+%==========================
+\section{辩证思维的日常实践}
+%==========================
+
+\subsection{四个“常用视角”}
+
+\begin{summarybox}{面对问题可以先问自己什么？}
+遇到一件事，可以先在心里快速问四个问题：
+\begin{itemize}
+  \item \keyword{联系视角}：这件事和\inlinehint{哪些人、哪些条件、哪些背景}有关？
+  \item \keyword{矛盾视角}：其中有哪些\inlinehint{互相拉扯的力量}？最关键的矛盾是什么？
+  \item \keyword{发展视角}：把时间轴拉长看，这只是\keyword{一个阶段}还是长期趋势？
+  \item \keyword{量变—质变视角}：当下的\inlinehint{小选择}，正在为未来哪种可能的“质变”积累条件？
+\end{itemize}
+\end{summarybox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines,node distance=2.2cm]
+  \node[draw,rounded corners=3pt,fill=surface,inner sep=5pt] (q) {\scriptsize 正在思考的问题};
+  \node[draw,rounded corners=3pt,fill=surface,above=of q] (lian) {\scriptsize 联系视角};
+  \node[draw,rounded corners=3pt,fill=surface,right=of q] (mao) {\scriptsize 矛盾视角};
+  \node[draw,rounded corners=3pt,fill=surface,below=of q] (fa) {\scriptsize 发展视角};
+  \node[draw,rounded corners=3pt,fill=surface,left=of q] (liang) {\scriptsize 量变—质变视角};
+  \draw[->,accent,thick] (q) -- (lian);
+  \draw[->,accent,thick] (q) -- (mao);
+  \draw[->,accent,thick] (q) -- (fa);
+  \draw[->,accent,thick] (q) -- (liang);
+\end{tikzpicture}
+\captionof{figure}{面对问题的四个辩证视角}
+\end{center}
+
+\subsection{三个练习场景}
+
+\begin{examplebox}{练习一：看待自己的情绪波动}
+当你感到\keyword{焦虑或沮丧}时，可以试着：
+\begin{itemize}
+  \item 从\keyword{联系}看：这些情绪和\inlinehint{睡眠、任务压力、人际关系、身体状态}有哪些联系？
+  \item 从\keyword{矛盾}看：你在\inlinehint{怎样的期望和现实之间}拉扯？主要矛盾是什么？
+  \item 从\keyword{发展}看：这一阶段的情绪是\keyword{偶发波动}还是长期累积的结果？
+  \item 从\keyword{量变—质变}看：哪些小习惯可以逐渐改善这种状况，为未来的“质变”铺路？
+\end{itemize}
+\end{examplebox}
+
+\begin{examplebox}{练习二：理解公共讨论中的不同声音}
+在网络上看到激烈讨论（例如关于某项政策、某个社会事件），可以：
+\begin{itemize}
+  \item 先从\keyword{联系}角度列出相关的\inlinehint{背景、利益相关者、历史因素}；
+  \item 再用\keyword{矛盾分析}找出\inlinehint{核心冲突}在哪些价值观或利益之间；
+  \item 用\keyword{发展视角}追问：争论背后反映了社会在\keyword{什么方向}上调整？
+  \item 用\keyword{否定之否定}思考：是否存在比“完全肯定 / 完全否定”更高一层的解决思路？
+\end{itemize}
+\end{examplebox}
+
+\begin{examplebox}{练习三：为一次重要选择提供辩证分析}
+面对升学、专业或职业方向的选择，可以尝试写一个\keyword{辩证分析小结}：
+\begin{itemize}
+  \item 简要描述\keyword{几个备选方向}及其优缺点（联系与矛盾）；
+  \item 判断当前阶段的\keyword{主要矛盾和主要方面}——例如是“成长空间”更重要，还是“短期稳定”更重要；
+  \item 分析不同选择在未来可能带来的\keyword{量变—质变路径}；
+  \item 最后根据这些分析，给出\keyword{暂时结论}，并注明在什么条件变化时自己可能\keyword{重新评估}。
 \end{itemize}
 \end{examplebox}
 
 %==========================
-\section{本章小结与自我检测}
+\section{本章小结与持续练习}
 %==========================
 
-\begin{summarybox}{核心知识网络回顾}
-可以按下面的\keyword{“三层网络”}自查是否掌握：
+\begin{summarybox}{核心观念一页看完}
 \begin{itemize}
-  \item \textbf{观念层（知道什么）}：能否简明说出\keyword{联系、发展、矛盾、量变、质变、否定之否定}等基本概念及其关系；
-  \item \textbf{工具层（会用什么）}：遇到设问时，是否能迅速判断用\keyword{联系观点、矛盾分析、量变—质变}还是\keyword{否定之否定}来作答；
-  \item \textbf{应用层（能做到什么）}：是否能用\keyword{规范政治语言}分析自身学习、班级活动或社会热点。
+  \item 世界是\keyword{普遍联系}、\keyword{永恒发展}的整体；
+  \item 事物内部充满\keyword{矛盾}，矛盾的\keyword{普遍性与特殊性}要求我们\keyword{具体问题具体分析}；
+  \item \keyword{量变—质变、否定之否定}帮助我们理解从\keyword{积累到突破}、从\keyword{旧到新的升级}；
+  \item 辩证法不是一套“术语”，而是一种\keyword{看世界和行动的方式}。
 \end{itemize}
 \end{summarybox}
 
 \begin{focuspoints}
-  \item 尝试用“矛盾分析四步法”写一段关于\keyword{手机使用}或\keyword{熬夜学习}的分析；
-  \item 任选一道最近做过的高考政治题，标注其中涉及的\keyword{辩证法知识点}并改写自己的答案；
-  \item 定期\keyword{更新本笔记}，把新的例子和答题句式补充进来，使之成为你个人的\keyword{辩证思维工具箱}。
+  \item 每天选一个\keyword{生活片段}（一次对话、一条新闻、一种心情），用本章至少\keyword{两个概念}重新描述；
+  \item 尝试画出属于自己的\keyword{“世界观思维导图”}：把联系、矛盾、量变—质变、否定之否定等概念连成网络；
+  \item 每隔一段时间，回头查看自己的分析和图示，观察\keyword{自己的思维是否也经历了量变与质变}；
+  \item 把这份笔记视为一个\keyword{可不断修改的版本}，在新的理解出现时，勇于对旧理解进行\keyword{辩证的否定与升级}。
 \end{focuspoints}
 
 \end{document}
