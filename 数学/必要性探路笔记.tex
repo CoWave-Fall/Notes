@@ -1,39 +1,18 @@
-\documentclass[a4paper,12pt]{ctexart}
+\documentclass[a4paper,11pt]{ctexart}
 
 \input{../mathnote-preamble.tex}
 
-\setCJKmainfont{SimSun}
-\setCJKsansfont{SimHei}
-\setCJKmonofont{FangSong}
-\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
-\pgfplotsset{compat=1.18}
+% 若主要用于纸质打印，可启用印刷模式配色
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
 
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-    pdfborder={0 0 0}
-}
+% 使用模板提供的主题色重新定义行内强调命令
+\newcommand{\highlight}[1]{\textcolor{highlight}{\textbf{#1}}}
+\newcommand{\method}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\keypoint}[1]{\textcolor{secondary}{\textbf{#1}}}
+\newcommand{\warning}[1]{\textcolor{highlight}{\textbf{注意：#1}}}
 
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{高中数学参考笔记}
-\fancyhead[R]{必要性探路}
-\fancyfoot[C]{\thepage}
-
-\titleformat{\section}{\Large\bfseries\color{blue!80!black}}{\thesection}{1em}{}
-\titleformat{\subsection}{\large\bfseries\color{green!70!black}}{\thesubsection}{1em}{}
-\titleformat{\subsubsection}{\bfseries\color{red!70!black}}{\thesubsubsection}{1em}{}
-
-% 定义颜色方案（兼容黑白打印）
-\definecolor{mainblue}{RGB}{0, 102, 204}
-\definecolor{accentgreen}{RGB}{0, 153, 76}
-\definecolor{accentred}{RGB}{204, 0, 51}
-\definecolor{textgray}{RGB}{64, 64, 64}
-\definecolor{lightgray}{RGB}{230, 230, 230}
-
-% 定理环境
+% 定理环境：保持传统样式，避免过多彩色文本框
 \theoremstyle{definition}
 \newtheorem{definition}{定义}[section]
 \newtheorem{theorem}{定理}[section]
@@ -46,24 +25,48 @@
 \newtheorem{example}{例题}[section]
 \newtheorem{exercise}{练习}[section]
 
-% 自定义命令
-\newcommand{\highlight}[1]{\textcolor{accentred}{\textbf{#1}}}
-\newcommand{\method}[1]{\textcolor{mainblue}{\textbf{#1}}}
-\newcommand{\keypoint}[1]{\textcolor{accentgreen}{\textbf{#1}}}
-\newcommand{\warning}[1]{\textcolor{accentred}{\textbf{注意：#1}}}
-
 \renewcommand{\notetitle}{必要性探路方法在高中数学中的应用}
 \renewcommand{\noteauthor}{高中数学参考笔记}
 \renewcommand{\notedate}{\today}
-
-\title{\textbf{\Large \notetitle}\\
-\large 综合性·指导性·详细性·复习式·工具与应用风格}
-\author{\noteauthor}
-\date{\notedate}
+\renewcommand{\notesubtitle}{理论基础·方法技巧·典型应用}
+\renewcommand{\noteversion}{v1.0}
 
 \begin{document}
 
-\maketitle
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·必要性探路}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{必要性探路}这一核心思想，梳理命题逻辑、不等式、函数、数列等常见场景中的典型模型；
+    \item 强调从\inlinehint{必要条件}出发缩小范围，再通过\inlinehint{充分性}验证完成证明与求解；
+    \item 配套基础例题与练习，帮助形成可迁移的\keyword{通用解题步骤}与\keyword{参数分析框架}。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
 
 % 目录
 \tableofcontents
@@ -123,14 +126,14 @@
 
 \subsection{方法步骤}
 
-\begin{method}[必要性探路的通用步骤]
+\begin{summarybox}{必要性探路的通用步骤}
 \begin{enumerate}
     \item \textbf{分析问题}：明确题目要求证明或求解的结论
     \item \textbf{寻找必要条件}：思考哪些条件是结论成立所必需的
     \item \textbf{验证充分性}：检查这些必要条件是否足以推出结论
     \item \textbf{综合推理}：结合必要条件和充分性验证，完成证明或求解
 \end{enumerate}
-\end{method}
+\end{summarybox}
 
 \newpage
 
@@ -167,14 +170,14 @@
 
 \subsection{参数范围确定}
 
-\begin{method}[参数范围确定技巧]
+\begin{summarybox}{参数范围确定技巧}
 \begin{enumerate}
     \item \textbf{边界分析}：通过特殊值确定参数的边界
     \item \textbf{单调性分析}：利用函数的单调性确定参数范围
     \item \textbf{极值分析}：通过极值点确定参数的临界值
     \item \textbf{综合验证}：结合多种方法验证参数范围的正确性
 \end{enumerate}
-\end{method}
+\end{summarybox}
 
 \subsection{充分性验证方法}
 

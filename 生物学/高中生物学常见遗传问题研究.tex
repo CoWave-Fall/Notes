@@ -2,48 +2,21 @@
 % !TEX encoding = UTF-8
 % ============================================
 % 高中生物学常见遗传问题研究
-% 基于数学笔记模板
+% 基于 MathNote XeLaTeX 模板
 % ============================================
 
-\documentclass[a4paper, 11pt]{ctexart}
+\documentclass[a4paper,11pt]{ctexart}
+\input{../mathnote-preamble.tex}
 
 % ============================================
-% 包的引入
+% 额外宏包与颜色（本笔记专用）
 % ============================================
 
-% 数学公式与符号
-\usepackage{amsmath, amssymb, amsthm, amsfonts}
-\usepackage{mathtools} % 增强的数学工具
-
-% 页面设置
-\usepackage{geometry}
-\geometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
-
-% 颜色支持
-\usepackage{xcolor}
-
-% 绘图支持
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta, positioning, intersections, quotes, calc, shapes.geometric, matrix}
-
-% 彩色文本框
-\usepackage[most]{tcolorbox}
-
-% 超链接
-\usepackage[colorlinks=true, linkcolor=myblue, citecolor=mygreen, urlcolor=myred]{hyperref}
-
-% 图片支持
-\usepackage{graphicx}
-
-% 其他工具
-\usepackage{caption} % 支持 \captionof 命令
-\usepackage{enumitem} % 增强的列表环境
+% 表格工具
 \usepackage{multirow} % 表格多行合并
-\usepackage{array} % 表格列格式
+\usepackage{array}    % 表格列格式
 
-% ============================================
-% 颜色定义（兼容黑白打印）
-% ============================================
+% 颜色定义：用于遗传示意图与补充标记
 \definecolor{myblue}{RGB}{0, 112, 192}
 \definecolor{mygreen}{RGB}{0, 176, 80}
 \definecolor{myorange}{RGB}{247, 150, 70}
@@ -51,124 +24,66 @@
 \definecolor{mypurple}{RGB}{152, 78, 163}
 \definecolor{mygray}{gray}{0.95}
 
-% ============================================
-% 定理、定义、例题环境设置
-% ============================================
-
-% 定理环境
-\newtcolorbox{theorembox}[1]{
-    colback=myblue!5!white,
-    colframe=myblue!75!black,
-    fonttitle=\bfseries,
-    title=遗传定律：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myblue!75!black,
-        sharp corners
-    }
-}
-
-% 定义环境
-\newtcolorbox{definitionbox}[1]{
-    colback=mygreen!5!white,
-    colframe=mygreen!75!black,
-    fonttitle=\bfseries,
-    title=定义：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=mygreen!75!black,
-        sharp corners
-    }
-}
-
-% 例题/技巧与应用环境
-\newtcolorbox{examplebox}[1]{
-    colback=myorange!5!white,
-    colframe=myorange!75!black,
-    fonttitle=\bfseries,
-    title=解题技巧：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myorange!75!black,
-        sharp corners
-    }
-}
-
-% 引理环境
-\newtcolorbox{lemmabox}[1]{
-    colback=mypurple!5!white,
-    colframe=mypurple!75!black,
-    fonttitle=\bfseries,
-    title=关键要点：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=mypurple!75!black,
-        sharp corners
-    }
-}
-
-% 注意/提醒环境
-\newtcolorbox{notebox}[1]{
-    colback=mygray,
-    colframe=myred!75!black,
-    fonttitle=\bfseries,
-    title=注意事项：#1,
-    enhanced,
-    attach boxed title to top left={xshift=1cm, yshift=-2mm},
-    top=8mm,
-    boxed title style={
-        colback=myred!75!black,
-        sharp corners
-    }
-}
+% TikZ 附加库（在 mathnote 已加载 tikz 的基础上扩展）
+\usetikzlibrary{intersections,quotes,shapes.geometric,matrix}
 
 % ============================================
-% 标题格式设置
+% MathNote 元信息与自定义命令
 % ============================================
-\usepackage{titlesec}
-\titleformat{\section}
-    {\Large\bfseries\color{myblue}}
-    {\thesection}{1em}{}
-\titleformat{\subsection}
-    {\large\bfseries\color{myorange}}
-    {\thesubsection}{1em}{}
 
-% ============================================
-% 数学定理环境（使用 amsthm）
-% ============================================
-\theoremstyle{definition}
-\newtheorem{theorem}{定律}[section]
-\newtheorem{definition}{定义}[section]
-\newtheorem{lemma}{引理}[section]
-\newtheorem{corollary}{推论}[theorem]
-\newtheorem{example}{例题}[section]
+% 笔记元信息（用于封面、页眉与 PDF 元数据）
+\renewcommand{\notetitle}{高中生物学常见遗传问题研究}
+\renewcommand{\noteauthor}{生物学笔记}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{常见遗传问题与解题策略}
+\renewcommand{\noteversion}{v1.0}
 
-% ============================================
-% 自定义命令
-% ============================================
-\newcommand{\genotype}[1]{\textcolor{myblue}{\textbf{#1}}} % 基因型
-\newcommand{\phenotype}[1]{\textcolor{myred}{\textbf{#1}}} % 表现型
+% 可根据输出介质按需启用
+% \MathNoteEnablePrint      % 若主要用于印刷，可解除注释
+% \MathNoteEnableReviewStamp% 若需要在首页叠加审稿章，可解除注释
+
+% 生物学专用标记
+\newcommand{\genotype}[1]{\textcolor{accent}{\textbf{#1}}}   % 基因型高亮
+\newcommand{\phenotype}[1]{\textcolor{highlight}{\textbf{#1}}} % 表现型高亮
 
 % ============================================
 % 文档开始
 % ============================================
 \begin{document}
 
-% 标题页
-\title{\Huge \bfseries \color{myblue} 高中生物学常见遗传问题研究}
-\author{生物学笔记}
-\date{\today}
-\maketitle
+\thispagestyle{empty}
+\PageTag[secondary]{高中生物·遗传问题}
+\setcounter{page}{1}
 
-% 目录
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 从\keyword{基因型—表现型}、配子法与概率入手，统一整理高中常见遗传模型；
+    \item 以\keyword{孟德尔定律}、\keyword{基因互作}、\keyword{连锁互换} 和 \keyword{伴性遗传} 为主线，总结常见题型与结构；
+    \item 配套典型例题、速查表与\inlinehint{易错点清单}，形成可迁移的\keyword{解题步骤}与\keyword{数量分析框架}。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
 \tableofcontents
 \newpage
 

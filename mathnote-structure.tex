@@ -68,7 +68,8 @@
 % --------------------------------------------------
 % Header / footer
 % --------------------------------------------------
-\newcommand{\mathnote@headertext}{\small\sffamily\textcolor{accent}{\notetitle\mathnote@maybeversion\ >\ \nouppercase{\rightmark}}}
+% 页眉仅显示笔记标题与当前节名，不再附加版本号
+\newcommand{\mathnote@headertext}{\small\sffamily\textcolor{accent}{\notetitle\ >\ \nouppercase{\rightmark}}}
 \newcommand{\mathnote@footertext}{\small\sffamily\textcolor{inkgray}{\thepage}\ \textcolor{mathnotePureCyan}{/}\ \textcolor{inkgray}{\pageref{LastPage}}}
 \pagestyle{fancy}
 \fancyhf{}
@@ -93,4 +94,3 @@
   \renewcommand{\headrulewidth}{0pt}
   \renewcommand{\footrulewidth}{0pt}
 }
-

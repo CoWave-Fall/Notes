@@ -1,48 +1,65 @@
-\documentclass[UTF8, a4paper]{ctexart}
+\documentclass[a4paper,11pt]{ctexart}
+\input{../mathnote-preamble.tex}
 
-% --- 宏包引入 ---
-\usepackage{amsmath}          % AMS 数学公式宏包
-\usepackage{geometry}         % 页面设置
-\usepackage{graphicx}         % 插入图片
-\usepackage{xcolor}           % 颜色支持
-\usepackage{tikz}             % 绘制图形
-\usepackage{hyperref}         % 超链接
-\usepackage{fancyhdr}         % 页眉页脚
+% 可选：如主要用于送印，可启用印刷模式与审稿章
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
 
-% --- 页面与颜色定义 ---
-\geometry{a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
-\definecolor{TitleColor}{rgb}{0.1, 0.4, 0.7}
-\definecolor{SectionColor}{rgb}{0.2, 0.5, 0.8}
-\definecolor{HighlightColor}{rgb}{0.8, 0.2, 0.2}
-\definecolor{FormulaColor}{rgb}{0.1, 0.5, 0.1}
-\definecolor{GraphBgColor}{gray}{0.95}
+\renewcommand{\notetitle}{高中物理笔记：板块问题}
+\renewcommand{\noteauthor}{Gemini AI}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{板块模型的情景分类与解题策略}
+\renewcommand{\noteversion}{v1.0}
 
-% --- 超链接设置 ---
-\hypersetup{
-    colorlinks=true,
-    linkcolor=TitleColor,
-    filecolor=magenta,      
-    urlcolor=cyan,
-}
+% 物理专用强调色：复用模板主色
+\colorlet{FormulaColor}{screenTone07}
+\colorlet{HighlightColor}{highlight}
+% v-t 图像配色：使用 16 色屏幕色板
+\colorlet{vtBlockA}{screenTone03}
+\colorlet{vtBlockB}{screenTone13}
+\colorlet{vtBoardM}{screenTone07}
+\colorlet{vtCommon}{screenTone15}
+\colorlet{vtFillA}{screenTone03!20!white}
+\colorlet{vtFillB}{screenTone13!20!white}
 
-% --- 标题样式 ---
-\ctexset{
-    section = {
-        \normalfont\large\bfseries\color{SectionColor}
-    },
-    subsection = {
-        \normalfont\normalsize\bfseries\color{SectionColor}
-    }
-}
-
-% --- 文档开始 ---
 \begin{document}
 
-\title{\textcolor{TitleColor}{\Huge 高中物理“板块问题”综合复习笔记}}
-\author{Gemini AI}
-\date{\today}
-\maketitle
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中物理 · 板块问题}
+\setcounter{page}{1}
 
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{板块模型}这一典型情景，总结“板上滑块 + 外界约束”的常见变式与统一分析框架；
+    \item 强调从\inlinehint{相对运动与摩擦类型}入手，结合整体法 / 隔离法与\keyword{v-t 图像}完成多阶段运动刻画；
+    \item 通过“光滑地面 / 粗糙地面 / 斜面 / 多滑块”等模块化整理，形成可迁移的\keyword{解题流程}与\keyword{能量视角}。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+
+% 目录
 \tableofcontents
 \newpage
 
@@ -51,26 +68,34 @@
 板块问题是处理置于另一物体（通常是长木板）上的滑块的动力学问题。其核心在于分析物体间的相对运动，以及由相对运动决定的摩擦力类型（静摩擦或动摩擦）。
 
 \subsection{两大核心分析方法}
-\begin{itemize}
+\begin{focuspoints}
     \item \textbf{隔离法}: 分别对木板和滑块进行受力分析，根据各自的受力情况应用牛顿第二定律 ($F_{net} = ma$)。这是最基本、最常用的方法。
     \item \textbf{整体法}: 在木板和滑块相对静止（即加速度相同）时，可以将它们视为一个整体进行分析。这能帮助我们快速求解系统的加速度或外部合力。
-\end{itemize}
+\end{focuspoints}
 
 \subsection{一个关键物理量：摩擦力}
 摩擦力是板块问题的灵魂，其方向和大小的判断至关重要。
-\begin{itemize}
+\begin{focuspoints}
     \item \textbf{静摩擦力 ($f_s$)}: 作用在相对静止的物体之间。其大小在 $0 < f_s \le f_{s,max}$ 范围内变化，方向与相对运动趋势相反。
     \item \textbf{动摩擦力 ($f_k$)}: 作用在发生相对滑动的物体之间。其大小恒定，\textcolor{FormulaColor}{$f_k = \mu_k N$}，其中 $\mu_k$ 是动摩擦因数，$N$ 是正压力。方向与相对运动方向相反。
-\end{itemize}
+\end{focuspoints}
 \textcolor{HighlightColor}{\textbf{核心判断点}}: 两物体能否保持相对静止，取决于它们之间的静摩擦力是否足以提供使它们加速度相同的“联系”。临界条件通常是静摩擦力达到最大值 $f_{s,max}$。
 
 \subsection{一个核心图像：v-t 图像}
 速度-时间 ($v-t$) 图像是解决板块问题最直观的工具。
-\begin{itemize}
+\begin{focuspoints}
     \item \textbf{斜率}: 表示物体的加速度 $a$。
     \item \textbf{面积}: 表示物体的位移 $s$。
     \item \textcolor{HighlightColor}{\textbf{两图像间的面积差}}: 表示两物体间的相对位移 $\Delta s = s_{相对}$。这在计算摩擦生热 ($Q = f_k \cdot s_{相对}$) 时极为有用。
-\end{itemize}
+\end{focuspoints}
+
+\begin{summarybox}{本章小结：板块问题三大视角}
+  \begin{focuspoints}
+    \item 从\keyword{整体法 + 隔离法}出发统一处理受力与加速度，明确系统与子系统的关系；
+    \item 将\keyword{静/动摩擦}视为“相对运动状态”的结果，通过临界静摩擦力判断是否发生滑动；
+    \item 借助\keyword{$v\!-\!t$ 图像}将相对位移与摩擦生热几何化，使多阶段运动一图在手、全程可追踪。
+  \end{focuspoints}
+\end{summarybox}
 
 \section{情况一：板块间有摩擦，地面光滑}
 
@@ -93,16 +118,16 @@
     \item \textbf{共同速度}: 系统动量守恒： $mv_0 = (M+m)v_{共} \implies \textcolor{FormulaColor}{v_{共} = \frac{m v_0}{M+m}}$
     \item \textbf{v-t 图像}:
     \begin{center}
-        \begin{tikzpicture}[scale=1.2]
+        \begin{tikzpicture}[mathnote lines, scale=1.2]
             \draw[->] (0,0) -- (5,0) node[right] {$t$};
             \draw[->] (0,0) -- (0,3) node[above] {$v$};
-            \draw[thick, blue] (0,2.5) node[left] {$v_0$} -- (3,1) node[midway, above] {滑块 $m$};
-            \draw[thick, red] (0,0) -- (3,1) node[midway, below] {木板 $M$};
+            \draw[thick, vtBlockA] (0,2.5) node[left] {$v_0$} -- (3,1) node[midway, above] {滑块 $m$};
+            \draw[thick, vtBoardM] (0,0) -- (3,1) node[midway, below] {木板 $M$};
             \draw[dashed] (3,1) -- (3,0) node[below] {$t_1$};
             \draw[dashed] (3,1) -- (0,1) node[left] {$v_{共}$};
-            \draw[thick, purple] (3,1) -- (4.5,1) node[right] {共同运动};
-            \fill[blue!20, opacity=0.5] (0,0) -- (0,2.5) -- (3,1) -- cycle;
-            \fill[red!20, opacity=0.5] (0,0) -- (3,1) -- cycle;
+            \draw[thick, vtCommon] (3,1) -- (4.5,1) node[right] {共同运动};
+            \fill[vtFillA, opacity=0.5] (0,0) -- (0,2.5) -- (3,1) -- cycle;
+            \fill[vtFillB, opacity=0.5] (0,0) -- (3,1) -- cycle;
             \node at (1.5, 0.5) [rotate=15] {$s_M$};
             \node at (1.5, 1.7) [rotate=-22] {$s_m$};
             \node[HighlightColor] at (2.5, 2) {$s_{相对} = s_m - s_M$};
@@ -159,14 +184,14 @@
         \end{itemize}
     \item \textbf{v-t 图像 (以 $a_M>0$ 为例)}:
     \begin{center}
-        \begin{tikzpicture}[scale=1.2]
+        \begin{tikzpicture}[mathnote lines, scale=1.2]
             \draw[->] (0,0) -- (6,0) node[right] {$t$};
             \draw[->] (0,0) -- (0,3) node[above] {$v$};
-            \draw[thick, blue] (0,2.5) node[left] {$v_0$} -- (2,1) node[midway, above] {$m$ 减速};
-            \draw[thick, red] (0,0) -- (2,1) node[midway, below] {$M$ 加速};
+            \draw[thick, vtBlockA] (0,2.5) node[left] {$v_0$} -- (2,1) node[midway, above] {$m$ 减速};
+            \draw[thick, vtBoardM] (0,0) -- (2,1) node[midway, below] {$M$ 加速};
             \draw[dashed] (2,1) -- (2,0) node[below] {$t_1$};
             \draw[dashed] (2,1) -- (0,1) node[left] {$v_{共}$};
-            \draw[thick, purple] (2,1) -- (4,0) node[midway, below right] {共同减速};
+            \draw[thick, vtCommon] (2,1) -- (4,0) node[midway, below right] {共同减速};
         \end{tikzpicture}
     \end{center}
 \end{itemize}
@@ -247,16 +272,16 @@
         最终共同速度 $v_{共} = \frac{P_{初}}{M+m_A+m_B} = \frac{m_A v_A - m_B v_B}{M+m_A+m_B}$。
     \item \textbf{v-t 图像 (以 $m_A > m_B$ 为例)}:
     \begin{center}
-        \begin{tikzpicture}[scale=1.2]
+        \begin{tikzpicture}[mathnote lines, scale=1.2]
             \draw[->] (0,-1.5) -- (5,-1.5) node[right] {$t$};
             \draw[->] (2.5,-2) -- (2.5,2.5) node[above] {$v$};
             \draw (2.5,-1.5) node[below] {$0$};
             % Block A
-            \draw[thick, blue] (2.5,2) node[right] {$v_A$} -- (4,0.5) node[midway, above] {$A$};
+            \draw[thick, vtBlockA] (2.5,2) node[right] {$v_A$} -- (4,0.5) node[midway, above] {$A$};
             % Block B
-            \draw[thick, red] (2.5,-1) node[left] {$-v_B$} -- (4,0.5) node[midway, below] {$B$};
+            \draw[thick, vtBlockB] (2.5,-1) node[left] {$-v_B$} -- (4,0.5) node[midway, below] {$B$};
             % Plate M
-            \draw[thick, green] (2.5,0) -- (4,0.5) node[midway, above] {$M$};
+            \draw[thick, vtBoardM] (2.5,0) -- (4,0.5) node[midway, above] {$M$};
             \draw[dashed] (4,0.5) -- (4,-1.5) node[below] {$t_{共}$};
             \draw[dashed] (4,0.5) -- (2.5,0.5) node[left] {$v_{共}$};
         \end{tikzpicture}
@@ -392,27 +417,27 @@ v-t 图像是理解这些复杂过程最直观的工具。每一幅图都像一�
         \end{itemize}
 \end{itemize}
 \begin{center}
-    \begin{tikzpicture}[scale=1.2, every node/.style={font=\small}]
+    \begin{tikzpicture}[mathnote lines, scale=1.2, every node/.style={font=\small}]
         % 坐标轴
         \draw[->] (0,-2) -- (6,-2) node[right] {$t$};
         \draw[->] (0,-2.5) -- (0,2.5) node[above] {$v$};
         \node at (0,-2) [below left] {$O$};
         
-        % 物体 A (蓝色)
-        \draw[thick, blue] (0,2) node[right] {$v_A$} -- (4,0) node[midway, above right] {滑块 A};
+        % 物体 A
+        \draw[thick, vtBlockA] (0,2) node[right] {$v_A$} -- (4,0) node[midway, above right] {滑块 A};
         
-        % 物体 B (红色)
-        \draw[thick, red] (0,-1.5) node[left] {$-v_B$} -- (3,0) node[midway, below right] {滑块 B};
+        % 物体 B
+        \draw[thick, vtBlockB] (0,-1.5) node[left] {$-v_B$} -- (3,0) node[midway, below right] {滑块 B};
         
-        % 物体 M (绿色)
-        \draw[ultra thick, green!50!black] (0,0) -- (3,0); % 在B停止前
-        \draw[thick, green!50!black] (3,0) -- (4,0); % B停止后与A共速
-        \node[green!50!black] at (1.5, 0.2) {木板 M 保持静止};
+        % 物体 M
+        \draw[ultra thick, vtBoardM] (0,0) -- (3,0); % 在B停止前
+        \draw[thick, vtBoardM] (3,0) -- (4,0); % B停止后与A共速
+        \node[text=vtBoardM] at (1.5, 0.2) {木板 M 保持静止};
 
         % 辅助线与标注
         \draw[dashed] (3,0) -- (3,-2) node[below] {$t_B$};
         \draw[dashed] (4,0) -- (4,-2) node[below] {$t_A$};
-        \node[align=center, fill=gray!10, rounded corners] at (3.5, -1.5) {B停止后, \\ M受A作用开始运动 (但此例中一起停止)};
+        \node[align=center, fill=screenTone09!8!white, rounded corners] at (3.5, -1.5) {B停止后, \\ M受A作用开始运动 (但此例中一起停止)};
     \end{tikzpicture}
     \captionof{figure}{对称情况 $m_A = m_B$ 的 v-t 图像。M 在 B 停止前保持不动。}
 \end{center}
@@ -429,28 +454,28 @@ v-t 图像是理解这些复杂过程最直观的工具。每一幅图都像一�
         \end{itemize}
 \end{itemize}
 \begin{center}
-    \begin{tikzpicture}[scale=1.2, every node/.style={font=\small}]
+    \begin{tikzpicture}[mathnote lines, scale=1.2, every node/.style={font=\small}]
         % 坐标轴
         \draw[->] (0,-1.5) -- (6,-1.5) node[right] {$t$};
         \draw[->] (0,-2) -- (0,2.5) node[above] {$v$};
         \node at (0,-1.5) [below left] {$O$};
         
-        % 物体 A (蓝色)
-        \draw[thick, blue] (0,2) node[right] {$v_A$} -- (2.5,0.8);
+        % 物体 A
+        \draw[thick, vtBlockA] (0,2) node[right] {$v_A$} -- (2.5,0.8);
         
-        % 物体 B (红色)
-        \draw[thick, red] (0,-1) node[left] {$-v_B$} -- (2.5,0.8);
+        % 物体 B
+        \draw[thick, vtBlockB] (0,-1) node[left] {$-v_B$} -- (2.5,0.8);
         
-        % 物体 M (绿色)
-        \draw[thick, green!50!black] (0,0) -- (2.5,0.8);
+        % 物体 M
+        \draw[thick, vtBoardM] (0,0) -- (2.5,0.8);
         
         % 第二阶段
-        \draw[thick, purple, line width=1.5pt] (2.5,0.8) -- (5,0) node[midway, above, sloped] {三者共同减速};
+        \draw[thick, vtCommon, line width=1.5pt] (2.5,0.8) -- (5,0) node[midway, above, sloped] {三者共同减速};
         
         % 标注
-        \node[blue] at (1,1.7) {A};
-        \node[red] at (1,-0.3) {B};
-        \node[green!50!black] at (1.5,0.2) {M};
+        \node[text=vtBlockA] at (1,1.7) {A};
+        \node[text=vtBlockB] at (1,-0.3) {B};
+        \node[text=vtBoardM] at (1.5,0.2) {M};
         \draw[dashed] (2.5,0.8) -- (2.5,-1.5) node[below] {$t_1$(共速)};
         \draw[dashed] (5,0) -- (5,-1.5) node[below] {$t_2$(停止)};
     \end{tikzpicture}
@@ -470,26 +495,26 @@ v-t 图像是理解这些复杂过程最直观的工具。每一幅图都像一�
         \end{itemize}
 \end{itemize}
 \begin{center}
-    \begin{tikzpicture}[scale=1.2, every node/.style={font=\small}]
+    \begin{tikzpicture}[mathnote lines, scale=1.2, every node/.style={font=\small}]
         % 坐标轴
         \draw[->] (0,-1) -- (7,-1) node[right] {$t$};
         \draw[->] (0,-1.5) -- (0,2.5) node[above] {$v$};
         \node at (0,-1) [below left] {$O$};
         
-        % 物体 A (蓝色) - 整个过程加速度不变
-        \draw[thick, blue] (0,2) node[right] {$v_A$} -- (4,1);
+        % 物体 A - 整个过程加速度不变
+        \draw[thick, vtBlockA] (0,2) node[right] {$v_A$} -- (4,1);
         
-        % 物体 B (红色)
-        \draw[thick, red] (0,-0.8) node[left] {$-v_B$} -- (1.5,0); % B在t_B时刻停止
+        % 物体 B
+        \draw[thick, vtBlockB] (0,-0.8) node[left] {$-v_B$} -- (1.5,0); % B在t_B时刻停止
         
-        % 物体 M (绿色) - 斜率发生变化
-        \draw[thick, green!50!black] (0,0) -- (1.5,0.4) node[midway, below, sloped] {$a_{M1}$}; % B停止前
-        \draw[thick, green!50!black] (1.5,0.4) -- (4,1) node[midway, below, sloped] {$a_{M2} > a_{M1}$}; % B停止后
+        % 物体 M - 斜率发生变化
+        \draw[thick, vtBoardM] (0,0) -- (1.5,0.4) node[midway, below, sloped] {$a_{M1}$}; % B停止前
+        \draw[thick, vtBoardM] (1.5,0.4) -- (4,1) node[midway, below, sloped] {$a_{M2} > a_{M1}$}; % B停止后
         \node[HighlightColor] at (1.5,0.4) {\textbullet}; % 突变点
         \node[HighlightColor, above] at (1.5,0.4) {突变点};
 
         % 第三阶段
-        \draw[thick, purple, line width=1.5pt] (4,1) -- (6,0) node[midway, above, sloped] {A+M 共同减速};
+        \draw[thick, vtCommon, line width=1.5pt] (4,1) -- (6,0) node[midway, above, sloped] {A+M 共同减速};
         
         % 标注
         \draw[dashed] (1.5,0) -- (1.5,-1) node[below] {$t_B$(B停止)};
@@ -560,23 +585,25 @@ v-t 图像是理解这些复杂过程最直观的工具。每一幅图都像一�
 \end{enumerate}
 
 \section{解题策略与思想总结}
-\begin{enumerate}
-    \item \textbf{程序化解题步骤}:
-        \begin{itemize}
-            \item[1.] \textbf{明确对象与过程}: 搞清楚有几个物体，分为几个运动阶段。
-            \item[2.] \textbf{受力分析}: 对每个物体画出受力图，特别是摩擦力的方向。
-            \item[3.] \textbf{判断相对运动}: 这是核心！通过比较临界摩擦力与所需摩擦力，或直接比较加速度，来判断物体间是相对滑动还是相对静止。
-            \item[4.] \textbf{选取规律}: 根据运动状态，应用牛顿第二定律、运动学公式、动量守恒（条件满足时）或能量守恒（摩擦生热）。
-            \item[5.] \textbf{画出 v-t 图像}: 图像能极大地简化过程分析，特别是对于多阶段或追及问题。
-        \end{itemize}
-    \item \textbf{“一个临界，两种观点”}:
-        \begin{itemize}
-            \item \textbf{临界点}: “恰好”发生相对滑动是板块问题的临界状态，此时静摩擦力达到最大值。这是求解最大拉力、最小板长等问题的突破口。
-            \item \textbf{动力学观点}: $F=ma$，关注力和加速度的瞬时关系。
-            \item \textbf{能量观点}: $W_{net} = \Delta E_k$ 和 $E_{系统} = E_{k} + Q$。能量观点在求解总路程、摩擦生热等问题时更具优势，因为它不涉及中间过程的时间和加速度。
-                \[ \textcolor{FormulaColor}{Q_{摩擦生热} = f_{滑动摩擦力} \times s_{相对位移}} \]
-        \end{itemize}
-\end{enumerate}
+
+\begin{NoteRoadmap}{板块问题通用解题流程}
+  \RoadmapStep{明确研究对象与阶段：搞清楚有几个物体、各自初始状态，以及哪些事件会触发“阶段切换”（共速、静止、滑出等）。}
+  \RoadmapStep{为每个阶段完成\keyword{受力分析}：画清受力图，特别是各接触面上的摩擦力方向与大小的可能范围。}
+  \RoadmapStep{判断相对运动与摩擦类型：通过比较“所需摩擦力”和“最大静摩擦力”，或直接比较各物体加速度，区分相对静止与相对滑动。}
+  \RoadmapStep{选取合适规律：结合牛顿第二定律、运动学公式、动量守恒（条件满足时）及能量守恒 / 功–能定理，求出目标物理量。}
+  \RoadmapStep{用 $v\!-\!t$ 图像收束：用斜率和面积统一理解速度、位移与相对位移，检验前面各阶段的分析是否自洽。}
+\end{NoteRoadmap}
+
+\begin{summarybox}{“一个临界，两种观点”}
+  \begin{focuspoints}
+    \item \keyword{临界点}: “恰好”发生相对滑动时静摩擦力达到最大值，是求最大拉力、最小板长等问题的突破口；
+    \item \keyword{动力学观点}: 以 $F=ma$ 为核心，关注每一时刻力与加速度的对应关系；
+    \item \keyword{能量观点}: 用 $W_{\text{net}} = \Delta E_k$ 与 $E_{\text{系统}} = E_k + Q$ 描述整体过程，特别适合处理总路程与摩擦生热等结果量，避免纠缠于各阶段的具体时间与加速度。
+  \end{focuspoints}
+  \begin{center}
+    \(\textcolor{FormulaColor}{Q_{\text{摩擦生热}} = f_{\text{滑动摩擦力}} \times s_{\text{相对位移}}}\)
+  \end{center}
+\end{summarybox}
 
 \end{document}
 % --- 文档结束 ---

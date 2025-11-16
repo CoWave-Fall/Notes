@@ -1,0 +1,753 @@
+% 高中数学-工具性思想与方法.tex
+% 使用 mathnote 模板编写的一份示范笔记
+
+\documentclass[a4paper,11pt]{ctexart}
+\input{../mathnote-preamble.tex}
+
+% 若主要用于纸质打印，可取消下一行注释
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
+% 元信息
+\renewcommand{\notetitle}{高中数学中的工具性思想与方法}
+\renewcommand{\noteauthor}{gpt-5.1}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{解题中常用的思维工具与操作模板}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+
+\thispagestyle{empty}
+\PageTag[secondary]{工具性方法}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+\textcolor{inkgray}{\sffamily\small 学习导读}\\
+\begin{itemize}
+  \item 本笔记聚焦高中数学中\keyword{最常用的工具性思想}，帮助你把“感觉”变成可操作的\keyword{解题模板}；
+  \item 每一节都给出：核心定义、常用操作清单、典型图像或表格，以及一两道代表性例题；
+  \item 建议边读边在空白处补充自己的例题与错题，将这些思想真正变成\keyword{自己的工具箱}。
+\end{itemize}
+\end{minipage}
+\end{center}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\section{工具性思想总览：把“感觉”变成可操作的工具}
+
+\begin{definitionbox}{工具性思想的基本理解}
+在高中数学中，\keyword{工具性思想}指的是一类\keyword{可重复使用的思维方式和操作模式}。
+它们像瑞士军刀一样，不直接给出答案，但能把复杂问题改造成熟悉的模型，使解题变得有章可循。
+\par
+常见的工具性思想包括：数形结合、函数与方程思想、分类讨论、转化与化归、不等式与估算、对称与不变性、结构拆分与整体把握、常见证明方法等。
+\end{definitionbox}
+
+\begin{summarybox}{本笔记涵盖的八类工具性思想}
+\begin{enumerate}
+  \item 数形结合与函数视角；
+  \item 方程思想与代数化建模；
+  \item 分类讨论与参数思想；
+  \item 转化与化归：把新题“变旧”；
+  \item 不等式、估算与放缩；
+  \item 对称性与不变性；
+  \item 结构拆分与整体把握；
+  \item 证明方法工具箱。
+\end{enumerate}
+\end{summarybox}
+
+\begin{center}
+\ModeBadge[highlight]{工具一览表}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.16\textwidth} p{0.30\textwidth} p{0.40\textwidth}}
+\hline
+\textbf{思想名称} & \textbf{关键词} & \textbf{典型应用场景} \\
+\hline
+数形结合 & 图像、坐标系、几何直观 & 函数、不等式、解析几何、立体几何投影 \\
+方程思想 & 列式、未知量、代数化 & 应用题、几何量转代数量、最值问题建模 \\
+分类讨论 & 情况、符号、范围 & 含绝对值、分段函数、参数方程、不等式 \\
+转化与化归 & 等价变形、降维、特殊化 & 几何$\rightarrow$代数、复杂式子$\rightarrow$简单结构 \\
+不等式与估算 & 放缩、均值、单调 & 最值估计、误差控制、数列比较大小 \\
+对称与不变性 & 轴对称、旋转、奇偶性 & 组合计数、数列递推、几何构型简化 \\
+结构与整体 & 分块、局部—整体、整体代入 & 复杂代数式、数列通项、函数性质分析 \\
+证明方法 & 直接法、反证法、构造法 & 恒等式、命题证明、充分必要条件判断 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{focuspoints}
+  \item 记忆目标：\keyword{先记名字，再记操作}，不要只背结论而忘记“用法步骤”；
+  \item 使用顺序：遇题先快速扫一眼，判断适合哪类思想，再细化为具体运算；
+  \item 反思习惯：每次做完题，用一句话写下“本题最核心的工具思想是什么？”。
+\end{focuspoints}
+
+\subsection{如何在一道题里识别工具思想}
+
+在正式进入各章节之前，可以先训练一个\keyword{快速判断}的习惯：
+拿到一道题，尽量在三十秒内回答“更像是哪一类工具题”，再决定具体做法。
+
+\begin{itemize}
+  \item 先看\keyword{问什么}：求范围/最值、求轨迹、求证明、求构造……；
+  \item 再看\keyword{给了什么}：函数关系、几何图形、数列递推、带参数的不等式等；
+  \item 最后看\keyword{难点在哪}：是式子复杂、结构怪异，还是条件很多、情况很多。
+\end{itemize}
+
+\begin{center}
+\ModeBadge[secondary]{题目关键词与优先工具}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.50\textwidth} p{0.50\textwidth}}
+\hline
+\textbf{题目中的关键词} & \textbf{优先考虑的工具思想} \\
+\hline
+“图像”“轨迹”“范围”“单调”“极值” & 数形结合、函数视角、不等式估算 \\
+“求表达式的值/范围”“应用题”“建模” & 方程思想、转化与化归 \\
+“参数 $k$”“分段”“绝对值”“符号变化” & 分类讨论、函数与不等式综合 \\
+“变换”“对称”“保持不变”“每一步操作相同” & 对称性、不变性、结构与整体 \\
+“恒成立”“对任意”“存在一个” & 证明方法（直接、反证、构造、归纳） \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{数形结合与函数视角}
+
+\subsection{把式子“画出来”：数形结合的核心}
+
+\begin{definitionbox}{数形结合思想}
+\keyword{数形结合}就是在“数”的世界和“形”的世界之间来回切换：
+一方面，用图像、几何图形帮助理解抽象的代数式；
+另一方面，用代数方法准确刻画几何关系和图形变化。
+\par
+在函数、不等式、解析几何和平面几何中，\keyword{先画后算}常常能迅速看出趋势和大致范围。
+\end{definitionbox}
+
+\begin{focuspoints}
+  \item 看到函数、不等式、变化趋势等词，优先考虑\keyword{画图像}或\keyword{在坐标系中表示}；
+  \item 处理几何题时，尝试引入\keyword{坐标系}或\keyword{向量}，把图形关系转化为代数关系；
+  \item 每画一张图，都问自己三个问题：\inlinehint{单调性在哪里变化？}、\inlinehint{极值或拐点在哪？}、\inlinehint{范围大致是多少？}。
+\end{focuspoints}
+
+典型的“数形结合”题目大致可以分为三类：
+\begin{itemize}
+  \item \textbf{函数与不等式}：利用图像判断函数的单调区间、零点个数、不等式解集范围；
+  \item \textbf{平面解析几何}：在直角坐标系中研究直线、圆及二次曲线的位置关系；
+  \item \textbf{立体几何与投影}：通过投影、截面把三维问题转化为平面图形进行分析。
+\end{itemize}
+
+\subsection{例：用图像理解不等式解集}
+
+\begin{examplebox}{图像法求二次函数不等式的解集}
+设函数
+\[
+f(x)=x^2-2x-3.
+\]
+用图像法解不等式 $f(x)\le 0$。
+
+\begin{enumerate}
+  \item 完成平方，得到
+  \[
+  f(x)=(x-1)^2-4.
+  \]
+  可知图像是开口向上的抛物线，顶点为 $(1,-4)$；
+  \item 解方程 $f(x)=0$，得两根 $x=-1,\,3$；
+  \item 因抛物线开口向上，所以在两根之间函数值$\le 0$，解集为
+  \[
+  x\in[-1,3].
+  \]
+\end{enumerate}
+\end{examplebox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines, scale=0.9]
+  \draw[->, thick] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->, thick] (0,-5) -- (0,2) node[above] {$y$};
+  \draw[accent, thick, domain=-2.2:3.2, samples=100]
+    plot (\x,{\x*\x-2*\x-3});
+  \draw[dashed, secondary] (-1,0) -- (-1,-3);
+  \draw[dashed, secondary] (3,0) -- (3,-3);
+  \filldraw[accent] (-1,0) circle (1.5pt) node[above left] {$-1$};
+  \filldraw[accent] (3,0) circle (1.5pt) node[above right] {$3$};
+  \node[text=inkgray] at (2,1.2) {$y=f(x)$};
+\end{tikzpicture}
+\end{center}
+
+\begin{summarybox}{数形结合的常用操作模板}
+\begin{itemize}
+  \item \textbf{不等式题}：先画函数图像，观察“在$x$轴上方/下方”的区间，再转成代数解集；
+  \item \textbf{最值题}：用图像的\keyword{顶点、距离、面积}来理解“最远、最近、最大、最小”；
+  \item \textbf{几何题}：给关键点设坐标，把长度、角度转化为代数式，利用代数工具求解。
+\end{itemize}
+\end{summarybox}
+
+\subsection{常见误区与纠正}
+
+\begin{itemize}
+  \item \textbf{图像画得不准确就直接下结论}：尤其是开口、顶点位置、交点个数要先用代数关系确定，再配合图像理解；
+  \item \textbf{忘记图像背后的解析式限制}：例如定义域是 $x>0$，图像却画到了负半轴，导致多写解或少写解；
+  \item \textbf{只看局部不看整体趋势}：在最值题中只算出一个候选点，而忽略边界、对称点等可能的极值点。
+\end{itemize}
+
+\subsection{建议练习方向}
+
+\begin{itemize}
+  \item 选几道一元二次不等式题，先画出大致图像，再用代数精确求解，对照两者的对应关系；
+  \item 做解析几何题时，强迫自己先粗略画出示意图，再去列方程，养成“先图后式”的习惯；
+  \item 在错题本中标出所有\keyword{“看错图像”或“图像没画”}导致失分的题，集中复盘一次。
+\end{itemize}
+
+\section{方程思想与代数化建模}
+
+\subsection{从文字到式子：列方程的三个步骤}
+
+\begin{definitionbox}{方程思想}
+\keyword{方程思想}就是把“文字描述的数量关系”转化为“含未知量的等式或方程组”，再用代数方法求解。
+\par
+典型流程：\keyword{设未知量} $\rightarrow$ \keyword{列关系式} $\rightarrow$ \keyword{解方程并检验}。
+\end{definitionbox}
+
+\begin{roadmap}
+  \RoadmapStep{读题：找出“已知”“未知”“约束条件”，圈出所有能转化为等式的关系；}
+  \RoadmapStep{设元：用尽量少的未知量描述关键量，注意单位与取值范围；}
+  \RoadmapStep{列式：将比例、和差、几何量等转写为方程或方程组；}
+  \RoadmapStep{求解：选择代数方法（消元、代入、配方法等），得到解；}
+  \RoadmapStep{检验：代回原题，排除增根，解释结果是否合理。}
+\end{roadmap}
+
+\begin{examplebox}{应用题建模示例：最长矩形的问题}
+已知一条长为 $10$ 的线段，两端固定，在线段上选取两点 $A,B$，使得形成的线段 $AB$ 与端点组成的两个小线段长度分别为 $x$ 与 $y$，且 $x+y=10$。
+要求：在周长一定的条件下，矩形面积最大。
+
+\begin{enumerate}
+  \item \textbf{设元与列式}：设矩形的长为 $x$，宽为 $y$，周长 $2(x+y)=20$，所以 $x+y=10$；
+  \item \textbf{代数化}：令 $y=10-x$，面积函数为
+  \[
+  S(x)=xy=x(10-x)=-x^2+10x;
+  \]
+  \item \textbf{求最值}：配方得 $S(x)=-(x-5)^2+25$，最大值为 $25$，此时 $x=5,y=5$；
+  \item \textbf{解释}：在周长一定时，矩形面积最大应为正方形，这与结论一致。
+\end{enumerate}
+\end{examplebox}
+
+\begin{center}
+\ModeBadge{从情景到方程}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.22\textwidth} p{0.30\textwidth} p{0.30\textwidth}}
+\hline
+\textbf{情景类型} & \textbf{常见数量关系} & \textbf{对应方程形式} \\
+\hline
+行程问题 & 路程=速度$\times$时间 & 一元二元一次方程 \\
+几何面积/体积 & 面积、体积公式 & 函数最值、二次函数 \\
+比例与浓度 & 比例、配比、浓度 & 分式方程、方程组 \\
+数列与递推 & 前后项关系 & 递推方程、通项公式 \\
+概率与计数 & 情形数、概率 & 组合数关系方程 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{summarybox}{方程思想小结}
+\begin{itemize}
+  \item 先问自己：\keyword{题目中的“关系句子”能否改写成等式？};
+  \item 设未知量时尽量\keyword{少而关键}，避免引入多余变量；
+  \item 得出方程后，要意识到它只是\keyword{模型}，最终结论还要回到原问题解释。
+\end{itemize}
+\end{summarybox}
+
+\subsection{建模题中的常见错误}
+
+\begin{itemize}
+  \item \textbf{未知量设得太多或太绕}：导致方程组复杂、计算量巨大；优先选择能直接表达目标量的未知量；
+  \item \textbf{忽略单位与量纲}：如把“分钟”和“小时”混在一起，最后求得的结果尺寸不合理；
+  \item \textbf{只解方程不做检验}：特别是在分式方程、开方法中容易产生增根，一定要代回原式检查；
+  \item \textbf{模型与题意脱节}：方程形式正确，但所设变量并不能真实反映题目中的量，导致解释不通。
+\end{itemize}
+
+\subsection{小结：看到“文字题”怎么想}
+
+遇到“应用题”“文字题”时，可以按顺序自问：
+\begin{itemize}
+  \item 题目里哪些量是\keyword{可数的}（时间、长度、人数、次数等），哪些量\keyword{需要被求出}；
+  \item 这些量之间的关系更像是\keyword{加减乘除}、\keyword{比例}，还是\keyword{函数关系}；
+  \item 是否可以用\keyword{一个方程}或\keyword{一个函数}同时描述关键条件，把问题压缩到核心。
+\end{itemize}
+
+\section{分类讨论与参数思想}
+
+\subsection{为什么要分类讨论？}
+
+\begin{definitionbox}{分类讨论思想}
+当一个问题的条件会因\keyword{符号、大小、取值范围、参数}不同而改变形式时，就需要进行\keyword{分类讨论}。
+\par
+典型情形：含绝对值、不等式中系数的正负、参数 $k$ 不同取值时方程根的情况、分段函数等。
+\end{definitionbox}
+
+\begin{center}
+\ModeBadge[secondary]{分类讨论的流程图}
+
+\vspace{0.5em}
+\begin{tikzpicture}[node distance=12mm, >=Stealth, thick,
+  box/.style={draw, rounded corners, fill=surface, align=center, inner sep=3pt}]
+  \node[box] (start) {读题\\整理条件};
+  \node[box, below left=of start, xshift=-5mm] (case1) {情形一\\(k>0)};
+  \node[box, below right=of start, xshift=5mm] (case2) {情形二\\(k $\le$ 0)};
+  \node[box, below=of case1] (solve1) {按条件一\\化简求解};
+  \node[box, below=of case2] (solve2) {按条件二\\化简求解};
+  \node[box, below=of solve1, xshift=15mm] (merge) {汇总解集\\检验多余解};
+  \draw[->] (start) -- (case1);
+  \draw[->] (start) -- (case2);
+  \draw[->] (case1) -- (solve1);
+  \draw[->] (case2) -- (solve2);
+  \draw[->] (solve1) -- (merge);
+  \draw[->] (solve2) -- (merge);
+\end{tikzpicture}
+\end{center}
+
+\subsection{例：含参数的不等式}
+
+\begin{examplebox}{含参数方程的分类讨论}
+解方程
+\[
+|x-1| = kx \quad (k>0).
+\]
+
+\begin{enumerate}
+  \item 按绝对值定义，将 $x-1$ 的正负分两类：
+  \begin{itemize}
+    \item 若 $x\ge 1$，方程变为 $x-1=kx$；
+    \item 若 $x<1$，方程变为 $1-x=kx$。
+  \end{itemize}
+  \item 在每一类里解出 $x$，并用对应的条件筛选出真正的解；
+  \item 最后根据 $k$ 的不同，讨论方程是否有解、解的个数如何。
+\end{enumerate}
+
+\inlinehint{关键在于：先按\keyword{结构}（如绝对值、分段）分，再按\keyword{参数取值}细分。}
+\end{examplebox}
+
+\begin{summarybox}{分类讨论的三问自检}
+\begin{itemize}
+  \item 条件里有哪些地方会导致\keyword{表达式形式改变}？（如符号、绝对值、分段）；
+  \item 每一类讨论时，是否\keyword{完整覆盖}了所有可能情况，没有遗漏？；
+  \item 汇总时是否\keyword{检查条件}，剔除不满足原始限制的“伪解”？。
+\end{itemize}
+\end{summarybox}
+
+\subsection{常见分类维度}
+
+在实际解题中，常见的分类方式主要有：
+\begin{itemize}
+  \item 按\keyword{符号}分类：$x>0$，$x=0$，$x<0$；系数为正/为负/为零；
+  \item 按\keyword{大小关系}分类：$a>b$，$a=b$，$a<b$；$x$ 在某个临界点的左侧或右侧；
+  \item 按\keyword{取值范围}分类：参数 $k$ 在不同区间（如 $k<0$，$0\le k\le 1$，$k>1$）下，方程根的情况；
+  \item 按\keyword{表达式结构}分类：绝对值、分段函数、分母为零的点等。
+\end{itemize}
+
+\subsection{练习建议}
+
+\begin{itemize}
+  \item 主动收集几道含参数的一元二次方程或不等式题，练习写出“分类表”，列清每一类的条件和结论；
+  \item 对含绝对值的不等式，尝试先画数轴标出关键点，再写分段表达式，会比直接硬算更清晰；
+  \item 在错题旁边补充一句话：“如果最开始就这样分类，会不会更简单？”。
+\end{itemize}
+
+\section{转化与化归：把新题“变旧”}
+
+\subsection{从新问题回到熟悉模型}
+
+\begin{definitionbox}{转化与化归思想}
+\keyword{转化}是指通过等价变形把问题改写成\keyword{更容易处理的形式}；
+\keyword{化归}是指把新问题\keyword{化归}到已经解决过的\keyword{经典问题或熟悉模型}。
+\par
+在解题中，我们常常通过\keyword{设元、代换、坐标化、向量化、特殊化}等方式完成转化与化归。
+\end{definitionbox}
+
+\begin{focuspoints}
+  \item 看到复杂代数式，优先思考：能否通过\keyword{换元}或\keyword{配方}把结构变简单；
+  \item 看到几何关系复杂的图形，考虑\keyword{坐标化}或\keyword{向量化}，将角度、距离写成代数式；
+  \item 解决不了一般情况时，先尝试\keyword{代入特殊值}（如 $0,\pm1,2$ 等）寻找规律，再推广到一般。
+\end{focuspoints}
+
+\subsection{例：换元化简三角函数}
+
+\begin{examplebox}{三角换元化归到二次函数}
+求函数
+\[
+y=\sin^2x+2\sin x
+\]
+的最小值。
+
+\begin{enumerate}
+  \item 直接处理较难，考虑设 $t=\sin x$，注意 $t\in[-1,1]$；
+  \item 原式化为
+  \[
+  y=t^2+2t=(t+1)^2-1;
+  \]
+  \item 由平方项知 $(t+1)^2\ge 0$，所以 $y\ge -1$，当 $t=-1$ 即 $\sin x=-1$ 时取得最小值 $-1$。
+\end{enumerate}
+\end{examplebox}
+
+\begin{center}
+\ModeBadge{常见转化方式对照表}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.22\textwidth} p{0.30\textwidth} p{0.30\textwidth}}
+\hline
+\textbf{原问题} & \textbf{转化方式} & \textbf{化归到的模型} \\
+\hline
+复杂代数式 & 换元、配方、因式分解 & 一元二次函数、不等式 \\
+几何长度、角度 & 坐标系、向量表示 & 方程组、点到直线距离公式 \\
+数列递推 & 构造新数列 & 等差/等比、线性递推 \\
+复杂计数 & 分类、分步、对应关系 & 组合数、二项式展开 \\
+抽象命题 & 借助图像、集合表示 & 交并补、不等式关系 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{summarybox}{转化与化归的使用提示}
+\begin{itemize}
+  \item 遇到“看不懂”的表达式，优先考虑：\keyword{能换成什么熟悉的形式？};
+  \item 转化过程中保持\keyword{等价}很重要，避免引入多余解或丢失解；
+  \item 做题后，可回顾：本题究竟被化归到了哪一类熟悉问题。
+\end{itemize}
+\end{summarybox}
+
+\subsection{几何中的转化示意}
+
+在几何题中，常用的转化方式是\keyword{坐标化}和\keyword{向量化}。例如：
+\begin{itemize}
+  \item 将平面图形放到直角坐标系中，用点的坐标表示线段长度、斜率、夹角；
+  \item 用向量表示位移、平移和旋转，再借助向量运算刻画平行、垂直、共线等关系；
+  \item 利用点到直线距离公式，将“距离”转化为代数表达式，再用不等式工具求最值。
+\end{itemize}
+
+\begin{center}
+\ModeBadge[secondary]{几何量的常见代数表达}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.16\textwidth} p{0.60\textwidth}}
+\hline
+\textbf{几何量} & \textbf{代数表达示例} \\
+\hline
+线段长度 $AB$ & 若 $A(x_1,y_1),B(x_2,y_2)$，则 $AB=\sqrt{(x_1-x_2)^2+(y_1-y_2)^2}$ \\
+直线斜率 & 过两点 $A,B$ 的直线斜率 $k=\dfrac{y_2-y_1}{x_2-x_1}$ \\
+点到直线的距离 & 点 $P$ 到直线 $Ax+By+C=0$ 的距离 $d=\dfrac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$ \\
+平行与垂直 & 向量平行：$\vec{a}=k\vec{b}$；垂直：$\vec{a}\cdot\vec{b}=0$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{易混淆点与提醒}
+
+\begin{itemize}
+  \item \textbf{转化要保持等价}：如换元时要同时写清\keyword{新元的取值范围}，避免多解或少解；
+  \item \textbf{不要被形式吓倒}：很多看似复杂的式子，本质上只是熟悉结构的叠加（如“二次+三角”）；
+  \item \textbf{做完题后要“回看”转化}：想一想有没有更自然的转化方式，下次能否更快看出。
+\end{itemize}
+
+\section{不等式、估算与放缩}
+
+\subsection{从“精确”到“足够精确”}
+
+\begin{definitionbox}{不等式与估算思想}
+在求最值、比较大小、估算范围时，往往不需要得到精确等号，而只需得到\keyword{上界或下界}。
+\par
+常用工具包括：\keyword{基本不等式}（如均值不等式、柯西不等式）、\keyword{单调性}、\keyword{放缩技巧}和\keyword{局部线性近似}等。
+\end{definitionbox}
+
+\begin{examplebox}{利用均值不等式估计最小值}
+设 $a,b>0$ 且 $a+b=4$，求
+\[
+S=a^2+b^2
+\]
+的最小值。
+
+\begin{enumerate}
+  \item 利用平方和公式：
+  \[
+  a^2+b^2=(a+b)^2-2ab=16-2ab;
+  \]
+  \item 由基本不等式 $ab\le \left(\dfrac{a+b}{2}\right)^2=4$，所以
+  \[
+  S\ge 16-2\cdot 4=8;
+  \]
+  \item 当 $a=b=2$ 时取到等号，故最小值为 $8$。
+\end{enumerate}
+\end{examplebox}
+
+\begin{center}
+\ModeBadge[highlight]{常用不等式工具小表}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.14\textwidth} p{0.34\textwidth} p{0.30\textwidth}}
+\hline
+\textbf{名称} & \textbf{形式} & \textbf{适用场景} \\
+\hline
+均值不等式 & $\dfrac{a+b}{2}\ge\sqrt{ab}$ & 正数和积关系、最值估计 \\
+柯西不等式 & $(\sum a_ib_i)^2\le(\sum a_i^2)(\sum b_i^2)$ & 内积、平方和估计 \\
+放缩技巧 & 适当放大/缩小项 & 把式子夹在熟悉范围之间 \\
+单调性 & 利用函数增减性 & 比较大小、求解不等式 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\ModeBadge[secondary]{数轴上的区间估计}
+
+\vspace{0.5em}
+\begin{tikzpicture}[mathnote lines, scale=0.9]
+  \draw[->] (-3,0) -- (3,0) node[right] {$x$};
+  \foreach \t in {-2,-1,0,1,2}
+    \draw (\t,0.08) -- (\t,-0.08) node[below, yshift=-1pt] {$\t$};
+  \draw[accent, very thick] (-2,0) -- (2,0);
+  \filldraw[accent] (-2,0) circle (1.5pt);
+  \filldraw[accent] (2,0) circle (1.5pt);
+  \node[above, text=inkgray] at (0,0.15) {$-2\le x\le 2$};
+\end{tikzpicture}
+\end{center}
+
+\begin{summarybox}{不等式与估算的三步法}
+\begin{itemize}
+  \item \textbf{定目标}：想要上界还是下界？是\keyword{粗略范围}还是\keyword{精确最值}？；
+  \item \textbf{选工具}：根据结构判断适用哪类不等式或放缩技巧；
+  \item \textbf{查等号}：关注等号成立条件，反推出“达到极值时”的变量关系。
+\end{itemize}
+\end{summarybox}
+
+\subsection{典型题型与策略选择}
+
+\begin{itemize}
+  \item \textbf{已知和求积/已知积求和}：优先想到\keyword{均值不等式}或其简单变形；
+  \item \textbf{需要比较两个复杂表达式的大小}：尝试构造\keyword{差}或\keyword{比值}，再分析其符号或单调性；
+  \item \textbf{含有 $\sqrt{f(x)}$ 或分式}：先考虑\keyword{有理化}或\keyword{配方}，再用不等式估计；
+  \item \textbf{数列或函数的范围}：用\keyword{单调性+端点值}、\keyword{界限不等式}等方法给出上下界。
+\end{itemize}
+
+\subsection{常见错误提醒}
+
+\begin{itemize}
+  \item 只会机械套用不等式，而不检查\keyword{适用条件}是否满足（如正数条件、变量个数一致等）；
+  \item 在放缩时“放得太宽”，导致得到的界限过于粗糙，失去意义；
+  \item 对“等号成立条件”不够敏感，错过了构造最值时变量之间应满足的关键关系。
+\end{itemize}
+
+\section{对称性、不变性与整体结构}
+
+\subsection{对称性：利用图形的“重复性”}
+
+\begin{definitionbox}{对称思想}
+如果一个问题的数据或图形存在某种\keyword{重复、镜像或周期}，就可以利用\keyword{对称性}简化计算。
+\par
+常见形式包括：轴对称、中心对称、旋转对称以及代数式中的奇偶性等。
+\end{definitionbox}
+
+\begin{center}
+\ModeBadge{简单对称图形示意}
+
+\vspace{0.5em}
+\begin{tikzpicture}[mathnote lines, scale=0.9]
+  \draw[->, thick] (-3,0) -- (3,0) node[right] {$x$};
+  \draw[->, thick] (0,-1.5) -- (0,3) node[above] {$y$};
+  \draw[accent, thick, domain=-2.2:2.2, samples=100]
+    plot (\x,{\x*\x-1});
+  \node[text=inkgray] at (1.8,2.2) {$y=x^2-1$};
+  \draw[dashed, secondary] (-1,0) -- (-1,-1);
+  \draw[dashed, secondary] (1,0) -- (1,-1);
+  \filldraw[accent] (-1,-1) circle (1.2pt);
+  \filldraw[accent] (1,-1) circle (1.2pt);
+  \node[text=inkgray] at (0,-1.3) {关于$y$轴对称};
+\end{tikzpicture}
+\end{center}
+
+\subsection{不变性与结构拆分}
+
+\begin{definitionbox}{不变性思想}
+在一些变化过程中，虽然局部状态在改变，但有些量\keyword{始终保持不变}，这就是\keyword{不变性}。
+\par
+识别不变量可以帮助判断过程是否可能发生、最终状态是否存在、步数是否有限等。
+\end{definitionbox}
+
+\begin{examplebox}{简化递推：整体与局部}
+设数列 $\{a_n\}$ 满足
+\[
+a_{n+1}=a_n+2,\quad a_1=1.
+\]
+观察可知，每一步都在原数列基础上加 $2$，整体呈\keyword{等差结构}。
+于是直接得到
+\[
+a_n=1+2(n-1)=2n-1,
+\]
+这是将局部递推关系\keyword{整体化}后得到的结构。
+\end{examplebox}
+
+\begin{summarybox}{对称与不变性的使用要点}
+\begin{itemize}
+  \item 画图时主动寻找\keyword{对称轴}、\keyword{中心点}或\keyword{重复单元}；
+  \item 在变化过程中记录哪些量“从头到尾没变”，如奇偶性、和、差、余数等；
+  \item 复杂结构可尝试分块，每一块结构相同，再用整体思想合并。
+\end{itemize}
+\end{summarybox}
+
+\subsection{结构拆分与整体把握}
+
+“结构拆分”关注的是：\keyword{一个复杂对象能否看成若干简单部分的组合}，再利用整体关系求解。
+典型操作包括：
+\begin{itemize}
+  \item 对复杂代数式进行\keyword{分块}，先整理每一块的形式（如“平方项”“线性项”“常数项”）；
+  \item 把长的和式写成\keyword{前后相邻两项的差}，寻找“望远镜求和”（前后抵消）结构；
+  \item 在数列和函数问题中，构造\keyword{整体量}（如前 $n$ 项和），再用递推或差分方法分析。
+\end{itemize}
+
+例如，求和
+\[
+S=\frac{1}{1\cdot2}+\frac{1}{2\cdot3}+\cdots+\frac{1}{n(n+1)}
+\]
+时，可以先把一般项拆成
+\[
+\frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1},
+\]
+于是整个和式就变成大量相邻项抵消的结构，最终得到 $S=1-\dfrac{1}{n+1}$。
+
+这种“局部拆分、整体合并”的思路，也是\keyword{结构与整体思想}在代数中的典型体现。
+
+\section{证明方法工具箱}
+
+\subsection{常见证明方法一览}
+
+\begin{center}
+\ModeBadge[highlight]{证明方法速览表}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.20\textwidth} p{0.30\textwidth} p{0.30\textwidth}}
+\hline
+\textbf{方法} & \textbf{核心思路} & \textbf{典型应用} \\
+\hline
+直接证明法 & 从已知出发，经过等价变形到结论 & 恒等式、简单命题 \\
+反证法 & 假设结论反面成立，推出矛盾 & 不等式、存在性命题 \\
+分类讨论证明 & 将情况分段分别证明 & 分段函数、参数题 \\
+构造法 & 亲手构造满足条件的对象 & “存在”型问题、数论命题 \\
+数学归纳法 & 利用“继承性”证明整数命题 & 数列公式、不等式推广 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{示例：反证法的使用}
+
+\begin{examplebox}{利用反证法证明根的唯一性}
+设二次函数 $f(x)=ax^2+bx+c$（$a\ne 0$）在实数范围内有且仅有一个实根。
+证明：该实根一定是顶点的横坐标 $x_0=-\dfrac{b}{2a}$。
+
+\begin{enumerate}
+  \item 已知只有一个实根，说明判别式 $\Delta=b^2-4ac=0$，方程有重根；
+  \item 设反面命题：存在实根 $x_1$，但 $x_1\ne x_0$；
+  \item 由一元二次方程性质知，当判别式为 $0$ 时，两根必相等，即 $x_1=x_0$，与假设矛盾；
+  \item 故实根只能是顶点横坐标 $x_0$。
+\end{enumerate}
+\end{examplebox}
+
+\begin{summarybox}{证明题的审题与反思}
+\begin{itemize}
+  \item 审题时先判断：\keyword{是“对所有”还是“存在”}？“对所有”常用直接法、归纳法，“存在”常用构造法、反证法；
+  \item 写证明时注意\keyword{每一步是否等价}，避免从结论出发倒推；
+  \item 做完题后，用一句话总结：\inlinehint{本题最关键的一步变形是什么？}。
+\end{itemize}
+\end{summarybox}
+
+\subsection{如何选择合适的证明方法}
+
+在做证明题之前，可以先按命题的形式来筛选方法：
+\begin{itemize}
+  \item 若结论是“对任意 $x$ 都成立”，多考虑\keyword{直接法}或\keyword{数学归纳法}；
+  \item 若结论是“存在一个满足条件的对象”，多考虑\keyword{构造法}或\keyword{反证法}；
+  \item 若条件本身就带有明显的“分类特征”，可以将证明拆成若干\keyword{情形分别讨论}。
+\end{itemize}
+
+\begin{center}
+\ModeBadge[secondary]{命题类型与推荐方法}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.26\textwidth} p{0.50\textwidth}}
+\hline
+\textbf{命题类型} & \textbf{优先考虑的证明工具} \\
+\hline
+“对一切 $x$ 有 $P(x)$” & 直接法；数学归纳法（特别是整数 $n$ 相关命题） \\
+“存在 $x$ 使得 $P(x)$” & 构造一个具体的 $x$；反证法 \\
+“若 $P$ 则 $Q$” & 直接从 $P$ 推出 $Q$；或证明反命题“若非$Q$则非$P$” \\
+“$P$ 的充要条件是 $Q$” & 分别证明“若 $P$ 则 $Q$”和“若 $Q$ 则 $P$” \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{工具箱应用与自我检查}
+
+\begin{summarybox}{八大工具思想回顾}
+\begin{itemize}
+  \item 数形结合：把式子画出来，用图像看趋势；
+  \item 函数与方程思想：从文字到方程，从方程回到情景；
+  \item 分类讨论：当条件会改变表达式结构时，先分后合；
+  \item 转化与化归：把新题化归到熟悉模型；
+  \item 不等式与估算：追求“足够精确”的上下界；
+  \item 对称与不变性：在变化中寻找不变，在复杂中发现重复；
+  \item 结构与整体：用分块、整体代入把复杂式子拆开再重组；
+  \item 证明方法工具箱：直接、反证、构造、归纳各有所长。
+\end{itemize}
+\end{summarybox}
+
+\begin{center}
+\ModeBadge[secondary]{解题后的“工具复盘表”}
+
+\vspace{0.5em}
+\begin{tabular}{p{0.24\textwidth} p{0.24\textwidth} p{0.30\textwidth}}
+\hline
+\textbf{反思问题} & \textbf{示例回答} & \textbf{你的补充} \\
+\hline
+本题核心工具？ & 数形结合+转化 & \\
+哪一步最关键？ & 换元/分类/画图 & \\
+能否推广？ & 参数推广/维度提升 & \\
+有无更简单解法？ & 特值法/估算法 & \\
+下次见到类似题？ & 先画图再列式 & \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{focuspoints}
+  \item 每天选两三道题，用上表快速复盘一次，把“零散技巧”沉淀为\keyword{稳定的工具}；
+  \item 遇到不会做的题，不急着看答案，先问：\inlinehint{这题最可能用到哪两类思想？}；
+  \item 逐渐形成“看到题目 $\rightarrow$ 快速匹配工具 $\rightarrow$ 选择操作模板”的习惯。
+\end{focuspoints}
+
+\subsection{示例：一周工具训练计划}
+
+下面给出一个可参考的一周训练安排，你可以根据自己的进度调整：
+
+\begin{center}
+\begin{tabular}{p{0.07\textwidth} p{0.68\textwidth}}
+\hline
+\textbf{时间} & \textbf{训练重点} \\
+\hline
+周一 & 数形结合：做 3 道函数图像与不等式题，要求每题都先画图再求解； \\
+周二 & 方程思想与建模：选 3 道应用题，认真写出“设元—列式—检验”的完整过程； \\
+周三 & 分类讨论与参数：练习 3 道含绝对值/分段或参数的不等式题，写清每一类； \\
+周四 & 转化与化归、不等式：做 3 道需要换元或配方的不等式最值题； \\
+周五 & 对称、不变与结构：挑 2 道递推或求和题，刻意寻找不变量和结构拆分； \\
+周末 & 证明方法综合：做 2～3 道证明题，并用“工具复盘表”总结使用的思想。 \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

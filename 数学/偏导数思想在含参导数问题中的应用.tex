@@ -355,8 +355,8 @@
 \begin{enumerate}
     \item 计算偏导数：$\partialder{f}{x} = 3x^2 - 6ax + 3a^2 = 3(x^2 - 2ax + a^2) = 3(x-a)^2$
     \item 令 $\partialder{f}{x} = 0$，得 $x = a$
-    \item 分析：由于 $\partialder{f}{x} = 3(x-a)^2 \geq 0$，且仅在 $x = a$ 处等于零
-    \item 结论：$x = a$ 是驻点，但需要进一步分析其性质
+    \item 分析：对任意 $x \neq a$，有 $\partialder{f}{x} = 3(x-a)^2 > 0$，仅在 $x = a$ 处取零，因此 $f(x)$ 在整个实数范围上单调递增
+    \item 结论：$x = a$ 是驻点，但不是极值点（这是只有驻点而无极值的典型例子）
 \end{enumerate}
 \end{examplebox}
 
@@ -460,6 +460,11 @@
         \item $f(0) = 0$
         \item $f(2) = 8 - 12a + 6a^2 = 2(4 - 6a + 3a^2)$
         \item $f(a) = a^3 - 3a^3 + 3a^3 = a^3$（当 $0 \leq a \leq 2$ 时）
+    \end{itemize}
+    \item 由于 $\partialder{f}{x} = 3(x-a)^2 \geq 0$ 对所有 $x$ 成立，$f(x)$ 在 $[0,2]$ 上单调递增，因此
+    \begin{itemize}
+        \item 最小值为 $f_{\min} = f(0) = 0$；
+        \item 最大值为 $f_{\max} = f(2) = 2(4 - 6a + 3a^2)$。
     \end{itemize}
 \end{enumerate}
 \end{examplebox}
@@ -580,12 +585,12 @@
 
 \textbf{解：}
 \begin{enumerate}
-    \item 参变分离：$ax \geq -x^2 - 1$，即 $a \geq -\frac{x^2 + 1}{x} = -x - \frac{1}{x}$
-    \item 分析函数 $g(x) = -x - \frac{1}{x}$ 在 $[0,1]$ 上的最大值
-    \item 计算偏导数：$\partialder{g}{x} = -1 + \frac{1}{x^2}$
-    \item 令 $\partialder{g}{x} = 0$，得 $x = 1$（在区间端点）
-    \item 分析：$g(x)$ 在 $[0,1]$ 上单调递减，最大值为 $g(0^+) = -\infty$
-    \item 重新分析：当 $x \to 0^+$ 时，$g(x) \to -\infty$，需要限制 $x$ 的范围
+    \item 当 $x = 0$ 时，$x^2 + ax + 1 = 1 \geq 0$ 恒成立；下面只需考虑 $x \in (0,1]$
+    \item 参变分离：$x^2 + ax + 1 \geq 0 \Leftrightarrow ax \geq -x^2 - 1$，即 $a \geq -\frac{x^2 + 1}{x} = -x - \frac{1}{x}$
+    \item 构造函数 $g(x) = -x - \frac{1}{x}$，定义域为 $x \in (0,1]$
+    \item 计算导数：$g'(x) = -1 + \frac{1}{x^2}$
+    \item 在 $(0,1)$ 内有 $x^2 < 1$，于是 $g'(x) > 0$，故 $g(x)$ 在 $(0,1]$ 上单调递增，其上确界为 $g(1) = -2$
+    \item 要使不等式对所有 $x \in [0,1]$ 恒成立，需 $a \geq \sup_{x \in (0,1]} g(x) = -2$，即 $a \geq -2$
 \end{enumerate}
 \end{examplebox}
 
@@ -606,8 +611,8 @@
         \item 当 $a > 0$ 时，驻点 $x = \sqrt{a}$，需要分析 $f(\sqrt{a}) \geq 0$
     \end{itemize}
     \item 当 $a > 0$ 时：$f(\sqrt{a}) = a\sqrt{a} - 3a\sqrt{a} + 1 = 1 - 2a\sqrt{a} \geq 0$
-    \item 解得：$a \leq \frac{1}{4}$
-    \item 综合：$a \leq \frac{1}{4}$
+    \item 设 $t = \sqrt{a} \geq 0$，则条件等价于 $1 - 2t^3 \geq 0$，即 $t^3 \leq \dfrac{1}{2}$，从而 $t \leq \sqrt[3]{\dfrac{1}{2}}$，于是 $a = t^2 \leq \left(\dfrac{1}{2}\right)^{\frac{2}{3}} = \dfrac{1}{\sqrt[3]{4}}$
+    \item 综合：$a \leq \dfrac{1}{\sqrt[3]{4}}$
 \end{enumerate}
 \end{examplebox}
 

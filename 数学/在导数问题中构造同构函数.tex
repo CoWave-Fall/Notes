@@ -1,77 +1,25 @@
-\documentclass[a4paper,12pt]{ctexrep}
+\documentclass[a4paper,11pt]{ctexrep}
 
-\input{../mathnote-preamble.tex}
+\providecommand{\MathNoteReviewStampBase}{../assest/lzlxV-reviewed}
+\InputIfFileExists{mathnote-preamble.tex}{}{%
+  \InputIfFileExists{../mathnote-preamble.tex}{}{%
+    \InputIfFileExists{../../mathnote-preamble.tex}{}{%
+      \InputIfFileExists{../../../mathnote-preamble.tex}{}{%
+        \PackageError{mathnote-notes}{mathnote-preamble.tex 未找到}{请确认 mathnote-preamble.tex 与当前文稿的相对路径配置正确。}%
+      }%
+    }%
+  }%
+}
+
 \usepackage{multirow}
 \usepackage{float}
 
-% ==================================================
-% Page Layout
-% ==================================================
-\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
-\setlength{\headheight}{15pt}
+% 如以打印版为主，可保留；若以屏幕阅读为主，可按需注释掉
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
 
 % ==================================================
-% Font Settings
-% ==================================================
-\setCJKmainfont{SimSun} % 宋体
-\setCJKsansfont{SimHei} % 黑体
-\setCJKmonofont{FangSong} % 仿宋
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
-
-\newcommand{\heiti}{\sffamily}
-\newcommand{\songti}{\rmfamily}
-\newcommand{\kaishu}{\CJKfamily{kai}}
-
-% ==================================================
-% Header and Footer
-% ==================================================
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\songti \leftmark}
-\fancyfoot[C]{\songti \thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-
-% ==================================================
-% Color Definitions
-% ==================================================
-\definecolor{iconRed}{HTML}{C72C41}
-\definecolor{iconBlue}{HTML}{4285F4}
-\definecolor{iconGreen}{HTML}{34A853}
-\definecolor{iconYellow}{HTML}{FBBC05}
-\definecolor{iconPurple}{HTML}{9C27B0}
-\definecolor{iconOrange}{HTML}{FF9800}
-\definecolor{iconTeal}{HTML}{009688}
-
-% 数学专用颜色
-\definecolor{mathBlue}{HTML}{1976D2}
-\definecolor{mathGreen}{HTML}{388E3C}
-\definecolor{mathRed}{HTML}{D32F2F}
-\definecolor{mathOrange}{HTML}{F57C00}
-\definecolor{mathPurple}{HTML}{7B1FA2}
-
-% 背景色（兼容黑白打印）
-\definecolor{bgLightBlue}{HTML}{E3F2FD}
-\definecolor{bgLightGreen}{HTML}{E8F5E8}
-\definecolor{bgLightYellow}{HTML}{FFFDE7}
-\definecolor{bgLightRed}{HTML}{FFEBEE}
-\definecolor{bgLightPurple}{HTML}{F3E5F5}
-
-% ==================================================
-% Icon Commands
-% ==================================================
-\newcommand{\exampleicon}{\textcolor{iconRed}{\faExclamationTriangle}}
-\newcommand{\analysisicon}{\textcolor{iconBlue}{\faSearch}}
-\newcommand{\revisionicon}{\textcolor{iconGreen}{\faCheckCircle}}
-\newcommand{\examicon}{\textcolor{iconYellow}{\faGraduationCap}}
-\newcommand{\tipicon}{\textcolor{iconPurple}{\faLightbulb}}
-\newcommand{\warningicon}{\textcolor{iconOrange}{\faExclamationCircle}}
-\newcommand{\keyicon}{\textcolor{iconTeal}{\faKey}}
-
-% ==================================================
-% Math Commands
+% Math helpers specific to this note
 % ==================================================
 % 导数符号
 \newcommand{\deriv}[2]{\frac{d#1}{d#2}}
@@ -81,65 +29,38 @@
 \newcommand{\isomorphic}{\cong}
 \newcommand{\homomorphic}{\simeq}
 
-\newtcolorbox{definitionbox}[1][]{
-    colback=bgLightBlue,
-    colframe=mathBlue,
-    colbacktitle=mathBlue,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    enhanced,
-    attach boxed title to top left={xshift=0.5cm, yshift=-0.25mm},
-    boxed title style={size=small, colback=mathBlue}
-}
+% 图标式标签：使用模板提供的 ModeBadge，而非额外图标字体
+\newcommand{\exampleicon}{\ModeBadge[highlight]{例题}}
+\newcommand{\analysisicon}{\ModeBadge[secondary]{分析}}
+\newcommand{\revisionicon}{\ModeBadge[accent]{整理}}
+\newcommand{\examicon}{\ModeBadge[accent]{考点}}
+\newcommand{\tipicon}{\ModeBadge[secondary]{提示}}
+\newcommand{\warningicon}{\ModeBadge[highlight]{注意}}
+\newcommand{\keyicon}{\ModeBadge[accent]{关键}}
 
-\newtcolorbox{examplebox}[1][]{
-    colback=bgLightYellow,
-    colframe=mathOrange,
-    colbacktitle=mathOrange,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    enhanced,
-    attach boxed title to top left={xshift=0.5cm, yshift=-0.25mm},
-    boxed title style={size=small, colback=mathOrange}
+% 方法与提示盒：复用 mathnote box 统一风格
+\makeatletter
+\newtcolorbox{methodbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{方法}{#2},
+  colback=surface,
+  colframe=accent!70!black,
+  coltitle=accent!15!white,
+  fonttitle=\sffamily\bfseries\color{accent!45!white},
+  borderline west={2pt}{0pt}{accent},
+  #1
 }
-
-\newtcolorbox{methodbox}[1][]{
-    colback=bgLightGreen,
-    colframe=mathGreen,
-    colbacktitle=mathGreen,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    enhanced,
-    attach boxed title to top left={xshift=0.5cm, yshift=-0.25mm},
-    boxed title style={size=small, colback=mathGreen}
+\newtcolorbox{tipbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{提示}{#2},
+  colback=surface,
+  colframe=secondary!60!black,
+  coltitle=secondary!15!white,
+  fonttitle=\sffamily\bfseries\color{secondary!45!white},
+  borderline west={2pt}{0pt}{secondary},
+  #1
 }
-
-\newtcolorbox{warningbox}[1][]{
-    colback=bgLightRed,
-    colframe=mathRed,
-    colbacktitle=mathRed,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    enhanced,
-    attach boxed title to top left={xshift=0.5cm, yshift=-0.25mm},
-    boxed title style={size=small, colback=mathRed}
-}
-
-\newtcolorbox{tipbox}[1][]{
-    colback=bgLightPurple,
-    colframe=mathPurple,
-    colbacktitle=mathPurple,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    enhanced,
-    attach boxed title to top left={xshift=0.5cm, yshift=-0.25mm},
-    boxed title style={size=small, colback=mathPurple}
-}
+\makeatother
 
 % ==================================================
 % Theorem Environments
@@ -153,29 +74,13 @@
 \newtheorem{remark}{注记}[chapter]
 
 % ==================================================
-% Hyperref Setup
-% ==================================================
-\hypersetup{
-    colorlinks=true,
-    linkcolor=mathBlue,
-    filecolor=mathPurple,
-    urlcolor=mathTeal,
-    pdftitle={在导数问题中构造同构函数},
-    pdfauthor={高中数学参考笔记},
-    pdfpagemode=UseOutlines,
-    bookmarksnumbered=true,
-}
-
-% ==================================================
-% Document Title
+% Document meta information
 % ==================================================
 \renewcommand{\notetitle}{在导数问题中构造同构函数}
-\renewcommand{\noteauthor}{\songti 高中数学参考笔记}
+\renewcommand{\noteauthor}{高中数学参考笔记}
 \renewcommand{\notedate}{\today}
-
-\title{\heiti \notetitle}
-\author{\noteauthor}
-\date{\notedate}
+\renewcommand{\notesubtitle}{同构思想在导数问题中的系统应用}
+\renewcommand{\noteversion}{v1.0}
 
 \renewcommand{\chaptername}{第}
 \renewcommand{\thechapter}{\arabic{chapter} 章}
@@ -186,18 +91,44 @@
 % ==================================================
 \begin{document}
 
-\begin{titlepage}
-    \centering
-    \vspace*{\stretch{1.0}}
-    \Huge\heiti 在导数问题中构造同构函数
-    \vspace*{\stretch{0.5}}
-    \Large\songti 高中数学参考笔记
-    \vspace*{\stretch{2.0}}
-    \large \today
-    \vfill
-\end{titlepage}
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{导数·同构函数}
+\setcounter{page}{1}
 
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{同构函数}这一核心工具，串联导数题目中的单调性、极值与不等式证明模型；
+    \item 强调从\inlinehint{结构相似}出发识别同构，再通过\inlinehint{构造与验证}完成求解；
+    \item 配套概念梳理、方法盒与典型例题，帮助建立可迁移的\keyword{同构模型库}与\keyword{统一分析框架}。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+
+% 目录
 \tableofcontents
+\newpage
 
 \chapter*{\heiti 前言}
 \addcontentsline{toc}{chapter}{前言}
@@ -310,9 +241,11 @@
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 同构函数是导数问题中的重要工具，它通过揭示函数之间的内在联系，为我们提供了简化问题、统一处理的有效方法。掌握同构函数的概念和基本类型，是学习后续内容的基础。
 
 在下一章中，我们将学习如何识别同构结构，这是构造同构函数的前提条件。
+\end{summarybox}
 
 \chapter{同构函数的识别技巧}
 
@@ -468,9 +401,11 @@ $$f(x) = x^2 - 2x + 3 = (x-1)^2 + 2$$
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 识别同构结构是构造同构函数的基础。通过观察法、变换法等技巧，我们可以发现函数之间的内在联系，为后续的构造工作奠定基础。
 
 在下一章中，我们将学习具体的构造方法，将识别到的同构结构转化为可操作的解题工具。
+\end{summarybox}
 
 \chapter{构造同构函数的基本方法}
 
@@ -682,9 +617,11 @@ $$f(x) = \frac{x^2 + 1}{x} = x + \frac{1}{x}$$
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 构造同构函数的方法多种多样，每种方法都有其适用场景。在实际应用中，要根据具体问题的特点，选择合适的方法，有时还需要综合运用多种方法。
 
 在下一章中，我们将学习常见的同构模型库，这些模型是构造同构函数的重要参考。
+\end{summarybox}
 
 \chapter{常见同构模型库}
 
@@ -1118,9 +1055,11 @@ k(x) &= \ln(x^3+1)
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 常见同构模型库为我们提供了构造同构函数的重要参考。通过掌握这些基本模型，我们可以快速识别问题中的同构结构，选择合适的构造方法，提高解题效率。
 
 在下一章中，我们将学习如何将这些模型应用到实际的不等式证明中。
+\end{summarybox}
 
 \chapter{不等式证明中的同构}
 
@@ -1286,9 +1225,11 @@ $f(x) \geq 0$ 对所有 $x \in \R$ 成立，等价于二次函数 $f(x)$ 的判�
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 不等式证明中的同构处理是导数问题的重要应用。通过构造同构函数，可以将复杂的超越不等式转化为简单的代数不等式，将恒成立问题转化为函数的最值问题，大大简化了计算过程。
 
 在下一章中，我们将学习如何将同构思想应用到方程与零点问题中。
+\end{summarybox}
 
 \chapter{方程与零点问题}
 
@@ -1427,9 +1368,11 @@ $$t + \frac{1}{t} = 2$$
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 方程与零点问题中的同构处理是导数问题的重要应用。通过构造同构函数，可以简化零点个数的判断，简化方程根的存在性证明，简化隐式方程的处理。
 
 在下一章中，我们将学习同构思想的综合应用，包括压轴题典型案例和多变量同构问题。
+\end{summarybox}
 
 \chapter{综合应用}
 
@@ -1569,9 +1512,11 @@ $$x^3 + 3x^2 + 3x + 1 = (x+1)^3$$
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 综合应用中的同构处理是导数问题的高级应用。通过构造同构函数，可以简化压轴题的求解过程，简化多变量问题的处理，识别隐性同构结构。
 
 在下一章中，我们将学习同构函数构造工具箱，为实际应用提供系统化的工具支持。
+\end{summarybox}
 
 \chapter{同构函数构造工具箱}
 
@@ -1752,9 +1697,11 @@ $f(x) = \cos x$ & $\R$ & $[-1, 1]$ & 周期性函数 \\
 
 \section{本章小结}
 
+\begin{summarybox}{本章小结}
 同构函数构造工具箱为我们提供了系统化的工具支持。通过掌握基本导数公式、函数性质、构造方法和检查清单，我们可以更加高效地解决导数问题中的同构构造问题。
 
 在附录中，我们将提供练习题精选、高考真题链接和快速检查清单，帮助大家巩固所学知识。
+\end{summarybox}
 
 \appendix
 

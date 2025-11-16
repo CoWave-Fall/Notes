@@ -1,10 +1,3 @@
-% !TEX program = xelatex
-% !TEX encoding = UTF-8
-% ============================================
-% 固定速度抛射的包络线
-% 数学笔记 XeLaTeX 模板
-% ============================================
-
 \documentclass[a4paper,11pt]{ctexart}
 
 \input{../mathnote-preamble.tex}
@@ -12,15 +5,56 @@
 \renewcommand{\notetitle}{定点固定速度抛射的包络线}
 \renewcommand{\noteauthor}{Gemini 数学组}
 \renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{抛体运动可达区域与包络线}
+\renewcommand{\noteversion}{v1.0}
 
-\title{\Huge \bfseries \color{myblue} \notetitle}
-\author{\noteauthor}
-\date{\notedate}
+% 可按需要开启印刷模式与审稿章
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
+
+% 专用配色：从 mathnote 16 色主题抽取
+\colorlet{myblue}{screenTone03}
+\colorlet{mygreen}{screenTone07}
+\colorlet{myred}{screenTone13}
+\colorlet{myorange}{screenTone12}
+\colorlet{mypurple}{screenTone15}
 
 \begin{document}
 
-% 标题页
-\maketitle
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·抛射运动包络线}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{定点固定速度抛射}这一典型物理模型，刻画不同抛射角轨迹构成的\keyword{曲线族}与其\keyword{包络线}；
+    \item 在\inlinehint{物理运动分解}与\inlinehint{曲线族求包络线}之间建立对应，形成可迁移的\keyword{“物理情景 $\rightarrow$ 数学模型 $\rightarrow$ 包络线”}流程；
+    \item 通过例题与判别式方法，训练对\keyword{可达区域}、\keyword{最优抛射角}等问题的统一分析框架。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
 
 % 目录
 \tableofcontents
@@ -53,9 +87,9 @@
     % 网格线（辅助）
     \draw[gray!20, very thin] (0,0) grid (1.05*\xmaxenv,1.05*\hmax);
     
-    % 抛射点
-    \fill[myred] (0,0) circle (2pt);
-    \node[myred, below left, font=\normalsize] at (0,0) {抛射点};
+    % 抛射点（略小的圆点标记）
+    \fill[myred] (0,0) circle (1.1pt);
+    \node[myred, below left, font=\small] at (0,0) {抛射点};
     
     % 多条不同角度的轨迹（示意）
     \foreach \angle in {10, 20, 30, 40, 50, 60, 70, 80}
@@ -161,7 +195,7 @@
     \draw[gray!20, very thin] (0,0) grid (1.05*\xmax,1.15*\ymax);
     
     % 抛射点
-    \fill[myred] (0,0) circle (1.5pt);
+    \fill[myred] (0,0) circle (0.6pt);
     
     % 速度矢量分解（缩短箭头长度）
     \pgfmathsetmacro{\vlen}{0.5}
@@ -192,15 +226,15 @@
     \draw[myorange, very thick, line width=2pt, domain=0:\xmax, samples=120] 
         plot (\x, {\x*\tantheta - \g*\x*\x/(2*\vzero*\vzero*\costheta*\costheta)});
     
-    % 关键点标注
-    \fill[myred] (0.5*\xmax, \ymax) circle (2pt);
+    % 关键点标注（最高点与落地点圆点略小）
+    \fill[myred] (0.5*\xmax, \ymax) circle (0.6pt);
     \draw[dashed, myred!60] (0.5*\xmax, 0) -- (0.5*\xmax, \ymax);
     \draw[dashed, myred!60] (0, \ymax) -- (0.5*\xmax, \ymax);
     \node[myred, above, font=\normalsize] at (0.5*\xmax, \ymax) {最高点};
     \node[myred, below, font=\small] at (0.5*\xmax, 0) {$R/2$};
     \node[myred, left, font=\small] at (0, \ymax) {$H$};
     
-    \fill[myred] (\xmax, 0) circle (2pt);
+    \fill[myred] (\xmax, 0) circle (0.6pt);
     \draw[dashed, myred!60] (\xmax, 0) -- (\xmax, 0.1);
     \node[myred, below right, font=\normalsize] at (\xmax, 0) {落地点};
     \node[myred, below, font=\small] at (\xmax, 0) {$R$};
@@ -264,7 +298,7 @@
     \draw[gray!20, very thin] (0,0) grid (1.05*\xmaxenv,1.05*\hmax);
     
     % 抛射点
-    \fill[myred] (0,0) circle (2pt);
+    \fill[myred] (0,0) circle (1.6pt);
     \node[myred, below left, font=\small] at (0,0) {抛射点};
     
     % 多条不同角度的轨迹
@@ -351,92 +385,129 @@
 \begin{definitionbox}{包络线的数学定义}
 设曲线族由方程 $F(x, y, \alpha) = 0$ 给出，其中 $\alpha$ 是参数。如果存在一条曲线 $C$，使得：
 \begin{enumerate}
-    \item $C$ 上的每一点都在族中某条曲线上
-    \item $C$ 在每一点都与族中经过该点的曲线相切
+    \item $C$ 上的每一点都在族中某条曲线上；
+    \item $C$ 在每一点都与族中经过该点的曲线相切，
 \end{enumerate}
-则称 $C$ 为该曲线族的\textbf{包络线}。
+则称 $C$ 为该曲线族的\keyword{包络线}。
 
-包络线的求法：联立方程组
-\begin{equation}
+求包络线的一般步骤可以用下面的\textbf{数学路线图}来概括：
+
+\begin{roadmap}
+  \RoadmapStep{写出曲线族的方程 $F(x,y,\alpha)=0$，明确参数 $\alpha$ 的含义（本问题中是抛射角或其正切）。}
+  \RoadmapStep{对参数求偏导：令 $\dfrac{\partial F}{\partial \alpha}(x,y,\alpha)=0$，刻画“相切”的条件。}
+  \RoadmapStep{联立
+  \[
     \begin{cases}
-        F(x, y, \alpha) = 0 \\
-        \frac{\partial F}{\partial \alpha}(x, y, \alpha) = 0
+      F(x,y,\alpha)=0,\\[0.3em]
+      \dfrac{\partial F}{\partial \alpha}(x,y,\alpha)=0
     \end{cases}
-\end{equation}
-消去参数 $\alpha$，即可得到包络线的方程。
+  \]
+  消去参数 $\alpha$，得到仅含 $x,y$ 的方程。}
+  \RoadmapStep{将得到的曲线理解为原曲线族的“边界”，并结合物理情景解释其几何意义。}
+\end{roadmap}
 \end{definitionbox}
 
-\subsection{包络线的推导过程}
+\subsection{利用参数法求包络线}
 
-对于抛体运动的轨迹族，我们使用 $\tan\theta$ 作为参数会更方便。设 $k = \tan\theta$，则轨迹方程 \eqref{eq:family} 变为：
+对于抛体运动的轨迹族，我们使用 $k = \tan\theta$ 作为参数会更方便。设
+\[
+  F(x,y,k) = y - xk + \frac{gx^2}{2v_0^2}(1 + k^2) = 0, \label{eq:F}
+\]
+这正是轨迹方程 \eqref{eq:family} 的等价形式。
 
-\begin{equation}
-    F(x, y, k) = y - xk + \frac{gx^2}{2v_0^2}(1 + k^2) = 0 \label{eq:F}
-\end{equation}
+根据上面的路线图：
+\begin{focuspoints}
+  \item 将\inlinehint{几何条件“相切”}翻译为关于参数 $k$ 的\keyword{重根条件}；
+  \item 用 $\dfrac{\partial F}{\partial k}=0$ 刻画“重根”或“切点”，再与 $F=0$ 联立；
+  \item 消去 $k$ 后得到的曲线，就是这族抛物线的包络线。
+\end{focuspoints}
 
-对参数 $k$ 求偏导数：
+对参数 $k$ 求偏导：
+\[
+  \frac{\partial F}{\partial k} = -x + \frac{gx^2}{2v_0^2} \cdot 2k
+  = -x + \frac{gx^2}{v_0^2}k = 0.
+\]
+由此可得
+\[
+  -x + \frac{gx^2k}{v_0^2} = 0
+  \quad\Longrightarrow\quad
+  x\!\left(-1 + \frac{gxk}{v_0^2}\right) = 0.
+\]
+当 $x = 0$ 时对应抛射点（不是我们关心的包络线上的一般点），因此必须有
+\[
+  -1 + \frac{gxk}{v_0^2} = 0
+  \quad\Longrightarrow\quad
+  k = \frac{v_0^2}{gx}. \label{eq:k}
+\]
 
-\begin{equation}
-    \frac{\partial F}{\partial k} = -x + \frac{gx^2}{2v_0^2} \cdot 2k = -x + \frac{gx^2k}{v_0^2} = 0 \label{eq:partial}
-\end{equation}
-
-由 \eqref{eq:partial} 得：
-\begin{equation}
-    -x + \frac{gx^2k}{v_0^2} = 0 \quad \Rightarrow \quad x\left(-1 + \frac{gxk}{v_0^2}\right) = 0
-\end{equation}
-
-当 $x = 0$ 时，对应抛射点，不是包络线上的点（除起点外）。因此：
-\begin{equation}
-    -1 + \frac{gxk}{v_0^2} = 0 \quad \Rightarrow \quad k = \frac{v_0^2}{gx} \label{eq:k}
-\end{equation}
-
-将 \eqref{eq:k} 代入 \eqref{eq:F}：
-
+将上式代入 $F(x,y,k)=0$：
 \begin{align}
-    y &= x \cdot \frac{v_0^2}{gx} - \frac{gx^2}{2v_0^2}\left(1 + \left(\frac{v_0^2}{gx}\right)^2\right) \nonumber\\
-    &= \frac{v_0^2}{g} - \frac{gx^2}{2v_0^2}\left(1 + \frac{v_0^4}{g^2x^2}\right) \nonumber\\
-    &= \frac{v_0^2}{g} - \frac{gx^2}{2v_0^2} - \frac{gx^2}{2v_0^2} \cdot \frac{v_0^4}{g^2x^2} \nonumber\\
-    &= \frac{v_0^2}{g} - \frac{gx^2}{2v_0^2} - \frac{v_0^2}{2g} \nonumber\\
-    &= \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}
+  y
+  &= x \cdot \frac{v_0^2}{gx}
+     - \frac{gx^2}{2v_0^2}\left(1 + \left(\frac{v_0^2}{gx}\right)^2\right) \nonumber\\
+  &= \frac{v_0^2}{g}
+     - \frac{gx^2}{2v_0^2}\left(1 + \frac{v_0^4}{g^2x^2}\right) \nonumber\\
+  &= \frac{v_0^2}{g}
+     - \frac{gx^2}{2v_0^2}
+     - \frac{v_0^2}{2g} \nonumber\\
+  &= \frac{v_0^2}{2g}
+     - \frac{gx^2}{2v_0^2}.
 \end{align}
 
 \begin{theorembox}{抛体运动轨迹族的包络线方程}
-从同一点以固定初速度 $v_0$、不同抛射角 $\theta$ 抛出的质点，其轨迹族的包络线方程为：
+从同一点以固定初速度 $v_0$、不同抛射角 $\theta$ 抛出的质点，其轨迹族的包络线方程为
 \begin{equation}
-    y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2} \label{eq:envelope}
+  y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}. \label{eq:envelope}
 \end{equation}
-
 这是一个开口向下的抛物线，其性质为：
 \begin{itemize}
-    \item 顶点：$\left(0, \frac{v_0^2}{2g}\right)$，这是竖直上抛能达到的最大高度
-    \item 对称轴：$x = 0$（$y$ 轴）
-    \item 与 $x$ 轴的交点：$x = \pm \frac{v_0^2}{g}$，这是水平抛射的最大射程
+  \item 顶点：$\left(0, \dfrac{v_0^2}{2g}\right)$，对应竖直上抛能达到的最大高度；
+  \item 对称轴：$x = 0$（$y$ 轴），反映抛体运动关于竖直方向的对称性；
+  \item 与 $x$ 轴的交点：$x = \pm \dfrac{v_0^2}{g}$，这是水平抛射的最大射程。
 \end{itemize}
 \end{theorembox}
 
-\subsection{推导方法的说明}
+\subsection{判别式视角：一次性判定可达区域}
 
-我们也可以直接从轨迹方程出发，使用另一种方法：
+还可以从\keyword{判别式}的角度理解包络线。
 
-将轨迹方程 \eqref{eq:trajectory} 整理为关于 $\tan\theta$ 的二次方程：
+把轨迹方程 \eqref{eq:trajectory} 看作关于 $k=\tan\theta$ 的二次方程：
 \begin{equation}
-    \frac{gx^2}{2v_0^2}\tan^2\theta - x\tan\theta + \left(y + \frac{gx^2}{2v_0^2}\right) = 0
+  \frac{gx^2}{2v_0^2}k^2 - xk
+  + \left(y + \frac{gx^2}{2v_0^2}\right) = 0.
 \end{equation}
+若给定点 $(x, y)$ 处存在实数抛射角使质点经过，则上述方程对 $k$ 有\keyword{实根}，即判别式
+\[
+  \Delta \geq 0.
+\]
 
-对于给定的点 $(x, y)$，如果它位于某条轨迹上，则上述关于 $\tan\theta$ 的方程有实数解，判别式 $\Delta \geq 0$：
-
+直接计算：
 \begin{align}
-    \Delta &= x^2 - 4 \cdot \frac{gx^2}{2v_0^2} \cdot \left(y + \frac{gx^2}{2v_0^2}\right) \nonumber\\
-    &= x^2 - \frac{2gx^2}{v_0^2}\left(y + \frac{gx^2}{2v_0^2}\right) \nonumber\\
-    &= x^2 - \frac{2gx^2y}{v_0^2} - \frac{g^2x^4}{v_0^4} \geq 0
+  \Delta
+  &= x^2
+   - 4 \cdot \frac{gx^2}{2v_0^2}
+     \left(y + \frac{gx^2}{2v_0^2}\right) \nonumber\\
+  &= x^2
+   - \frac{2gx^2}{v_0^2}\left(y + \frac{gx^2}{2v_0^2}\right) \nonumber\\
+  &= x^2
+   - \frac{2gx^2y}{v_0^2}
+   - \frac{g^2x^4}{v_0^4}.
 \end{align}
 
-整理得：
+令 $\Delta \geq 0$，整理得
 \begin{equation}
-    y \leq \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}
+  y \leq \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}.
 \end{equation}
 
-等号成立时，点 $(x, y)$ 恰好在包络线上，这与 \eqref{eq:envelope} 一致。
+\begin{summarybox}{判别式视角下的“可达区域”}
+\begin{itemize}
+  \item \keyword{包络线} $y = \dfrac{v_0^2}{2g} - \dfrac{gx^2}{2v_0^2}$ 对应 $\Delta = 0$：给定点恰好只有一个抛射角（重根），轨迹与包络线相切；
+  \item \keyword{包络线内部}对应 $\Delta > 0$：存在两个抛射角（两根），通常是“低抛/高抛”两种方案；
+  \item \keyword{包络线外部}对应 $\Delta < 0$：无实根，说明无论怎样选择抛射角都无法到达该点。
+\end{itemize}
+\end{summarybox}
+
+这给出了一个\keyword{一眼判断可达性}的工具：只需把点坐标代入包络线不等式，就能判断是否存在合适抛射角。
 
 % ============================================
 % 5. 包络线的性质与应用
@@ -490,18 +561,18 @@
         plot (\x, {\hmax - \g*\x*\x/(2*\vzero*\vzero)});
     
     % 抛射点
-    \fill[myred] (0,0) circle (2pt);
+    \fill[myred] (0,0) circle (1.6pt);
     \node[myred, below left, font=\small] at (0,0) {抛射点};
     
     % 标注顶点
-    \fill[myred] (0, \hmax) circle (2.5pt);
+    \fill[myred] (0, \hmax) circle (2pt);
     \draw[dashed, myred!60, thick] (0, 0) -- (0, \hmax);
     \node[myred, left, font=\normalsize] at (0, 0.5*\hmax) {$\frac{v_0^2}{2g}$};
     \node[myred, above, font=\normalsize\bfseries] at (0, \hmax) {顶点};
     
     % 标注与x轴交点
-    \fill[myred] (\xmax, 0) circle (2pt);
-    \fill[myred] (-\xmax, 0) circle (2pt);
+    \fill[myred] (\xmax, 0) circle (1.8pt);
+    \fill[myred] (-\xmax, 0) circle (1.8pt);
     \draw[dashed, myred!60, thick] (\xmax, 0) -- (\xmax, 0.08);
     \draw[dashed, myred!60, thick] (-\xmax, 0) -- (-\xmax, 0.08);
     \node[black, below, font=\normalsize] at (\xmax, 0) {$\frac{v_0^2}{g}$};
@@ -575,7 +646,7 @@
     \draw[gray!20, very thin] (0,0) grid (\xmax,\ymax);
     
     % 抛射点
-    \fill[myred] (0,0) circle (1.5pt);
+    \fill[myred] (0,0) circle (1.6pt);
     \node[myred, below left, font=\small] at (0,0) {抛射点};
     
     % 参数设置
@@ -755,18 +826,25 @@
 % ============================================
 \section{总结}
 
-本笔记介绍了固定速度抛射的包络线问题，主要内容包括：
-
+\begin{summarybox}{固定速度抛射包络线·知识小结}
 \begin{itemize}
-    \item \textbf{包络线的概念}：与一族曲线都相切的曲线，表示可达区域的边界
-    \item \textbf{抛体运动基础}：参数方程、轨迹方程、射程和最大高度
-    \item \textbf{轨迹族}：固定初速度、不同抛射角形成的抛物线族
-    \item \textbf{包络线方程}：$y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2}$
-    \item \textbf{几何性质}：顶点、对称轴、与坐标轴的交点
-    \item \textbf{应用}：判断点是否可达、求最优抛射角等
+  \item \keyword{抛体运动模型}：从定点以初速度 $v_0$、抛射角 $\theta$ 抛出质点，运动可分解为水平方向匀速、竖直方向匀加速；
+  \item \keyword{轨迹族方程}：
+  \[
+    y = x\tan\theta - \frac{gx^2}{2v_0^2}(1+\tan^2\theta),
+  \]
+  固定 $v_0$、令 $\theta$ 变化即可得到一族抛物线；
+  \item \keyword{包络线方程}：
+  \[
+    y = \frac{v_0^2}{2g} - \frac{gx^2}{2v_0^2},
+  \]
+  是所有轨迹的几何“边界”，刻画\inlinehint{可达区域}与\inlinehint{不可达区域}；
+  \item \keyword{两种求法统一}：一是用 $F(x,y,k)=0$ 与 $\dfrac{\partial F}{\partial k}=0$ 消去参数，二是用判别式 $\Delta\ge0$ 描述“有无抛射角”；
+  \item \keyword{常见问题类型}：点的可达性判断、最优抛射角、最大射程/最大高度、给定目标点反求初速度或角度等。
 \end{itemize}
+\end{summarybox}
 
-包络线问题将数学中的曲线族理论与物理中的抛体运动相结合，是数学物理交叉应用的典型例子。掌握包络线的求法和性质，有助于深入理解抛体运动的本质特征。
+包络线问题把曲线族理论与经典力学中的抛体运动紧密结合，是数理结合的典型模型。熟练掌握“\keyword{写出轨迹族} $\rightarrow$ \keyword{求包络线} $\rightarrow$ \keyword{解释可达区域}”的统一流程，可以自然迁移到更多含参曲线族与极值边界类问题中。
 
 % ============================================
 % 文档结束

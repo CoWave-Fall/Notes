@@ -3,192 +3,72 @@
 \input{../mathnote-preamble.tex}
 
 % ==================================================
-% Page Layout
-% ==================================================
-\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
-\setlength{\headheight}{15pt}
-
-% ==================================================
-% Font Settings
-% ==================================================
-\setCJKmainfont{SimSun} % 宋体
-\setCJKsansfont{SimHei} % 黑体
-\setCJKmonofont{FangSong} % 仿宋
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
-
-\newcommand{\heiti}{\sffamily}
-\newcommand{\songti}{\rmfamily}
-\newcommand{\kaishu}{\CJKfamily{kai}}
-
-% ==================================================
-% Header and Footer
-% ==================================================
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\songti \leftmark}
-\fancyfoot[C]{\songti \thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-
-% ==================================================
-% Color Definitions
-% ==================================================
-\definecolor{iconRed}{HTML}{C72C41}
-\definecolor{iconBlue}{HTML}{4285F4}
-\definecolor{iconGreen}{HTML}{34A853}
-\definecolor{iconYellow}{HTML}{FBBC05}
-\definecolor{iconPurple}{HTML}{9C27B0}
-\definecolor{iconOrange}{HTML}{FF6B35}
-\definecolor{lightblue}{HTML}{E3F2FD}
-\definecolor{lightgreen}{HTML}{E8F5E8}
-\definecolor{lightyellow}{HTML}{FFFDE7}
-\definecolor{lightred}{HTML}{FFEBEE}
-
-% ==================================================
-% Icon Commands
-% ==================================================
-\newcommand{\exampleicon}{\textcolor{iconRed}{\faExclamationTriangle}}
-\newcommand{\analysisicon}{\textcolor{iconBlue}{\faSearch}}
-\newcommand{\revisionicon}{\textcolor{iconGreen}{\faCheckCircle}}
-\newcommand{\examicon}{\textcolor{iconYellow}{\faGraduationCap}}
-\newcommand{\tipicon}{\textcolor{iconPurple}{\faLightbulb}}
-\newcommand{\warningicon}{\textcolor{iconOrange}{\faExclamationCircle}}
-\newcommand{\methodicon}{\textcolor{iconBlue}{\faCogs}}
-
-% ==================================================
-% Textbox Definitions
-% ==================================================
-\newtcolorbox{definitionbox}{
-    colback=lightblue,
-    colframe=iconBlue,
-    boxrule=1pt,
-    arc=3pt,
-    left=5pt,
-    right=5pt,
-    top=5pt,
-    bottom=5pt,
-    fonttitle=\bfseries\heiti,
-    title=定义
-}
-
-\newtcolorbox{theorembox}{
-    colback=lightgreen,
-    colframe=iconGreen,
-    boxrule=1pt,
-    arc=3pt,
-    left=5pt,
-    right=5pt,
-    top=5pt,
-    bottom=5pt,
-    fonttitle=\bfseries\heiti,
-    title=定理
-}
-
-\newtcolorbox{examplebox}{
-    colback=lightyellow,
-    colframe=iconYellow,
-    boxrule=1pt,
-    arc=3pt,
-    left=5pt,
-    right=5pt,
-    top=5pt,
-    bottom=5pt,
-    fonttitle=\bfseries\heiti,
-    title=例题
-}
-
-\newtcolorbox{tipbox}{
-    colback=lightred,
-    colframe=iconRed,
-    boxrule=1pt,
-    arc=3pt,
-    left=5pt,
-    right=5pt,
-    top=5pt,
-    bottom=5pt,
-    fonttitle=\bfseries\heiti,
-    title=重要提示
-}
-
-\newtcolorbox{methodbox}{
-    colback=lightblue,
-    colframe=iconPurple,
-    boxrule=1pt,
-    arc=3pt,
-    left=5pt,
-    right=5pt,
-    top=5pt,
-    bottom=5pt,
-    fonttitle=\bfseries\heiti,
-    title=解题方法
-}
-
-% ==================================================
-% Hyperref Setup
-% ==================================================
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-    pdftitle={端点/内点效应高中数学参考笔记},
-    pdfpagemode=UseOutlines,
-    bookmarksnumbered=true,
-}
-
-% ==================================================
-% Document Title
+% Document Title & Metadata
 % ==================================================
 \renewcommand{\notetitle}{端点/内点效应高中数学参考笔记}
-\renewcommand{\noteauthor}{\songti 高中数学参考笔记}
+\renewcommand{\noteauthor}{高中数学参考笔记}
 \renewcommand{\notedate}{\today}
-
-\title{\heiti \notetitle}
-\author{\noteauthor}
-\date{\notedate}
+\renewcommand{\notesubtitle}{导数压轴·端点效应与内点效应}
+\renewcommand{\noteversion}{v1.0}
 
 \renewcommand{\chaptername}{第}
 \renewcommand{\thechapter}{\arabic{chapter} 章}
 \renewcommand{\appendixname}{附录}
 
-% ==================================================
-% Main Document
-% ==================================================
 \begin{document}
 
-\begin{titlepage}
-    \centering
-    \vspace*{\stretch{1.0}}
-    \Huge\heiti 端点/内点效应高中数学参考笔记
-    \vspace*{\stretch{0.5}}
-    \Large\songti 综合指导 · 详细复习 · 工具应用
-    \vspace*{\stretch{2.0}}
-    \large \today
-    \vfill
-\end{titlepage}
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·端点/内点效应}
+\setcounter{page}{1}
 
+\MathNoteEnableReviewStamp
+\MathNoteEnablePrint
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{端点效应}与\keyword{内点效应}两大核心概念，梳理闭区间最值、导数单调性等典型模型；
+    \item 通过\inlinehint{端点比较}与\inlinehint{驻点分析}的对比，构建一套可迁移的\keyword{统一解题框架}；
+    \item 配套基础到压轴的例题与高考真题，帮助形成系统的\keyword{参数讨论}与\keyword{综合判断}能力。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+
+% 目录
 \tableofcontents
+\newpage
 
 \chapter*{\heiti 前言}
 \addcontentsline{toc}{chapter}{前言}
 
-端点效应和内点效应是高中数学导数部分的核心概念，也是高考数学压轴题的重要解题方法。本笔记采用"理论深入 + 方法对比 + 例题丰富 + 应用综合"的体系，帮助同学们全面掌握这一重要知识点。
-
-\warningicon \textbf{学习建议：}
-\begin{itemize}
-    \item \textbf{理论基础}：深入理解端点/内点效应的数学本质
-    \item \textbf{方法对比}：掌握不同解题方法的适用场景
-    \item \textbf{例题训练}：通过20个精选例题提升解题能力
-    \item \textbf{综合应用}：结合高考真题强化实战能力
-\end{itemize}
+端点效应和内点效应是高中数学导数部分的核心概念，也是高考数学导数压轴题的重要解题方法。本笔记采用“理论深入 + 方法对比 + 例题丰富 + 应用综合”的体系，帮助同学们从整体上把握端点/内点效应在各类题型中的作用。
 
 \chapter{理论基础}
 
 \section{核心概念定义}
 
-\begin{definitionbox}
+\begin{definitionbox}{核心概念}
 \textbf{端点效应}：在研究函数性质时，函数在定义域端点处的行为对问题解答产生关键影响的现象。当函数的极值、最值或单调性主要由端点处的函数值决定时，称为端点效应。
 
 \textbf{内点效应}：函数在定义域内部某些特殊点（如驻点、拐点等）的行为对函数性质产生决定性影响的现象。当函数的极值主要由内部驻点决定时，称为内点效应。
@@ -196,14 +76,14 @@
 
 \section{数学理论基础}
 
-\begin{theorembox}
-\textbf{费马引理}：设函数 $f(x)$ 在点 $x_0$ 处可导，且在 $x_0$ 处取得极值，则 $f'(x_0) = 0$。
+\begin{theorembox}{费马引理}
+设函数 $f(x)$ 在点 $x_0$ 处可导，且在 $x_0$ 处取得极值，则 $f'(x_0) = 0$。
 
 \textbf{注意}：费马引理仅适用于内点，对于端点处的极值需要单独分析。
 \end{theorembox}
 
-\begin{theorembox}
-\textbf{极值存在性定理}：设函数 $f(x)$ 在闭区间 $[a,b]$ 上连续，则 $f(x)$ 在 $[a,b]$ 上必有最大值和最小值。
+\begin{theorembox}{极值存在性定理}
+设函数 $f(x)$ 在闭区间 $[a,b]$ 上连续，则 $f(x)$ 在 $[a,b]$ 上必有最大值和最小值。
 
 \textbf{极值位置}：极值可能出现在：
 \begin{enumerate}
@@ -215,14 +95,12 @@
 
 \section{端点效应与内点效应的关系}
 
-\begin{tipbox}
-\textbf{选择原则}：
+\textbf{选择原则：}
 \begin{itemize}
-    \item 当函数在端点处有明显特征时，优先考虑\textcolor{iconBlue}{端点效应}
-    \item 当函数在内部有驻点时，重点分析\textcolor{iconGreen}{内点效应}
-    \item 复杂问题需要\textcolor{iconPurple}{综合运用}两种方法
+    \item 当函数在端点处有明显特征时，优先考虑\keyword{端点效应}
+    \item 当函数在内部有驻点时，重点分析\keyword{内点效应}
+    \item 复杂问题需要\keyword{综合运用}两种方法
 \end{itemize}
-\end{tipbox}
 
 \chapter{方法体系}
 
@@ -230,21 +108,17 @@
 
 \subsection{基本步骤}
 
-\begin{methodbox}
-\textbf{端点效应解题步骤}：
+\textbf{端点效应解题步骤：}
 \begin{enumerate}
     \item \textbf{代入端点}：将定义域端点代入函数，得到关于参数的初步条件
     \item \textbf{分析导数}：求导并分析导数在端点处的符号
     \item \textbf{确定范围}：结合端点值和导数信息，确定参数取值范围
     \item \textbf{验证结果}：检查所得参数范围是否满足题目要求
 \end{enumerate}
-\end{methodbox}
 
 \subsection{典型应用场景}
 
-\begin{examplebox}
-\textbf{应用场景1：恒成立问题}
-
+\begin{examplebox}{应用场景1：恒成立问题}
 已知函数 $f(x) = e^x + ax^2 - x$，当 $x \geq 0$ 时，$f(x) \geq 2x^3 + 1$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解}：
@@ -262,23 +136,18 @@
 
 \subsection{基本步骤}
 
-\begin{methodbox}
-\textbf{内点效应解题步骤}：
+\textbf{内点效应解题步骤：}
 \begin{enumerate}
     \item \textbf{求导找驻点}：求导数并解 $f'(x) = 0$，找到所有驻点
     \item \textbf{分析驻点性质}：通过二阶导数或函数值比较判断驻点性质
     \item \textbf{比较端点与驻点}：将端点值与驻点值进行比较
     \item \textbf{确定最值}：综合比较得出函数的最值
 \end{enumerate}
-\end{methodbox}
 
 \subsection{典型应用场景}
 
-\begin{examplebox}
-\textbf{应用场景2：最值问题}
-
+\begin{examplebox}{应用场景2：最值问题}
 求函数 $f(x) = x^3 - 3x^2 + 2x$ 在区间 $[0, 3]$ 上的最大值和最小值。
-
 \textbf{解}：
 \begin{enumerate}
     \item \textbf{求导}：$f'(x) = 3x^2 - 6x + 2$
@@ -294,9 +163,6 @@
 
 \section{方法对比分析}
 
-\begin{tipbox}
-\textbf{端点效应 vs 内点效应}：
-
 \begin{tabularx}{\textwidth}{|l|X|X|}
 \hline
 \heiti 特征 & \heiti 端点效应 & \heiti 内点效应 \\
@@ -310,14 +176,13 @@
 适用范围 & 恒成立、参数范围问题 & 最值、极值问题 \\
 \hline
 \end{tabularx}
-\end{tipbox}
 
 \chapter{题型分类与例题精讲}
 
 \section{恒成立问题}
 
-\begin{examplebox}
-\textbf{例题1}（基础）：已知函数 $f(x) = ax^2 + bx + c$，当 $x \in [0, 1]$ 时，$f(x) \geq 0$ 恒成立，求参数 $a, b, c$ 的取值范围。
+\begin{examplebox}{例题1（基础）}
+已知函数 $f(x) = ax^2 + bx + c$，当 $x \in [0, 1]$ 时，$f(x) \geq 0$ 恒成立，求参数 $a, b, c$ 的取值范围。
 
 \textbf{解}：
 \begin{enumerate}
@@ -327,8 +192,8 @@
 \end{enumerate}
 \end{examplebox}
 
-\begin{examplebox}
-\textbf{例题2}（提高）：已知函数 $f(x) = \ln x - ax$，当 $x \geq 1$ 时，$f(x) \leq 0$ 恒成立，求参数 $a$ 的取值范围。
+\begin{examplebox}{例题2（提高）}
+已知函数 $f(x) = \ln x - ax$，当 $x \geq 1$ 时，$f(x) \leq 0$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解}：
 \begin{enumerate}
@@ -343,8 +208,8 @@
 
 \section{存在性问题}
 
-\begin{examplebox}
-\textbf{例题3}（中等）：已知函数 $f(x) = x^3 - 3x + a$，问是否存在实数 $a$，使得 $f(x)$ 在区间 $[0, 2]$ 上有两个不同的零点？
+\begin{examplebox}{例题3（中等）}
+已知函数 $f(x) = x^3 - 3x + a$，问是否存在实数 $a$，使得 $f(x)$ 在区间 $[0, 2]$ 上有两个不同的零点？
 
 \textbf{解}：
 \begin{enumerate}
@@ -364,8 +229,8 @@
 
 \section{参数范围问题}
 
-\begin{examplebox}
-\textbf{例题4}（较难）：已知函数 $f(x) = e^x - ax - 1$，当 $x \geq 0$ 时，$f(x) \geq 0$ 恒成立，求参数 $a$ 的取值范围。
+\begin{examplebox}{例题4（较难）}
+已知函数 $f(x) = e^x - ax - 1$，当 $x \geq 0$ 时，$f(x) \geq 0$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解}：
 \begin{enumerate}
@@ -386,8 +251,8 @@
 
 \section{最值问题}
 
-\begin{examplebox}
-\textbf{例题5}（基础）：求函数 $f(x) = x^4 - 4x^3 + 4x^2$ 在区间 $[0, 3]$ 上的最大值和最小值。
+\begin{examplebox}{例题5（基础）}
+求函数 $f(x) = x^4 - 4x^3 + 4x^2$ 在区间 $[0, 3]$ 上的最大值和最小值。
 
 \textbf{解}：
 \begin{enumerate}
@@ -404,8 +269,8 @@
 
 \section{不等式证明}
 
-\begin{examplebox}
-\textbf{例题6}（提高）：证明当 $x \in [0, 1]$ 时，$x - x^2 \leq \frac{1}{4}$。
+\begin{examplebox}{例题6（提高）}
+证明当 $x \in [0, 1]$ 时，$x - x^2 \leq \frac{1}{4}$。
 
 \textbf{证明}：
 \begin{enumerate}
@@ -431,8 +296,8 @@
 
 \section{高考真题分析}
 
-\begin{examplebox}
-\textbf{2023年全国甲卷}：已知函数 $f(x) = ax - \frac{a}{x} - 2\ln x$，$a > 0$。
+\begin{examplebox}{2023年全国甲卷}
+已知函数 $f(x) = ax - \frac{a}{x} - 2\ln x$，$a > 0$。
 \begin{enumerate}
     \item 当 $a = 1$ 时，求 $f(x)$ 的单调区间；
     \item 若 $f(x)$ 在 $(0, +\infty)$ 上单调递增，求 $a$ 的取值范围。
@@ -461,9 +326,7 @@
 
 \section{解题策略总结}
 
-\begin{tipbox}
-\textbf{端点/内点效应解题策略}：
-
+\textbf{端点/内点效应解题策略：}
 \begin{enumerate}
     \item \textbf{问题识别}：判断是恒成立、存在性、最值还是证明问题
     \item \textbf{方法选择}：根据函数特点选择端点效应或内点效应
@@ -471,13 +334,10 @@
     \item \textbf{结果验证}：检查所得结果是否满足题目要求
     \item \textbf{特殊情况}：注意参数边界值和函数定义域
 \end{enumerate}
-\end{tipbox}
 
 \section{易错点分析}
 
-\begin{warningicon}
-\textbf{常见易错点}：
-
+\begin{warningbox}{常见易错点}
 \begin{enumerate}
     \item \textbf{忽略端点}：在求最值时忘记比较端点值
     \item \textbf{导数不存在}：忽略导数不存在的点
@@ -485,7 +345,7 @@
     \item \textbf{定义域限制}：忽略函数的定义域限制
     \item \textbf{等号处理}：在不等式证明中忽略等号成立的条件
 \end{enumerate}
-\end{warningicon}
+\end{warningbox}
 
 \chapter{综合练习}
 
@@ -538,9 +398,7 @@
 
 \section{解题技巧总结}
 
-\begin{tipbox}
-\textbf{解题技巧}：
-
+\textbf{解题技巧：}
 \begin{enumerate}
     \item \textbf{画图辅助}：通过函数图像直观理解问题
     \item \textbf{分类讨论}：对参数的不同取值进行分类
@@ -548,7 +406,6 @@
     \item \textbf{反证法}：在证明题中灵活运用反证法
     \item \textbf{数形结合}：结合几何意义理解代数问题
 \end{enumerate}
-\end{tipbox}
 
 \section{学习资源推荐}
 

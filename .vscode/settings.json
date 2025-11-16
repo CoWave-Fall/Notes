@@ -1,0 +1,85 @@
+{
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk-xelatex",
+      "command": "latexmk",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-xelatex",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "latexmk-clean-aux",
+      "command": "latexmk",
+      "args": [
+        "-c",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "latexmk-clean-aux-all",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "Set-Location -LiteralPath '%DIR%'; Get-ChildItem -Recurse -Filter *.tex | ForEach-Object { latexmk -c $_.FullName }"
+      ]
+    },
+    {
+      "name": "latexmk-clean-all",
+      "command": "latexmk",
+      "args": [
+        "-C",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "latexmk-clean-all-all",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        "Set-Location -LiteralPath '%DIR%'; Get-ChildItem -Recurse -Filter *.tex | ForEach-Object { latexmk -C $_.FullName }"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk (XeLaTeX)",
+      "tools": [
+        "latexmk-xelatex"
+      ]
+    },
+    {
+      "name": "清除当前文件辅助文件",
+      "tools": [
+        "latexmk-clean-aux"
+      ]
+    },
+    {
+      "name": "清除全部辅助文件",
+      "tools": [
+        "latexmk-clean-aux-all"
+      ]
+    },
+    {
+      "name": "清除辅助文件和 PDF",
+      "tools": [
+        "latexmk-clean-all"
+      ]
+    },
+    {
+      "name": "清除全部辅助文件和 PDF",
+      "tools": [
+        "latexmk-clean-all-all"
+      ]
+    }
+  ]
+}

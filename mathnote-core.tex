@@ -48,30 +48,32 @@
 % 尝试在多级目录中自动寻找审核章图标，兼容根目录与子目录编译
 \newif\ifmathnote@reviewstampfound
 \mathnote@reviewstampfoundfalse
-% 若用户未自定义 \MathNoteReviewStampBase，则留空以使用自动探测
+% 若用户未自定义 \MathNoteReviewStampBase，则留空以使用自动探测；
+% 用户可在导言前通过 \providecommand 或 \renewcommand 覆盖。
 \@ifundefined{MathNoteReviewStampBase}{%
-  \newcommand{\MathNoteReviewStampBase}{}%
+  \let\MathNoteReviewStampBase\@empty
 }{}
 \newcommand{\mathnote@reviewstamppathbase}{}
-\def\mathnote@reviewstampdircandidates{assest/,./assest/,../assest/,../../assest/,../../../assest/,../../../../assest/}
+\def\mathnote@reviewstampdircandidates{assest/lzlxV-reviewed,./assest/lzlxV-reviewed,../assest/lzlxV-reviewed,../../assest/lzlxV-reviewed,../../../assest/lzlxV-reviewed,../../../../assest/lzlxV-reviewed}
 \@ifundefined{mathnote@rootpath}{}{%
   \edef\mathnote@reviewstampdircandidates{%
-    \mathnote@rootpath\detokenize{assest/},%
-    \mathnote@rootpath\detokenize{./assest/},%
-    \mathnote@rootpath\detokenize{../assest/},%
-    \mathnote@rootpath\detokenize{../../assest/},%
+    \mathnote@rootpath\detokenize{assest/lzlxV-reviewed},%
+    \mathnote@rootpath\detokenize{./assest/lzlxV-reviewed},%
+    \mathnote@rootpath\detokenize{../assest/lzlxV-reviewed},%
+    \mathnote@rootpath\detokenize{../../assest/lzlxV-reviewed},%
     \mathnote@reviewstampdircandidates
   }%
 }
-\if\relax\detokenize{\MathNoteReviewStampBase}\relax
+% 如果用户显式提供了基路径，则直接使用；否则在候选路径中自动搜索
+\ifx\MathNoteReviewStampBase\@empty
   \@for\mathnote@cand:=\mathnote@reviewstampdircandidates\do{%
     \ifmathnote@reviewstampfound\else
-      \IfFileExists{\mathnote@cand lzlxV-reviewed.pdf}{%
-        \edef\mathnote@reviewstamppathbase{\mathnote@cand lzlxV-reviewed}%
+      \IfFileExists{\mathnote@cand.pdf}{%
+        \edef\mathnote@reviewstamppathbase{\mathnote@cand}%
         \mathnote@reviewstampfoundtrue
       }{%
-        \IfFileExists{\mathnote@cand lzlxV-reviewed.svg}{%
-          \edef\mathnote@reviewstamppathbase{\mathnote@cand lzlxV-reviewed}%
+        \IfFileExists{\mathnote@cand.svg}{%
+          \edef\mathnote@reviewstamppathbase{\mathnote@cand}%
           \mathnote@reviewstampfoundtrue
         }{}%
       }%
@@ -263,7 +265,9 @@
   \fi
 }
 
-% 中文主字体族：优先思源宋/黑与 Noto CJK，可退回 Fandol 系列
+% 中文主字体族：优先思源宋 (Source Han Serif) / 思源黑 (Source Han Sans)，
+% 斜体统一使用霞鹜文楷 LXGW WenKai（作为“伪斜体”），
+% 若上述字体缺失，则退回 Noto CJK / Fandol 系列。
 \newcommand{\mathnote@setcjkfonts}{%
   \ifmathnote@haslocalshserif
     \setCJKmainfont{SourceHanSerifSC-Regular}[

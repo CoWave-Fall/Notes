@@ -1,121 +1,95 @@
-\documentclass[a4paper, 12pt]{report}
+\documentclass[a4paper,12pt]{ctexrep}
+
+\input{../mathnote-preamble.tex}
+
+\usepackage{fontawesome5}
+
+\MathNoteEnableReviewStamp
+\MathNoteEnablePrint
+
+% 图标命令：使用 mathnote 配色体系
+\newcommand{\exampleicon}{\textcolor{highlight}{\faExclamationTriangle}}
+\newcommand{\analysisicon}{\textcolor{accent}{\faSearch}}
+\newcommand{\revisionicon}{\textcolor{secondary}{\faCheckCircle}}
+\newcommand{\examicon}{\textcolor{accent}{\faGraduationCap}}
+\newcommand{\tipicon}{\textcolor{secondary}{\faLightbulb}}
 
 % ==================================================
-% Packages
+% Document Title & Metadata
 % ==================================================
-\usepackage{xeCJK} % For Chinese support
-\usepackage{geometry} % For page margins
-\usepackage{fancyhdr} % For headers and footers
-\usepackage[x11names,table]{xcolor} % For colors
-\usepackage{enumitem} % For custom lists
-\usepackage{fontawesome5} % For icons
-\usepackage{hyperref} % For hyperlinks
-\usepackage{amsmath}
-\usepackage{tabularx}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage{parskip}
-
-% ==================================================
-% Page Layout
-% ==================================================
-\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
-\setlength{\headheight}{15pt}
-
-% ==================================================
-% Font Settings
-% ==================================================
-\setCJKmainfont{SimSun} % 宋体
-\setCJKsansfont{SimHei} % 黑体
-\setCJKmonofont{FangSong} % 仿宋
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
-
-\newcommand{\heiti}{\sffamily}
-\newcommand{\songti}{\rmfamily}
-\newcommand{\kaishu}{\CJKfamily{kai}}
-
-% ==================================================
-% Header and Footer
-% ==================================================
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\songti \leftmark}
-\fancyfoot[C]{\songti \thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-
-% ==================================================
-% Color Definitions
-% ==================================================
-\definecolor{iconRed}{HTML}{C72C41}
-\definecolor{iconBlue}{HTML}{4285F4}
-\definecolor{iconGreen}{HTML}{34A853}
-\definecolor{iconYellow}{HTML}{FBBC05}
-\definecolor{iconPurple}{HTML}{9C27B0}
-
-% ==================================================
-% Icon Commands
-% ==================================================
-\newcommand{\exampleicon}{\textcolor{iconRed}{\faExclamationTriangle}}
-\newcommand{\analysisicon}{\textcolor{iconBlue}{\faSearch}}
-\newcommand{\revisionicon}{\textcolor{iconGreen}{\faCheckCircle}}
-\newcommand{\examicon}{\textcolor{iconYellow}{\faGraduationCap}}
-\newcommand{\tipicon}{\textcolor{iconPurple}{\faLightbulb}}
-
-% ==================================================
-% Hyperref Setup
-% ==================================================
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,
-    urlcolor=cyan,
-    pdftitle={高中语文病句类型综合详解},
-    pdfpagemode=UseOutlines,
-    bookmarksnumbered=true,
-}
-
-% ==================================================
-% Document Title
-% ==================================================
-\title{\heiti 高中语文病句类型综合详解}
-\author{\songti}
-\date{\today}
+\renewcommand{\notetitle}{高中语文病句类型综合详解}
+\renewcommand{\noteauthor}{高中语文学习笔记}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{六大病句类型·方法论·实战应用}
+\renewcommand{\noteversion}{v1.0}
 
 \renewcommand{\chaptername}{第}
 \renewcommand{\thechapter}{\arabic{chapter} 章}
 \renewcommand{\appendixname}{附录}
 
-% ==================================================
-% Main Document
-% ==================================================
 \begin{document}
 
-\begin{titlepage}
-    \centering
-    \vspace*{\stretch{1.0}}
-    \Huge\heiti 高中语文病句类型综合详解
-    \vspace*{\stretch{2.0}}
-    \large \today
-    \vfill
-\end{titlepage}
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中语文·病句辨析}
+\setcounter{page}{1}
 
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{六大病句类型}（语序不当、搭配不当、成分残缺或赘余、结构混乱、表意不明、不合逻辑），梳理高中语文中最常考的错误模式；
+    \item 采用\inlinehint{病句示例}+\inlinehint{辨析分析}+\inlinehint{修改方法}三步法，训练从“发现问题”到“规范表达”的完整链路；
+    \item 配套\keyword{方法论}总结、\keyword{高频考点表}与\keyword{真题·综合练习}，便于考前进行系统回顾与自测。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+
+% 目录
 \tableofcontents
+\newpage
 
 \chapter*{\heiti 前言}
 \addcontentsline{toc}{chapter}{前言}
 
-病句辨析是高中语文学习的重点和难点，也是高考的必考题型。它不仅考察学生的语言基础知识，更考验学生的逻辑思维能力和语感。本笔记旨在系统梳理高中阶段常见的六大病句类型，通过"概念解析 + 细分类型 + 实例辨析"的模式，帮助同学们建立清晰的知识框架。
+病句辨析是高中语文学习的重点和难点，也是高考的必考题型。它不仅考察学生的语言基础知识，更考验学生的逻辑思维能力和语感。本笔记旨在系统梳理高中阶段常见的六大病句类型，通过“概念解析 + 细分类型 + 实例辨析”的模式，帮助同学们建立清晰的知识框架。
 
 本笔记力求内容全面、结构清晰、实例典型。每种病句类型都配有核心概念定义、细分类型讲解以及大量精选例句。例句后附有详细的辨析分析和修改方法，帮助同学们不仅知其然，更知其所以然。此外，笔记还总结了辨析和修改病句的实用方法、高考真题链接以及综合练习，以期帮助同学们在实战中巩固所学，提升应试能力。
+
+建议在\keyword{专题复习}或\keyword{套题训练}前后配合本笔记使用：先按章节通读概念与典型例句，再在做题中对照“方法论”和“快速诊断检查清单”进行自我纠错与归纳。
 
 希望这本笔记能成为你攻克病句难关的得力助手。
 
 \chapter{语序不当}
 \section{核心概念定义}
+\begin{conceptbox}{语序不当的核心判断}
 语序不当是指句子中的词语、短语或分句的排列顺序不符合语法规则或逻辑事理，导致语意不清、表达别扭或产生歧义。
+\begin{focuspoints}
+  \item 常见于\keyword{多层定语}、\keyword{多层状语}、关联词或短语堆叠时，顺序不符合汉语习惯；
+  \item 朗读时若出现\keyword{停顿困难}、语气别扭或前后次序与事理不符，往往提示存在语序问题；
+  \item 排查时可尝试\keyword{分层划线}并调换成分位置，比较调整前后语意是否更清晰顺畅。
+\end{focuspoints}
+\end{conceptbox}
 
 \section{细分类型}
 \subsection{多层定语语序不当}
@@ -153,9 +127,24 @@
 
 \revisionicon \textbf{修改方法：}广大干部群众对焦裕禄这个名字是再熟悉不过了。
 
+\begin{summarybox}{语序不当小结}
+\begin{focuspoints}
+  \item 多层定语按“\keyword{领属→指示→数量→动词性短语→形容词性短语→名词}”的顺序排列；
+  \item 多层状语一般遵循“\keyword{时间/处所→对象/范围→方式/状态→原因/目的}”的顺序；
+  \item 重点检查\keyword{关联词位置}和\keyword{主客关系}，看清“谁对谁怎么样”。
+\end{focuspoints}
+\end{summarybox}
+
 \chapter{搭配不当}
 \section{核心概念定义}
+\begin{conceptbox}{搭配不当的核心判断}
 搭配不当是指句子中的主要成分（主、谓、宾）之间或修饰成分与中心语之间在语义或语法上无法构成合理的搭配关系。
+\begin{focuspoints}
+  \item 重点排查\keyword{主谓}、\keyword{动宾}、\keyword{定中/状中}等结构，看语义上是否自然、常见；
+  \item 注意数量词、介词短语与中心语之间是否\keyword{类别一致}、感情色彩是否匹配；
+  \item 可通过\keyword{替换法}，把中心词或修饰语换成简单词语，观察句子是否仍然顺畅。
+\end{focuspoints}
+\end{conceptbox}
 
 \section{细分类型}
 \subsection{主谓搭配不当}
@@ -200,9 +189,24 @@
 
 \revisionicon \textbf{修改方法：}(此句无语病)
 
+\begin{summarybox}{搭配不当小结}
+\begin{focuspoints}
+  \item 逐一检查\keyword{主谓}、\keyword{动宾}及\keyword{修饰语+中心语}是否语义自然、对象合理；
+  \item 含有“\keyword{是否/能否/好坏}”等两面词语时，要看前后结构是否保持一面或两面\keyword{对应一致}；
+  \item 多用\keyword{替换法}和\keyword{造句法}验证搭配是否符合日常表达习惯。
+\end{focuspoints}
+\end{summarybox}
+
 \chapter{成分残缺或赘余}
 \section{核心概念定义}
+\begin{conceptbox}{成分残缺/赘余的核心判断}
 成分残缺指句子缺少了应有的语法成分（如主语、谓语、宾语），导致意思不完整。成分赘余则指句子中出现了不必要的词语，导致表达啰嗦。
+\begin{focuspoints}
+  \item 优先检查\keyword{主、谓、宾}是否齐全，尤其注意介词短语前置后主语被“吃掉”的情况；
+  \item 若句中出现多个\keyword{意义相近或反复}的词语（如“大约……左右”、“防止……不再”），要警惕赘余或否定不当；
+  \item 修改时遵循“\keyword{补缺不添乱，删赘不伤义}”，既补足必要成分又避免过度删改。
+\end{focuspoints}
+\end{conceptbox}
 
 \section{细分类型}
 \subsection{缺主语}
@@ -257,9 +261,24 @@
 
 \revisionicon \textbf{修改方法：}他大约三十岁。或者：他三十岁左右。
 
+\begin{summarybox}{成分残缺/赘余小结}
+\begin{focuspoints}
+  \item 看到“\keyword{通过/由于/对于/在……}”等介词短语开头的句子，要警惕主语是否缺失；
+  \item 带“\keyword{把/将}”的句子，要检查后面是否接上完整的“动词+宾语”；
+  \item 多个表示程度或否定的词语叠加时，要留意是否出现\keyword{赘余}或\keyword{否定不当}。
+\end{focuspoints}
+\end{summarybox}
+
 \chapter{结构混乱}
 \section{核心概念定义}
+\begin{conceptbox}{结构混乱（句式杂糅）的核心判断}
 结构混乱，也称句式杂糅，是指将两个意思或两种结构形式混杂在一个句子中，造成结构不清、语意不明。
+\begin{focuspoints}
+  \item 典型表现为把两套本来可以单独成立的句式\keyword{硬拼在一起}，例如“是由于……的结果”；
+  \item 句中“的、是、因为、由于、原因是”等结构性词语过多时，要格外注意是否互相\keyword{缠绕重叠}；
+  \item 修改时通常采用\keyword{拆开成两句}或\keyword{只保留其中一种说法}来化繁为简。
+\end{focuspoints}
+\end{conceptbox}
 
 \section{常见杂糅类型}
 \subsection{"是由于...的结果"}
@@ -301,9 +320,24 @@
 
 \revisionicon \textbf{修改方法：}这本书的作者是鲁迅。或者：这本书是鲁迅写的。
 
+\begin{summarybox}{结构混乱（句式杂糅）小结}
+\begin{focuspoints}
+  \item 先分辨句子是否同时包含两套完整结构，如“\keyword{是由于……}”与“\keyword{是……的结果}”；
+  \item 若删除其中一部分后句子仍然完整通顺，往往说明原句存在\keyword{句式杂糅}；
+  \item 修改时坚持“一句只用一套结构”，必要时拆成两句分别表述。
+\end{focuspoints}
+\end{summarybox}
+
 \chapter{表意不明}
 \section{核心概念定义}
+\begin{conceptbox}{表意不明（歧义句）的核心判断}
 表意不明，也称歧义句，是指一个句子可以有两种或多种不同的理解，使得读者无法确定其真实含义。
+\begin{focuspoints}
+  \item 主要源于\keyword{代词指代不清}、\keyword{修饰关系不明}或\keyword{断句位置不稳定}；
+  \item 阅读时若自然而然产生两种及以上理解，就要考虑是否属于歧义句；
+  \item 一般通过补足指代、调整语序或改变停顿位置就能消除歧义。
+\end{focuspoints}
+\end{conceptbox}
 
 \section{细分类型}
 \subsection{指代不明}
@@ -370,9 +404,24 @@
 
 \revisionicon \textbf{修改方法：}他看见我，他哭了。或者：他看见，我哭了。
 
+\begin{summarybox}{表意不明（歧义句）小结}
+\begin{focuspoints}
+  \item 重点检查\keyword{代词指代}是否唯一，必要时用具体的人或事物替代“他、她、它”；
+  \item 对容易产生\keyword{词义两可}的动词（如“借、走、开刀”）要明确谁是施动者、谁是受事者；
+  \item 碰到“他看见我笑了”一类句子时，可通过\keyword{调整停顿或重复主语}来消除歧义。
+\end{focuspoints}
+\end{summarybox}
+
 \chapter{不合逻辑}
 \section{核心概念定义}
+\begin{conceptbox}{不合逻辑的核心判断}
 不合逻辑是指句子所表达的意思在事理上、逻辑上存在矛盾或不合理之处。
+\begin{focuspoints}
+  \item 典型情形包括\keyword{自相矛盾}、\keyword{范围或分类不当}、\keyword{因果关系混乱}等；
+  \item 需要结合生活常识进行\keyword{事理判断}，不仅仅看语法是否通顺；
+  \item 含有“凡是、所有、必然、绝对”等词语时，要警惕是否夸大或偷换概念。
+\end{focuspoints}
+\end{conceptbox}
 
 \section{细分类型}
 \subsection{自相矛盾}
@@ -452,22 +501,30 @@
 
 \revisionicon \textbf{修改方法：}没有人不认为他是好人。
 
+\begin{summarybox}{不合逻辑小结}
+\begin{focuspoints}
+  \item 优先排查是否存在\keyword{自相矛盾}或“几乎完全”“大概一定”一类\keyword{程度冲突}的搭配；
+  \item 关注\keyword{范围与分类}是否清晰，如“水果……蔬菜”等是否属于同一范畴；
+  \item 对含有明显因果标志的句子，思考因果是否真实存在，避免\keyword{强加因果}和否定不当。
+\end{focuspoints}
+\end{summarybox}
+
 \chapter{方法论}
 \section{辨析病句的四大方法}
-\begin{enumerate}
-    \item \heiti 语感审读法：通过朗读，感知句子是否通顺、自然。
-    \item \heiti 主干分析法：提取句子的主、谓、宾，检查其搭配是否得当，成分是否残缺。
-    \item \heiti 逻辑分析法：分析句子内部及分句之间的逻辑关系是否合理。
-    \item \heiti 类比造句法：根据病句的结构，模仿造一个简单的句子，帮助发现问题。
-\end{enumerate}
+\begin{NoteRoadmap}{从发现到定位：辨析病句的四步法}
+  \RoadmapStep{\keyword{语感审读法}：通过朗读，感知句子是否通顺自然，关注停顿和重音位置是否别扭。}
+  \RoadmapStep{\keyword{主干分析法}：提取句子的主语、谓语、宾语，检查搭配是否得当，成分是否残缺。}
+  \RoadmapStep{\keyword{逻辑分析法}：分析句子内部及分句之间的逻辑关系是否合理，有无自相矛盾或强加因果。}
+  \RoadmapStep{\keyword{类比造句法}：根据病句的结构，模仿造一个简单正确的句子，通过对比发现问题所在。}
+\end{NoteRoadmap}
 
 \section{修改病句的四大原则}
-\begin{enumerate}
-    \item \heiti 保留原意原则：修改应尽量保持句子原有的核心意思。
-    \item \heiti 改动最少原则：在能够修正语病的前提下，尽量少地改动原句的词语和结构。
-    \item \heiti 语法规范原则：修改后的句子必须符合现代汉语的语法规范。
-    \item \heiti 逻辑自洽原则：修改后的句子必须逻辑清晰，没有矛盾。
-\end{enumerate}
+\begin{NoteChecklist}{修改病句时的四条底线}
+  \item \keyword{保留原意原则}：修改应尽量保持句子原有的核心意思。
+  \item \keyword{改动最少原则}：在能够修正语病的前提下，尽量少地改动原句的词语和结构。
+  \item \keyword{语法规范原则}：修改后的句子必须符合现代汉语的语法规范。
+  \item \keyword{逻辑自洽原则}：修改后的句子必须逻辑清晰，没有矛盾。
+\end{NoteChecklist}
 
 \chapter{实战应用}
 \section{高频考点总结表}
@@ -492,7 +549,9 @@
 \end{tabularx}
 
 \section{高考真题链接}
-\examicon \textbf{2023年全国甲卷：}下列各句中，没有语病的一句是（ ）
+
+\begin{examplebox}{2023 年全国甲卷}
+\textbf{题目：}下列各句中，没有语病的一句是（ ）
 \begin{enumerate}[label=\Alph*.]
     \item 这座桥的修建，不但方便了群众的出行，而且带动了当地经济的发展，毫无疑问，这是一座名副其实的便民桥、致富桥。
     \item 在学习上，我们不但要敢于提出问题，而且要善于发现问题，还要有解决问题的能力，才能不断进步。
@@ -501,8 +560,10 @@
 \end{enumerate}
 
 \analysisicon \textbf{解析：}A项，正确。B项，语序不当，"还要有解决问题的能力"应与前两分句结构对应，改为"还要能够解决问题"。C项，成分残缺，"严禁"后缺少宾语中心语，应为"严禁中小学教师有偿补课的行为"。D项，一面与两面搭配不当，"能否杜绝"是两面的，而后面"在于..."是单方面的陈述。
+\end{examplebox}
 
-\examicon \textbf{2022年全国乙卷：}下列各句中，没有语病的一句是（ ）
+\begin{examplebox}{2022 年全国乙卷}
+\textbf{题目：}下列各句中，没有语病的一句是（ ）
 \begin{enumerate}[label=\Alph*.]
     \item 这次会议的主要议题是讨论如何提高教学质量。
     \item 他不但学习好，而且品德也好。
@@ -511,6 +572,7 @@
 \end{enumerate}
 
 \analysisicon \textbf{解析：}A项，正确。B项，正确。C项，成分残缺，滥用介词"通过"导致缺少主语。D项，成分赘余，"涉及"本身就包含"到"的意思。
+\end{examplebox}
 
 \section{综合练习题}
 \begin{enumerate}
@@ -553,16 +615,15 @@
 \appendix
 \chapter{附录}
 \section{快速诊断检查清单}
-\tipicon \textbf{检查要点：}
-\begin{itemize}
-    \item \heiti 查成分：主、谓、宾齐全吗？
-    \item \heiti 查搭配：主谓、动宾、修饰语和中心语搭配吗？
-    \item \heiti 查语序：定语、状语顺序对吗？关联词位置对吗？
-    \item \heiti 查逻辑：有自相矛盾、分类不当、因果颠倒吗？
-    \item \heiti 查对应：有"一面"对"两面"的问题吗？
-    \item \heiti 查重复：有没有赘余的词语？
-    \item \heiti 查混杂：是不是把两种说法揉在一起了？
-\end{itemize}
+\begin{NoteChecklist}{\tipicon\ 检查要点：一眼扫全句}
+  \item \keyword{查成分}：主语、谓语、宾语齐全吗？有无“通过、由于、对于”等介词吃掉主语？
+  \item \keyword{查搭配}：主谓、动宾、修饰语和中心语在语义上是否自然、得体？
+  \item \keyword{查语序}：定语、状语顺序是否符合习惯？关联词位置是否成对、对应？
+  \item \keyword{查逻辑}：有无自相矛盾、范围/分类不当或强加因果等问题？
+  \item \keyword{查对应}：有“一面”对“两面”的搭配错误吗，如“能否……在于……”？
+  \item \keyword{查重复}：是否存在意义相近的词语反复出现，形成赘余或否定不当？
+  \item \keyword{查混杂}：是否把两种说法揉在一起，构成句式杂糅或结构混乱？
+\end{NoteChecklist}
 
 \section{常见易错成语/词语搭配表}
 \begin{tabularx}{\textwidth}{|l|l|X|}

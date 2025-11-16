@@ -4,18 +4,56 @@
 \input{../mathnote-preamble.tex}
 
 \renewcommand{\notetitle}{三角函数}
-\renewcommand{\noteauthor}{Gemini AI}
+\renewcommand{\noteauthor}{Gemini 数学组}
 \renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{定义·恒等变换·图像与不等式}
+\renewcommand{\noteversion}{v1.0}
 
-\title{\Huge \bfseries \color{myblue} \notetitle}
-\author{\noteauthor}
-\date{\notedate}
-
-% --- 文档开始 ---
 \begin{document}
 
-\maketitle
+\MathNoteEnableReviewStamp
+\MathNoteEnablePrint
 
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·三角函数}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 从\keyword{单位圆}与\keyword{三角函数线}出发，建立任意角三角函数的统一几何模型；
+    \item 系统整理\inlinehint{同角三角函数关系}、\inlinehint{诱导公式}与\inlinehint{三角恒等变换}等核心公式族；
+    \item 通过图像、恒等式与不等式三条路径，构建解决\keyword{三角函数方程与不等式}的常用思路。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\begin{roadmap}
+  \RoadmapStep{理解任意角三角函数的定义与单位圆表示。}
+  \RoadmapStep{熟练掌握同角关系与诱导公式的变形与逆用。}
+  \RoadmapStep{从图像角度把握函数的周期性、单调性与对称性。}
+  \RoadmapStep{综合运用恒等变换解决方程与不等式问题。}
+\end{roadmap}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
 \tableofcontents
 \newpage
 
@@ -41,7 +79,7 @@
     \node at (0,0) [below left] {$O$};
 
     % 单位圆
-    \draw[thin, myblue] (0,0) circle (1);
+    \draw[thin, accent] (0,0) circle (1);
 
     % 角度与点P
     \def\angle{35} % 定义角度
@@ -49,11 +87,11 @@
     \coordinate (M) at (\angle:1cm and 0cm);
 
     % 三角函数线 (标签位置已修正)
-    \draw[myred, very thick] (M) -- (P) node[midway, right=4pt, color=myred] {$\sin\alpha$};
-    \draw[mygreen, very thick] (0,0) -- (M) node[midway, below=2pt, color=mygreen] {$\cos\alpha$};
+    \draw[highlight, very thick] (M) -- (P) node[midway, right=4pt, color=highlight] {$\sin\alpha$};
+    \draw[secondary, very thick] (0,0) -- (M) node[midway, below=2pt, color=secondary] {$\cos\alpha$};
     
     % 辅助线 (标签位置已修正)
-    \draw[->, thick, myorange] (0.5,0) arc (0:\angle:0.5cm) node[midway, right] {$\alpha$};
+    \draw[->, thick, accent] (0.5,0) arc (0:\angle:0.5cm) node[midway, right] {$\alpha$};
     \draw[thick, ->] (0,0) -- (P) node[above right=2pt] {$P(x,y)$};
     \draw[dashed] (P) -- (M) node [below] {$M$};
     \draw[dashed] (0,0) -- (P) node [pos=0.6, above, sloped] {$r=1$};
@@ -61,13 +99,19 @@
     % 正切线
     \coordinate (T) at (1, {tan(\angle)});
     \draw[thick] (1,-1.5) -- (1,1.5);
-    \draw[myorange, very thick] (1,0) -- (T) node[midway, right=2pt, color=myorange] {$\tan\alpha$};
+    \draw[accent, very thick] (1,0) -- (T) node[midway, right=2pt, color=accent] {$\tan\alpha$};
     \draw[dashed] (P) -- (T);
 
     \node at (1, -0.1) {$A(1,0)$};
 \end{tikzpicture}
 \captionof{figure}{单位圆中的三角函数线}
 \end{center}
+
+\begin{focuspoints}
+  \item 用单位圆统一记忆：$P(\cos\alpha,\sin\alpha)$，横坐标对应 $\cos\alpha$，纵坐标对应 $\sin\alpha$；
+  \item 六个三角函数只由 $\sin\alpha$ 与 $\cos\alpha$ 两个量决定，其余四个都是商或倒数关系；
+  \item 通过 $r=1$ 的单位圆，可以把直角三角形中的边比定义自然推广到任意实数角。
+\end{focuspoints}
 
 % =============================================
 \section{同角三角函数的基本关系}
@@ -89,10 +133,18 @@
     \end{equation}
     \[ \cot\alpha = \frac{\cos\alpha}{\sin\alpha} \quad (\sin\alpha \neq 0) \]
 
-    \item \textbf{倒数关系 (Reciprocal Identities)}
-    \[ \tan\alpha \cdot \cot\alpha = 1 \quad \quad \sin\alpha \cdot \csc\alpha = 1 \quad \quad \cos\alpha \cdot \sec\alpha = 1 \]
+	    \item \textbf{倒数关系 (Reciprocal Identities)}
+	    \[ \tan\alpha \cdot \cot\alpha = 1 \quad \quad \sin\alpha \cdot \csc\alpha = 1 \quad \quad \cos\alpha \cdot \sec\alpha = 1 \]
 \end{itemize}
 \end{theorembox}
+
+\begin{summarybox}{同角关系的常见化简思路}
+  \begin{itemize}
+    \item 遇到 $\sin^2\alpha$ 与 $\cos^2\alpha$ 同时出现时，优先尝试用 $\sin^2\alpha + \cos^2\alpha = 1$ 降低幂次或消元；
+    \item 含有 $\tan\alpha$、$\cot\alpha$ 时，常用商关系 $\tan\alpha=\dfrac{\sin\alpha}{\cos\alpha}$ 把式子统一到 $\sin\alpha,\cos\alpha$；
+    \item 出现 $\sec\alpha,\csc\alpha$ 等倒数函数时，可以先用倒数关系转回 $\cos\alpha,\sin\alpha$，再与平方、商关系结合使用。
+  \end{itemize}
+\end{summarybox}
 
 % =============================================
 \section{诱导公式}
@@ -136,7 +188,7 @@
 % =============================================
 
 \begin{center}
-\begin{tikzpicture}[domain=-2.2*pi:2.2*pi, samples=200, scale=1]
+\begin{tikzpicture}[mathnote lines, domain=-2.2*pi:2.2*pi, samples=200, scale=1]
     % Axes
     \draw[->, thick] (-2.3*pi, 0) -- (2.3*pi, 0) node[right] {$x$};
     \draw[->, thick] (0, -1.5) -- (0, 1.5) node[above] {$y$};
@@ -149,17 +201,17 @@
     \draw (0,-1) -- (-0.1, -1) node[left] {$-1$};
     
     % Waves and Labels (Corrected)
-    \draw[myblue, thick, smooth] plot (\x, {sin(\x r)});
-    \node[myblue, below right] at (0.5*pi, 1) {$y=\sin x$};
+    \draw[accent, thick, smooth] plot (\x, {sin(\x r)});
+    \node[accent, below right] at (0.5*pi, 1) {$y=\sin x$};
     
-    \draw[myred, thick, smooth, dashed] plot (\x, {cos(\x r)});
-    \node[myred, above] at (0, 1) {$y=\cos x$};
+    \draw[secondary, thick, smooth, dashed] plot (\x, {cos(\x r)});
+    \node[secondary, above] at (0, 1) {$y=\cos x$};
 \end{tikzpicture}
 \captionof{figure}{正弦函数与余弦函数图像}
 \end{center}
 
 \begin{center}
-\begin{tikzpicture}[scale=1]
+\begin{tikzpicture}[mathnote lines, scale=1]
     % Axes
     \draw[->, thick] (-1.5*pi-0.2, 0) -- (1.5*pi+0.2, 0) node[right] {$x$};
     \draw[->, thick] (0, -4) -- (0, 4) node[above] {$y$};
@@ -172,22 +224,31 @@
     }
     
     % Asymptotes
-    \draw[dashed, mygray] (-1.5*pi, -4) -- (-1.5*pi, 4);
-    \draw[dashed, mygray] (-0.5*pi, -4) -- (-0.5*pi, 4);
-    \draw[dashed, mygray] (0.5*pi, -4) -- (0.5*pi, 4);
-    \draw[dashed, mygray] (1.5*pi, -4) -- (1.5*pi, 4);
+    \draw[dashed, inkgray!35] (-1.5*pi, -4) -- (-1.5*pi, 4);
+    \draw[dashed, inkgray!35] (-0.5*pi, -4) -- (-0.5*pi, 4);
+    \draw[dashed, inkgray!35] (0.5*pi, -4) -- (0.5*pi, 4);
+    \draw[dashed, inkgray!35] (1.5*pi, -4) -- (1.5*pi, 4);
 
     % Tangent plot
     \clip (-1.5*pi-0.1, -4) rectangle (1.5*pi+0.1, 4);
     % Plot in segments to avoid asymptote calculation errors
-    \draw[mygreen, thick, smooth, domain=-1.5*pi+0.02:-0.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
-    \draw[mygreen, thick, smooth, domain=-0.5*pi+0.02:0.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
-    \draw[mygreen, thick, smooth, domain=0.5*pi+0.02:1.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
+    \draw[highlight, thick, smooth, domain=-1.5*pi+0.02:-0.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
+    \draw[highlight, thick, smooth, domain=-0.5*pi+0.02:0.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
+    \draw[highlight, thick, smooth, domain=0.5*pi+0.02:1.5*pi-0.02, samples=100] plot (\x, {tan(\x r)});
     
-    \node[color=mygreen, right] at (0.8, tan(0.8 r)) {$y=\tan x$};
+    \node[color=highlight, right] at (0.8, {tan(0.8 r)}) {$y=\tan x$};
 \end{tikzpicture}
 \captionof{figure}{正切函数图像}
 \end{center}
+
+\begin{summarybox}{正弦、余弦与正切函数的图像特征}
+  \begin{itemize}
+    \item \keyword{定义域与值域}：$\sin x,\cos x$ 在整个 $\R$ 上有定义，值域为 $[-1,1]$；$\tan x$ 在 $x\neq \dfrac{\pi}{2}+k\pi$ 上有定义，值域为 $\R$；
+    \item \keyword{周期性}：$\sin x,\cos x$ 的基本周期为 $2\pi$，$\tan x$ 的基本周期为 $\pi$，在解题时可用“平移一个周期不变”简化区间；
+    \item \keyword{奇偶性与对称性}：$\sin x$ 为奇函数（关于原点对称），$\cos x$ 为偶函数（关于 $y$ 轴对称），$\tan x$ 也是奇函数；
+    \item \keyword{单调区间}：常用区间为 $[-\dfrac{\pi}{2},\dfrac{\pi}{2}]$ 上 $\sin x$ 递增、$[0,\pi]$ 上 $\cos x$ 递减、$\left(-\dfrac{\pi}{2},\dfrac{\pi}{2}\right)$ 上 $\tan x$ 递增。
+  \end{itemize}
+\end{summarybox}
 
 
 % =============================================
@@ -364,18 +425,18 @@
     \item \textbf{图像法}：在同一坐标系中画出 $y=\sin x$ 和 $y=\cos x$ 的图像。不等式 $\sin x > \cos x$ 的解集即为 $y=\sin x$ 图像在 $y=\cos x$ 图像上方的部分对应的 $x$ 的取值范围。
     
     \begin{center}
-    \begin{tikzpicture}[domain=-pi/2:2*pi, samples=200, scale=1.2]
+    \begin{tikzpicture}[mathnote lines, domain=-pi/2:2*pi, samples=200, scale=1.2]
         \draw[->] (-pi/2-0.2, 0) -- (2*pi+0.2, 0) node[right] {$x$};
         \draw[->] (0,-1.2) -- (0,1.2) node[above] {$y$};
         
-        \draw[myblue, thick] plot (\x, {sin(\x r)});
-        \draw[myred, dashed, thick] plot (\x, {cos(\x r)});
+        \draw[accent, thick] plot (\x, {sin(\x r)});
+        \draw[secondary, dashed, thick] plot (\x, {cos(\x r)});
         
-        \fill[myblue!20, domain=pi/4:5*pi/4] plot(\x, {sin(\x r)}) -- (5*pi/4, {cos(5*pi/4 r)}) -- plot[domain=5*pi/4:pi/4] (\x, {cos(\x r)}) -- (pi/4, {sin(pi/4 r)});
+        \fill[accent!20, domain=pi/4:5*pi/4] plot(\x, {sin(\x r)}) -- (5*pi/4, {cos(5*pi/4 r)}) -- plot[domain=5*pi/4:pi/4] (\x, {cos(\x r)}) -- (pi/4, {sin(pi/4 r)});
 
         \draw[dotted] (pi/4, -1.2) node[below] {$\frac{\pi}{4}$} -- (pi/4, {sin(pi/4 r)});
         \draw[dotted] (5*pi/4, -1.2) node[below] {$\frac{5\pi}{4}$} -- (5*pi/4, {sin(5*pi/4 r)});
-        \node at (pi*1.2, 1) {\color{myblue}\Large $\sin x > \cos x$};
+        \node at (pi*1.2, 1) {\color{accent}\Large $\sin x > \cos x$};
     \end{tikzpicture}
     \end{center}
     从图中可以看出，在一个周期内，解集为 $x \in \left(\frac{\pi}{4}, \frac{5\pi}{4}\right)$。
@@ -384,18 +445,19 @@
     \item \textbf{单位圆法}：在单位圆上，$\sin x = y_P$, $\cos x = x_P$。不等式 $\sin x > \cos x$ 转化为 $y_P > x_P$。直线 $y=x$ 与单位圆的交点所对应的角为 $\frac{\pi}{4}$ 和 $\frac{5\pi}{4}$。在单位圆上位于直线 $y=x$ 上方的弧所对应的角的范围即为解集。
     
     \begin{center}
-    \begin{tikzpicture}[scale=1.5]
+    \begin{tikzpicture}[mathnote lines, scale=1.5]
+        \node at (0.8, {tan(0.8 r)}) [color=highlight, right] {$ y=\tan x $};
         \draw[->] (-1.5,0) -- (1.5,0) node[right] {$x$};
         \draw[->] (0,-1.5) -- (0,1.5) node[above] {$y$};
-        \draw[thin, mygray] (0,0) circle (1);
+        \draw[thin, inkgray!35] (0,0) circle (1);
         \draw[dashed] (-1.2, -1.2) -- (1.2, 1.2) node[right] {$y=x$};
         
         \coordinate (A) at (45:1);
         \coordinate (B) at (225:1);
         
-        \draw[myblue, very thick] (A) arc (45:225:1);
-        \node[color=myblue, below right] at (A) {$P(\cos x, \sin x)$};
-        \node at (-1, 1) {\color{myblue}\Large $y > x$};
+        \draw[accent, very thick] (A) arc (45:225:1);
+        \node[color=accent, below right] at (A) {$P(\cos x, \sin x)$};
+        \node at (-1, 1) {\color{accent}\Large $y > x$};
 
         \draw[->, dotted] (0.5,0) arc (0:45:0.5);
         \node at (0.8,0.2) {$\frac{\pi}{4}$};
