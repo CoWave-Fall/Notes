@@ -1,0 +1,433 @@
+\documentclass[a4paper,11pt]{ctexart}
+\input{../mathnote-preamble.tex}
+
+% 可选：如需 CMYK 印刷模式，请取消下一行注释
+% \MathNoteEnablePrint
+% 可选：如需右上角审核图章，请取消下一行注释
+% \MathNoteEnableReviewStamp
+
+\renewcommand{\notetitle}{竖直圆轨道中的小球运动}
+\renewcommand{\noteauthor}{自学物理笔记}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{不同底端速度下的小球运动情况全解析}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中物理·力学进阶}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{竖直圆轨道}这一经典模型，系统分析\keyword{不同底端速度}下小球的完整运动过程；
+    \item 通过\inlinehint{能量守恒}与\inlinehint{向心力条件}两条主线推导关键结论，构建可直接套用的\keyword{判断流程}；
+    \item 配套\keyword{总览表格}与\keyword{典型例题}，既可课堂使用，也适合作为自学时的工具型速查笔记。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\clearpage
+\section{核心问题与结论速览}
+
+\begin{summarybox}{一页总结}
+  我们研究一质量为 $m$ 的光滑小球，在竖直平面内沿\keyword{固定圆形轨道}（半径为 $R$）运动。小球从\keyword{最低点}以速度 $v_0$ 出发，在重力 $mg$ 与轨道\keyword{支持力} $N$ 作用下运行。
+  \begin{focuspoints}
+    \item \textbf{能量主线：}忽略能量损失，有
+          \[
+            \frac12 m v_0^2 = \frac12 m v^2 + mg\,h,
+          \]
+          其中 $h$ 为相对最低点的高度；
+    \item \textbf{轨道约束：}沿半径方向，支持力与重力合力提供向心力：
+          \[
+            N - mg\cos\theta = m\frac{v^2}{R},
+          \]
+          其中 $\theta$ 为从\keyword{最低点}沿轨道向上量起的角度；
+    \item \textbf{离轨条件：}$N=0$ 时小球刚好\keyword{失去接触}，改为做抛体运动；
+    \item \textbf{整周条件：}若希望小球始终\keyword{贴轨}并通过最高点，则在最高点需满足
+          \[
+            v_{\text{top}}^2 \ge gR
+            \quad\Longrightarrow\quad
+            v_0 \ge \sqrt{5gR}.
+          \]
+  \end{focuspoints}
+\end{summarybox}
+
+\begin{summarybox}{按底端初速度分类的运动类型}
+  设小球自最低点起始速度为 $v_0$，竖直圆轨道半径为 $R$，重力加速度为 $g$。不同 $v_0$ 区间对应的典型运动情况如下：
+  \begin{itemize}
+    \item $0 < v_0 < \sqrt{2gR}$：上升到某角度 $\theta_{\text{turn}} < \dfrac{\pi}{2}$ 处速度降为 $0$，随后\keyword{原路滑回}，始终贴轨；
+    \item $v_0 = \sqrt{2gR}$：恰好上升到 $\theta = \dfrac{\pi}{2}$ 处速度为 $0$，在最高点侧边停顿后回落；
+    \item $\sqrt{2gR} < v_0 < \sqrt{5gR}$：小球先贴轨上升，随后在 $\dfrac{\pi}{2} < \theta_1 < \pi$ 处满足 $N=0$，从此点\keyword{飞离轨道}做抛体运动，不能绕完整竖直圆；
+    \item $v_0 = \sqrt{5gR}$：\keyword{临界整周运动}，恰好能绕整圈且在最高点 $N=0$；
+    \item $v_0 > \sqrt{5gR}$：\keyword{高速整周运动}，小球在整条轨道上始终有 $N>0$，最高点也\keyword{压紧轨道}。
+  \end{itemize}
+\end{summarybox}
+
+\begin{center}
+\begin{minipage}{0.96\textwidth}
+  \centering
+  \ModeBadge[highlight]{总览表格}
+  \begin{table}[h]
+    \centering
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{lll}
+      \toprule
+      底端初速度条件 & 运动特点 & 关键结论 \\
+      \midrule
+      $0 < v_0 < \sqrt{2gR}$ &
+      上升不到 $\pi/2$ 即停止回落 &
+      始终贴轨，不会飞离 \\
+      $v_0 = \sqrt{2gR}$ &
+      恰在 $\theta=\pi/2$ 处速度为 $0$ &
+      最高侧边停住后原路滑回 \\
+      $\sqrt{2gR} < v_0 < \sqrt{5gR}$ &
+      在 $\pi/2 < \theta_1 < \pi$ 处离轨 &
+      无法整周，离轨后为抛体运动 \\
+      $v_0 = \sqrt{5gR}$ &
+      最小整周速度 &
+      最高点速度 $\sqrt{gR}$，$N_{\text{top}} = 0$ \\
+      $v_0 > \sqrt{5gR}$ &
+      高速整周 &
+      $N>0$ 始终贴轨，$N_{\text{top}}>0$ \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+\end{minipage}
+\end{center}
+
+\clearpage
+\section{基本模型与受力分析}
+
+\subsection{几何与符号约定}
+
+\begin{definitionbox}{竖直圆轨道模型}
+  \begin{itemize}
+    \item 竖直平面内固定一光滑圆轨道，半径为 $R$；
+    \item 取\keyword{最低点}为参考位置，记为 $A$；最高点记为 $C$；
+    \item 小球质量为 $m$，从 $A$ 点以初速度 $v_0$ 沿轨道上升；
+    \item 从 $A$ 点沿轨道逆时针量起角度 $\theta$，到达任意点 $P(\theta)$；
+    \item 以最低点为零势能面，上升到 $P$ 点的高度
+          \[
+            h(\theta) = R(1-\cos\theta).
+          \]
+  \end{itemize}
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines, scale=1.1]
+  \def\R{1.8}
+  \coordinate (O) at (0,0);
+  \draw[accent, thick] (O) circle (\R);
+
+  % 关键点
+  \coordinate (A) at (0,-\R);
+  \coordinate (C) at (0,\R);
+  \coordinate (B) at (\R,0);
+
+  \fill (O) circle (0.5pt) node[below right=1pt] {$O$};
+  \fill (A) circle (1.1pt) node[below] {$A$};
+  \fill (B) circle (1.1pt) node[right] {$B$};
+  \fill (C) circle (1.1pt) node[above] {$C$};
+
+  % 任意点 P
+  \def\theta{130}
+  \coordinate (P) at ({\R*sin(\theta)}, -{\R*cos(\theta)});
+  \fill (P) circle (1.1pt) node[above left=-1pt] {$P(\theta)$};
+
+  % 半径与角度
+  \draw[secondary, thick, -{Latex[length=2mm]}] (O) -- (A);
+  \draw[secondary, thick, -{Latex[length=2mm]}] (O) -- (P);
+  \draw[secondary] (0.4, -0.1) arc (-15:-(90-\theta):0.4);
+  \node at (0.8,-0.25) {$\theta$};
+
+  % 力的示意（在 P 点）
+  \draw[highlight, -{Latex[length=2mm]}] (P) -- ++(0,-1.1) node[below] {$mg$};
+  % 指向圆心的支持力方向
+  \draw[highlight, -{Latex[length=2mm]}] (P) -- ($(P)!0.9!(O)$) node[midway, above right] {$N$};
+
+  % 底端速度箭头
+  \draw[accent, -{Latex[length=2mm]}] (A) -- ++(-1.0,0) node[left] {$v_0$};
+\end{tikzpicture}
+\captionof{figure}{竖直圆轨道几何与受力示意}
+\end{center}
+
+\subsection{能量守恒：速度与高度的关系}
+
+以最低点 $A$ 为零势能面，设小球在某一点 $P(\theta)$ 的速度大小为 $v$，高度为 $h(\theta)$。若忽略摩擦与空气阻力，则有
+\[
+  \frac12 m v_0^2 = \frac12 m v^2 + mg\,h(\theta)
+  = \frac12 m v^2 + mgR(1-\cos\theta),
+\]
+从而得到重要的\keyword{速度—角度关系式}：
+\begin{equation}
+  v^2 = v_0^2 - 2gR(1-\cos\theta).
+  \label{eq:energy-v-theta}
+\end{equation}
+
+\begin{notebox}{常用特例}
+  \begin{itemize}
+    \item 在最低点 $A(\theta=0)$：$h=0$，$v=v_0$；
+    \item 在侧边点 $B(\theta=\dfrac{\pi}{2})$：$h=R$，$v_B^2 = v_0^2 - 2gR$；
+    \item 在最高点 $C(\theta=\pi)$：$h=2R$，$v_C^2 = v_0^2 - 4gR$。
+  \end{itemize}
+  在解题时，可直接调用这些结果，快速判断小球能否到达某一点以及通过该点时的速度。
+\end{notebox}
+
+\subsection{向心力与支持力：轨道约束条件}
+
+在任意点 $P(\theta)$，沿\keyword{指向圆心的径向}列动力学方程。取径向指向圆心为正方向，有
+\[
+  \Sigma F_r = N - mg\cos\theta = m\frac{v^2}{R},
+  \quad\Rightarrow\quad
+  N = m\frac{v^2}{R} + mg\cos\theta.
+\]
+
+\begin{summarybox}{贴轨、离轨与整周的判据}
+  \begin{itemize}
+    \item \keyword{贴轨}：$N>0$，小球与轨道始终保持接触；
+    \item \keyword{临界离轨}：$N=0$，小球刚好失去接触，从此点开始按抛体运动轨迹飞出；
+    \item \keyword{整周运动}：对 $0\le\theta\le\pi$ 的所有位置有 $N\ge0$，特别是在最高点 $C$ 需要 $N_{\mathrm{top}}\ge 0$。
+  \end{itemize}
+\end{summarybox}
+
+\clearpage
+\section{不同初速度下的运动情况}
+
+本节关注同一条竖直圆轨道上，小球在\keyword{不同底端初速度} $v_0$ 下的典型运动情形，并给出统一的判断流程。
+
+\subsection{第一类：上去又回来的贴轨运动}
+
+\begin{ModeBadge}{情形 I：$0 < v_0 \le \sqrt{2gR}$}
+
+当 $0 < v_0 \le \sqrt{2gR}$ 时，由式\eqref{eq:energy-v-theta}，在某一转折点 $\theta_{\text{turn}}$ 处速度 $v=0$：
+\[
+  0 = v_0^2 - 2gR(1-\cos\theta_{\text{turn}}),
+  \quad\Rightarrow\quad
+  \cos\theta_{\text{turn}} = 1 - \frac{v_0^2}{2gR}.
+\]
+由于 $0<v_0^2\le 2gR$，有 $0\le\cos\theta_{\text{turn}}<1$，即
+\[
+  0 < \theta_{\text{turn}} \le \frac{\pi}{2}.
+\]
+在 $\theta\le\theta_{\text{turn}}\le\dfrac{\pi}{2}$ 区间内，
+\[
+  N = m\frac{v^2}{R} + mg\cos\theta \ge 0,
+\]
+因此小球始终\keyword{贴轨}，到达最高点前就会停下并原路滑回。
+
+\begin{examplebox}{例 1：能上多高？}
+  一小球质量 $m$，竖直圆轨道半径 $R$，自最低点以 $v_0=\sqrt{gR}$ 出发。求小球能上升到的最大角度 $\theta_{\text{turn}}$。
+\end{examplebox}
+
+\begin{proofbox}{解析}
+  由能量守恒，
+  \[
+    0 = v_0^2 - 2gR(1-\cos\theta_{\text{turn}}),
+    \quad v_0^2 = gR,
+  \]
+  得
+  \[
+    \cos\theta_{\text{turn}} = 1 - \frac{gR}{2gR} = \frac{1}{2},
+    \quad\Rightarrow\quad
+    \theta_{\text{turn}} = \frac{\pi}{3}.
+  \]
+  此时 $\theta_{\text{turn}}<\dfrac{\pi}{2}$，说明小球无法上到水平位置就已经停下。
+\end{proofbox}
+
+\end{ModeBadge}
+
+\subsection{第二类：离轨的“半周运动”}
+
+\begin{ModeBadge[highlight]{情形 II：$\sqrt{2gR} < v_0 < \sqrt{5gR}$}}
+
+在此区间内，小球首先\keyword{不回滑}，通过 $\theta=\dfrac{\pi}{2}$ 处后进入上半圆；随后由于速度不断减小，支持力 $N$ 有可能减小到 $0$，出现离轨点。
+
+\paragraph*{离轨角度的求法}
+在离轨点 $\theta_1$ 处，满足
+\[
+  N=0,\qquad v=v_1,\qquad \frac12 m v_0^2 = \frac12 m v_1^2 + mgR(1-\cos\theta_1).
+\]
+由 $N=0$ 有
+\[
+  0 = m\frac{v_1^2}{R} + mg\cos\theta_1
+  \quad\Rightarrow\quad
+  v_1^2 = -gR\cos\theta_1.
+\]
+代回能量表达式得到
+\[
+  v_0^2 = v_1^2 + 2gR(1-\cos\theta_1)
+         = -gR\cos\theta_1 + 2gR(1-\cos\theta_1)
+         = 2gR - 3gR\cos\theta_1,
+\]
+从而
+\begin{equation}
+  \cos\theta_1 = \frac{2gR - v_0^2}{3gR}.
+  \label{eq:theta1}
+\end{equation}
+对 $\sqrt{2gR} < v_0 < \sqrt{5gR}$，右端满足 $-1<\cos\theta_1<0$，因此
+\[
+  \frac{\pi}{2} < \theta_1 < \pi.
+\]
+
+\paragraph*{离轨后的运动}
+离轨后小球仅受重力 $mg$ 作用，改为在竖直平面内做\keyword{抛体运动}。其初速度大小为 $v_1$，方向为轨道在离轨点的切线方向。常见问题包括：
+\begin{itemize}
+  \item 离轨后小球是否会再次与轨道相交？
+  \item 小球能否飞越最高点并落回轨道下方？
+  \item 飞行过程中最高点的高度与轨道顶点的高度关系。
+\end{itemize}
+具体求解时，可将离轨点作为原点，建立直角坐标系，用分解后的初速度分量和匀加速运动公式处理。
+\end{ModeBadge}
+
+\begin{examplebox}{例 2：已知离轨角度求初速度}
+  小球从竖直圆轨道的最低点出发，运动到 $\theta_1$ 处刚好离开轨道。测得 $\theta_1 = \frac{2\pi}{3}$。求底端初速度 $v_0$ 与 $g,R$ 的关系。
+\end{examplebox}
+
+\begin{proofbox}{解析}
+  由公式\eqref{eq:theta1}，
+  \[
+    \cos\theta_1 = -\frac{1}{2}
+    = \frac{2gR - v_0^2}{3gR}
+    \quad\Rightarrow\quad
+    2gR - v_0^2 = -\frac{3}{2}gR,
+  \]
+  故
+  \[
+    v_0^2 = \frac{7}{2}gR,
+    \qquad
+    v_0 = \sqrt{\frac{7}{2}gR}.
+  \]
+  注意 $2gR < \frac{7}{2}gR < 5gR$，确实属于“离轨半周运动”情形。
+\end{proofbox}
+
+\subsection{第三类：整周运动与临界速度}
+
+\begin{ModeBadge[secondary]{情形 III：$v_0 \ge \sqrt{5gR}$}
+
+若小球需要\keyword{绕完整竖直圆且始终与轨道接触}，关键是考察最高点 $C$ 处的受力情况。
+
+\paragraph*{最高点的受力与速度}
+在 $C(\theta=\pi)$ 处，高度为 $2R$，由能量守恒
+\[
+  \frac12 m v_0^2 = \frac12 m v_{\mathrm{C}}^2 + 2mgR,
+  \quad\Rightarrow\quad
+  v_{\mathrm{C}}^2 = v_0^2 - 4gR.
+\]
+沿径向列出向心力方程：
+\[
+  N_{\mathrm{C}} + mg = m\frac{v_{\mathrm{C}}^2}{R},
+  \quad\Rightarrow\quad
+  N_{\mathrm{C}} = m\frac{v_{\mathrm{C}}^2}{R} - mg.
+\]
+要保持接触，必须满足 $N_{\mathrm{C}}\ge 0$，即
+\[
+  \frac{v_{\mathrm{C}}^2}{R} \ge g
+  \quad\Longrightarrow\quad
+  v_{\mathrm{C}}^2 \ge gR.
+\]
+代入 $v_{\mathrm{C}}^2 = v_0^2 - 4gR$ 得到
+\[
+  v_0^2 - 4gR \ge gR
+  \quad\Rightarrow\quad
+  v_0^2 \ge 5gR.
+\]
+\paragraph*{临界整周速度}
+当
+\[
+  v_0 = \sqrt{5gR}
+  \quad\Rightarrow\quad
+  v_{\mathrm{C}}^2 = gR,\quad N_{\mathrm{C}} = 0,
+\]
+小球在最高点时恰好失重，是\keyword{整周运动的最小初速度}。若 $v_0>\sqrt{5gR}$，则 $v_{\mathrm{C}}^2>gR$，得到 $N_{\mathrm{C}}>0$，小球在整条轨道上都压紧轨道。
+\end{ModeBadge}
+
+\begin{examplebox}{例 3：整周运动的受力判断}
+  一竖直圆轨道半径为 $R$，小球从最低点以 $v_0=\sqrt{6gR}$ 出发。求：
+  \begin{enumerate}
+    \item 小球在最高点的速度大小；
+    \item 小球在最高点受到的支持力大小。
+  \end{enumerate}
+\end{examplebox}
+
+\begin{proofbox}{解析}
+  \begin{enumerate}
+    \item 由能量守恒：
+          \[
+            v_{\mathrm{C}}^2 = v_0^2 - 4gR = 6gR - 4gR = 2gR,
+            \quad\Rightarrow\quad
+            v_{\mathrm{C}} = \sqrt{2gR}.
+          \]
+    \item 在最高点，
+          \[
+            N_{\mathrm{C}} + mg = m\frac{v_{\mathrm{C}}^2}{R}
+            = m\frac{2gR}{R} = 2mg,
+          \]
+          故
+          \[
+            N_{\mathrm{C}} = 2mg - mg = mg.
+          \]
+  \end{enumerate}
+  因为 $v_0>\sqrt{5gR}$，符合高速整周运动的条件。
+\end{proofbox}
+
+\clearpage
+\section{解题套路与易错点}
+
+\begin{roadmap}
+  \RoadmapStep{先画图与受力示意}
+  \RoadmapStep{写出能量守恒方程，求速度随高度/角度的关系}
+  \RoadmapStep{在关键位置（如离轨点、最高点）列径向向心力方程}
+  \RoadmapStep{结合 $N>0$、$N=0$ 判据判断贴轨、离轨或整周}
+  \RoadmapStep{若离轨，转入抛体运动模型继续分���}
+\end{roadmap}
+
+\begin{summarybox}{常见易错点提醒}
+  \begin{itemize}
+    \item \keyword{混淆角度的起点}：本笔记中角度 $\theta$ 均从\keyword{最低点沿轨道向上}量起，注意与某些教材从最高点量起的区别；
+    \item \keyword{只看最高点条件，忽视中间过程}：当 $v_0<\sqrt{5gR}$ 时，小球在到达最高点之前已经离轨，不能简单带入最高点条件；
+    \item \keyword{离轨后仍把小球当作“在轨道上”}：离轨后只受重力，必须使用\inlinehint{抛体运动}规律，而不是继续沿圆周求向心力；
+    \item \keyword{把 $N=0$ 理解为“没有重力”}：$N=0$ 只表示失去接触，重力 $mg$ 始终存在；
+    \item \keyword{能量方程漏掉高度变化}：建议始终从“最低点 $\rightarrow$ 目标点”统一写出
+          \[
+            \frac12 m v_0^2 = \frac12 m v^2 + mg\,h,
+          \]
+          再代入具体的 $h(\theta)$。
+  \end{itemize}
+\end{summarybox}
+
+\begin{summarybox}{本节小结：如何一眼看出是哪一类运动？}
+  \begin{focuspoints}
+    \item 第一步：看 $v_0^2$ 与 $2gR$、$5gR$ 的大小关系，确定属于哪一类运动；
+    \item 第二步：若 $v_0^2 \le 2gR$，只需用能量守恒求最高点 $\theta_{\text{turn}}$，不必考虑离轨；
+    \item 第三步：若 $2gR < v_0^2 < 5gR$，使用\eqref{eq:theta1} 求离轨角 $\theta_1$，再转入抛体模型；
+    \item 第四步：若 $v_0^2 \ge 5gR$，在最高点列向心力方程，关注 $v_{\mathrm{C}}$ 与 $N_{\mathrm{C}}$；
+    \item 第五步：遇到计算题时，用\keyword{“能量 + 向心力 + 抛体”}三件套检查是否有遗漏。
+  \end{focuspoints}
+\end{summarybox}
+
+\end{document}
+

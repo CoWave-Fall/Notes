@@ -1,0 +1,437 @@
+\documentclass[a4paper,11pt]{ctexart}
+% 动量守恒与能量观：两物块在光滑平面上的碰撞
+% 编译方式：XeLaTeX 或 LuaLaTeX
+
+\input{../mathnote-preamble.tex}
+
+% 元信息配置
+\renewcommand{\notetitle}{动量守恒与能量观：两物块在光滑平面上的碰撞}
+\renewcommand{\notesubtitle}{动-静、动-动与水平/斜面综合}
+\renewcommand{\noteauthor}{学生自学笔记}
+\renewcommand{\noteversion}{v1.0}
+\renewcommand{\notedate}{\today}
+
+\begin{document}
+
+\MathNoteEnableReviewStamp
+\MathNoteEnablePrint
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中物理·动量与碰撞}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{动量守恒}与\keyword{动能变化}两条主线，统一处理两物块碰撞的各类模型；
+    \item 覆盖\inlinehint{动-静}、\inlinehint{动-动同向/相向}以及\inlinehint{水平/斜面光滑面}等常见情形；
+    \item 配套示意图、对比表和\keyword{通用解题步骤}，帮助建立可迁移的模型化思维。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+\newpage
+
+%------------------------------------------------
+\section{整体图像：从情景到模型}
+
+\begin{examplebox}{情景体验}
+在光滑空气轨道上放置两小车 $A$、$B$，可调节质量并用光电门测速度：\par
+\begin{itemize}
+  \item 设 $A$ 向右运动撞上静止的 $B$；
+  \item 或 $A$、$B$ 同向/相向运动后发生碰撞；
+  \item 轨道可以水平，也可以轻微倾斜。
+\end{itemize}
+观察会发现：不同质量、不同初速度下，碰撞后的速度变化有\keyword{稳定的规律}。
+\end{examplebox}
+
+\begin{conceptbox}{两条主线}
+\begin{focuspoints}
+  \item \keyword{动量守恒观}：碰撞时间极短，若某方向外力的冲量可以忽略，则该方向上\keyword{系统总动量守恒}；
+  \item \keyword{能量观}：比较碰撞前后\keyword{机械能（尤其是动能）}是否守恒，用来区分\inlinehint{弹性碰撞}与\inlinehint{非弹性碰撞}；
+  \item \keyword{模型化处理}：用少量统一的符号（$m_1,m_2,u_1,u_2,v_1,v_2$）表示各种情形，通过方程而不是画面记忆结果。
+\end{focuspoints}
+\end{conceptbox}
+
+本讲围绕“两物块在光滑平面上碰撞”这一主题，从\keyword{水平面}推广到\keyword{倾斜光滑面}，并用表格和示意图把常见情形串联起来。
+
+%------------------------------------------------
+\section{动量守恒定律与能量观}
+
+\subsection{动量与动量守恒}
+
+\begin{definitionbox}{动量与系统}
+\begin{itemize}
+  \item 质点（或刚体）质量为 $m$，速度为矢量 $\vec v$，其\keyword{动量}定义为
+  \[
+    \vec p = m\vec v.
+  \]
+  在一维问题中，可以把方向用\keyword{正负号}表示。
+  \item 将参与碰撞的两个物块 $A$、$B$ 构成\keyword{系统}，用下标 $1,2$ 区分：$m_1,m_2$；碰撞前速度为 $u_1,u_2$，碰撞后速度为 $v_1,v_2$。
+  \item 若某一方向上\keyword{合外力的冲量}可以忽略，则该方向上系统总动量守恒：
+  \[
+    m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2.
+  \]
+\end{itemize}
+\end{definitionbox}
+
+\begin{warningbox}{“守恒”的前提}
+\begin{itemize}
+  \item 一定要先\keyword{选系统}：通常取“参与碰撞的所有物体”为系统；
+  \item 再看\keyword{某方向}合外力的冲量是否可以忽略：\inlinehint{光滑}表示无摩擦，支撑力一般垂直接触面，对切线方向没有冲量；
+  \item 只有在该方向外力冲量可以忽略时，才能说“这一方向上动量守恒”。
+\end{itemize}
+\end{warningbox}
+
+\subsection{碰撞过程中的能量比较}
+
+\begin{conceptbox}{动能与机械能}
+\begin{itemize}
+  \item 质点动能：$E_k = \dfrac12 mv^2$；
+  \item 在只含重力和弹力等保守力的情况下，机械能有可能守恒；
+  \item 碰撞时，物体可能发生形变、发热、发声等，使部分机械能转化为其他形式。
+\end{itemize}
+\end{conceptbox}
+
+\begin{definitionbox}{按能量变化划分碰撞类型}
+\begin{center}
+\begin{tabular}{ccl}
+\hline
+类型 & 记号（恢复系数） & 守恒情况与特点 \\
+\hline
+完全弹性 & $e=1$ &
+\begin{tabular}[c]{@{}l@{}}动量守恒；\\ 机械能（动能）也守恒\end{tabular} \\
+完全非弹性 & $e=0$ &
+\begin{tabular}[c]{@{}l@{}}动量守恒；\\ 两物块碰后粘在一起，\\ 作为一个整体运动，动能损失最大\end{tabular} \\
+一般非弹性 & $0<e<1$ &
+\begin{tabular}[c]{@{}l@{}}动量守恒；\\ 动能减少一部分\end{tabular} \\
+\hline
+\end{tabular}
+\end{center}
+
+恢复系数 $e$ 与\keyword{相对速度}有关系：
+\[
+  e = \frac{\text{分离速度的大小}}{\text{接近速度的大小}}
+  = \frac{|v_2 - v_1|}{|u_1 - u_2|}.
+\]
+在高中多数题目中，只需熟悉\keyword{完全弹性}与\keyword{完全非弹性}两种极端情形。
+\end{definitionbox}
+
+%------------------------------------------------
+\section{水平光滑面上的两物块碰撞}
+
+\subsection{统一建模与示意图}
+
+\begin{conceptbox}{统一符号与动量方程}
+\begin{itemize}
+  \item 设水平光滑面上有两物块 $A$、$B$，质量分别为 $m_1,m_2$；
+  \item 取向右为正方向，碰撞前速度为 $u_1,u_2$，碰撞后速度为 $v_1,v_2$（可为负）；
+  \item \keyword{一维动量守恒方程}：
+  \[
+    m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2.
+  \]
+  这是所有一维碰撞题的\keyword{主线方程}。
+\end{itemize}
+\end{conceptbox}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[>=Stealth,scale=1]
+    % 地面
+    \draw[thick] (-0.5,0) -- (6.5,0);
+    % 物块 A
+    \draw[fill=surface!80!white,draw=inkgray] (0,0) rectangle +(1.4,0.7);
+    \node at (0.7,0.35) {$m_1$};
+    % 物块 B
+    \draw[fill=surface!80!white,draw=inkgray] (3,0) rectangle +(1.4,0.7);
+    \node at (3.7,0.35) {$m_2$};
+    % 初速度箭头
+    \draw[->,accent,thick] (0.7,0.9) -- +(1,0) node[above] {$u_1$};
+    \draw[->,accent,thick] (3.7,0.9) -- +(0.4,0) node[above] {$u_2$};
+  \end{tikzpicture}
+  \caption{水平光滑面上一维两物块碰撞示意}
+\end{figure}
+
+\begin{focuspoints}
+  \item 水平方向外力（如摩擦）为零或可忽略 $\Rightarrow$ 水平方向动量守恒；
+  \item 题目若强调“光滑、短时间碰撞”，可忽略重力与支持力在水平方向的冲量；
+  \item 把不同情形（动-静、同向、相向）统一为“有符号的一维碰撞”。
+\end{focuspoints}
+
+\subsection{基本模型一：动-静碰撞（水平面）}
+
+\begin{definitionbox}{动-静完全弹性碰撞的一般结果}
+设质量为 $m_1$ 的物块以速度 $u>0$ 向右运动，撞上质量为 $m_2$、初速度为 $0$ 的物块，碰撞\keyword{完全弹性}，碰撞后速度为 $v_1,v_2$（向右为正），则：
+\[
+  \begin{cases}
+    m_1u = m_1v_1 + m_2v_2,\\[0.3em]
+    \dfrac12 m_1u^2 = \dfrac12 m_1v_1^2 + \dfrac12 m_2v_2^2.
+  \end{cases}
+\]
+解得（可记为工具公式）：
+\[
+  v_1 = \dfrac{m_1 - m_2}{m_1 + m_2}u,\qquad
+  v_2 = \dfrac{2m_1}{m_1 + m_2}u.
+\]
+\end{definitionbox}
+
+\begin{focuspoints}
+  \item 若 $m_1 = m_2$，则 $v_1 = 0,\ v_2 = u$：\inlinehint{“一停一走，速度互换”}；
+  \item 若 $m_1 \ll m_2$，则 $v_1 \approx -u,\ v_2 \approx 0$：轻物块几乎反弹回去，重物块几乎不动；
+  \item 若 $m_1 \gg m_2$，则 $v_1 \approx u,\ v_2 \approx 2u$：重物块几乎未受影响，轻物块获得更大的速度。
+\end{focuspoints}
+
+\begin{examplebox}{例1：轻小车撞重小车}
+一质量为 $m_1=1.0\ \mathrm{kg}$ 的小车以 $u=4.0\ \mathrm{m/s}$ 向右运动，撞上静止的质量为 $m_2=3.0\ \mathrm{kg}$ 的小车，碰撞完全弹性。求碰后两车速度。
+
+\textbf{解：}\par
+代入公式：
+\[
+  v_1 = \frac{1-3}{1+3}u = -\frac12 u = -2.0\ \mathrm{m/s},
+  \qquad
+  v_2 = \frac{2\cdot 1}{1+3}u = \frac12 u = 2.0\ \mathrm{m/s}.
+\]
+结果表示：轻车反向以 $2.0\ \mathrm{m/s}$ 速度运动，重车向右以 $2.0\ \mathrm{m/s}$ 速度运动。
+\end{examplebox}
+
+\subsection{基本模型二：动-动同向碰撞}
+
+\begin{conceptbox}{同向碰撞的相对速度关系}
+设 $u_1>u_2$，两物块同向运动，$1$ 在后、$2$ 在前，发生\keyword{完全弹性碰撞}。取向右为正，则
+\[
+  \begin{cases}
+    m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2,\\[0.3em]
+    v_2 - v_1 = u_1 - u_2.
+  \end{cases}
+\]
+第二个式子是 $e=1$ 时“分离速度 = 接近速度”的\keyword{有符号表达}，是能量守恒的简洁代替。
+\end{conceptbox}
+
+\begin{examplebox}{例2：同向追及碰撞}
+质量 $m_1=2m$ 的物块在后，以速度 $u_1=5v_0$ 向右运动；质量 $m_2=m$ 的物块在前，以速度 $u_2=3v_0$ 同向运动，二者在水平光滑面上完全弹性碰撞。求碰后 $v_1,v_2$。
+
+\textbf{解：}\par
+列动量守恒：
+\[
+  2m\cdot 5v_0 + m\cdot 3v_0 = 2mv_1 + mv_2
+  \Rightarrow 13mv_0 = 2mv_1 + mv_2.
+\]
+相对速度关系：
+\[
+  v_2 - v_1 = u_1 - u_2 = 2v_0.
+\]
+解二元一次方程组：
+\[
+  \begin{cases}
+    2v_1 + v_2 = 13v_0,\\
+    -v_1 + v_2 = 2v_0,
+  \end{cases}
+  \Rightarrow v_1 = \dfrac{11}{3}v_0,\quad v_2 = \dfrac{17}{3}v_0.
+\]
+两物块仍向右运动，且前车速度增加更多。
+\end{examplebox}
+
+\subsection{基本模型三：动-动相向碰撞}
+
+\begin{conceptbox}{利用符号统一处理相向碰撞}
+设 $1$ 向右，$2$ 向左运动，碰撞前速度写为
+\[
+  u_1 = +u,\qquad u_2 = -u'.
+\]
+则动量守恒为
+\[
+  m_1u - m_2u' = m_1v_1 + m_2v_2.
+\]
+若完全弹性，则相对速度关系为
+\[
+  v_2 - v_1 = -(u_2 - u_1) = u + u' .
+\]
+\end{conceptbox}
+
+\begin{examplebox}{例3：等质量、相向弹性碰撞}
+两质量相同的小车 $A$、$B$（质量均为 $m$）在水平光滑面上相向运动，$A$ 向右速度为 $u$，$B$ 向左速度为 $u$。若碰撞完全弹性，求碰后速度。
+
+\textbf{解：}\par
+取向右为正，$u_1 = u,\ u_2 = -u$。
+\[
+  \begin{cases}
+    mu + m(-u) = mv_1 + mv_2,\\[0.3em]
+    v_2 - v_1 = -(u_2 - u_1) = 2u.
+  \end{cases}
+\]
+第一式给出 $v_1 + v_2 = 0$。联立可得 $v_1 = -u,\ v_2 = u$。\par
+\textbf{结论：}相同质量、完全弹性、相向碰撞时，两物块\keyword{交换速度}。
+\end{examplebox}
+
+\subsection{小结表：一维两物块碰撞常用关系}
+
+\begin{summarybox}{一维两物块碰撞工具表}
+\begin{center}
+\begin{tabular}{ccl}
+\hline
+情形 & 关键方程 & 常见结论或技巧 \\
+\hline
+任意一维碰撞 &
+$m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2$ &
+统一主方程，注意速度符号 \\
+完全弹性 &
+$v_2 - v_1 = -(u_2 - u_1)$ &
+可替代能量守恒，适合快速求解 \\
+完全非弹性 &
+$v_1 = v_2 = v$ &
+两物块粘在一起，整体动量守恒 \\
+动-静弹性 &
+$u_2=0$ 代入上式 &
+可记结论：速度交换/反弹特征 \\
+等质量弹性 &
+$m_1 = m_2$ &
+相向：交换速度；追及：后物体几乎全“交给”前物体 \\
+\hline
+\end{tabular}
+\end{center}
+\end{summarybox}
+
+%------------------------------------------------
+\section{倾斜光滑面上的两物块碰撞}
+
+\subsection{关键思想：沿斜面方向看动量}
+
+\begin{conceptbox}{选好方向，就回到一维模型}
+\begin{itemize}
+  \item 倾斜光滑面上，两物块沿斜面运动并发生碰撞；
+  \item 碰撞时间极短，重力和支持力的作用方向与斜面有关；
+  \item 对\keyword{沿斜面切线方向}来说，外力（重力分力、支持力）在极短时间内的冲量可以近似忽略；
+  \item 因此，\keyword{沿斜面方向的动量守恒}：
+  \[
+    m_1u_1 + m_2u_2 = m_1v_1 + m_2v_2
+  \]
+  仍然成立，只是 $u_1,u_2,v_1,v_2$ 变为沿斜面方向的分速度。
+\end{itemize}
+\end{conceptbox}
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[>=Stealth,scale=1]
+    % 地面
+    \draw[thick] (-0.5,0) -- (4.5,0);
+    % 斜面
+    \draw[thick] (0,0) -- (4,1.8);
+    % 物块 1
+    \draw[fill=surface!80!white,draw=inkgray] (1.3,0.6) rectangle +(0.8,0.5);
+    \node at (1.7,0.85) {$m_1$};
+    % 物块 2
+    \draw[fill=surface!80!white,draw=inkgray] (2.7,1.1) rectangle +(0.8,0.5);
+    \node at (3.1,1.35) {$m_2$};
+    % 速度箭头
+    \draw[->,accent,thick] (1.7,1.1) -- +(0.9,0.4) node[above right] {$u_1$};
+    \draw[->,accent,thick] (3.1,1.6) -- +(-0.6,-0.25) node[above left] {$u_2$};
+    % 角度
+    \draw (0.7,0) arc[start angle=0,end angle=24,radius=0.7];
+    \node at (1.2,0.2) {$\theta$};
+  \end{tikzpicture}
+  \caption{倾斜光滑面上的两物块碰撞（沿斜面方向分析）}
+\end{figure}
+
+\subsection{例题：同一斜面上的动-静碰撞}
+
+\begin{examplebox}{例4：斜面上的弹性碰撞}
+光滑斜面倾角为 $\theta$，上面有两物块 $A$、$B$，质量分别为 $m_1$、$m_2$。开始时 $A$ 在上、$B$ 在下，$A$ 以沿斜面向下速度 $u$ 运动，$B$ 静止。二者沿斜面发生完全弹性碰撞。求碰撞后沿斜面方向的速度 $v_1,v_2$。
+
+\textbf{解：}\par
+沿斜面向下取正，忽略沿斜面方向外力冲量，得
+\[
+  m_1u + m_2\cdot 0 = m_1v_1 + m_2v_2.
+\]
+完全弹性 $\Rightarrow$ 相对速度关系
+\[
+  v_2 - v_1 = u - 0 = u.
+\]
+与水平面\keyword{动-静弹性碰撞}完全同构，只是“速度”换成“沿斜面的速度”。因此解得
+\[
+  v_1 = \dfrac{m_1 - m_2}{m_1 + m_2}u,\qquad
+  v_2 = \dfrac{2m_1}{m_1 + m_2}u.
+\]
+此结论与斜面倾角 $\theta$ 无关，体现了模型的统一性。
+\end{examplebox}
+
+\begin{summarybox}{倾斜与水平：本质相同}
+\begin{itemize}
+  \item 关键在于：\keyword{沿碰撞方向的动量守恒}，而不是一定要在水平方向；
+  \item 对倾斜光滑面，选取\keyword{沿斜面}为分析方向，问题就退化为一维碰撞；
+  \item 若涉及高度、重力势能，可先用\keyword{能量守恒}求出碰撞前沿斜面速度，再套用一维碰撞模型。
+\end{itemize}
+\end{summarybox}
+
+%------------------------------------------------
+\section{通用解题步骤与思路模板}
+
+\begin{roadmap}
+  \RoadmapStep{画图选方向}
+  画出两物块及运动方向，标明质量和速度。根据接触面选取\keyword{碰撞方向}为坐标轴（水平或沿斜面），统一用正负号表示方向。
+
+  \RoadmapStep{选系统与判断守恒量}
+  一般取“所有参与碰撞的物块”为系统。分析碰撞方向上外力冲量是否可忽略：若是，则该方向动量守恒；再判断是否可以认为\keyword{机械能（或动能）}守恒。
+
+  \RoadmapStep{列方程}
+  必列：\keyword{动量守恒方程}；
+  若完全弹性：可选\keyword{能量守恒}或\keyword{相对速度关系}；
+  若完全非弹性：加上 $v_1 = v_2$；
+  若还有几何或约束条件（如不脱离、刚性连接），一并列出。
+
+  \RoadmapStep{代数求解与物理检查}
+  解方程组求出未知速度、质量比或高度等。最后用\keyword{物理意义检查}：方向合理？大小在预期范围内？动能是否增大得不合理？
+
+  \RoadmapStep{用能量观反向验证}
+  对重要题目，可用\keyword{能量守恒}或“损失的动能 = 其他能量增加”做二次验证，深化对碰撞过程的理解。
+\end{roadmap}
+
+%------------------------------------------------
+\section{常见错误与综合小结}
+
+\subsection{常见错误}
+
+\begin{warningbox}{易错点与应对策略}
+\begin{itemize}
+  \item \keyword{系统选错}：只取一个物块为系统，却错误地认为动量守恒。应把\inlinehint{发生相互作用的全部物体}纳入系统；
+  \item \keyword{方向处理混乱}：忘记给向左的速度加负号，导致方程形式看似正确、实则错误。解决：\inlinehint{统一取一条直线为正方向}，其他都用符号区分；
+  \item \keyword{乱用能量守恒}：非弹性碰撞中机械能一定减少，不能写“碰前动能 = 碰后动能”。正确做法是只用动量守恒，或写出“损失的动能”与内能、势能增加的关系；
+  \item \keyword{忽略倾斜问题的方向选择}：斜面上的碰撞仍然可以守恒，但要\inlinehint{沿斜面方向}写动量守恒，而不是胡乱在水平方向上应用；
+  \item \keyword{把“交换速度”当成万能结论}：只有在\inlinehint{等质量 + 完全弹性}的特定情形下，两物块才会严格交换速度。
+\end{itemize}
+\end{warningbox}
+
+\subsection{综合小结：一张“心中思维导图”}
+
+\begin{summarybox}{动量守恒与能量观的统一视角}
+\begin{itemize}
+  \item \keyword{核心守恒量}：沿碰撞方向的\keyword{动量守恒}，是所有一维两物块碰撞模型的起点；
+  \item \keyword{能量观辅助}：通过比较碰前后动能，判断碰撞类型（完全弹性、完全非弹性或一般非弹性），并用来验证计算结果；
+  \item \keyword{模型统一性}：无论动-静、动-动、水平还是斜面，只要\inlinehint{统一选取碰撞方向、合理选系统}，数学形式都可化为同一组方程；
+  \item \keyword{解题工具}：动量守恒方程、相对速度关系、动-静弹性碰撞公式、等质量交换速度等，都可视为\inlinehint{可迁移的解题“模板”}；
+  \item \keyword{物理理解优先}：与其死记公式，不如多画图、多想“谁把动量和能量传给了谁”，做到\inlinehint{算得对、更要看得懂}。
+\end{itemize}
+\end{summarybox}
+
+\end{document}
+

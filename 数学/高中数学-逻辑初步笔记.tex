@@ -1,0 +1,557 @@
+% --------------------------------------------------
+% 高中数学·逻辑初步 专题笔记
+% 依托 mathnote-preamble.tex 与“数学笔记模板”排版风格
+% --------------------------------------------------
+\documentclass[a4paper,11pt]{ctexart}
+\InputIfFileExists{mathnote-preamble.tex}{}{%
+  \InputIfFileExists{../mathnote-preamble.tex}{}{%
+    \InputIfFileExists{../../mathnote-preamble.tex}{}{%
+      \PackageError{mathnote-notes}{mathnote-preamble.tex 未找到}{请确认 mathnote-preamble.tex 与当前文稿的相对路径配置正确。}%
+    }%
+  }%
+}
+
+% 以纸质打印与课堂讲解为主的配色
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
+
+% 稍微压缩垂直空白，提升信息密度
+\ifmathnoteprintmode
+  \setlength{\parskip}{0.25em}
+  \ctexset{
+    section={
+      beforeskip=1.0em,
+      afterskip=0.5em
+    },
+    subsection={
+      beforeskip=0.8em,
+      afterskip=0.35em
+    },
+    subsubsection={
+      beforeskip=0.6em,
+      afterskip=0.2em
+    }
+  }
+  \tcbset{
+    mathnote box/.style/.append style={
+      top=0.6em,
+      bottom=0.6em,
+      before skip=8pt,
+      after skip=8pt
+    }
+  }
+\fi
+
+\renewcommand{\notetitle}{高中数学逻辑初步}
+\renewcommand{\noteauthor}{生成式人工智能，人工审阅通过}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{命题逻辑\quad 充要条件\quad 推理结构}
+\renewcommand{\noteversion}{v1.0}
+
+% 列表总体略收缩，避免与彩色边条叠加产生视觉负担
+\setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\relax, after=\relax}
+\setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, before=\relax, after=\relax}
+
+% 本笔记中的小节内标题
+\newcommand{\LogicMiniHeading}[1]{%
+  \par\smallskip
+  \noindent\textbf{#1}\par\smallskip
+}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·逻辑初步}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{命题}、\keyword{逻辑联结词}、\keyword{充要条件}、\keyword{量词}四条主线，构建一张清晰的「逻辑初步」知识地图；
+    \item 通过\inlinehint{真值表}、\inlinehint{结构等价变形}和\inlinehint{条件关系判定表}等图表，总结常见结论与题型；
+    \item 提供可直接应用的\ModeBadge{解题 Roadmap} 与\ModeBadge[highlight]{考前自查清单}，兼具复习指导性与工具性。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\clearpage
+
+% === 导读 ===
+\section*{导读：如何使用本笔记}
+\addcontentsline{toc}{section}{导读：如何使用本笔记}
+
+\begin{summarybox}{本笔记的定位}
+  \begin{itemize}
+    \item \keyword{针对性}：紧扣高中必修内容「逻辑初步」，覆盖命题、联结词、充分必要条件、量词与常见推理结构；
+    \item \keyword{工具性}：通过表格与 Roadmap，把零散结论组织成便于查阅的「逻辑工具箱」；
+    \item \keyword{可迁移}：强调「数学语言 $\leftrightarrow$ 自然语言」的互译，方便迁移到函数、不等式、解析几何等题型中。
+  \end{itemize}
+\end{summarybox}
+
+\begin{NoteRoadmap}{使用建议：一轮学习与二轮回顾}
+  \RoadmapStep{一轮学习时，按章节顺序阅读，遇到定义与定理时结合右侧\keyword{示例}以及真值表进行「\inlinehint{边看边写边想}」。}
+  \RoadmapStep{遇到需要判断命题真假或条件关系的题目时，优先在本笔记中查找对应的\keyword{结构表格}（如联结词真值表、条件命题关系表）。}
+  \RoadmapStep{二轮复习时，以各节末的\ModeBadge{小结表}与\ModeBadge[highlight]{考前自查清单}为主，快速浏览并针对不熟悉的部分回到正文。}
+  \RoadmapStep{做题遇到逻辑混乱时，尝试画出\keyword{真值表}或在草稿上写出等价命题，强制让「语言」变成「结构」。}
+\end{NoteRoadmap}
+
+\clearpage
+% === 第一章 命题与真值 ===
+\section{命题与真值}
+
+\subsection{命题的基本概念}
+
+\begin{definitionbox}{命题与真值}
+  \begin{itemize}
+    \item 能够判断\keyword{真}或\keyword{假}，并且这种判断有\keyword{确定真值}的陈述句，称为一个\keyword{命题}；
+    \item 命题的真假称为\keyword{真值}，通常用 $\mathrm{T}$（true）表示「真」，用 $\mathrm{F}$（false）表示「假」；
+    \item 既不是「真」也不是「假」的句子（如祈使句、疑问句、含有未定量的陈述）\textbf{不是}命题。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{summarybox}{命题与非命题对照举例}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{4.1cm}cX}
+    \toprule
+    \textbf{句子} & \textbf{是否为命题} & \textbf{说明} \\
+    \midrule
+    $2+3=5$ & 是 & 真值为「真」，可被明确判断。 \\
+    $x+1>3$ & 否 & 含有\keyword{未说明取值}的字母 $x$，真值未确定。 \\
+    $x\in\R$ 时，$x^2\ge0$ & 是 & 指明了变量取值范围，可判断为真命题。 \\
+    今天下雨了吗？ & 否 & 疑问句，不具有真值。 \\
+    请把窗户关上。 & 否 & 祈使句，不具有真值。 \\
+    所有实数都大于 $0$ & 是 & 可以被判断为假命题。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{sideinfobox}[title={命题化技巧}]
+  很多题目表面上给出的是「含参不等式」「几何条件」，实际都可以用命题的形式表达：
+  \begin{itemize}
+    \item 先用「若\ldots{}则\ldots{}」「对任意\ldots{}」「存在\ldots{}使得\ldots{}」等语言把条件与结论说清楚；
+    \item 再用字母 $p,q,r,\dots$ 或具体数学表达式代替，便于使用逻辑工具进行分析；
+    \item 命题化的好处：可以借用\keyword{真值表}与\keyword{等价变形}来检验推理是否正确。
+  \end{itemize}
+\end{sideinfobox}
+
+\subsection{简单命题与复合命题}
+
+\begin{definitionbox}{简单命题与复合命题}
+  \begin{itemize}
+    \item 不能再分解为更小命题的命题称为\keyword{简单命题}，用 $p,q,r,\dots$ 表示；
+    \item 由若干简单命题通过\keyword{逻辑联结词}连接而成的命题称为\keyword{复合命题}；
+    \item 典型的逻辑联结词有：否定「不」、合取「并且」、析取「或者」、条件「如果\ldots{}那么\ldots{}」、双条件「当且仅当」等。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{summarybox}{常见逻辑联结词一览}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}>{\centering\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{3.1cm}X}
+    \toprule
+    \textbf{名称} & \textbf{符号} & \textbf{常见语言形式} & \textbf{真值大致描述} \\
+    \midrule
+    否定 & $\neg p$ & 不~$p$；$p$ 不成立 & 与 $p$ 真值相反。 \\
+    合取 & $p\land q$ & $p$ 且 $q$；$p$ 并且 $q$ & 只有当 $p,q$ 都真时才真。 \\
+    析取 & $p\lor q$ & $p$ 或 $q$；$p$ 或者 $q$ & 至少有一个为真时为真。 \\
+    条件 & $p\to q$ & 若 $p$ 则 $q$；如果 $p$ 那么 $q$ & 只有在「$p$ 真而 $q$ 假」时为假。 \\
+    双条件 & $p\leftrightarrow q$ & $p$ 当且仅当 $q$ & 当 $p,q$ 真值相同才真。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\clearpage
+\subsection{真值表：把语言变成结构}
+
+\LogicMiniHeading{基本二元联结词的真值表}
+
+\begin{center}
+\begin{tabular}{cc|c c c c}
+  \toprule
+  $p$ & $q$ & $\neg p$ & $p\land q$ & $p\lor q$ & $p\to q$ \\
+  \midrule
+  $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{T}$ \\
+  $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{F}$ \\
+  $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ \\
+  $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\LogicMiniHeading{真值表的常见用途}
+
+\begin{itemize}
+  \item 判断一个复合命题是否为\keyword{永真命题}（在所有情形下都为真）或\keyword{永假命题}；
+  \item 比较两个复合命题在所有情形下真值是否完全相同，从而判断它们是否\keyword{等价}；
+  \item 检验某个「推理形式」是否可靠：把前提与结论都写成命题，根据真值表看「前提全真时结论是否必真」。
+\end{itemize}
+
+\begin{examplebox}{例：用真值表判断等价}
+  判断命题「$\neg(p\lor q)$」与「$\neg p\land\neg q$」是否等价。
+
+  \textbf{分析与解：}
+  \begin{center}
+  \begin{tabular}{cc|c c}
+    \toprule
+    $p$ & $q$ & $\neg(p\lor q)$ & $\neg p\land\neg q$ \\
+    \midrule
+    $\mathrm{T}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ \\
+    $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{F}$ \\
+    $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{F}$ & $\mathrm{F}$ \\
+    $\mathrm{F}$ & $\mathrm{F}$ & $\mathrm{T}$ & $\mathrm{T}$ \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  两列真值完全一致，因此 $\neg(p\lor q)\iff(\neg p\land\neg q)$，这就是著名的\keyword{德·摩根律}之一。
+\end{examplebox}
+
+\begin{sideinfobox}[title={刷题建议：真值表只画关键}]
+  在选择题中，通常只需要区分少量备选项时对应的某几种「关键组合」，不用把完整真值表全部写完：
+  \begin{itemize}
+    \item 条件命题 $p\to q$：只需关注「$p$ 真、$q$ 假」这一行；
+    \item 双条件命题 $p\leftrightarrow q$：只需关注「真真」和「假假」两行；
+    \item 若选项之间差异不大，可先挑出最容易分辨真假的情况（例如 $p,q$ 同时为真或同时为假）。
+  \end{itemize}
+\end{sideinfobox}
+
+\clearpage
+% === 第二章 命题的等价与否定 ===
+\section{命题的等价变形与否定}
+
+\subsection{常用等价关系速查}
+
+\begin{summarybox}{常用等价关系（结构层面）}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{4.1cm}X}
+    \toprule
+    \textbf{原命题形式} & \textbf{等价形式或说明} \\
+    \midrule
+    $\neg(p\land q)$ & $\neg p\lor\neg q$ （德·摩根律） \\
+    $\neg(p\lor q)$ & $\neg p\land\neg q$ （德·摩根律） \\
+    $p\to q$ & $\neg p\lor q$（条件命题的析取形式） \\
+    $p\leftrightarrow q$ & $(p\to q)\land(q\to p)$ 或 $(p\land q)\lor(\neg p\land\neg q)$ \\
+    $\neg(p\to q)$ & $p\land\neg q$（只在「真$\to$假」时失败） \\
+    $\neg(p\leftrightarrow q)$ & $(p\land\neg q)\lor(\neg p\land q)$（真值不同） \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{examplebox}{例：把复杂命题化简}
+  把命题「$\neg(p\to q)\lor(p\land q)$」化为不含「$\to$」的形式，并尽量简化。
+
+  \textbf{解：}
+  \[
+    \neg(p\to q)\lor(p\land q)
+    \equiv (p\land\neg q)\lor(p\land q)
+    \equiv p\land(\neg q\lor q)
+    \equiv p.
+  \]
+  因此原命题与「$p$」等价。这一类题目在选择题中常对应于「不同表述同一含义」的选项。
+\end{examplebox}
+
+\subsection{命题的否定：结构 > 文字}
+
+\begin{summarybox}{常见形式的否定（记忆表）}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{4.4cm}X}
+    \toprule
+    \textbf{命题形式} & \textbf{其否定形式（可作为标准答案模板）} \\
+    \midrule
+    $p$ & $\neg p$：不是 $p$。 \\
+    $p\land q$ & $\neg p\lor\neg q$：$p$、$q$ 中至少有一个不成立。 \\
+    $p\lor q$ & $\neg p\land\neg q$：$p$、$q$ 都不成立。 \\
+    $p\to q$ & $p\land\neg q$：$p$ 成立但 $q$ 不成立。 \\
+    $p\leftrightarrow q$ & $(p\land\neg q)\lor(\neg p\land q)$：$p$ 与 $q$ 真值不同。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{warningbox}{常见错误：只在字面上加「不」}
+  很多同学习惯在句子前面简单加上「不」，而忽略了命题内部的\keyword{逻辑结构}。例如：
+  \begin{itemize}
+    \item 「所有实数都大于 $0$」的否定不是「所有实数都不大于 $0$」，而应是「存在\keyword{至少一个}实数不大于 $0$」；
+    \item 「若 $x>1$，则 $x^2>1$」的否定不是「若 $x>1$，则 $x^2\le1$」，而是「存在 $x>1$，但 $x^2\le1$」。
+  \end{itemize}
+\end{warningbox}
+
+\begin{examplebox}{例：写出命题的否定}
+  写出下列命题的否定（用数学语言表述）：
+  \begin{enumerate}
+    \item 命题 $A$：「对任意实数 $x$，都有 $x^2\ge0$」；
+    \item 命题 $B$：「存在实数 $x$，使得 $x^2+x+1=0$」。
+  \end{enumerate}
+  \textbf{解：}
+  \begin{enumerate}
+    \item $A$ 的否定为：「存在实数 $x$，使得 $x^2<0$」；
+    \item $B$ 的否定为：「对任意实数 $x$，都有 $x^2+x+1\ne0$」。
+  \end{enumerate}
+\end{examplebox}
+
+\clearpage
+% === 第三章 条件命题与充要条件 ===
+\section{条件命题、必要条件与充分条件}
+
+\subsection{条件命题的四种相关形式}
+
+\begin{definitionbox}{条件命题及相关命题}
+  设 $p,q$ 为命题：
+  \begin{itemize}
+    \item $p\to q$：原命题，通常读作「若 $p$，则 $q$」；
+    \item $q\to p$：\keyword{逆命题}；
+    \item $\neg p\to\neg q$：\keyword{否命题}；
+    \item $\neg q\to\neg p$：\keyword{逆否命题}。
+  \end{itemize}
+  其中，$p\to q$ 与 $\neg q\to\neg p$ 总是\keyword{等价}的；而 $p\to q$ 与 $q\to p$ 一般\textbf{不}等价。
+\end{definitionbox}
+
+\begin{summarybox}{四种形式之间的真值关系}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3.5cm}X}
+    \toprule
+    \textbf{命题形式} & \textbf{与原命题 $p\to q$ 的关系} \\
+    \midrule
+    原命题：$p\to q$ & 自身。 \\
+    逆命题：$q\to p$ & 一般不等价，只有在「$p\leftrightarrow q$」成立时才与原命题同真。 \\
+    否命题：$\neg p\to\neg q$ & 与逆命题类似，一般不与原命题等价。 \\
+    逆否命题：$\neg q\to\neg p$ & 与原命题等价（真值完全相同）。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{examplebox}{例：判断相关命题的真假}
+  已知命题 $P$：「若 $x>1$���则 $x^2>1$」。讨论其逆命题、否命题、逆否命题的真假。
+
+  \textbf{解：}
+  \begin{itemize}
+    \item 原命题：对所有 $x>1$，有 $x^2>1$，显然为真；
+    \item 逆命题：「若 $x^2>1$，则 $x>1$」为假，例如 $x=-2$ 是反例；
+    \item 否命题：「若 $x\le1$，则 $x^2\le1$」为假，例如 $x=-2$；
+    \item 逆否命题：「若 $x^2\le1$，则 $x\le1$」，为真（可配合图像理解）。
+  \end{itemize}
+\end{examplebox}
+
+\subsection{充分条件与必要条件}
+
+\begin{definitionbox}{充分条件与必要条件}
+  设命题 $p,q$：
+  \begin{itemize}
+    \item 若 $p\to q$ 成立，则称 $p$ 是 $q$ 的\keyword{充分条件}，$q$ 是 $p$ 的\keyword{必要条件}；
+    \item 若 $p\leftrightarrow q$，则 $p$ 与 $q$ 互为\keyword{充要条件}；
+    \item 口语表达中常见：\inlinehint{只要 $p$ 就 $q$}（$p$ 为充分条件）、\inlinehint{要想 $q$ 必须 $p$}（$p$ 为必要条件）。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{summarybox}{条件关系判断表（可按列背诵）}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{4.2cm}X}
+    \toprule
+    \textbf{语言描述} & \textbf{形式化表达} \\
+    \midrule
+    $p$ 是 $q$ 的充分不必要条件 & $p\to q$，但 $q\not\to p$。 \\
+    $p$ 是 $q$ 的必要不充分条件 & $q\to p$，但 $p\not\to q$。 \\
+    $p$ 是 $q$ 的充要条件 & $p\leftrightarrow q$。 \\
+    $p$ 既非 $q$ 的充分条件也非必要条件 & $p\not\to q$ 且 $q\not\to p$。 \\
+    「$p$ 成立是 $q$ 成立的必要条件」 & $q\to p$。 \\
+    「$p$ 成立是 $q$ 成立的充分条件」 & $p\to q$。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{examplebox}{例：从自然语言到条件关系}
+  设命题：
+  \begin{itemize}
+    \item $A$：「一个三角形是等边三角形」；
+    \item $B$：「一个三角形是等腰三角形」。
+  \end{itemize}
+  判断 $A,B$ 之间的条件关系。
+
+  \textbf{分析与解：}
+  \begin{itemize}
+    \item 若 $A$ 成立（等边），则一定是等腰，所以 $A\to B$ 成立；
+    \item 反之，等腰三角形不一定等边，$B\to A$ 不成立；
+  \end{itemize}
+  因此 $A$ 是 $B$ 的充分不必要条件，$B$ 是 $A$ 的必要不充分条件。
+\end{examplebox}
+
+\begin{NoteChecklist}{考前自查：条件命题与充要条件}
+  \item 能用「只要\ldots{}就\ldots{}」「要想\ldots{}必须\ldots{}」迅速识别充分条件与必要条件；
+  \item 能画出 $p\to q$ 的真值表，并快速定位「真$\to$假」这一唯一为假的情形；
+  \item 清楚原命题与逆否命题等价，逆命题与否命题等价；
+  \item 能从具体情境（如几何、函数）中抽象出 $p,q$，并判断「充分/必要/充要/都不是」；
+  \item 能将「$p$ 是 $q$ 的必要不充分条件」等语言翻译为形式化表达并逆向翻译。
+\end{NoteChecklist}
+
+\clearpage
+% === 第四章 量词与含参命题 ===
+\section{量词、全称命题与存在命题}
+
+\subsection{全称与存在：\texorpdfstring{$\forall$}{forall} 与 \texorpdfstring{$\exists$}{exists}}
+
+\begin{definitionbox}{量词与量化命题}
+  \begin{itemize}
+    \item 「对任意 $x$，$P(x)$」记作 $\forall x\;P(x)$，称为\keyword{全称命题}；
+    \item 「存在 $x$，使得 $P(x)$」记作 $\exists x\;P(x)$，称为\keyword{存在命题}；
+    \item 一般高考题中不强制使用符号 $\forall,\exists$，但理解它们有助于准确把握题意与否定形式。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{summarybox}{全称命题与存在命题的否定}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{4.4cm}X}
+    \toprule
+    \textbf{原命题} & \textbf{等价的否定形式} \\
+    \midrule
+    $\forall x\;P(x)$ & $\exists x\;\neg P(x)$：存在至少一个 $x$ 使 $P(x)$ 不成立。 \\
+    $\exists x\;P(x)$ & $\forall x\;\neg P(x)$：对所有 $x$，$P(x)$ 都不成立。 \\
+    「所有\ldots{}都\ldots{}」 & 「存在至少一个\ldots{}不\ldots{}」。 \\
+    「存在\ldots{}使得\ldots{}」 & 「所有\ldots{}都不\ldots{}」。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{examplebox}{例：用量词重写命题}
+  将下列句子用量词符号表示，并写出其否定：
+  \begin{enumerate}
+    \item 「对任意实数 $x$，都有 $x^2\ge0$」；
+    \item 「存在实数 $x$，使得 $x^2+x+1=0$」。
+  \end{enumerate}
+  \textbf{解：}
+  \begin{enumerate}
+    \item 原命题：$\forall x\in\R,\;x^2\ge0$。否定为：$\exists x\in\R,\;x^2<0$；
+    \item 原命题：$\exists x\in\R,\;x^2+x+1=0$。否定为：$\forall x\in\R,\;x^2+x+1\ne0$。
+  \end{enumerate}
+\end{examplebox}
+
+\subsection{含参命题与「对任意」「至少存在」}
+
+\begin{sideinfobox}[title={典型高考表述}]%
+  在含参数题中，以下表述频繁出现：
+  \begin{itemize}
+    \item 「对任意实数 $x$，不等式 $f(x)\ge0$ 恒成立」；
+    \item 「存在实数 $x$，使得 $f(x)<0$」；
+    \item 「对任意实数 $x$，命题 $P(x)$ 与 $Q(x)$ 等价」。
+  \end{itemize}
+  它们分别对应「$\forall x\;P(x)$」「$\exists x\;P(x)$」「$\forall x\;(P(x)\leftrightarrow Q(x))$」等结构。
+\end{sideinfobox}
+
+\begin{examplebox}{例：从量词角度理解参数范围}
+  已知关于 $x$ 的不等式 $x^2-2ax+a^2-1\ge0$ 对任意实数 $x$ 恒成立，求实数 $a$ 的取值范围。
+
+  \textbf{结构分析：}
+  \[
+    \forall x\in\R,\;x^2-2ax+a^2-1\ge0.
+  \]
+  这相当于：对所有 $x$，二次函数 $f(x)=x^2-2ax+a^2-1$ 的值都不小于 $0$。
+
+  \textbf{解题思路：}
+  \begin{itemize}
+    \item 开口向上的二次函数在实数范围内恒不小于 $0$，当且仅当\keyword{判别式 $\le0$} 且\keyword{开口向上}；
+    \item 这里系数 $1>0$，故只需令 $\Delta\le0$：$(-2a)^2-4(a^2-1)\le0$；
+    \item 化简得 $4a^2-4a^2+4\le0$，即 $4\le0$，矛盾。
+  \end{itemize}
+  说明对任意 $a$，不等式都\textbf{不可能}对所有实数 $x$ 恒成立；若题目改为「存在实数 $x$」则需用不同方法讨论。
+\end{examplebox}
+
+\clearpage
+% === 第五章 常用推理结构与解题模板 ===
+\section{常用推理结构与解题模板}
+
+\subsection{演绎推理与合情推理}
+
+\begin{definitionbox}{两类常见推理}
+  \begin{itemize}
+    \item \keyword{演绎推理}：从一般到特殊，如「所有三角形内角和为 $180^\circ$，$\triangle ABC$ 是三角形，因此 $\angle A+\angle B+\angle C=180^\circ$」；
+    \item \keyword{合情推理}：包括归纳推理、类比推理等，从特殊到一般，结论具有\inlinehint{合理性但不一定严谨可靠}。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{summarybox}{常见正确推理形式}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{4.4cm}X}
+    \toprule
+    \textbf{推理形式} & \textbf{结构示意} \\
+    \midrule
+    肯定前件 & $p\to q$；$p$ 成立 $\Rightarrow q$ 成立。 \\
+    否定后件 & $p\to q$；$q$ 不成立 $\Rightarrow p$ 不成立。 \\
+    链式推理 & $p\to q,\;q\to r\Rightarrow p\to r$。 \\
+    分类讨论 & $p$ 或 $q$ 成立；分别在 $p,q$ 情形下推出同一结论 $r$，则有 $r$。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{warningbox}{两类常见错误推理}
+  \begin{itemize}
+    \item \keyword{肯定后件}：由 $p\to q$ 与 $q$ 成立推出 $p$ 成立，一般不正确；
+    \item \keyword{否定前件}：由 $p\to q$ 与 $p$ 不成立推出 $q$ 不成立，也一般不正确。
+  \end{itemize}
+  记忆方式：正确的是「肯定前件」「否定后件」；错误的是「肯定后件」「否定前件」。
+\end{warningbox}
+
+\subsection{解题 Roadmap：从题面到逻辑结构}
+
+\begin{NoteRoadmap}{逻辑题解题 Roadmap}
+  \RoadmapStep{读题并\keyword{命题化}：用 $p,q,r$ 等记号给题中的关键陈述命名，写清楚「已知」和「欲证」是哪些命题。}
+  \RoadmapStep{识别结构：判断题目主要涉及「联结词真假」「条件关系」「量词」哪一类工具。}
+  \RoadmapStep{必要时画真值表：当选项数量较少、命题结构不复杂时，可直接用真值表区分；否则优先使用等价变形与推理规则。}
+  \RoadmapStep{翻译选项：把文字描述如「$p$ 是 $q$ 的必要不充分条件」等翻译为形式化表达后再比较。}
+  \RoadmapStep{反向检验：针对未被排除的选项，尝试构造简单反例或画草图，检查是否与题设矛盾。}
+\end{NoteRoadmap}
+
+\begin{examplebox}{例：典型选择题结构解析}
+  设命题 $p$：「一个实数 $x$ 满足 $x^2=1$」，命题 $q$：「$x=1$」。下列说法正确的是（\quad）。
+  \begin{enumerate}
+    \item $p$ 是 $q$ 的充分不必要条件；
+    \item $p$ 是 $q$ 的必要不充分条件；
+    \item $p$ 与 $q$ 互为充要条件；
+    \item $p$ 与 $q$ 既非充分条件也非必要条件。
+  \end{enumerate}
+
+  \textbf{解题结构：}
+  \begin{itemize}
+    \item 从 $q$ 出发：若 $x=1$，则显然 $x^2=1$，所以 $q\to p$ 成立；
+    \item 从 $p$ 出发：若 $x^2=1$，则 $x=\pm1$，并不一定 $x=1$，所以 $p\to q$ 不成立；
+  \end{itemize}
+  因此 $q$ 是 $p$ 的充分不必要条件，等价于「$p$ 是 $q$ 的必要不充分条件」，选择 \textbf{B}。
+\end{examplebox}
+
+\begin{NoteChecklist}{考前自查：逻辑初步核心要点}
+  \item 能判断一个句子是否为命题，并给出理由；
+  \item 能熟练写出 $p\land q,p\lor q,\neg p,p\to q,p\leftrightarrow q$ 的真值表；
+  \item 能运用德·摩根律、$p\to q\equiv\neg p\lor q$ 等等价关系化简命题；
+  \item 能区分原命题、逆命题、否命题、逆否命题，并判断它们之间的真值关系；
+  \item 能在实际情境中判断「充分条件」「必要条件」「充要条件」等语言；
+  \item 能写出常见全称命题与存在命题的否定形式；
+  \item 能按照解题 Roadmap 完成典型逻辑选择题与证明题。
+\end{NoteChecklist}
+
+\end{document}
+

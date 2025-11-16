@@ -1,0 +1,470 @@
+\documentclass[a4paper,11pt]{ctexart}
+
+\input{../mathnote-preamble.tex}
+
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
+
+\renewcommand{\notetitle}{利用切割线求零点差}
+\renewcommand{\noteauthor}{高中数学参考笔记}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{导数视角下的函数零点距离}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·零点差}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 从\keyword{切割线（割线）}的几何意义出发，理解“平均变化率”与\keyword{零点差}之间的联系；
+    \item 掌握利用\inlinehint{导数中值定理}和\inlinehint{导数范围}，定量估计不同方程零点间距离的通用步骤；
+    \item 通过图像、表格与例题，构建一套可直接套用的\keyword{零点差估计模型}，服务于函数与导数压轴题。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+
+% 目录
+\tableofcontents
+\newpage
+
+% 前言
+\section*{前言}
+\addcontentsline{toc}{section}{前言}
+
+在函数与导数压轴题中，经常需要\keyword{比较不同方程零点之间的距离}，例如：
+\begin{itemize}
+  \item 比较 $f(x)=a$ 与 $f(x)=b$ 的解之间的距离；
+  \item 估计参数变化前后某个方程零点的偏移量；
+  \item 用“根之间的距离”转化不等式或最值问题。
+\end{itemize}
+直接求根往往困难，但从图像上看，\keyword{零点差正是函数图像上两点的水平距离}。本笔记围绕一个核心思想：
+
+\begin{center}
+\ModeBadge[highlight]{核心公式}
+\quad
+\keyword{零点差 = 函数值差 $\div$ 割线斜率}
+\end{center}
+
+通过导数中值定理，我们可以把“割线斜率”与某点的导数联系起来，从而在\keyword{不解方程的前提下}得到零点差的\keyword{精确表达}或\keyword{范围估计}。
+
+\newpage
+
+\section{切割线视角下的零点差}
+
+\subsection{基本情景与图像理解}
+
+\begin{conceptbox}{情景描述}
+设函数 $f$ 在区间 $I$ 上连续且严格单调，取区间内两点的函数值
+\[
+ y_1 = f(x_1),\quad y_2 = f(x_2),\quad x_1 < x_2.
+\]
+则图像上点 $A(x_1,y_1)$ 与 $B(x_2,y_2)$ 之间的直线称为 $f$ 在 $[x_1,x_2]$ 上的一条\keyword{切割线（割线)}。
+\par
+若 $y_1,y_2$ 取为两个不同的常数 $a,b$，则解方程 $f(x)=a$ 与 $f(x)=b$ 所得零点的差 $|x_b-x_a|$，就是图像上\keyword{对应两点的水平距离}。
+\end{conceptbox}
+
+\begin{center}
+\ModeBadge[secondary]{几何示意图}
+\begin{tikzpicture}[scale=0.9]
+  % 网格与坐标轴
+  \draw[mathnote grid] (-0.2,-0.2) grid (5.2,4.2);
+  \draw[mathnote lines,->] (-0.2,0) -- (5.4,0) node[right] {$x$};
+  \draw[mathnote lines,->] (0,-0.2) -- (0,4.4) node[above] {$y$};
+  % 函数图像
+  \draw[mathnote lines,domain=0:4,smooth] plot(\x,{0.3*(\x-0.5)^2+0.8});
+  % 水平线
+  \draw[secondary,thick] (0,1.3) -- (4.5,1.3);
+  \draw[highlight,thick] (0,2.7) -- (4.5,2.7);
+  % 交点
+  \coordinate (A) at (0.8,1.3);
+  \coordinate (B) at (3.4,2.7);
+  \filldraw[accent] (A) circle (1.5pt) node[below left] {$A(x_a,a)$};
+  \filldraw[accent] (B) circle (1.5pt) node[above right] {$B(x_b,b)$};
+  % 割线
+  \draw[accent,thick] (A) -- (B) node[midway,above,sloped] {\scriptsize 割线};
+  % 水平距离
+  \draw[highlight,|<->|] (0.8,-0.1) -- (3.4,-0.1)
+    node[midway,below] {$x_b - x_a$};
+\end{tikzpicture}
+\end{center}
+
+\begin{notebox}{平均变化率与割线斜率}
+割线 $AB$ 的斜率为
+\[
+k_{AB} = \frac{b-a}{x_b-x_a},
+\]
+正是函数 $f$ 在区间 $[x_a,x_b]$ 上的\keyword{平均变化率}。
+因此，只要能掌握平均变化率，就可以在不直接求解的情况下控制零点差 $x_b-x_a$。
+\end{notebox}
+
+\subsection{导数中值定理的桥梁作用}
+
+\begin{theorembox}{拉格朗日中值定理（导数中值定理）}
+设函数 $f$ 在闭区间 $[a,b]$ 上连续，在开区间 $(a,b)$ 上可导，则存在 $\xi\in(a,b)$ 使得
+\[
+f'(\xi) = \frac{f(b)-f(a)}{b-a}.
+\]
+\end{theorembox}
+
+\begin{proofbox}{几何含义}
+从几何上看，中值定理告诉我们：在曲线上的某点 $P(\xi,f(\xi))$，\keyword{切线的斜率} $f'(\xi)$ 与\keyword{割线的斜率} $k_{AB}$ 完全相同。
+这为“割线$\Rightarrow$导数”搭建了桥梁。
+\end{proofbox}
+
+\subsection{零点差的切割线公式}
+
+\begin{theorembox}{零点差 = 函数值差 $\div$ 某点导数}
+设 $f$ 在区间 $I$ 上连续且严格单调，并在 $I$ 内处处可导。
+取 $a\neq b$ 为 $f$ 的值域内两点，方程
+\[
+f(x)=a,\qquad f(x)=b
+\]
+在 $I$ 内分别有唯一解 $x_a,x_b$（约定 $x_a < x_b$）。
+则存在 $\xi\in(x_a,x_b)$ 使得
+\[
+x_b - x_a = \frac{b-a}{f'(\xi)}.
+\]
+\end{theorembox}
+
+\begin{proofbox}{证明思路}
+由导数中值定理，存在 $\xi\in(x_a,x_b)$ 使得
+\[
+f'(\xi) = \frac{f(x_b)-f(x_a)}{x_b-x_a} = \frac{b-a}{x_b-x_a},
+\]
+整理得
+\[
+x_b-x_a = \frac{b-a}{f'(\xi)},
+\]
+即得结论。
+\end{proofbox}
+
+\begin{summarybox}{切割线法求零点差的通用思路}
+\begin{roadmap}
+  \RoadmapStep{把\keyword{零点差}理解为函数图像上两个水平线 $y=a$ 与 $y=b$ 与曲线的交点之间的水平距离。}
+  \RoadmapStep{写出割线斜率 $k_{AB} = \dfrac{b-a}{x_b-x_a}$，并意识到它是 $f$ 在 $[x_a,x_b]$ 上的\keyword{平均变化率}。}
+  \RoadmapStep{调用\keyword{导数中值定理}，找到某个 $\xi$ 使 $f'(\xi)=k_{AB}$，从而得到 $x_b-x_a=\dfrac{b-a}{f'(\xi)}$。}
+  \RoadmapStep{若已知 $f'$ 的取值范围，则可以把 $\xi$ “夹”在导数范围中，得到零点差的\keyword{估计范围}。}
+\end{roadmap}
+\end{summarybox}
+
+\newpage
+
+\section{模型一：利用导数范围估计零点差}
+
+\subsection{典型例题：给出导数范围}
+
+\begin{examplebox}{例1：导数有界 $\Rightarrow$ 零点差范围}
+设函数 $f$ 在区间 $[0,3]$ 上连续可导，且
+\[
+1 \le f'(x) \le 3,\quad \forall x\in[0,3].
+\]
+已知方程 $f(x)=1$ 与 $f(x)=4$ 在 $(0,3)$ 内分别有唯一解 $x_1,x_2$，求 $x_2-x_1$ 的取值范围。
+\end{examplebox}
+
+\begin{proofbox}{解析}
+根据上一节的结论，存在 $\xi\in(x_1,x_2)$ 使得
+\[
+x_2-x_1 = \frac{4-1}{f'(\xi)} = \frac{3}{f'(\xi)}.
+\]
+又因为 $1\le f'(\xi)\le 3$，所以
+\[
+\frac{3}{3} \le x_2-x_1 \le \frac{3}{1},
+\]
+即
+\[
+1 \le x_2-x_1 \le 3.
+\]
+\end{proofbox}
+
+\begin{center}
+\ModeBadge[secondary]{导数范围 $\Rightarrow$ 零点差范围}
+\begin{tabular}{c|c|c}
+\hline
+已知信息 & 连接关系 & 推出结论 \\
+\hline
+$1\le f'(x)\le 3$ & $x_2-x_1 = \dfrac{3}{f'(\xi)}$ & $\dfrac{3}{3}\le x_2-x_1\le\dfrac{3}{1}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{focuspoints}
+  \item “导数有界”给的是 $f'$ 的\keyword{数值范围}；
+  \item “零点差”本质是 $x$ 的\keyword{范围问题}；
+  \item 二者之间的桥梁就是\keyword{切割线公式} $x_2-x_1=\dfrac{b-a}{f'(\xi)}$。
+\end{focuspoints}
+
+\subsection{例题变式：只给下界或上界}
+
+\begin{examplebox}{例2：只给导数下界}
+设函数 $f$ 在 $\R$ 上可导，且对任意 $x\in\R$ 有
+\[
+f'(x) \geq 2.
+\]
+记方程 $f(x)=1$ 与 $f(x)=5$ 的实根分别为 $\alpha,\beta$（且 $\alpha<\beta$），证明：
+\[
+\beta-\alpha \leq 2.
+\]
+\end{examplebox}
+
+\begin{proofbox}{思路与证明}
+由切割线公式，存在 $\xi\in(\alpha,\beta)$ 使得
+\[
+\beta-\alpha = \frac{5-1}{f'(\xi)} = \frac{4}{f'(\xi)}.
+\]
+因为 $f'(\xi)\geq 2$，所以
+\[
+\beta-\alpha = \frac{4}{f'(\xi)} \leq \frac{4}{2} = 2,
+\]
+命题得证。
+\end{proofbox}
+
+\begin{notebox}{只给一侧界的常见结论}
+\begin{itemize}
+  \item 若 $f'(x)\geq m>0$，则任意两条水平线 $y=a,y=b$ 对应的零点差满足
+  \[
+  x_b-x_a \leq \frac{b-a}{m};
+  \]
+  \item 若 $f'(x)\leq M<0$，则
+  \[
+  x_b-x_a \geq \frac{b-a}{M}
+  \]
+  （注意斜率与单调性的符号方向）。
+\end{itemize}
+\end{notebox}
+
+\newpage
+
+\section{模型二：含参数函数中的零点差}
+
+\subsection{整体模板}
+
+\begin{summarybox}{参数题中“零点差”的操作框架}
+\begin{roadmap}
+  \RoadmapStep{先用题目条件（如单调性、值域、交点个数）保证相关方程 $f(x)=a,f(x)=b$ 各自只有\keyword{一个}实根。}
+  \RoadmapStep{列出切割线公式 $x_b-x_a=\dfrac{b-a}{f'(\xi)}$，把“零点差”写成“常数 $\div$ 导数”的形式。}
+  \RoadmapStep{用题目给出的不等式（或需要证明的不等式）去\keyword{夹逼} $f'(\xi)$，从而得到 $x_b-x_a$ 的范围或符号。}
+  \RoadmapStep{将“零点差的范围”回代到原问题中，完成对参数的讨论或对结论的证明。}
+\end{roadmap}
+\end{summarybox}
+
+\subsection{典型例题：零点差控制参数}
+
+\begin{examplebox}{例3：利用零点差求参数范围}
+设函数 $f(x)$ 在 $\R$ 上可导且严格单调递增，且满足
+\[
+1 \leq f'(x) \leq 3,\quad \forall x\in\R.
+\]
+记方程
+\[
+f(x)=a,\qquad f(x)=a+2
+\]
+的实根分别为 $x_1,x_2$（显然 $x_2>x_1$）。证明：
+\[
+ \frac{2}{3} \leq x_2-x_1 \leq 2.
+\]
+\end{examplebox}
+
+\begin{proofbox}{解析}
+由切割线公式，存在 $\xi\in(x_1,x_2)$ 使得
+\[
+x_2-x_1 = \frac{(a+2)-a}{f'(\xi)} = \frac{2}{f'(\xi)}.
+\]
+因为 $1\leq f'(\xi)\leq 3$，所以
+\[
+\frac{2}{3}\leq x_2-x_1 \leq 2.
+\]
+这说明：\keyword{无论参数 $a$ 如何变化}，相邻两条水平线 $y=a$ 与 $y=a+2$ 与曲线的交点水平距离都被控制在固定区间内。
+\end{proofbox}
+
+\begin{center}
+\ModeBadge[secondary]{图像视角}
+\begin{tikzpicture}[scale=0.9]
+  % 网格与坐标轴
+  \draw[mathnote grid] (-0.2,-0.2) grid (5.2,4.2);
+  \draw[mathnote lines,->] (-0.2,0) -- (5.4,0) node[right] {$x$};
+  \draw[mathnote lines,->] (0,-0.2) -- (0,4.4) node[above] {$y$};
+  % 单调增函数（示意）
+  \draw[mathnote lines,domain=0:4,smooth] plot(\x,{0.5+0.4*\x+0.06*\x*\x});
+  % 两条水平线
+  \draw[secondary,thick] (0,1.3) -- (4.5,1.3) node[right] {$y=a$};
+  \draw[highlight,thick] (0,3.3) -- (4.5,3.3) node[right] {$y=a+2$};
+  % 交点及水平距离
+  \coordinate (A1) at (0.6,1.3);
+  \coordinate (A2) at (2.8,3.3);
+  \filldraw[accent] (A1) circle (1.5pt) node[below left] {$x_1$};
+  \filldraw[accent] (A2) circle (1.5pt) node[above right] {$x_2$};
+  \draw[highlight,|<->|] (0.6,-0.1) -- (2.8,-0.1)
+    node[midway,below] {$x_2-x_1$};
+\end{tikzpicture}
+\end{center}
+
+\subsection{例题：零点差与不等式}
+
+\begin{examplebox}{例4：用零点差证明不等式}
+设函数 $f(x)$ 在 $\R$ 上连续可导，且严格单调递增，满足
+\[
+1 \leq f'(x) \leq 2,\quad \forall x\in\R.
+\]
+设 $x_1,x_2$ 分别为方程 $f(x)=0$ 与 $f(x)=3$ 的实根，证明：
+\[
+1.5 \leq x_2-x_1 \leq 3.
+\]
+\end{examplebox}
+
+\begin{proofbox}{证明}
+由切割线公式，存在 $\xi\in(x_1,x_2)$ 使得
+\[
+x_2-x_1 = \frac{3-0}{f'(\xi)} = \frac{3}{f'(\xi)}.
+\]
+因为 $1\leq f'(\xi)\leq 2$，所以
+\[
+\frac{3}{2}\leq x_2-x_1 \leq 3,
+\]
+即
+\[
+1.5 \leq x_2-x_1 \leq 3.
+\]
+这类题目本质上是把“不等式”转化为“零点差范围”的判断。
+\end{proofbox}
+
+\newpage
+
+\section{模型三：与单调性、凸凹性结合}
+
+\subsection{单调性保证零点唯一}
+
+\begin{definitionbox}{单调性与零点唯一性}
+若函数 $f$ 在区间 $I$ 上严格单调，则对任意 $c$ 属于 $f(I)$，方程 $f(x)=c$ 在 $I$ 内\keyword{至多有一个}实根。
+\par
+若再结合连续性与端点符号（介值定理），便可判断“恰有一个零点”。
+\end{definitionbox}
+
+\begin{examplebox}{例5：先判零点唯一，再谈零点差}
+设函数 $f(x)=x^3-3x+1$。
+\begin{enumerate}
+  \item 证明：方程 $f(x)=1$ 在 $\R$ 上有且仅有一个实根 $x_1$；
+  \item 证明：方程 $f(x)=2$ 在 $\R$ 上有且仅有一个实根 $x_2$；
+  \item 用切割线法估计 $x_2-x_1$ 的范围。
+\end{enumerate}
+\end{examplebox}
+
+\begin{proofbox}{解析}
+\textbf{(1) 单调性与零点个数}
+\[
+f'(x)=3x^2-3=3(x-1)(x+1).
+\]
+由此可知 $f$ 在 $(-\infty,-1)$ 与 $(1,+\infty)$ 上单调递增，在 $(-1,1)$ 上单调递减。
+直接计算
+\[
+f(-2)=-1,\quad f(0)=1,\quad f(2)=3.
+\]
+由连续性与介值定理可知：$f(x)=1$ 在 $\R$ 上恰有一根 $x_1\in(-2,2)$。
+\par
+同理，由
+\[
+f(-2)=-1,\quad f(1)=-1,\quad f(2)=3
+\]
+可知 $f(x)=2$ 也在 $\R$ 上恰有一根 $x_2\in(1,2)$。
+
+\textbf{(2) 零点差的粗略估计}
+在区间 $[x_1,x_2]\subset(-2,2)$ 上，有
+\[
+-3 \leq f'(x) \leq 9.
+\]
+注意到 $f$ 在 $[0,2]$ 上整体递增且 $x_1,x_2$ 都落在该区间内，因此在 $[x_1,x_2]$ 上有
+\[
+0 \leq f'(x) \leq 9.
+\]
+由切割线公式，
+\[
+x_2-x_1 = \frac{2-1}{f'(\xi)} = \frac{1}{f'(\xi)},\quad \xi\in(x_1,x_2).
+\]
+因为 $0<f'(\xi)\leq 9$，所以
+\[
+0< x_2-x_1 \leq 1.
+\]
+虽然这个估计比较粗，但已经告诉我们：两条水平线 $y=1$ 与 $y=2$ 与曲线的交点距离不会超过 $1$。
+\end{proofbox}
+
+\begin{sideinfobox}
+在真正的高考或竞赛题中，往往会给出\keyword{更精确的导数范围}（例如通过凸凹性或二阶导数得到），从而得到更紧的零点差范围。
+本节的目标是先把\keyword{“思路模板”}建立起来。
+\end{sideinfobox}
+
+\newpage
+
+\section{练习巩固}
+
+\subsection{基础练习}
+
+\begin{enumerate}
+  \item 设函数 $f$ 在 $[0,2]$ 上连续可导，且 $2\leq f'(x)\leq 5$。已知方程 $f(x)=1$ 与 $f(x)=4$ 在 $(0,2)$ 内分别有唯一实根 $x_1,x_2$，用切割线法给出 $x_2-x_1$ 的范围。
+  \item 设函数 $f$ 在 $\R$ 上可导且严格单调递增，满足 $1\leq f'(x)\leq 4$。记 $x_1,x_2$ 分别为方程 $f(x)=0$ 与 $f(x)=2$ 的实根，比较 $x_2-x_1$ 与 $1$ 的大小关系。
+  \item 设函数 $f$ 在 $[1,3]$ 上连续可导，且 $0< f'(x)\leq 2$。记 $x_1,x_2$ 分别为方程 $f(x)=2$ 与 $f(x)=5$ 在 $(1,3)$ 内的实根，证明 $x_2-x_1\geq 1.5$。
+\end{enumerate}
+
+\subsection{提高练习}
+
+\begin{enumerate}
+  \item 设函数 $f$ 在 $\R$ 上连续可导且严格单调递增，满足
+  \[
+  1\leq f'(x)\leq 2,\quad \forall x\in\R.
+  \]
+  证明：对任意实数 $a<b$，方程 $f(x)=a$ 与 $f(x)=b$ 的实根 $x_a,x_b$ 满足
+  \[
+  \frac{b-a}{2}\leq x_b-x_a\leq b-a.
+  \]
+  \item 设函数 $f$ 在 $[0,+\infty)$ 上连续可导，且 $f'(x)\geq 1+x$。记 $x_0$ 为方程 $f(x)=0$ 在 $[0,+\infty)$ 上的实根，$x_1$ 为方程 $f(x)=1$ 的实根（均假设存在且唯一），试用切割线法给出 $x_1-x_0$ 的一个上界估计。
+  \item （探究题）试构造一个具体函数 $f(x)$，使得对某两个常数 $a<b$，方程 $f(x)=a$ 与 $f(x)=b$ 的零点差 $x_b-x_a$ 正好等于指定的值（例如 $1$ 或 $2$），并用图像解释你的构造。
+\end{enumerate}
+
+\begin{NoteChecklist}{考前自查：关于“切割线求零点差”你是否已经掌握？}
+  \item 能在图像上准确画出割线，并说清它与平均变化率的关系；
+  \item 能熟练写出切割线公式 $x_b-x_a=\dfrac{b-a}{f'(\xi)}$ 并说明 $\xi$ 的位置；
+  \item 能根据导数范围，把 $f'(\xi)$ 换成具体的数值范围，从而得到零点差的范围；
+  \item 知道先用单调性与介值定理保证相关方程\keyword{零点唯一}；
+  \item 能在含参数问题中，用“零点差范围”来控制参数的取值或证明不等式；
+  \item 能主动把“零点差”问题画成图像，找到两个水平线与曲线的交点，并用直观图像校验自己的结论。
+\end{NoteChecklist}
+
+\newpage
+
+\section*{小结}
+\addcontentsline{toc}{section}{小结}
+
+本笔记围绕“利用切割线求零点差”这一主题，从\keyword{图像直观}、\keyword{中值定理桥梁}、\keyword{导数范围估计}到\keyword{含参数与综合应用}，构建了一套可以直接上手的解题模板：
+\begin{itemize}
+  \item 把零点差看成两条水平线与曲线交点的水平距离；
+  \item 用切割线连接这两个交点，把零点差写成“函数值差 $\div$ 割线斜率”；
+  \item 再通过导数中值定理，把割线斜率换成某点导数，从而利用导数范围控制零点差。
+\end{itemize}
+
+在实际解题中，只要看到“\keyword{两个方程的零点距离}”“\keyword{参数变化前后根的位置}”“\keyword{把不等式转化为根的间距}”等提示，都可以尝试套用本笔记中的“切割线—导数—零点差”思路进行分析。
+
+\end{document}
+

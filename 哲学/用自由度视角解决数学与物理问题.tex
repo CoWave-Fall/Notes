@@ -1,0 +1,575 @@
+\documentclass[a4paper,11pt]{ctexart}
+\input{../mathnote-preamble.tex}
+
+% 可选：如需 CMYK 印刷模式，请取消下一行注释
+\MathNoteEnablePrint
+% 可选：如需右上角审核图章，请取消下一行注释
+\MathNoteEnableReviewStamp
+
+\renewcommand{\notetitle}{用自由度视角解决数学与物理问题}
+\renewcommand{\noteauthor}{自学数学与物理笔记}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{从“未知数个数”到“约束结构”的统一视角}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{数学·物理·自由度工具箱}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{自由度}这一核心概念，统一理解「未知数个数」「约束条件」与「解集形状」三者之间的关系；
+    \item 在\keyword{数学}中学会用自由度判断方程组是否有解、有多少解，以及\inlinehint{如何选参数}把解写成工具化的通式；
+    \item 在\keyword{物理}中学会用自由度数目快速判断「能动几条独立轨迹」，从而\inlinehint{选好坐标}、写出最少而够用的方程；
+    \item 通过\ModeBadge[highlight]{总览表格} 与 \ModeBadge[secondary]{示意图} 搭建可自学的「自由度视角解题流程」，成为后续力学、电学与竞赛题的\keyword{通用思考骨架}。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\clearpage
+\section{自由度：一句话是什么？}
+
+\begin{summarybox}{核心结论一页看懂}
+  \begin{focuspoints}
+    \item \textbf{一句话定义：}\keyword{自由度}就是\keyword{能独立变化的变量个数}，也可以理解为\inlinehint{你手上可自由拨动的“滑块”数量}；
+    \item \textbf{数学视角：}在常见高中问题中，
+          \[
+            \text{自由度} \approx \text{未知数个数} - \text{相互独立的约束个数}；
+          \]
+    \item \textbf{几何视角：}自由度越大，解集越「厚」：$0$ 个自由度对应\inlinehint{一个点}，$1$ 个对应\inlinehint{一条线}，$2$ 个对应\inlinehint{一个面}，以此类推；
+    \item \textbf{物理视角：}自由度告诉我们\keyword{该系统需要多少个坐标才能被完全描述}，也是写运动方程时\inlinehint{需要多少个独立方程}的上限；
+    \item \textbf{解题套路：}「先数坐标，再数约束」$\Rightarrow$ 得出自由度 $\Rightarrow$ 选好\keyword{最少的广义坐标}，最后\keyword{只对这些坐标写方程}。
+  \end{focuspoints}
+\end{summarybox}
+
+\subsection{几个直观小画面}
+
+\begin{center}
+\begin{minipage}{0.96\textwidth}
+  \centering
+  \ModeBadge[secondary]{几何直观：点—线—面}
+  \begin{tikzpicture}[mathnote lines, scale=1.0]
+    % 坐标轴
+    \draw[->, thin] (-0.3,0) -- (4.2,0) node[right] {$x$};
+    \draw[->, thin] (0,-0.3) -- (0,3.2) node[above] {$y$};
+
+    % 点（0 自由度）
+    \fill[accent] (0.8,0.8) circle (1.2pt);
+    \node[inkgray, below right=1pt] at (0.8,0.8) {$0$ 自由度：点};
+
+    % 线（1 自由度）
+    \draw[secondary, thick] (1.6,0.4) -- (3.6,2.4);
+    \node[inkgray, below right=1pt] at (2.9,1.9) {$1$ 自由度：直线};
+
+    % 面（2 自由度）
+    \fill[highlight!12] (0.4,1.4) rectangle (2.2,3.0);
+    \draw[highlight] (0.4,1.4) rectangle (2.2,3.0);
+    \node[inkgray, above left=1pt] at (2.2,1.4) {$2$ 自由度：区域};
+  \end{tikzpicture}
+  \captionof{figure}{自由度与几何对象：点、线、面}
+\end{minipage}
+\end{center}
+
+\begin{notebox}{快速辨认：「能随意拧几个旋钮」？}
+  \begin{itemize}
+    \item 想象解题时你在控制面板前：每个\keyword{自由可选的数}就是一个旋钮；
+    \item \keyword{一个方程}就是一条「你必须满足的关系」，相当于\inlinehint{在旋钮之间加上一根硬杆}，限制了它们能同时取值的方式；
+    \item 全部约束加上去之后，剩下还能自由拧动的旋钮个数，就是\keyword{自由度}.
+  \end{itemize}
+\end{notebox}
+
+\subsection{一张表：自由度、未知数、解集形状}
+
+\begin{center}
+\ModeBadge[highlight]{数学视角总览表}
+
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{0.98\textwidth}{l>{\centering\arraybackslash}p{2.2cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{2.2cm}X}
+  \toprule
+  问题类型 & 未知数个数 & 独立约束个数 & 自由度 & 解集常见几何形状 \\
+  \midrule
+  一元一次方程 $ax+b=0$ & $1$ & $1$ & $0$ & 一个点（唯一解） \\
+  二元一次方程组（两条直线且不平行） & $2$ & $2$ & $0$ & 一个点（交点） \\
+  二元一次方程（只一条直线） & $2$ & $1$ & $1$ & 一条直线（无穷多解） \\
+  三元一次方程（一个平面） & $3$ & $1$ & $2$ & 一个平面（无穷多解） \\
+  三元一次方程组（两平面不平行） & $3$ & $2$ & $1$ & 一条直线（两平面交线） \\
+  三元一次方程组（三平面一般位置） & $3$ & $3$ & $0$ & 一个点（三平面交点） \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{notebox}{提醒：这里的「约束个数」指的是\keyword{相互独立}的约束}
+  如果一个方程组里有「两条完全一样的直线」，那它们只提供了\keyword{一个}有效约束；\\
+  如果一个方程能通过\keyword{加减变形}由其他方程得到，那么它不再提供新的限制——在自由度计数中就不再额外加 $1$。
+\end{notebox}
+
+\clearpage
+\section{数学中的自由度：从方程到几何}
+
+\subsection{未知数 $-$ 约束 = 自由度}
+
+\begin{definitionbox}{数学中的自由度}
+  在典型的高中代数与解析几何问题中，可以按下列方式理解自由度：
+  \begin{itemize}
+    \item 把所有\keyword{未知量}列出来，记为 $n$ 个；
+    \item 把题目给出的\keyword{彼此独立的条件（方程或等价关系）}列出来，记为 $k$ 个；
+    \item 则\emph{通常}可以把自由度视为
+          \[
+            \text{自由度} = n - k,
+          \]
+          它刻画了「解集中还能随意选的参数个数」。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{线性方程组中的自由度}
+  考察方程组
+  \[
+    \begin{cases}
+      x + y + z = 3,\\[0.3em]
+      x - y + 2z = 1.
+    \end{cases}
+  \]
+  \begin{focuspoints}
+    \item 未知数有 $3$ 个：$x,y,z$；
+    \item 独立方程有 $2$ 个（不能互相线性表示）；
+    \item 因此自由度 $=3-2=1$，意味着\inlinehint{解集中可以任选一个参数}；
+    \item 通常我们把 $z$ 记为自由参数 $t$，其他由它表示：
+          \[
+            z = t,\quad x = 1 + t,\quad y = 2 - 2t.
+          \]
+  \end{focuspoints}
+  解集可以写成
+  \[
+    (x,y,z) = (1+t,\ 2-2t,\ t),\quad t\in\R,
+  \]
+  它在空间中是一条直线——正好是\keyword{一维}的几何对象，对应\keyword{一个自由度}。
+\end{examplebox}
+
+\subsection{参数化：用自由度写出通解}
+
+\begin{notebox}{「自由度 = 能引入几个参数」}
+  对于线性方程组来说，自由度的大小直接告诉你需要引入\keyword{几个参数}来表示全部解：
+  \begin{itemize}
+    \item 自由度 $=0$：无参数，解是\keyword{有限个点}（通常是唯一解）；
+    \item 自由度 $=1$：需要\keyword{一个参数 $t$}，解是一族沿直线分布的点；
+    \item 自由度 $=2$：需要\keyword{两个参数 $s,t$}，解通常构成一个平面或平面区域。
+  \end{itemize}
+\end{notebox}
+
+\begin{examplebox}{二元一次方程的参数化}
+  解方程
+  \[
+    2x - 3y = 1.
+  \]
+  \begin{focuspoints}
+    \item 未知数 $2$ 个，独立约束 $1$ 个，自由度 $=1$；
+    \item 令 $y = t$ 为自由参数，则
+          \[
+            2x - 3t = 1 \quad\Rightarrow\quad x = \frac{1+3t}{2};
+          \]
+    \item 通解可以写为
+          \[
+            (x,y) = \left(\frac{1+3t}{2},\ t\right),\quad t\in\R;
+          \]
+    \item 在平面直角坐标系中，这是一条直线；$t$ 越大，点就沿着直线在某个方向上滑动。
+  \end{focuspoints}
+\end{examplebox}
+
+\begin{summarybox}{通用参数化小结}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{0.98\textwidth}{l>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}X}
+    \toprule
+    场景 & 未知数 & 自由度 & 参数个数 & 典型解的写法 \\
+    \midrule
+    二元一次方程 & $2$ & $1$ & $1$ & $(x,y) = (x_0,y_0) + t\,(u,v)$ \\
+    三元一次方程组（两独立方程） & $3$ & $1$ & $1$ & $(x,y,z) = P_0 + t\,\vec{d}$ \\
+    三元一次方程（一个平面） & $3$ & $2$ & $2$ & $(x,y,z) = P_0 + s\,\vec{u} + t\,\vec{v}$ \\
+    二元二次曲线（如圆） & $2$ & $1$ & $1$ & $(x,y) = (x_0 + r\cos t,\ y_0 + r\sin t)$ \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\subsection{不等式与区域：自由度如何被「剪掉」}
+
+\begin{examplebox}{由不等式确定的区域}
+  在平面上考虑由不等式组
+  \[
+    \begin{cases}
+      x \ge 0,\\
+      y \ge 0,\\
+      x + y \le 1
+    \end{cases}
+  \]
+  决定的点集。
+
+  \begin{focuspoints}
+    \item 原始变量有 $2$ 个，自由度起点为 $2$；
+    \item 三个不等式把平面「剪」出了一个\keyword{有边界的区域}，但区域内部任一点仍由两个坐标决定——自由度还是 $2$；
+    \item 真正「降低自由度」的是像 $x+y=1$ 这样的\keyword{等式约束}，会把二维区域压缩成一条一维线段；
+    \item 用图像理解：不等式决定的是\keyword{多大的一块区域}，而等式决定的是\keyword{这块区域的维数}。
+  \end{focuspoints}
+\end{examplebox}
+
+\begin{notebox}{小结：等式控制维数，不等式控制范围}
+  \begin{itemize}
+    \item 等式（$=$）常常减少自由度，使维数降低；
+    \item 不等式（$\le,\ge$）一般不改变自由度，而是在原有维数上限制「活动范围」；
+    \item 在参数化解集时，先用等式确定\keyword{要用几个参数}，再用不等式为这些参数\keyword{加上范围}。
+  \end{itemize}
+\end{notebox}
+
+\subsection{几何问题中的自由度：坐标选取的艺术}
+
+\begin{examplebox}{确定一个三角形需要几个自由度？}
+  在平面内用坐标描述一个一般三角形 $\triangle ABC$（不考虑全体平移与整体转动的等价性），我们可以这样计数：
+  \begin{itemize}
+    \item 三个顶点 $A,B,C$ 各有两个坐标，共 $6$ 个未知数；
+    \item 通常我们可以通过\inlinehint{平移与转动}把 $A$ 固定在原点、$B$ 固定在 $x$ 轴上，把这些选择看作\keyword{消去}了 $3$ 个自由度；
+    \item 于是只剩下 $3$ 个自由度：例如可以用「三条边长」$(a,b,c)$ 来描述；也可以用「两边一角」之类的等价参数组。
+  \end{itemize}
+\end{examplebox}
+
+\begin{notebox}{套路：先在坐标里数，再减去「约束」与「不重要的对称性」}
+  \begin{itemize}
+    \item \keyword{原始坐标}：先假装所有点都能在平面上随便动，数一数坐标总数；
+    \item \keyword{几何约束}：比如「三点共线」「固定在圆上」都会减少自由度；
+    \item \keyword{对称性}：整体平移、整体转动往往不改变问题实质，可以通过巧妙选坐标系「吃掉」掉一些自由度，使计算更简洁。
+  \end{itemize}
+\end{notebox}
+
+\subsection{练练手：解集形状与自由度}
+
+\begin{summarybox}{快速判断解集类型的小表}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{0.98\textwidth}{l>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.7cm}>{\centering\arraybackslash}p{1.8cm}X}
+    \toprule
+    典型设定 & 未知数 & 自由度 & 解集维数 & 常见图像 \\
+    \midrule
+    一元二次方程 $ax^2+bx+c=0$ & $1$ & $0$ & $0$ 维 & 最多两个点 \\
+    二元一次方程 $ax+by=c$ & $2$ & $1$ & $1$ 维 & 一条直线 \\
+    二元二次曲线（比如圆） & $2$ & $1$ & $1$ 维 & 一条封闭曲线 \\
+    三元一次方程组两条独立方程 & $3$ & $1$ & $1$ 维 & 空间中的直线 \\
+    三元一次方程 & $3$ & $2$ & $2$ 维 & 空间中的平面 \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\clearpage
+\section{物理中的自由度：从质点到约束系统}
+
+\subsection{单质点：自由度就是「能往几个方向跑」}
+
+\begin{definitionbox}{质点的自由度}
+  \begin{itemize}
+    \item 在一条直线上运动的质点：只需一个坐标（比如 $x$），\keyword{自由度为 $1$}；
+    \item 在一个平面内运动的质点：需要两个坐标（比如 $x,y$），\keyword{自由度为 $2$}；
+    \item 在空间内运动的质点：需要三个坐标（比如 $x,y,z$），\keyword{自由度为 $3$}。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{center}
+\begin{minipage}{0.9\textwidth}
+  \centering
+  \ModeBadge[secondary]{质点自由度示意}
+  \begin{tikzpicture}[mathnote lines, scale=1.0]
+    % 直线运动
+    \draw[accent, thick, -{Latex[length=2mm]}] (-0.2,0) -- (3.2,0);
+    \fill (1.5,0) circle (1.0pt);
+    \node[inkgray, below] at (1.5,-0.1) {直线运动，$1$ 自由度};
+
+    % 平面运动
+    \begin{scope}[xshift=5.0cm]
+      \draw[secondary!40, fill=secondary!10] (0,0) rectangle (3,2);
+      \draw[->, thin] (0,-0.2) -- (3.2,-0.2) node[right] {$x$};
+      \draw[->, thin] (-0.2,0) -- (-0.2,2.2) node[above] {$y$};
+      \fill (1.2,1.0) circle (1.0pt);
+      \node[inkgray, below right] at (1.2,1.0) {平面运动，$2$ 自由度};
+    \end{scope}
+  \end{tikzpicture}
+  \captionof{figure}{不同运动环境下的自由度数目}
+\end{minipage}
+\end{center}
+
+\subsection{约束：把多维运动「压缩」到低维}
+
+\begin{notebox}{两步法：先数「原始自由度」，再减去「约束」}
+  \begin{itemize}
+    \item 第一步：假设所有物体在空间里自由运动，按「每个质点 $3$ 个坐标」来粗略计数；
+    \item 第二步：把题目里提到的\keyword{几何约束}（在直线、在平面、在圆上、绳长不变、杆长不变等）逐条减掉；
+    \item 最终得到的是\keyword{有效自由度}——写运动方程时只需要为这些自由坐标建模。
+  \end{itemize}
+\end{notebox}
+
+\begin{summarybox}{常见高中力学模型的自由度表}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{0.98\textwidth}{l>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}X}
+    \toprule
+    模型 & 原始坐标数 & 约束个数 & 自由度 & 典型广义坐标选择 \\
+    \midrule
+    光滑水平面上小车 & $2$（$x,y$） & $1$（只能沿轨道） & $1$ & 沿轨道的位移 $s$ \\
+    单摆（细绳长 $l$，端点固定） & $2$（平面内） & $1$（绳长恒定） & $1$ & 摆角 $\theta$ \\
+    斜面上的滑块 & $2$（平面内） & $1$（只能沿斜面） & $1$ & 沿斜面距离 $s$ \\
+    同一直线上的两个滑块 + 不可伸长绳 & $2$（两个位置） & $1$（绳长恒定） & $1$ & 任选一个滑块的位置 \\
+    平面内两个用刚性杆连接的质点 & $4$（两个点） & $1$（杆长固定） & $3$ & 两点参考系下的极坐标组合等 \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\subsection{例：单摆的自由度与坐标选择}
+
+\begin{examplebox}{用自由度视角看单摆}
+  一根长为 $l$ 的细绳，一端固定在天花板上，另一端悬挂质量为 $m$ 的小球，系统在竖直平面内摆动。
+  \begin{focuspoints}
+    \item 若只看平面运动，小球位置需要两个坐标 $(x,y)$ 来描述；
+    \item 但绳长 $l$ 恒定：$x^2 + y^2 = l^2$ 提供了一个几何约束；
+    \item 因此自由度 $=2-1=1$：只需指定一个角度 $\theta$（相对竖直或相对水平）就能确定小球位置；
+    \item 动力学方程只需针对\keyword{这一个广义坐标 $\theta$} 来写（例如利用能量守恒或牛顿第二定律）；
+    \item 高中题目中常见的「沿切向」「沿径向」分解，本质上就是为这\keyword{一个自由度}选取了合适的分解方向。
+  \end{focuspoints}
+\end{examplebox}
+
+\subsection{复合系统：多质点与多约束}
+
+\begin{notebox}{步骤复盘：多质点系统的自由度计数}
+  对于由多个质点组成、并带有若干几何连接的系统，可以按以下步骤评估自由度：
+  \begin{enumerate}
+    \item 原始坐标数：平面内每个质点 $2$ 个，空间内每个质点 $3$ 个，总数为 $N_{\text{coord}}$；
+    \item 几何约束：每条「长度不变」「在直线/圆上」等条件通常对应一个标量约束，数出总约束数 $N_{\text{constr}}$；
+    \item 估算自由度：$f \approx N_{\text{coord}} - N_{\text{constr}}$；
+    \item 选择广义坐标：为这 $f$ 个自由度各挑一个物理意义清晰的量（角度、位移、相对距离等）。
+  \end{enumerate}
+\end{notebox}
+
+\begin{summarybox}{进阶模型的自由度速查表}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabularx}{0.98\textwidth}{X>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}X}
+    \toprule
+    模型描述 & 原始坐标数 & 约束个数 & 自由度估计 & 常用广义坐标选择 \\
+    \midrule
+    竖直平面内的单摆 & $2$ & $1$ & $1$ & 摆角 $\theta$ \\
+    两个同长度单摆独立摆动 & $4$ & $2$ & $2$ & 两个摆角 $\theta_1,\theta_2$ \\
+    双摆（两个摆球用杆连接） & $4$ & $2$ & $2$ & 第一、第二摆的摆角 $\theta_1,\theta_2$ \\
+    水平面内两质点用刚性杆连接 & $4$ & $1$ & $3$ & 一个质点位置 $(x_1,y_1)$+$1$ 个相对角度 \\
+    一滑块在斜面上，另一滑块在水平面上，轻绳经光滑滑轮相连 & $3$（两个位置+滑轮角度） & $2$（绳长恒定+滑轮几何关系） & $1$ & 任选一块沿轨道的位移 \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\subsection{例题：双摆自由度与坐标选取}
+
+\begin{examplebox}{双摆的自由度估算}
+  在竖直平面内有一双摆：上端固定一点 $O$，第一根长为 $l_1$ 的细绳下端挂质量为 $m_1$ 的小球，第二根长为 $l_2$ 的细绳将质量为 $m_2$ 的小球挂在 $m_1$ 下方。忽略绳重与空气阻力。
+
+  \textbf{问题：}（1）估计该系统的自由度；（2）给出一个自然的广义坐标组。
+
+  \begin{focuspoints}
+    \item 在竖直平面内，每个摆球位置由两个坐标描述——原始坐标数为 $4$；
+    \item 第一根绳长恒定：$O$ 到 $m_1$ 的距离为 $l_1$，构成一个约束；
+    \item 第二根绳长恒定：$m_1$ 到 $m_2$ 的距离为 $l_2$，构成第二个约束；
+    \item 因此自由度 $f = 4 - 2 = 2$；
+    \item 常用的广义坐标组为两根绳与竖直方向之间的摆角
+          \[
+            q_1 = \theta_1,\quad q_2 = \theta_2,
+          \]
+          给定 $(\theta_1,\theta_2)$ 后，两摆球在平面中的位置就完全确定。
+  \end{focuspoints}
+\end{examplebox}
+
+\subsection{例题：竖直圆轨道小球的自由度视角}
+
+\begin{examplebox}{重温竖直圆轨道问题}
+  考虑质量为 $m$ 的小球在竖直平面内沿一固定光滑圆轨道（半径 $R$）运动，小球从最低点以初速度 $v_0$ 出发。
+
+  \begin{focuspoints}
+    \item 若不受轨道约束，小球在平面内运动需要两个坐标 $(x,y)$——原始自由度为 $2$；
+    \item 现在小球被约束在圆轨道上：$x^2 + y^2 = R^2$，提供了一个几何约束；
+    \item 因此系统有效自由度为 $2-1=1$：只需一个角度 $\theta$ 指明在圆上的位置；
+    \item 动力学分析中常见的「能量+向心力」写法，实质上就是围绕这一个自由度 $\theta$ 和其导数 $ \dot\theta $ 展开；
+    \item 在更复杂的题目（如圆环可转动、参考系加速等）中，常是\keyword{多了额外的自由度}，比如圆环的转角，或者整体平动的自由度。
+  \end{focuspoints}
+\end{examplebox}
+
+\subsection{练习：自己数一数自由度}
+
+\begin{summarybox}{自测题（建议先独立完成再对照答案）}
+  \begin{enumerate}
+    \item 空间中一根细且不可伸长的轻杆，两端各连接一个小球，整个系统在三维空间内运动（忽略引力）。\\
+          问：原始坐标数是多少？有哪条几何约束？估计系统自由度，并给出一个可能的广义坐标组。
+    \item 平面内一个矩形框架的四个顶点都是滑块，可以在光滑的水平地面上自由滑动，四个顶点之间由四根刚性杆连接组成矩形（四条边长度固定）。\\
+          问：用类似「先数坐标、再减约束」的思路估计该系统的自由度。
+    \item 在平面直角坐标系中，考虑所有满足 $x^2 + y^2 = 4$ 且 $x \ge 0$ 的点集。\\
+          问：这个集合的自由度是多少？你能给出一个只用\keyword{一个参数}的参数化表达式吗？
+  \end{enumerate}
+\end{summarybox}
+
+\clearpage
+\section{自由度视角的通用解题流程}
+
+\begin{summarybox}{Roadmap：从题目到方程}
+  \begin{roadmap}
+    \RoadmapStep{画图并列出所有\keyword{可动元素}（点、刚体、滑块、质点等），给它们起名字。}
+    \RoadmapStep{选择初始坐标系：可以先宽松地用平面或空间直角坐标来描述每个可动元素的位置。}
+    \RoadmapStep{计数\keyword{原始自由度}：质点通常在平面有 $2$ 个，在空间有 $3$ 个坐标；多质点系统则累加。}
+    \RoadmapStep{从题目中提取\keyword{几何约束}与\keyword{连接约束}：比如「在直线上」「在圆上」「距离不变」「绳长不变」等。}
+    \RoadmapStep{自由度 $=$ 原始坐标数 $-$ 约束数，得到需要的最少\keyword{广义坐标}个数。}
+    \RoadmapStep{为每个自由度选一个\keyword{物理意义清晰}的量作为广义坐标（如角度、沿某方向的位移），并把其他量用它们表示。}
+    \RoadmapStep{只针对这些广义坐标写独立方程：数学题中是方程组，物理题中是牛顿方程或能量方程。}
+    \RoadmapStep{最后根据解的自由度判断结果形式：是否有唯一解、参数族解，或是否题目本身矛盾。}
+  \end{roadmap}
+\end{summarybox}
+
+\subsection{例 1：方程组中「少一个方程」意味着什么？}
+
+\begin{examplebox}{自由度视角下的一道代数题}
+  已知实数 $x,y,z$ 满足
+  \[
+    \begin{cases}
+      x + y + z = 4,\\[0.3em]
+      2x - y + z = 1.
+    \end{cases}
+  \]
+  \textbf{问题：}（1）判断此方程组的自由度；（2）写出其通解；（3）画出解集的几何示意。
+
+  \begin{focuspoints}
+    \item 未知数有 $3$ 个；独立约束有 $2$ 个，自由度 $=1$；
+    \item 把 $z$ 当作自由参数 $t$，解方程组：
+          \[
+            \begin{cases}
+              x + y = 4 - t,\\
+              2x - y = 1 - t,
+            \end{cases}
+          \]
+          解得 $x = \dfrac{5-2t}{3},\ y = \dfrac{7-t}{3}$；
+    \item 整体写成
+          \[
+            (x,y,z) = \left(\frac{5-2t}{3},\ \frac{7-t}{3},\ t\right),\quad t\in\R;
+          \]
+    \item 在三维空间中，这是两平面交线的一条直线，可以用\inlinehint{参数 $t$ 代表在线上滑动的位置}来理解自由度。
+  \end{focuspoints}
+\end{examplebox}
+
+\subsection{例 2：两个滑块一根绳——力学中的自由度练习}
+
+\begin{examplebox}{同一直线上的两个滑块与一根轻绳}
+  在光滑水平直轨道上有质量分别为 $m_1,m_2$ 的两个滑块 $A,B$，它们之间用一根不可伸长、质量可忽略的轻绳连接。忽略空气阻力。
+
+  \textbf{问题：}
+  \begin{enumerate}
+    \item 若不考虑绳长约束，系统共有多少个自由度？
+    \item 加上「绳长不变」这一条件后，实际自由度是多少？
+    \item 任选一个合理的广义坐标，并说明理由。
+  \end{enumerate}
+
+  \begin{focuspoints}
+    \item 不考虑绳长约束时：$A,B$ 各有一个坐标（沿轨道的 $x_A,x_B$），原始自由度为 $2$；
+    \item 轻绳不可伸长意味着
+          \[
+            x_B - x_A = L
+          \]
+          恒定，其中 $L$ 为绳长，这构成一个\keyword{几何约束}；
+    \item 因此\keyword{有效自由度}为 $2-1=1$；
+    \item 只需选一个坐标即可完全描述系统，例如：
+          \[
+            q = x_A \quad\text{或}\quad q = x_B,
+          \]
+          另一块的位置由约束自动确定；
+    \item 动力学分析时，只需对这个 $q$ 写出运动方程（例如通过整体受力、能量守恒等），大大简化了变量数量。
+  \end{focuspoints}
+\end{examplebox}
+
+\subsection{综合例题：数学+物理的自由度联动}
+
+\begin{examplebox}{斜面—滑轮—质点系统的建模}
+  如图所示，在光滑斜面上有一质量为 $m_1$ 的小滑块 $A$，通过一根不可伸长的轻绳跨过光滑定滑轮与竖直悬挂的质量为 $m_2$ 的小球 $B$ 相连。记斜面的倾角为 $\alpha$，斜面与水平地面相接处为点 $O$。
+
+  \textbf{问题：}
+  \begin{enumerate}
+    \item 用自由度视角分析该系统的\keyword{有效自由度}是多少；
+    \item 选取一个合适的广义坐标，并用它表示 $A,B$ 的位移；
+    \item 在此基础上写出系统的能量表达式（不必求解方程，只需搭建模型）。
+  \end{enumerate}
+
+  \begin{focuspoints}
+    \item 若忽略绳长约束，$A$ 可以沿斜面运动，$B$ 可沿竖直方向运动——原始自由度为 $2$；
+    \item 轻绳不可伸长，且滑轮理想，则 $A,B$ 的位移满足一条固定关系：
+          \[
+            s_A + s_B = \text{常数},
+          \]
+          其中 $s_A$ 是 $A$ 沿斜面向上的位移，$s_B$ 是 $B$ 向下的位移；
+    \item 这条关系构成一个约束，因此有效自由度 $f = 2 - 1 = 1$；
+    \item 可以选
+          \[
+            q = s_A
+          \]
+          作为广义坐标，则 $s_B$ 可写为
+          \[
+            s_B = L - q,
+          \]
+          其中 $L$ 为由初始状态决定的常数；
+    \item 动能：
+          \[
+            T = \frac12 m_1 \dot q^2 + \frac12 m_2 \dot s_B^2
+            = \frac12 (m_1 + m_2)\dot q^2,
+          \]
+          因为 $\dot s_B = -\dot q$；
+    \item 若以斜面底端 $O$ 的水平地面为零势能面，则势能
+          \[
+            U = m_1 g\,q\sin\alpha - m_2 g\,s_B
+              = m_1 g\,q\sin\alpha - m_2 g\,(L - q),
+          \]
+          可以看出整个系统的动力学已完全由\keyword{单个自由度 $q$} 描述。
+  \end{focuspoints}
+\end{examplebox}
+
+\clearpage
+\section{总结与自学建议}
+
+\begin{summarybox}{自由度视角的三层记忆}
+  \begin{focuspoints}
+    \item \textbf{第 1 层——概念记忆：}
+          \keyword{自由度}是「能独立变化的变量个数」，在数学中对应解集的维数，在物理中对应描述系统所需的独立坐标数；
+    \item \textbf{第 2 层——工具流程：}
+          任何题目都可以尝试「先数坐标，再减约束」，得到自由度，再选择\keyword{广义坐标}并写出最少而够用的方程；
+    \item \textbf{第 3 层——图像与表格：}
+          把典型模型（直线、平面、单摆、滑块、竖直圆轨道、滑轮—斜面系统等）的自由度关系做成自己的\keyword{小抄表}，考试前快速复习；
+    \item \textbf{第 4 层——综合建模：}
+          在较复杂的\keyword{数学+物理综合题}中，先用自由度视角搭建「变量—约束—广义坐标」的骨架，再补上方程与运算细节。
+  \end{focuspoints}
+\end{summarybox}
+
+\begin{notebox}{建议的自学练习}
+  \begin{itemize}
+    \item 从你做过的\keyword{解析几何}与\keyword{力学}题目中，挑出几道印象深刻的，尝试用自由度视角重新审视：\\
+          \inlinehint{「我一开始有哪些变量？」}、\inlinehint{「题目给了哪些约束？」}、\inlinehint{「真实自由度有几个？」}；
+    \item 为常见模型（如「斜面+滑块+滑轮」「小球在圆轨道」「刚体平面运动」等）各画一张示意图，标出自由度与典型广义坐标；
+    \item 在遇到「方程很多、变量很多」的难题时，先停下来用本笔记中的\keyword{Roadmap} 检查一遍自己有没有\inlinehint{多写了不必要的方程}或\inlinehint{漏掉关键约束}；
+    \item 长期坚持使用自由度视角，你会发现：复杂题目往往只是\keyword{对象多、约束多}，而不是\keyword{本质更难}。
+  \end{itemize}
+\end{notebox}
+
+\end{document}

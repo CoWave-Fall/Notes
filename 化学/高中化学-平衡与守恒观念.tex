@@ -1,0 +1,781 @@
+\documentclass[a4paper,11pt]{ctexart}
+\input{mathnote-preamble.tex}
+\usepackage[version=4]{mhchem}
+
+\renewcommand{\notetitle}{高中化学中的平衡观念与守恒观念}
+\renewcommand{\noteauthor}{自学版笔记}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{从核心概念到解题工具}
+\renewcommand{\noteversion}{v0.2}
+
+\begin{document}
+
+\MathNoteEnableReviewStamp
+\MathNoteEnablePrint
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中化学·平衡与守恒}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{平衡观念}与\keyword{守恒观念}两条主线，建立高中化学的“宏观—微观—符号—计算”统一视角；
+    \item 通过\inlinehint{定义—特征—图像—表格—例题}五个层次，构建可自学、可复盘、可迁移的知识框架；
+    \item 配套\keyword{典型模型}与\keyword{解题模板}，突出“用平衡与守恒简化复杂问题”的工具性。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+
+% 目录
+\tableofcontents
+\newpage
+
+% 正文开始 --------------------------------------------------
+
+\section{总览：平衡观念与守恒观念的地位}
+
+\begin{summarybox}{本章要点}
+  \begin{focuspoints}
+    \item \keyword{平衡观念}回答“在什么条件下，体系处于什么状态，会向哪里变化”；
+    \item \keyword{守恒观念}回答“变化过程中，哪些量不变，可以用来算未知量”；
+    \item 平衡观念强调\keyword{状态描述与趋势判断}，守恒观念强调\keyword{数量关系与方程建立}；
+    \item 两者贯穿\inlinehint{溶液、气体、氧化还原、热化学、化学反应速率与平衡}等全部高中化学模块。
+  \end{focuspoints}
+\end{summarybox}
+
+\begin{table}[htbp]
+  \centering
+  \caption{平衡观念与守恒观念的比较}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} X X}
+    \toprule
+    & \textbf{平衡观念} & \textbf{守恒观念} \\
+    \midrule
+    关注对象 & 体系的\keyword{状态}与\keyword{变化趋势} & 体系中\keyword{总量不变}的物理量或化学量 \\
+    典型问题 & 是否达到平衡？平衡向哪边移动？ & 反应前后如何计算未知的物质的量、浓度、pH 等？ \\
+    典型工具 & 平衡常数 $K$、反应商 $Q$、勒夏特列原理、图像分析 & 质量守恒、\keyword{元素守恒}、电子守恒、电荷守恒、能量守恒 \\
+    思维路径 & 条件 $\Rightarrow$ 状态 $\Rightarrow$ 可能变化方向 & 已知与未知之间列\keyword{守恒方程}，联立求解 \\
+    常见误区 & 把平衡当“静止”，忽视动态本质 & 乱列守恒，遗漏物种或重复计数 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{roadmap}
+  \RoadmapStep{第\ref{sec:equilibrium}章——系统梳理\keyword{平衡观念}：动态平衡、平衡常数、平衡移动及图像分析；}
+  \RoadmapStep{第\ref{sec:specific-equilibria}章——按类型整理\keyword{酸碱平衡、溶解平衡、电离平衡与可逆反应}的模型与表达式；}
+  \RoadmapStep{第\ref{sec:conservation}章——构建\keyword{守恒观念}：质量守恒、原子守恒、电子守恒、电荷守恒、能量守恒及解题模板；}
+  \RoadmapStep{第\ref{sec:combined}章——综合应用：平衡与守恒交织的综合题型与自检练习。}
+\end{roadmap}
+
+\clearpage
+
+\section{平衡观念：从动态平衡到平衡常数}
+\label{sec:equilibrium}
+
+\subsection{化学平衡的定义与特征}
+
+\begin{definitionbox}{化学平衡的基本概念}
+  对于可逆反应
+  \[
+    a\mathrm{A} + b\mathrm{B} \rightleftharpoons c\mathrm{C} + d\mathrm{D},
+  \]
+  在一定条件下，正、逆反应速率相等，宏观性质不再随时间显著变化，此时体系处于\keyword{化学平衡状态}。
+\end{definitionbox}
+
+\begin{focuspoints}
+  \item \keyword{动态性}：微观上，反应粒子仍在不断发生正、逆反应；
+  \item \keyword{条件性}：温度、压强、浓度、催化剂等条件改变，平衡状态会改变；
+  \item \keyword{可逆性}：只有可逆反应才能建立化学平衡；
+  \item \keyword{宏观稳定性}：体系的颜色、压强、pH 等宏观性质\inlinehint{保持稳定}。
+\end{focuspoints}
+
+\begin{table}[htbp]
+  \centering
+  \caption{化学平衡状态的宏观与微观特征对比}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3cm} X X}
+    \toprule
+    & 未达到平衡 & 已达到化学平衡 \\
+    \midrule
+    微观粒子行为 & 正、逆反应速率差别较大，粒子组成持续明显改变 & 正、逆反应持续进行但\keyword{速率相等}，粒子组成统计意义上保持不变 \\
+    宏观可观测量 & 颜色、压强、浓度、导电性等随时间明显变化 & 宏观性质\keyword{保持稳定}，无明显随时间变化 \\
+    反应方向 & 有明显“正向”或“逆向”方向感 & 不再能分出“往哪边进行”，只讨论\keyword{平衡移动} \\
+    数学表征 & 反应商 $Q$ 不等于平衡常数 $K$ & 满足 $Q = K$ \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[mathnote lines, >=Stealth, scale=1]
+    \draw[->, thick] (0,0) -- (6.2,0) node[below] {$t$};
+    \draw[->, thick] (0,0) -- (0,3.2) node[left] {$\xi$};
+    \draw[accent, thick, domain=0:5, samples=100]
+      plot (\x, {2.8*(1 - exp(-0.8*\x))});
+    \draw[secondary, dashed] (0,2.8) -- (5.5,2.8);
+    \node[inkgray] at (4.4,2.95) {\scriptsize 平衡反应程度};
+    \node[inkgray] at (2.5,1.4) {\scriptsize 达到动态平衡};
+  \end{tikzpicture}
+  \caption{反应程度随时间变化的示意图——达到动态平衡后保持稳定}
+\end{figure}
+
+\begin{examplebox}{判断体系是否达到化学平衡}
+  某密闭容器中充入 $N_{2}$ 和 $\ce{H2}$，在一定温度下发生反应
+  \[
+    \ce{N2(g) + 3H2(g) <=> 2NH3(g)}.
+  \]
+  已知开始一段时间内，体系总压由 $4.0\ \mathrm{atm}$ 降至 $3.2\ \mathrm{atm}$，之后长期保持 $3.2\ \mathrm{atm}$ 不变。问：体系是否已经达到化学平衡？说明理由。
+
+  \begin{proofbox}{思路解析}
+    \begin{focuspoints}
+      \item 总压反映气体\keyword{总物质的量}变化，是宏观性质之一；
+      \item 总压先变后保持恒定，说明宏观性质已稳定；
+      \item 在密闭容器中，仅有上述可逆反应发生，因此宏观稳定可视为化学平衡的标志。
+    \end{focuspoints}
+    \inlinehint{结论：}该体系已经达到化学平衡。
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{平衡常数与反应商}
+
+\begin{definitionbox}{平衡常数与反应商}
+  对反应
+  \[
+    a\mathrm{A} + b\mathrm{B} \rightleftharpoons c\mathrm{C} + d\mathrm{D},
+  \]
+  若以浓度表示，则平衡常数
+  \[
+    K_c = \frac{[\mathrm{C}]^c[\mathrm{D}]^d}{[\mathrm{A}]^a[\mathrm{B}]^b},
+  \]
+  其中各项为\keyword{平衡时刻}的浓度。将任意时刻的浓度代入同样形式的分式得到\keyword{反应商} $Q_c$。
+\end{definitionbox}
+
+\begin{summarybox}{利用 $Q$ 与 $K$ 判断反应趋势}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3cm} X}
+    \toprule
+    比较关系 & 反应趋势判断 \\
+    \midrule
+    $Q < K$ & 体系中\keyword{生成物偏少}，反应将向\keyword{正向}进行以生成更多产物； \\
+    $Q = K$ & 体系处于\keyword{化学平衡}，正逆反应速率相等，宏观性质保持稳定； \\
+    $Q > K$ & 体系中\keyword{生成物偏多}，反应将向\keyword{逆向}进行，以消耗部分产物； \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\begin{examplebox}{用 $K$ 与 $Q$ 判断新平衡方向}
+  一定温度下，反应
+  \[
+    \ce{2SO2(g) + O2(g) <=> 2SO3(g)}
+  \]
+  的 $K_c = 100$。某时刻测得 $[\ce{SO2}] = 0.10\ \mathrm{mol/L}$，$[\ce{O2}] = 0.10\ \mathrm{mol/L}$，$[\ce{SO3}] = 0.50\ \mathrm{mol/L}$。判断此时体系是否处于平衡，如不在平衡，说明反应将往哪个方向进行。
+
+  \begin{proofbox}{解题模板}
+    \begin{focuspoints}
+      \item 写出 $Q_c$ 表达式：
+      \[
+        Q_c = \frac{[\ce{SO3}]^2}{[\ce{SO2}]^2[\ce{O2}]} = \frac{0.50^2}{0.10^2 \times 0.10} = 250.
+      \]
+      \item 比较 $Q_c$ 与 $K_c$：$Q_c = 250 > K_c = 100$；
+      \item 结论：体系中生成物偏多，反应将向\keyword{逆向}进行，消耗 $\ce{SO3}$，生成 $\ce{SO2}$ 和 $\ce{O2}$，直至 $Q_c$ 降至 $100$ 为止。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{勒夏特列原理与平衡移动}
+
+\begin{definitionbox}{勒夏特列原理}
+  当处于化学平衡的体系受到外界条件（浓度、压强、温度等）改变的扰动时，体系将通过\keyword{平衡移动}来\keyword{抵消扰动的影响}，趋向新的平衡状态。
+\end{definitionbox}
+
+\begin{summarybox}{平衡移动的常见情形}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} X X}
+    \toprule
+    扰动类型 & 对平衡移动的影响 & 典型应对策略 \\
+    \midrule
+    增大某反应物浓度 & 平衡向\keyword{消耗该反应物的一侧}移动 & 工业中通过补加反应物促进转化率 \\
+    减少某生成物浓度 & 平衡向\keyword{生成该物质的一侧}移动 & 不断移出生成物以提高收率 \\
+    增大总压强（仅气体） & 若 $\Delta n_\mathrm{gas} < 0$，平衡向\keyword{气体体积减小}一侧移动 & 合成氨工业增压以提高 $\ce{NH3}$ 收率 \\
+    升高温度 & 平衡向\keyword{吸热方向}移动（视反应热而定） & 吸热反应宜升温、放热反应宜降温（需兼顾速率） \\
+    加入催化剂 & 改变正、逆反应速率，但\keyword{不改变平衡常数及平衡组成} & 常用来\inlinehint{加快达到平衡的速度} \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\begin{examplebox}{综合判断平衡移动}
+  在某温度下，反应
+  \[
+    \ce{N2(g) + 3H2(g) <=> 2NH3(g)}\quad (\Delta H < 0)
+  \]
+  达到平衡。分别分析下列操作对 $\ce{NH3}$ 平衡浓度和总压强的影响，并简要说明理由：
+  \begin{enumerate}
+    \item 降低温度；
+    \item 增大总压强（恒温，压缩容器体积）；
+    \item 加入惰性气体（恒容）。
+  \end{enumerate}
+
+  \begin{proofbox}{典型分析路径}
+    \begin{focuspoints}
+      \item 先判断反应的\keyword{热效应}与\keyword{气体物质的量变化}：本反应为放热反应（$\Delta H < 0$），$\Delta n_\mathrm{gas} = 2 - 4 = -2$；
+      \item 操作 1：降温有利于\keyword{放热方向}，即正向生成 $\ce{NH3}$，$\ce{NH3}$ 平衡浓度增大，总压强减小；
+      \item 操作 2：增大总压强（恒温、压缩体积），平衡向\keyword{气体物质的量较少}的一侧移动，即正向，$\ce{NH3}$ 平衡浓度增大，总压强仍大于原来；
+      \item 操作 3：在恒容条件下加入惰性气体，不改变各有效成分的\keyword{分压与浓度}，故平衡\keyword{不移动}，组成与 $\ce{NH3}$ 浓度基本不变。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\clearpage
+
+\section{典型平衡体系：酸碱、溶解与电离}
+\label{sec:specific-equilibria}
+
+\subsection{电离平衡：弱电解质的通用模型}
+
+\begin{summarybox}{弱电解质电离平衡的通用框架}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} X X}
+    \toprule
+    体系类型 & 通用表达式 & 典型例子 \\
+    \midrule
+    弱酸电离 & $\ce{HA <=> H^+ + A^-}$，$K_a = \dfrac{[\ce{H^+}][\ce{A^-}]}{[\ce{HA}]}$ & $\ce{CH3COOH}$、$\ce{H2CO3}$ \\
+    弱碱电离 & $\ce{B + H2O <=> BH^+ + OH^-}$，$K_b = \dfrac{[\ce{BH^+}][\ce{OH^-}]}{[\ce{B}]}$ & $\ce{NH3 \cdot H2O}$、有机胺 \\
+    水的自电离 & $\ce{2H2O <=> H3O^+ + OH^-}$，$K_w = [\ce{H^+}][\ce{OH^-}]$ & $K_w \approx 1.0\times 10^{-14}\ (25^\circ\mathrm{C})$ \\
+    多元电离 & 分步电离，如 $\ce{H2CO3}$：$K_{a1}, K_{a2}$ & $\ce{H2CO3}$、$\ce{H3PO4}$ \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\begin{definitionbox}{电离度与电离平衡常数}
+  对弱酸 $\ce{HA}$ 的电离平衡
+  \[
+    \ce{HA <=> H^+ + A^-},
+  \]
+  若初始浓度为 $c_0$，平衡时有 $\alpha c_0$ 电离，则
+  \[
+    \alpha = \frac{\text{电离的物质的量}}{\text{初始物质的量}} = \frac{c(\ce{H^+})}{c_0},\qquad
+    K_a = \frac{c(\ce{H^+})c(\ce{A^-})}{c(\ce{HA})}.
+  \]
+  在 $\alpha \ll 1$ 的近似下，常用
+  \[
+    K_a \approx \frac{c(\ce{H^+})^2}{c_0}.
+  \]
+\end{definitionbox}
+
+\begin{examplebox}{醋酸电离平衡的近似计算}
+  $0.10\ \mathrm{mol/L}$ 的 $\ce{CH3COOH}$ 溶液在 $25^\circ\mathrm{C}$ 时的电离平衡常数 $K_a = 1.8\times 10^{-5}$。试估算该溶液的 pH。
+
+  \begin{proofbox}{解题模板}
+    \begin{focuspoints}
+      \item 建立电离平衡：$\ce{CH3COOH <=> H^+ + CH3COO^-}$；
+      \item 设平衡时 $c(\ce{H^+}) = x$，且 $\alpha = x/0.10 \ll 1$；
+      \item 近似得 $K_a \approx \dfrac{x^2}{0.10}$，即
+      \[
+        x^2 \approx 1.8\times 10^{-5} \times 0.10 = 1.8\times 10^{-6},
+      \]
+      从而 $x \approx 1.34\times 10^{-3}\ \mathrm{mol/L}$；
+      \item $\mathrm{pH} = -\lg[\ce{H^+}] \approx -\lg(1.34\times 10^{-3}) \approx 2.87$；
+      \item 检查近似：$\alpha \approx 1.3\% \ll 5\%$，近似合理。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{酸碱平衡与 pH 计算}
+
+\begin{summarybox}{常见酸碱溶液 pH 近似计算一览}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3cm} X X}
+    \toprule
+    溶液类型 & 典型关系式 & 备注 \\
+    \midrule
+    强酸（单元） & $c(\ce{H^+}) \approx c(\text{酸})$，$\mathrm{pH} = -\lg c(\ce{H^+})$ & 如 $\ce{HCl}$、$\ce{HNO3}$ 等 \\
+    强碱（单元） & $c(\ce{OH^-}) \approx c(\text{碱})$，$\mathrm{pOH} = -\lg c(\ce{OH^-})$，$\mathrm{pH} + \mathrm{pOH} = 14$ & 如 $\ce{NaOH}$、$\ce{KOH}$ \\
+    弱酸 & $K_a \approx \dfrac{c(\ce{H^+})^2}{c_0}$，$\mathrm{pH} = -\lg c(\ce{H^+})$ & 适用于 $\alpha \ll 1$ \\
+    弱碱 & $K_b \approx \dfrac{c(\ce{OH^-})^2}{c_0}$，$\mathrm{pOH} = -\lg c(\ce{OH^-})$ & 再由 $\mathrm{pH} = 14 - \mathrm{pOH}$ \\
+    盐水解 & 根据酸碱强弱判断水解方向，列平衡常数式 & 如 $\ce{CH3COONa}$、$\ce{NH4Cl}$ 等 \\
+    缓冲溶液 & $\mathrm{pH} \approx pK_a + \lg\dfrac{c(\ce{A^-})}{c(\ce{HA})}$ & 了解为主，高考多用定性 \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\begin{examplebox}{混合溶液的 pH 快速判断}
+  将等体积的 $0.10\ \mathrm{mol/L}$ $\ce{HCl}$ 溶液与 $0.10\ \mathrm{mol/L}$ $\ce{NaOH}$ 溶液混合，所得溶液的 $\mathrm{pH}$ 约为多少？若改为 $0.10\ \mathrm{mol/L}$ $\ce{CH3COOH}$ 与 $0.10\ \mathrm{mol/L}$ $\ce{NaOH}$ 等体积混合，又如何判断溶液酸碱性？
+
+  \begin{proofbox}{分析}
+    \begin{focuspoints}
+      \item 强酸 + 强碱（等物质的量）：
+      \begin{itemize}
+        \item $\ce{H^+}$ 与 $\ce{OH^-}$ 定量中和，生成 $\ce{H2O}$；
+        \item 溶液中只剩惰性离子 $\ce{Na^+}$、$\ce{Cl^-}$，近似看作中性，$\mathrm{pH} \approx 7$。
+      \end{itemize}
+      \item 弱酸 + 强碱（等物质的量）：
+      \begin{itemize}
+        \item 中和后主要为 $\ce{CH3COO^-}$ 和 $\ce{Na^+}$；
+        \item $\ce{CH3COO^-}$ 发生水解：$\ce{CH3COO^- + H2O <=> CH3COOH + OH^-}$；
+        \item 生成 $\ce{OH^-}$，故溶液呈\keyword{碱性}。
+      \end{itemize}
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{溶解平衡与溶度积常数}
+
+\begin{definitionbox}{溶解平衡与溶度积}
+  微溶电解质 $\ce{AB}$ 在水中的溶解可表示为
+  \[
+    \ce{AB(s) <=> A^+(aq) + B^-(aq)},
+  \]
+  在饱和溶液中达到\keyword{溶解平衡}，定义\keyword{溶度积常数}
+  \[
+    K_\mathrm{sp} = [\ce{A^+}][\ce{B^-}],
+  \]
+  对于一般形式 $\ce{A_mB_n}$ 有
+  \[
+    K_\mathrm{sp} = [\ce{A^{n+}}]^m[\ce{B^{m-}}]^n.
+  \]
+\end{definitionbox}
+
+\begin{summarybox}{用 $Q_\mathrm{sp}$ 与 $K_\mathrm{sp}$ 判断是否有沉淀}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3cm} X}
+    \toprule
+    比较关系 & 体系状态判断 \\
+    \midrule
+    $Q_\mathrm{sp} < K_\mathrm{sp}$ & 溶液\keyword{未饱和}，无沉淀，继续溶解趋势； \\
+    $Q_\mathrm{sp} = K_\mathrm{sp}$ & 溶液\keyword{恰好饱和}，溶解与沉淀速率相等； \\
+    $Q_\mathrm{sp} > K_\mathrm{sp}$ & 溶液\keyword{过饱和}，将有沉淀析出直至新的平衡。 \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\begin{examplebox}{由溶度积求溶解度}
+  在 $25^\circ\mathrm{C}$ 时，$\ce{AgCl}$ 的 $K_\mathrm{sp} = 1.8\times 10^{-10}$。求 $\ce{AgCl}$ 在纯水中的溶解度（以 $\mathrm{mol/L}$ 表示）。
+
+  \begin{proofbox}{解题模型}
+    \begin{focuspoints}
+      \item 写出溶解平衡：$\ce{AgCl(s) <=> Ag^+ + Cl^-}$；
+      \item 设溶解度为 $s$，则平衡时 $[\ce{Ag^+}] = [\ce{Cl^-}] = s$；
+      \item 有 $K_\mathrm{sp} = s^2$，故 $s = \sqrt{1.8\times 10^{-10}} \approx 1.3\times 10^{-5}\ \mathrm{mol/L}$；
+      \item 如需换算成 $\mathrm{g/L}$，再乘以摩尔质量。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[mathnote lines, >=Stealth]
+    \draw[rounded corners, fill=surface, draw=accent] (0,0) rectangle (6,2);
+    \node at (5.3,1.7) {\scriptsize 溶液};
+    \node at (0.7,0.3) {\scriptsize 固体 $\ce{AB}$};
+    \fill[accent] (0.4,0.6) rectangle (1.2,1.2);
+    \foreach \x in {1.8,2.3,2.8,3.3,3.8,4.3,4.8}{
+      \node[scale=0.6, accent] at (\x,0.8) {$\ce{A^+}$};
+      \node[scale=0.6, secondary] at (\x,1.4) {$\ce{B^-}$};
+    }
+    \draw[->, thick, accent] (1.2,1.4) .. controls (2.0,2.0) .. (3.0,1.7);
+    \draw[->, thick, accent] (3.0,0.3) .. controls (2.0,-0.1) .. (1.2,0.4);
+  \end{tikzpicture}
+  \caption{溶解平衡示意图——固体与溶液中离子之间的动态平衡}
+\end{figure}
+
+\subsection{可逆反应与多重平衡}
+
+\begin{definitionbox}{可逆反应与多重平衡}
+  \begin{focuspoints}
+    \item \keyword{可逆反应}：正、逆反应可以同时进行，并在一定条件下达到化学平衡的反应；
+    \item \keyword{多重平衡}：在同一体系中，\inlinehint{多个平衡}同时存在，彼此制约，如
+    \[
+      \ce{CO2(g) <=> CO2(aq) <=> H2CO3(aq) <=> H^+ + HCO3^- <=> 2H^+ + CO3^{2-}}.
+    \]
+    \item 多重平衡常与\keyword{酸碱平衡、溶解平衡、电离平衡}交织在一起，是中高考综合题的重要来源。
+  \end{focuspoints}
+\end{definitionbox}
+
+\begin{examplebox}{可逆反应与平衡移动的综合理解}
+  在 $\ce{CaCO3}$ 与稀盐酸反应的过程中，涉及下列几个过程：
+  \[
+    \ce{CaCO3(s) <=> Ca^{2+} + CO3^{2-}},\quad
+    \ce{CO3^{2-} + 2H^+ <=> H2O + CO2\uparrow}.
+  \]
+  试从\keyword{溶解平衡}与\keyword{酸碱平衡}两个角度，解释为何加入酸后固体 $\ce{CaCO3}$ 不断溶解。
+
+  \begin{proofbox}{分析路径}
+    \begin{focuspoints}
+      \item 溶解平衡：$\ce{CaCO3(s) <=> Ca^{2+} + CO3^{2-}}$，在水中可建立溶解平衡；
+      \item 酸碱平衡：加入 $\ce{H^+}$ 后，$\ce{CO3^{2-}}$ 与 $\ce{H^+}$ 发生反应生成 $\ce{H2O}$ 和 $\ce{CO2}$，\keyword{消耗}了溶液中的 $\ce{CO3^{2-}}$；
+      \item 由溶解平衡的勒夏特列原理：$\ce{CO3^{2-}}$ 被消耗，相当于减小了溶液中某生成物的浓度，平衡将向\keyword{生成离子}方向移动，即固体继续溶解；
+      \item $\ce{CO2}$ 不断逸出，使逆反应难以进行，进一步推动反应向正向进行。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\clearpage
+
+\section{守恒观念：从质量守恒到电子守恒}
+\label{sec:conservation}
+
+\subsection{常见守恒类型与适用场景}
+
+\begin{summarybox}{高中化学中的主要守恒类型}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3cm} X X}
+    \toprule
+    守恒类型 & 守恒内容 & 常见应用场景 \\
+    \midrule
+    质量守恒 & 反应前后体系的\keyword{总质量}不变 & 溶液配制、混合、沉淀、气体体积变化等 \\
+    元素（原子）守恒 & 同一元素原子数反应前后保持不变 & 配平化学方程式、复杂反应物质的量关系 \\
+    电荷守恒 & 溶液或体系总电荷量不变 & 电解、电化学、电中性关系、离子方程式配平 \\
+    电子守恒 & 氧化还原反应中\keyword{得失电子总数相等} & 氧化还原反应方程式配平，滴定计算 \\
+    能量守恒 & 吸放热总量与能量转化守恒 & 热化学方程式、反应热计算、燃料能量估算 \\
+    气体物质的量守恒 & 密闭体系中气体总物质的量与体积分配关系 & 体积比计算、混合气体组成与转化率 \\
+    \bottomrule
+  \end{tabularx}
+\end{summarybox}
+
+\begin{definitionbox}{守恒观念的核心}
+  在已知反应关系与条件的前提下，找出\keyword{反应前后必定相等}的物理量或化学量，并以此建立方程，是守恒观念在解题中的根本作用。
+\end{definitionbox}
+
+\begin{focuspoints}
+  \item 守恒观念的本质是\keyword{建立等式}，将未知量与已知量联系起来；
+  \item 同一题目往往可同时使用多种守恒（如质量和电子守恒）；
+  \item 关键在于\inlinehint{选对守恒对象}，避免重复计数或遗漏物种；
+  \item 解题时建议按“\keyword{画图—列表—列式}”三步走。
+\end{focuspoints}
+
+\subsection{质量守恒与元素守恒}
+
+\begin{examplebox}{质量守恒的典例}
+  将 $100\ \mathrm{g}$ 烧杯中含有 $5\ \mathrm{g}$ 氯化钠和 $5\ \mathrm{g}$ 氯化钾的溶液加热蒸干，得到固体质量为 $10\ \mathrm{g}$。问：蒸发过程中溶液中水的质量变化情况。
+
+  \begin{proofbox}{分析}
+    \begin{focuspoints}
+      \item 蒸发前：总质量 $m_\text{总} = m_{\ce{NaCl}} + m_{\ce{KCl}} + m_{\ce{H2O}} = 5 + 5 + 90 = 100\ \mathrm{g}$；
+      \item 蒸发后：固体仅为 $\ce{NaCl}$ 和 $\ce{KCl}$，其总质量仍为 $10\ \mathrm{g}$；
+      \item 质量守恒：蒸发前后体系总质量相等，故蒸发出的水质量 $= 90\ \mathrm{g}$；
+      \item 守恒视角：溶质质量守恒 $\Rightarrow$ 固体质量不变；水质量通过“总量－溶质”获得。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\begin{examplebox}{元素守恒与方程式配平}
+  用浓硫酸与氯化钠共热制取氯化氢气体的反应可表示为：
+  \[
+    \ce{NaCl + H2SO4 -> NaHSO4 + HCl}.
+  \]
+  利用元素守恒与电荷守恒检查方程式是否配平。
+
+  \begin{proofbox}{解析}
+    \begin{focuspoints}
+      \item 检查两侧元素：
+      \begin{itemize}
+        \item 钠：左 $1$，右 $1$；
+        \item 氯：左 $1$，右 $1$；
+        \item 氢：左 $2$，右 $1 + 1 = 2$；
+        \item 硫、氧：各元素计数一致；
+      \end{itemize}
+      \item 电荷：均为中性分子或固体，\keyword{总电荷为零}；
+      \item 结论：反应式已经配平，满足元素与电荷守恒。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{电子守恒与氧化还原计算}
+
+\begin{summarybox}{电子守恒的两种常见用法}
+  \begin{enumerate}
+    \item \keyword{配平方程式}：拆分成氧化半反应与还原半反应，分别配平原子与电荷，再通过电子守恒配平系数；
+    \item \keyword{定量计算}：已知某氧化剂与还原剂的物质的量，通过“得电子数 = 失电子数”求未知物质的量或浓度。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}{电子守恒配平离子方程式}
+  在酸性条件下，$\ce{Fe^{2+}}$ 被 $\ce{MnO4^-}$ 氧化为 $\ce{Fe^{3+}}$，$\ce{MnO4^-}$ 被还原为 $\ce{Mn^{2+}}$。写出并配平该反应的离子方程式。
+
+  \begin{proofbox}{解题模板}
+    \begin{focuspoints}
+      \item 写出两个半反应：
+      \[
+        \ce{Fe^{2+} -> Fe^{3+} + e^-},\qquad
+        \ce{MnO4^- + 8H^+ + 5e^- -> Mn^{2+} + 4H2O}.
+      \]
+      \item 为使得失电子数与得电子数相等，将第一式乘 $5$：
+      \[
+        \ce{5Fe^{2+} -> 5Fe^{3+} + 5e^-}.
+      \]
+      \item 电子守恒合并：
+      \[
+        \ce{5Fe^{2+} + MnO4^- + 8H^+ -> 5Fe^{3+} + Mn^{2+} + 4H2O}.
+      \]
+      \item 检查元素与电荷：各元素与电荷数目均守恒。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\begin{examplebox}{电子守恒在滴定计算中的应用}
+  一定体积的 $\ce{Fe^{2+}}$ 溶液，用 $0.0200\ \mathrm{mol/L}$ 的 $\ce{KMnO4}$ 溶液滴定，至终点共消耗 $15.0\ \mathrm{mL}$。求被滴定的 $\ce{Fe^{2+}}$ 的物质的量。
+
+  \begin{proofbox}{思路}
+    \begin{focuspoints}
+      \item 由上例可知，在酸性条件下
+      \[
+        \ce{5Fe^{2+} + MnO4^- + 8H^+ -> 5Fe^{3+} + Mn^{2+} + 4H2O},
+      \]
+      即 $n(\ce{Fe^{2+}}) : n(\ce{MnO4^-}) = 5 : 1$；
+      \item 先求 $n(\ce{MnO4^-}) = cV = 0.0200 \times 15.0\times 10^{-3} = 3.00\times 10^{-4}\ \mathrm{mol}$；
+      \item 再由电子守恒（物质的量比）得
+      \[
+        n(\ce{Fe^{2+}}) = 5 \times n(\ce{MnO4^-}) = 1.50\times 10^{-3}\ \mathrm{mol}.
+      \]
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{电荷守恒与电中性条件}
+
+\begin{definitionbox}{电荷守恒与电中性}
+  在溶液体系中，所有带电粒子（阳离子和阴离子）的\keyword{代数电荷和}为零，即体系\keyword{电中性}。该条件可用来建立离子浓度之间的关系。
+\end{definitionbox}
+
+\begin{examplebox}{弱电解质溶液中的电荷守恒}
+  $0.10\ \mathrm{mol/L}$ 的 $\ce{NH4Cl}$ 溶液中，主要存在 $\ce{NH4^+}$、$\ce{Cl^-}$ 和少量 $\ce{H^+}$、$\ce{OH^-}$。写出电荷守恒关系式。
+
+  \begin{proofbox}{分析}
+    \begin{focuspoints}
+      \item 主导阳离子：$\ce{NH4^+}$ 与少量 $\ce{H^+}$；
+      \item 主导阴离子：$\ce{Cl^-}$ 与少量 $\ce{OH^-}$；
+      \item 电荷守恒（电中性条件）：
+      \[
+        [\ce{NH4^+}] + [\ce{H^+}] = [\ce{Cl^-}] + [\ce{OH^-}].
+      \]
+      \item 在定量解题中，结合平衡常数表达式和物料衡算，可求得各离子浓度。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\clearpage
+
+\section{综合应用：平衡观念与守恒观念的融合}
+\label{sec:combined}
+
+\subsection{常见综合题型结构图}
+
+\begin{summarybox}{平衡与守恒综合题的典型结构}
+  \begin{tikzpicture}[mathnote lines, node distance=1.4cm, >=Stealth]
+    \node[draw, rounded corners, fill=surface, inner sep=4pt] (start) {\sffamily\small 已知条件（初始物质的量、浓度、体积、温度、压强等）};
+    \node[draw, rounded corners, fill=surface, below=of start, inner sep=4pt] (conserve) {\sffamily\small 列守恒方程：质量守恒、元素守恒、电子守恒、电荷守恒};
+    \node[draw, rounded corners, fill=surface, below=of conserve, inner sep=4pt] (equil) {\sffamily\small 写平衡常数表达式，应用 $K$ 或 $Q$ 判断平衡关系};
+    \node[draw, rounded corners, fill=surface, below=of equil, inner sep=4pt] (solve) {\sffamily\small 联立方程求解未知量（平衡组成、转化率、pH 等）};
+    \node[draw, rounded corners, fill=surface, below=of solve, inner sep=4pt] (check) {\sffamily\small 检查：单位、数量级、守恒关系是否满足};
+
+    \draw[->, accent, thick] (start) -- (conserve);
+    \draw[->, accent, thick] (conserve) -- (equil);
+    \draw[->, accent, thick] (equil) -- (solve);
+    \draw[->, accent, thick] (solve) -- (check);
+  \end{tikzpicture}
+\end{summarybox}
+
+\subsection{典例：气体平衡与守恒的综合}
+
+\begin{examplebox}{密闭容器中的气体平衡}
+  将 $1.00\ \mathrm{mol}$ $\ce{N2}$ 与 $3.00\ \mathrm{mol}$ $\ce{H2}$ 混合后充入 $5.00\ \mathrm{L}$ 的密闭容器中，在某温度下发生反应
+  \[
+    \ce{N2(g) + 3H2(g) <=> 2NH3(g)}.
+  \]
+  达到平衡时，测得 $\ce{NH3}$ 的物质的量为 $0.60\ \mathrm{mol}$。求：
+  \begin{enumerate}
+    \item 该温度下反应的平衡常数 $K_c$；
+    \item 若在同温同容条件下，仅加入 $0.20\ \mathrm{mol}$ $\ce{N2}$，达到新平衡后 $\ce{NH3}$ 的物质的量如何变化（定性分析即可）。
+  \end{enumerate}
+
+  \begin{proofbox}{解题步骤}
+    \begin{focuspoints}
+      \item \keyword{建立物料衡算表}（本质是元素守恒与物质的量守恒）：
+        \begin{center}
+          \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{1.8cm} *{3}{>{\raggedleft\arraybackslash}X}}
+            \toprule
+            物种 & 初始 $n/\mathrm{mol}$ & 变化量 & 平衡 $n/\mathrm{mol}$ \\
+            \midrule
+            $\ce{N2}$ & $1.00$ & $-x$ & $1.00 - x$ \\
+            $\ce{H2}$ & $3.00$ & $-3x$ & $3.00 - 3x$ \\
+            $\ce{NH3}$ & $0$ & $+2x$ & $2x$ \\
+            \bottomrule
+          \end{tabularx}
+        \end{center}
+      \item 由已知平衡时 $n(\ce{NH3}) = 0.60\ \mathrm{mol}$，得 $2x = 0.60$，故 $x = 0.30$；
+      \item 代入得到平衡物质的量：
+        \[
+          n(\ce{N2}) = 0.70,\quad n(\ce{H2}) = 2.10,\quad n(\ce{NH3}) = 0.60.
+        \]
+      \item 求平衡浓度（同容条件下）：
+        \[
+          c(\ce{N2}) = 0.14,\quad c(\ce{H2}) = 0.42,\quad c(\ce{NH3}) = 0.12\ \mathrm{mol/L}.
+        \]
+      \item 写出 $K_c$ 表达式：
+        \[
+          K_c = \frac{[\ce{NH3}]^2}{[\ce{N2}][\ce{H2}]^3}
+          = \frac{0.12^2}{0.14 \times 0.42^3}.
+        \]
+        计算可得 $K_c \approx 8.3$（保留两位有效数字）；
+      \item 对于第二问：加入 $\ce{N2}$ 后，初始状态下 $Q_c < K_c$，体系平衡向\keyword{正向}移动，\keyword{$\ce{NH3}$ 的物质的量增大}。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\clearpage
+
+\subsection{专题练习：酸碱滴定与缓冲溶液}
+
+\begin{summarybox}{使用说明}
+  \begin{focuspoints}
+    \item 本专题侧重\keyword{结构化练习}：先看表格与模板，再做题，再对照解析自查；
+    \item 计算时尽量\inlinehint{先画示意图、列物料表}，不要一上来就代公式；
+    \item 建议先独立完成，再用文末的\keyword{参考答案}校对，标出易错点。
+  \end{focuspoints}
+\end{summarybox}
+
+\begin{table}[htbp]
+  \centering
+  \caption{酸碱滴定曲线中常见区段的特点（以酸被碱滴定为例}
+  \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} X X}
+    \toprule
+    区段 & 主导粒子 & pH 变化特点 \\
+    \midrule
+    初始（未加碱） & 被滴定酸（强酸或弱酸） & 由被滴定溶液本身决定 \\
+    缓冲区（弱酸 + 强碱） & 共轭酸碱对 $\ce{HA/A^-}$ & pH 随加入体积缓慢变化，接近 $pK_a$ \\
+    当量点附近（强酸 + 强碱） & 中性盐 + 水 & pH 快速跨越 7，一般取 pH = 7 附近 \\
+    当量点（弱酸 + 强碱） & 由弱酸根形成的弱碱 $\ce{A^-}$ & 溶液呈碱性，pH $>$ 7 \\
+    过量碱 & 过量 $\ce{OH^-}$ & pH 由过量强碱浓度决定，变化缓慢 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{examplebox}{练习 1：强酸—强碱滴定曲线的关键点}
+  25.0\,$\mathrm{mL}$、$0.10\ \mathrm{mol/L}$ 的 $\ce{HCl}$ 溶液，用 $0.10\ \mathrm{mol/L}$ 的 $\ce{NaOH}$ 滴定。
+  \begin{enumerate}
+    \item 计算滴定前溶液的 pH；
+    \item 计算加入 25.0\,$\mathrm{mL}$ $\ce{NaOH}$ 后溶液的 pH；
+    \item 计算加入 30.0\,$\mathrm{mL}$ $\ce{NaOH}$ 后溶液的 pH。
+  \end{enumerate}
+
+  \begin{proofbox}{思路与参考答案}
+    \begin{focuspoints}
+      \item 统一用\keyword{物质的量}思考，再算浓度：
+        \begin{itemize}
+          \item 初始：$n(\ce{H^+}) = 0.10 \times 25.0\times 10^{-3} = 2.50\times 10^{-3}\ \mathrm{mol}$；
+          \item 等当点：$n(\ce{NaOH}) = 2.50\times 10^{-3}\ \mathrm{mol}$，恰好完全中和；
+          \item 过量碱：30.0\,$\mathrm{mL}$ 时，碱过量 $0.50\times 10^{-3}\ \mathrm{mol}$。
+        \end{itemize}
+      \item 计算结果（供自查）：
+        \begin{itemize}
+          \item 初始：$c(\ce{H^+}) = 0.10\ \mathrm{mol/L}$，$\mathrm{pH} = 1.0$；
+          \item 等当点：溶液近似为中性盐溶液，$\mathrm{pH} \approx 7.0$；
+          \item 过量碱：$c(\ce{OH^-}) = \dfrac{0.50\times 10^{-3}}{(25.0 + 30.0)\times 10^{-3}} \approx 9.1\times 10^{-3}$，
+          $\mathrm{pOH} \approx 2.04$，$\mathrm{pH} \approx 11.96$。
+        \end{itemize}
+      \item 建议在坐标纸上大致勾画 pH 随加入体积的变化曲线，体会\keyword{“S” 型}。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\begin{examplebox}{练习 2：弱酸—强碱滴定中的缓冲区}
+  25.0\,$\mathrm{mL}$、$0.10\ \mathrm{mol/L}$ 的 $\ce{CH3COOH}$（$K_a = 1.8\times 10^{-5}$）溶液，用 $0.10\ \mathrm{mol/L}$ 的 $\ce{NaOH}$ 滴定。
+  设 $pK_a \approx 4.74$，求：
+  \begin{enumerate}
+    \item 滴定前溶液的 pH（可用近似 $K_a \approx \dfrac{c(\ce{H^+})^2}{c_0}$）；
+    \item 加入 10.0\,$\mathrm{mL}$ $\ce{NaOH}$ 后溶液的 pH（缓冲区）；
+    \item 当量点的 pH 是大于、小于还是等于 7？为什么？
+  \end{enumerate}
+
+  \begin{proofbox}{思路与参考答案}
+    \begin{focuspoints}
+      \item 第 1 问：设 $c(\ce{H^+}) = x$，有 $K_a \approx \dfrac{x^2}{0.10}$，解得
+      $x \approx 1.3\times 10^{-3}\ \mathrm{mol/L}$，$\mathrm{pH} \approx 2.9$；
+      \item 第 2 问：用\keyword{物质的量}形式的 Henderson–Hasselbalch 公式：
+        \[
+          \mathrm{pH} \approx pK_a + \lg\dfrac{n(\ce{CH3COO^-})}{n(\ce{CH3COOH})}.
+        \]
+        初始 $n(\ce{CH3COOH}) = 2.50\times 10^{-3}$，加入 $\ce{NaOH}$ 后
+        \[
+          n(\ce{CH3COO^-}) = 1.00\times 10^{-3},\quad
+          n(\ce{CH3COOH}) = 1.50\times 10^{-3},
+        \]
+        得 $\mathrm{pH} \approx 4.74 + \lg\dfrac{1.00}{1.50} \approx 4.56$；
+      \item 第 3 问：当量点溶液主要为 $\ce{CH3COO^-}$，其电离表现为\keyword{弱碱性}，
+      因此 pH $>$ 7（如按电离平衡计算，可得到 $\mathrm{pH} \approx 8.7$ 左右）。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\begin{examplebox}{练习 3：缓冲溶液的抗酸抗碱能力}
+  配制 $0.10\ \mathrm{mol/L}$、$50.0\ \mathrm{mL}$ 的缓冲溶液，其中 $\ce{CH3COOH}$ 和 $\ce{CH3COONa}$ 的物质的量各为 $2.5\times 10^{-3}\ \mathrm{mol}$。
+  已知 $pK_a(\ce{CH3COOH}) \approx 4.74$。
+  \begin{enumerate}
+    \item 估算该缓冲溶液的 pH；
+    \item 向其中加入 $1.0\ \mathrm{mL}$、$0.10\ \mathrm{mol/L}$ 的 $\ce{HCl}$ 后，溶液 pH 变化大约多少？说明理由。
+  \end{enumerate}
+
+  \begin{proofbox}{思路与参考答案}
+    \begin{focuspoints}
+      \item 初始缓冲溶液中 $n(\ce{CH3COOH}) = n(\ce{CH3COO^-})$，故
+        \[
+          \mathrm{pH} \approx pK_a + \lg\dfrac{n(\ce{CH3COO^-})}{n(\ce{CH3COOH})}
+          = pK_a \approx 4.74;
+        \]
+      \item 加入强酸后：
+        \begin{itemize}
+          \item 加入的 $\ce{H^+}$ 物质的量为 $1.0\times 10^{-4}\ \mathrm{mol}$；
+          \item 近似全部与 $\ce{CH3COO^-}$ 反应生成 $\ce{CH3COOH}$；
+          \item 新的物质的量：
+          \[
+            n'(\ce{CH3COO^-}) = 2.5\times 10^{-3} - 1.0\times 10^{-4},\quad
+            n'(\ce{CH3COOH}) = 2.5\times 10^{-3} + 1.0\times 10^{-4}.
+          \]
+        \end{itemize}
+      \item 新 pH 约为
+        \[
+          \mathrm{pH}' \approx 4.74 + \lg\dfrac{2.4}{2.6} \approx 4.74 - 0.035 \approx 4.70，
+        \]
+        pH 仅略有下降，体现了\keyword{缓冲溶液对酸的缓冲作用}。
+    \end{focuspoints}
+  \end{proofbox}
+\end{examplebox}
+
+\subsection{自检练习与复盘建议}
+
+\begin{summarybox}{自检清单}
+  \begin{enumerate}
+    \item 能从\keyword{宏观现象}判断体系是否处于化学平衡，并说明理由；
+    \item 能写出常见反应的平衡常数表达式，利用 $Q$ 与 $K$ 判断反应方向；
+    \item 能根据浓度、压强、温度等变化准确判断平衡移动方向，并联系实际生产；
+    \item 能熟练运用质量守恒、元素守恒、电子守恒和电荷守恒列方程；
+    \item 能在综合题中同时使用平衡观念与守恒观念，构建“表格 + 方程”的解题路径；
+    \item 能针对\keyword{酸碱平衡、溶解平衡、电离平衡}列出相应的平衡常数表达式，并与守恒式联立计算；
+    \item 能在遇到多重平衡问题时，先画出平衡之间的\inlinehint{关系图}，再分步分析各平衡的移动方向。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{notebox}{复盘建议}
+  \begin{itemize}
+    \item 尝试将本笔记中的表格与图示\keyword{自己重画一遍}，用自己的语言补充说明；
+    \item 为每一种守恒类型至少找\inlinehint{两道课本或试题中的例题}，用守恒视角重新解一遍；
+    \item 见到复杂计算题时，优先画出“\keyword{物料衡算表}”，再考虑如何写出平衡常数与守恒方程；
+    \item 建议每学完一个新的反应类型（如溶解平衡、沉淀平衡、酸碱平衡、氧化还原平衡），都回到这份笔记中，补充对应的\keyword{平衡表达式}与\keyword{守恒关系}。
+  \end{itemize}
+\end{notebox}
+
+\end{document}

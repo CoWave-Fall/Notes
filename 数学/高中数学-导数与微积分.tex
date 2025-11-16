@@ -1,0 +1,597 @@
+% 高中数学：导数与微积分 笔记
+% 使用 mathnote-preamble.tex 模板，建议用 XeLaTeX 编译两次
+
+\documentclass[a4paper,11pt]{ctexart}
+\input{../mathnote-preamble.tex}
+
+% 元信息配置（用于页眉、书签与封面）
+\renewcommand{\notetitle}{高中数学：导数与微积分}
+\renewcommand{\notesubtitle}{变化率、导数与积分初步}
+\renewcommand{\noteauthor}{自学笔记示例}
+\renewcommand{\notedate}{\today}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·导数与微积分}
+\setcounter{page}{1}
+
+\MathNoteEnableReviewStamp
+\MathNoteEnablePrint
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\[0.4em]
+  \begin{focuspoints}
+    \item 从\keyword{平均变化率}出发理解\keyword{导数}，建立“变化率 = 斜率 = 导数”的统一视角；
+    \item 掌握常见初等函数的\keyword{求导公式}与运算规则，能独立完成典型高考题型；
+    \item 利用导数分析\keyword{单调性、极值、图像}，解决最值与参数范围问题；
+    \item 初步理解\keyword{原函数}与\keyword{定积分}，会用“面积”视角解释积分；
+    \item 通过小结表与步骤化流程，将零散知识整理为\keyword{可复用解题模板}。
+  \end{focuspoints}
+\end{minipage}
+\end{center}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+\newpage
+
+%==========================
+\section{导学与整体结构}
+%==========================
+
+\begin{summarybox}{本章导学}
+本章围绕\keyword{“变化率”}展开，将“导数”视为刻画\keyword{瞬时变化速度}的工具，再进一步引出\keyword{原函数}和\keyword{积分}，构成高中阶段微积分的基本框架。
+\end{summarybox}
+
+\begin{roadmap}
+  \RoadmapStep{用平均变化率感性认识导数}
+  \RoadmapStep{掌握导数定义与几何意义}
+  \RoadmapStep{熟练运用求导公式与运算法则}
+  \RoadmapStep{用导数研究单调性、极值与图像}
+  \RoadmapStep{认识原函数与不定积分}
+  \RoadmapStep{从面积视角理解定积分}
+\end{roadmap}
+
+\inlinehint{建议学习顺序：按章节顺序推进，每节先看“定义盒+例题盒”，再完成配套练习。}
+
+%==========================
+\section{平均变化率与导数的概念}
+%==========================
+
+\subsection{平均变化率}
+
+\begin{definitionbox}{平均变化率}
+设函数 $y=f(x)$ 在区间 $[x_1,x_2]$ 上有定义，则从 $x_1$ 变到 $x_2$ 的\keyword{平均变化率}定义为
+\[
+  \dfrac{\Delta y}{\Delta x}
+  = \dfrac{f(x_2)-f(x_1)}{x_2-x_1}.
+\]
+几何上，它等于函数图像上两点 $A(x_1,f(x_1))$ 和 $B(x_2,f(x_2))$ 连线（割线）的斜率。
+\end{definitionbox}
+
+\begin{examplebox}{平均变化率的计算与理解}
+已知 $f(x)=x^2$，求：
+\begin{enumerate}
+  \item 从 $x=1$ 变到 $x=3$ 的平均变化率；
+  \item 从 $x=1$ 变到 $x=1+h$（$h\neq 0$）的平均变化率。
+\end{enumerate}
+\textbf{解：}
+\begin{enumerate}
+  \item
+  \[
+    \dfrac{f(3)-f(1)}{3-1}
+    = \dfrac{9-1}{2}
+    = 4.
+  \]
+  \item
+  \[
+    \dfrac{f(1+h)-f(1)}{(1+h)-1}
+    = \dfrac{(1+h)^2-1}{h}
+    = \dfrac{2h+h^2}{h}
+    = 2+h.
+  \]
+  当 $h$ 很小时，$2+h$ 很接近 $2$。
+\end{enumerate}
+这个例子说明：\keyword{平均变化率}可以逼近某点附近的\keyword{瞬时变化率}，这正是导数的思想。
+\end{examplebox}
+
+\subsection{导数的极限定义}
+
+\begin{definitionbox}{导数的定义}
+设函数 $y=f(x)$ 在点 $x_0$ 的某个邻域内有定义，若极限
+\[
+  \lim_{x\to x_0}\dfrac{f(x)-f(x_0)}{x-x_0}
+\]
+存在，则称 $f(x)$ 在 $x_0$ 处$ \keyword{可导}$，并把该极限值记作 $f'(x_0)$，称为 $f(x)$ 在 $x_0$ 处的\keyword{导数}。
+
+常用等价记号：
+\[
+  f'(x_0),\quad y'|_{x=x_0},\quad \left.\dfrac{\dd y}{\dd x}\right|_{x=x_0}.
+\]
+\end{definitionbox}
+
+\begin{summarybox}{导数的直观含义}
+\begin{itemize}
+  \item 物理：导数 $\approx$ 瞬时速度（单位时间内的位置变化率）；
+  \item 几何：导数 $\approx$ 切线斜率（曲线在该点的“倾斜程度”）；
+  \item 数学：导数是平均变化率在区间长度趋于 $0$ 时的极限。
+\end{itemize}
+\end{summarybox}
+
+\subsection{导数的几何意义：切线斜率}
+
+\begin{examplebox}{用导数求切线方程}
+已知 $f(x)=x^2$，求其在点 $P(1,f(1))$ 处的切线方程。
+
+\textbf{解：}
+\begin{enumerate}
+  \item 先求导数：$f'(x)=2x$，因此 $f'(1)=2$。
+  \item 导数 $f'(1)=2$ 即为该点处切线的斜率 $k=2$。
+  \item $P(1,1)$，代入点斜式：$y-1=2(x-1)$，整理得
+  \[
+    y=2x-1.
+  \]
+\end{enumerate}
+\inlinehint{“求切线方程”几乎总是“先求导数，再套用点斜式”。}
+\end{examplebox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines,scale=1.0]
+  % 坐标轴
+  \draw[->,thick] (-0.5,0) -- (3,0) node[right] {$x$};
+  \draw[->,thick] (0,-0.5) -- (0,4) node[above] {$y$};
+
+  % 函数 y = x^2
+  \draw[accent,thick,domain=0:2.1,samples=100]
+    plot (\x,{\x*\x}) node[right] {$y=x^2$};
+
+  % 点 P(1,1)
+  \filldraw[highlight] (1,1) circle (1.5pt) node[above right] {$P(1,1)$};
+
+  % 切线 y = 2x - 1
+  \draw[secondary,thick,domain=-0.2:2.1]
+    plot (\x,{2*\x-1}) node[right] {$y=2x-1$};
+\end{tikzpicture}
+\captionof{figure}{$y=x^2$ 在 $x=1$ 处的切线}
+\end{center}
+
+%==========================
+\section{基本求导公式与运算法则}
+%==========================
+
+\subsection{基本初等函数的导数}
+
+\begin{summarybox}{常见基本导数公式一览}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+函数 $y=f(x)$ & 导数 $f'(x)$ \\
+\midrule
+常数函数 $y=C$ & $0$ \\
+幂函数 $y=x^n$（$n$ 为常数） & $nx^{n-1}$ \\
+指数函数 $y=\ee^x$ & $\ee^x$ \\
+对数函数 $y=\ln x$（$x>0$） & $\dfrac{1}{x}$ \\
+三角函数 $y=\sin x$ & $\cos x$ \\
+三角函数 $y=\cos x$ & $-\sin x$ \\
+三角函数 $y=\tan x$ & $\sec^2 x$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{summarybox}
+
+\begin{examplebox}{基本公式的使用}
+求下列函数的导数：
+\begin{enumerate}
+  \item $f(x)=3x^4-2x+\dfrac{1}{x}$；
+  \item $g(x)=\ee^{2x}-\ln x$。
+\end{enumerate}
+\textbf{解：}
+\begin{enumerate}
+  \item
+  \[
+    f'(x)=3\cdot4x^3-2+\left(-\dfrac{1}{x^2}\right)=12x^3-2-\dfrac{1}{x^2}.
+  \]
+  \item
+  \[
+    g'(x)=\ee^{2x}\cdot 2 - \dfrac{1}{x}=2\ee^{2x}-\dfrac{1}{x}.
+  \]
+\end{enumerate}
+\end{examplebox}
+
+\subsection{求导运算法则}
+
+\begin{theorembox}{求导的四则运算与链式法则}
+设 $u(x)$、$v(x)$ 为可导函数，$C$ 为常数，则
+\begin{align*}
+  (u\pm v)' &= u'\pm v',\\
+  (Cu)' &= Cu',\\
+  (uv)' &= u'v+uv',\\
+  \left(\dfrac{u}{v}\right)' &= \dfrac{u'v-uv'}{v^2}\quad (v\ne 0),\\
+  \bigl(f(g(x))\bigr)' &= f'(g(x))\cdot g'(x)\quad\text{（链式法则）}.
+\end{align*}
+\end{theorembox}
+
+\begin{examplebox}{综合运用求导法则}
+求函数 $y=x^2\sin x$ 的导数。
+
+\textbf{解：} 视为 $u=x^2$，$v=\sin x$，用积的求导公式：
+\[
+  y' = u'v+uv' = 2x\sin x + x^2\cos x.
+\]
+\end{examplebox}
+
+\begin{notebox}{求导常见步骤模板}
+\begin{focuspoints}
+  \item \keyword{拆结构}：先识别函数由哪几种基本初等函数和运算组成；
+  \item \keyword{列法则}：标记需要用到的法则（和差、积、商、链式）；
+  \item \keyword{逐层求导}：由外向内应用链式法则，避免漏乘导数；
+  \item \keyword{整理化简}：因式分解或合并同类项，有利于后续研究符号；
+  \item \keyword{及时检验}：口算在简单点代值检查结果是否合理。
+\end{focuspoints}
+\end{notebox}
+
+%==========================
+\section{利用导数研究函数性质}
+%==========================
+
+\subsection{单调性与极值}
+
+\begin{definitionbox}{单调性判定}
+设函数 $f(x)$ 在区间 $I$ 上可导，若对任意 $x\in I$：
+\begin{itemize}
+  \item $f'(x)>0$，则 $f(x)$ 在 $I$ 上\keyword{单调递增}；
+  \item $f'(x)<0$，则 $f(x)$ 在 $I$ 上\keyword{单调递减}。
+\end{itemize}
+\end{definitionbox}
+
+\begin{definitionbox}{极值与驻点}
+若存在点 $x_0$ 及其邻域，使得：
+\begin{itemize}
+  \item 对邻域内所有 $x\ne x_0$，$f(x)\le f(x_0)$，则称 $f(x_0)$ 为\keyword{极大值}；
+  \item 对邻域内所有 $x\ne x_0$，$f(x)\ge f(x_0)$，则称 $f(x_0)$ 为\keyword{极小值}。
+\end{itemize}
+若 $f'(x_0)=0$，则称 $x_0$ 为\keyword{驻点}。极值点往往出现在驻点，但驻点不一定是极值点。
+\end{definitionbox}
+
+\begin{examplebox}{单调区间与极值求法模板}
+设 $f(x)=x^3-3x$，求：
+\begin{enumerate}
+  \item 单调区间；
+  \item 极值点与极值。
+\end{enumerate}
+\textbf{解：}
+\begin{enumerate}
+  \item 求导：$f'(x)=3x^2-3=3(x-1)(x+1)$。
+  \item 解 $f'(x)=0$ 得驻点：$x=-1,1$。
+  \item 作符号表：
+  \[
+    \begin{array}{c|ccc}
+      x & (-\infty,-1) & (-1,1) & (1,+\infty)\\\hline
+      f'(x) & + & - & +
+    \end{array}
+  \]
+  因此：
+  \begin{itemize}
+    \item 在 $(-\infty,-1)$ 与 $(1,+\infty)$ 上单调递增；
+    \item 在 $(-1,1)$ 上单调递减。
+  \end{itemize}
+  \item 比较符号变化：
+  \begin{itemize}
+    \item $x=-1$ 处，导数由 $+$ 变 $-$，得极大值点；
+    \item $x=1$ 处，导数由 $-$ 变 $+$，得极小值点。
+  \end{itemize}
+  代入原函数：
+  \[
+    f(-1)=(-1)^3-3(-1)=2,\quad f(1)=1-3=-2.
+  \]
+  故极大值为 $2$，极小值为 $-2$。
+\end{enumerate}
+\end{examplebox}
+
+\subsection{图像草图与综合分析}
+
+\begin{notebox}{导数描图三步法}
+\begin{focuspoints}
+  \item \keyword{边界与对称}：先看定义域、奇偶性、周期性等整体特征；
+  \item \keyword{一阶导数}：求单调区间、极值点，画出“大致起伏”；
+  \item \keyword{二阶导数（若需要）}：分析凹凸性与拐点，使图像更精细。
+\end{focuspoints}
+\end{notebox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote grid,scale=0.9]
+  % 坐标轴
+  \draw[->,thick] (-3.5,0) -- (3.5,0) node[right] {$x$};
+  \draw[->,thick] (0,-4) -- (0,4) node[above] {$y$};
+
+  % y = x^3 - 3x
+  \draw[accent,very thick,domain=-2.1:2.1,samples=120]
+    plot (\x,{\x*\x*\x-3*\x}) node[right] {$y=x^3-3x$};
+
+  % 极值点
+  \filldraw[highlight] (-1,2) circle (1.5pt) node[above left] {$(-1,2)$};
+  \filldraw[highlight] (1,-2) circle (1.5pt) node[below right] {$(1,-2)$};
+\end{tikzpicture}
+\captionof{figure}{函数 $y=x^3-3x$ 的大致图像}
+\end{center}
+
+%==========================
+\section{导数的应用：近似与最值问题}
+%==========================
+
+\subsection{切线近似与线性化}
+
+\begin{definitionbox}{切线近似（线性化）}
+若函数 $y=f(x)$ 在 $x_0$ 处可导，则其在 $x_0$ 附近可以用切线近似：
+\[
+  f(x)\approx f(x_0)+f'(x_0)(x-x_0).
+\]
+当 $x$ 靠近 $x_0$ 时，上式给出的近似值精度较高。
+\end{definitionbox}
+
+\begin{examplebox}{利用切线近似估算数值}
+用合适的点和切线近似估算 $\sqrt{10}$。
+
+\textbf{解：}
+取函数 $f(x)=\sqrt{x}$，在 $x_0=9$ 附近展开。
+\[
+  f'(x)=\dfrac{1}{2\sqrt{x}},\quad f(9)=3,\quad f'(9)=\dfrac{1}{6}.
+\]
+切线近似：
+\[
+  f(x)\approx 3+\dfrac{1}{6}(x-9).
+\]
+令 $x=10$，得
+\[
+  \sqrt{10}\approx 3+\dfrac{1}{6}=3.166\overline{6}.
+\]
+真实值约为 $3.162$，误差很小。
+\end{examplebox}
+
+\subsection{最值与实际应用}
+
+\begin{examplebox}{一类典型几何最值问题}
+在半径为 $R$ 的半圆内（直径在 $x$ 轴上），内接一矩形，其一边在直径上，求矩形面积最大时的边长。
+
+\textbf{分析：}
+\begin{focuspoints}
+  \item 用一个变量刻画矩形位置，如取右上角点坐标 $(x,y)$；
+  \item 利用半圆方程 $x^2+y^2=R^2$ 把 $y$ 表示成 $x$；
+  \item 把矩形面积 $S$ 写成关于 $x$ 的函数，求 $S'(x)=0$；
+  \item 判定极值并求出最大面积。
+\end{focuspoints}
+
+\textbf{解：}
+右上角点为 $(x,y)$，则矩形宽 $2x$，高 $y$，面积
+\[
+  S=2xy.
+\]
+半圆方程 $x^2+y^2=R^2$（$y\ge 0$），得 $y=\sqrt{R^2-x^2}$，代入：
+\[
+  S(x)=2x\sqrt{R^2-x^2}.
+\]
+在 $(0,R)$ 上求导：
+\[
+  S'(x)=2\sqrt{R^2-x^2}+2x\cdot\dfrac{-x}{\sqrt{R^2-x^2}}
+  =\dfrac{2(R^2-x^2)-2x^2}{\sqrt{R^2-x^2}}
+  =\dfrac{2R^2-4x^2}{\sqrt{R^2-x^2}}.
+\]
+令 $S'(x)=0$，得 $2R^2-4x^2=0$，故 $x=\dfrac{R}{\sqrt{2}}$。
+此时
+\[
+  y=\sqrt{R^2-x^2}=\sqrt{R^2-\dfrac{R^2}{2}}=\dfrac{R}{\sqrt{2}}.
+\]
+即面积最大时为边长均为 $\dfrac{R}{\sqrt{2}}$ 的正方形。
+\end{examplebox}
+
+%==========================
+\section{原函数与不定积分}
+%==========================
+
+\subsection{原函数与不定积分的概念}
+
+\begin{definitionbox}{原函数与不定积分}
+若函数 $F(x)$ 在区间 $I$ 上可导，且对一切 $x\in I$ 有
+\[
+  F'(x)=f(x),
+\]
+则称 $F(x)$ 是 $f(x)$ 在 $I$ 上的一个\keyword{原函数}。
+所有原函数构成的集合记为
+\[
+  \int f(x)\,\dd x = F(x)+C,\quad C\in\R,
+\]
+称为 $f(x)$ 的\keyword{不定积分}。
+\end{definitionbox}
+
+\begin{summarybox}{常见不定积分公式}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+被积函数 $f(x)$ & 原函数 $F(x)$ \\
+\midrule
+$x^n$（$n\ne -1$） & $\dfrac{x^{n+1}}{n+1}+C$ \\
+$\dfrac{1}{x}$ & $\ln|x|+C$ \\
+$\ee^x$ & $\ee^x+C$ \\
+$\sin x$ & $-\cos x+C$ \\
+$\cos x$ & $\sin x+C$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{summarybox}
+
+\begin{examplebox}{不定积分的直接计算}
+求不定积分：
+\begin{enumerate}
+  \item $\displaystyle\int(3x^2-2x+1)\,\dd x$；
+  \item $\displaystyle\int(\ee^x-\cos x)\,\dd x$。
+\end{enumerate}
+\textbf{解：}
+\begin{enumerate}
+  \item
+  \[
+    \int(3x^2-2x+1)\,\dd x
+    =x^3-x^2+x+C.
+  \]
+  \item
+  \[
+    \int(\ee^x-\cos x)\,\dd x
+    =\ee^x-\sin x+C.
+  \]
+\end{enumerate}
+\end{examplebox}
+
+\subsection{换元法（基础型）}
+
+\begin{notebox}{简单换元法思路}
+\begin{focuspoints}
+  \item 观察被积函数是否含有“函数 $\times$ 其导数”的结构；
+  \item 设 $u=g(x)$，使得 $f(g(x))g'(x)$ 变成 $f(u)\,\dd u$；
+  \item 在 $u$ 的世界中积分，再换回 $x$。
+\end{focuspoints}
+\end{notebox}
+
+\begin{examplebox}{简单换元法例题}
+求 $\displaystyle\int 2x\cos(x^2)\,\dd x$。
+
+\textbf{解：}
+令 $u=x^2$，则 $\dd u=2x\,\dd x$，原式变为
+\[
+  \int \cos u\,\dd u=\sin u+C=\sin(x^2)+C.
+\]
+\end{examplebox}
+
+%==========================
+\section{定积分与面积初步}
+%==========================
+
+\subsection{定积分的直观理解}
+
+\begin{definitionbox}{定积分（直观型）}
+设 $f(x)\ge 0$ 在区间 $[a,b]$ 上连续，则
+\[
+  \int_a^b f(x)\,\dd x
+\]
+可以理解为“从 $x=a$ 到 $x=b$ 之间，曲线 $y=f(x)$ 与 $x$ 轴围成图形的\keyword{有向面积}”。
+\end{definitionbox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines,scale=1.0]
+  % 坐标轴
+  \draw[->,thick] (-0.2,0) -- (4.2,0) node[right] {$x$};
+  \draw[->,thick] (0,-0.2) -- (0,3.5) node[above] {$y$};
+
+  % 曲线
+  \draw[accent,thick,domain=0.3:3.7,samples=120]
+    plot (\x,{0.4*(\x-0.5)*(\x-0.5)+0.4}) node[right] {$y=f(x)$};
+
+  % 区间 [a,b]
+  \draw[dashed] (1,0) node[below] {$a$} -- (1,1.0);
+  \draw[dashed] (3,0) node[below] {$b$} -- (3,2.0);
+
+  % 面积填充
+  \path[fill=secondary!40]
+    (1,0)
+    plot[domain=1:3,samples=60]
+      (\x,{0.4*(\x-0.5)*(\x-0.5)+0.4})
+    -- (3,0) -- cycle;
+\end{tikzpicture}
+\captionof{figure}{定积分与曲边梯形的面积}
+\end{center}
+
+\subsection{牛顿--莱布尼茨公式}
+
+\begin{theorembox}{牛顿--莱布尼茨公式}
+设 $F(x)$ 是 $f(x)$ 在 $[a,b]$ 上的一个原函数，即 $F'(x)=f(x)$，则
+\[
+  \int_a^b f(x)\,\dd x = F(b)-F(a).
+\]
+\end{theorembox}
+
+\begin{examplebox}{用原函数计算定积分}
+求：
+\begin{enumerate}
+  \item $\displaystyle\int_0^1 (3x^2+2)\,\dd x$；
+  \item $\displaystyle\int_0^{\pi} \sin x\,\dd x$。
+\end{enumerate}
+\textbf{解：}
+\begin{enumerate}
+  \item 取原函数 $F(x)=x^3+2x$，则
+  \[
+    \int_0^1 (3x^2+2)\,\dd x
+    =F(1)-F(0)=(1+2)-(0+0)=3.
+  \]
+  \item 取原函数 $G(x)=-\cos x$，则
+  \[
+    \int_0^{\pi} \sin x\,\dd x
+    =G(\pi)-G(0)=(-\cos\pi)-(-\cos 0)=1+1=2.
+  \]
+\end{enumerate}
+\end{examplebox}
+
+%==========================
+\section{易错点与复习清单}
+%==========================
+
+\begin{warningbox}{导数与积分常见易错点}
+\begin{itemize}
+  \item 把“平均变化率”与“瞬时变化率（导数）”混为一谈；
+  \item 求导时漏乘链式法则中的“内层导数”；
+  \item 只看 $f'(x)=0$ 的点，而忽略端点或不可导点的最值；
+  \item 不定积分忘记写积分常数 $C$；
+  \item 定积分 $\int_a^b f(x)\,\dd x$ 中，上下限顺序颠倒导致符号错误。
+\end{itemize}
+\end{warningbox}
+
+\begin{summarybox}{自检清单}
+请自查是否已经掌握：
+\begin{focuspoints}
+  \item 能口头描述“导数”的几何和物理意义；
+  \item 会写出并使用常见初等函数的求导公式；
+  \item 能用导数判断函数的单调性并求极值；
+  \item 能利用导数解决一到两个典型最值/优化问题；
+  \item 能根据原函数求出简单不定积分与定积分；
+  \item 能用“面积”视角解释定积分的结果。
+\end{focuspoints}
+\end{summarybox}
+
+%==========================
+\section*{附录：公式速查表}
+\addcontentsline{toc}{section}{附录：公式速查表}
+
+\begin{summarybox}{导数与积分常用公式归纳}
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+类型 & 形式 & 对应关系 \\
+\midrule
+幂函数 & $y=x^n$ & $y'=nx^{n-1}$；$\displaystyle\int x^n\,\dd x=\dfrac{x^{n+1}}{n+1}+C$ \\
+指数 & $y=\ee^x$ & $y'=\ee^x$；$\displaystyle\int \ee^x\,\dd x=\ee^x+C$ \\
+对数 & $y=\ln x$ & $y'=\dfrac{1}{x}$；$\displaystyle\int \dfrac1x\,\dd x=\ln|x|+C$ \\
+三角 & $y=\sin x$ & $y'=\cos x$；$\displaystyle\int \cos x\,\dd x=\sin x+C$ \\
+三角 & $y=\cos x$ & $y'=-\sin x$；$\displaystyle\int \sin x\,\dd x=-\cos x+C$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{summarybox}
+
+\end{document}
+
