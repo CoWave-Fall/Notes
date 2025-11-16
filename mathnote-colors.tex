@@ -1,0 +1,130 @@
+% mathnote-colors.tex
+% 屏幕 / 印刷双模式配色与色板定义，以及
+% 与 hyperref / PDF 元信息相关的颜色同步逻辑。
+
+% --------------------------------------------------
+% Colors
+% --------------------------------------------------
+\definecolor{screenAccent}{HTML}{1565C0}
+\definecolor{screenSecondary}{HTML}{00897B}
+\definecolor{screenHighlight}{HTML}{F9A826}
+\definecolor{screenInfo}{HTML}{546E7A}
+\definecolor{screenSurface}{HTML}{FFFFFF}
+
+\definecolor{printAccent}{cmyk}{0.95,0.55,0,0.05}
+\definecolor{printSecondary}{cmyk}{0.82,0,0.56,0.08}
+\definecolor{printHighlight}{cmyk}{0,0.35,0.80,0}
+\definecolor{printInfo}{cmyk}{0.60,0.47,0.43,0.20}
+\definecolor{printSurface}{cmyk}{0,0,0,0}
+\definecolor{mathnotePureCyan}{cmyk}{1,0,0,0}
+
+% 16 色屏幕主题（sRGB）
+\definecolor{screenTone01}{HTML}{0D47A1}
+\definecolor{screenTone02}{HTML}{1565C0}
+\definecolor{screenTone03}{HTML}{1A73E8}
+\definecolor{screenTone04}{HTML}{2196F3}
+\definecolor{screenTone05}{HTML}{00ACC1}
+\definecolor{screenTone06}{HTML}{00897B}
+\definecolor{screenTone07}{HTML}{2E7D32}
+\definecolor{screenTone08}{HTML}{558B2F}
+\definecolor{screenTone09}{HTML}{9E9D24}
+\definecolor{screenTone10}{HTML}{F9A825}
+\definecolor{screenTone11}{HTML}{FFB300}
+\definecolor{screenTone12}{HTML}{FB8C00}
+\definecolor{screenTone13}{HTML}{F4511E}
+\definecolor{screenTone14}{HTML}{D84315}
+\definecolor{screenTone15}{HTML}{8E24AA}
+\definecolor{screenTone16}{HTML}{6A1B9A}
+
+% 16 色印刷主题（CMYK 近似）
+\definecolor{printTone01}{cmyk}{1,0.72,0,0.35}
+\definecolor{printTone02}{cmyk}{0.9,0.5,0,0.2}
+\definecolor{printTone03}{cmyk}{0.85,0.45,0,0.12}
+\definecolor{printTone04}{cmyk}{0.65,0.25,0,0.02}
+\definecolor{printTone05}{cmyk}{0.75,0.05,0.1,0.05}
+\definecolor{printTone06}{cmyk}{0.85,0,0.35,0.2}
+\definecolor{printTone07}{cmyk}{0.75,0,0.8,0.38}
+\definecolor{printTone08}{cmyk}{0.6,0,1,0.42}
+\definecolor{printTone09}{cmyk}{0.35,0,1,0.45}
+\definecolor{printTone10}{cmyk}{0,0.2,1,0.02}
+\definecolor{printTone11}{cmyk}{0,0.25,1,0}
+\definecolor{printTone12}{cmyk}{0,0.45,1,0}
+\definecolor{printTone13}{cmyk}{0,0.7,0.8,0}
+\definecolor{printTone14}{cmyk}{0,0.85,0.95,0.1}
+\definecolor{printTone15}{cmyk}{0.45,0.9,0,0}
+\definecolor{printTone16}{cmyk}{0.6,1,0,0.1}
+
+% 主色系别名：其他模块只依赖这些命名即可
+\colorlet{accent}{screenAccent}
+\colorlet{secondary}{screenSecondary}
+\colorlet{highlight}{screenHighlight}
+\colorlet{inkgray}{screenInfo}
+\colorlet{surface}{screenSurface}
+
+\newif\ifmathnote@docstarted
+\mathnote@docstartedfalse
+\AtBeginDocument{\mathnote@docstartedtrue}
+
+% 根据当前模式将颜色状态同步给 hyperref 链接
+\newcommand{\mathnote@applyhypercolors}{%
+  \ifmathnoteprintmode
+    \hypersetup{
+      colorlinks=false,
+      hidelinks,
+      pdfborderstyle={/S/U/W 0},
+      pdfborder={0 0 0}
+    }%
+  \else
+    \hypersetup{
+      colorlinks=true,
+      linkcolor=accent,
+      citecolor=secondary,
+      urlcolor=accent,
+      pdfborder={0 0 0}
+    }%
+  \fi
+}
+
+% 在屏幕 / 印刷模式之间切换整体色板
+\newcommand{\mathnote@applypalette}{%
+  \ifmathnoteprintmode
+    \colorlet{accent}{printAccent}%
+    \colorlet{secondary}{printSecondary}%
+    \colorlet{highlight}{printHighlight}%
+    \colorlet{inkgray}{printInfo}%
+    \colorlet{surface}{printSurface}%
+  \else
+    \colorlet{accent}{screenAccent}%
+    \colorlet{secondary}{screenSecondary}%
+    \colorlet{highlight}{screenHighlight}%
+    \colorlet{inkgray}{screenInfo}%
+    \colorlet{surface}{screenSurface}%
+  \fi
+  \colorlet{accentline}{accent!65!black}%
+  \colorlet{accentbg}{accent!8!white}%
+  \colorlet{secondarybg}{secondary!10!white}%
+  \colorlet{highlightbg}{highlight!10!white}%
+  \colorlet{inkline}{inkgray!60!black}%
+  \colorlet{surfacegrid}{inkgray!6!white}%
+  \ifmathnote@docstarted
+    \mathnote@applyhypercolors
+  \else
+    \AtBeginDocument{\mathnote@applyhypercolors}
+  \fi
+}
+
+% 初始化为屏幕模式色板
+\mathnote@applypalette
+% 用户可在外部手动调用以刷新颜色（在自行 \colorlet 之后）
+\newcommand{\MathNoteRefreshColors}{\mathnote@applypalette}
+
+% PDF 元信息：标题 / 作者 / 副标题等
+\AtBeginDocument{%
+  \hypersetup{%
+    pdftitle=\notetitle,
+    pdfauthor=\noteauthor,
+    pdfsubject=\notesubtitle,
+    pdfcreator={MathNote dual-medium template}%
+  }%
+}
+

@@ -1,0 +1,96 @@
+% mathnote-structure.tex
+% 段落风格、章节标题样式以及页眉页脚等文档结构相关设置。
+
+% Block-style paragraph headings to avoid run-in overfull boxes
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}{\z@}%
+    {1.5ex \@plus 0.5ex \@minus 0.2ex}%
+    {0.65em}%
+    {\normalfont\normalsize\bfseries}%
+}
+
+% --------------------------------------------------
+% Sectioning and spacing
+% --------------------------------------------------
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{2em}
+\newlength{\mathnote@boxindent}
+\setlength{\mathnote@boxindent}{\parindent}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+% 若未加载 ctex（如 article 等），使用安全的西文标题回退方案
+\newcommand{\mathnote@setupsectionsfallback}{%
+  \renewcommand{\section}{%
+    \@startsection{section}{1}{\z@}%
+      {1.2em}%
+      {0.7em}%
+      {\normalfont\Large\sffamily\bfseries\color{accent}}%
+  }%
+  \renewcommand{\subsection}{%
+    \@startsection{subsection}{2}{\z@}%
+      {1em}%
+      {0.4em}%
+      {\normalfont\large\sffamily\bfseries\color{secondary}}%
+  }%
+  \renewcommand{\subsubsection}{%
+    \@startsection{subsubsection}{3}{\z@}%
+      {0.8em}%
+      {0.2em}%
+      {\normalfont\normalsize\sffamily\bfseries\color{inkgray}}%
+  }%
+}
+\@ifundefined{ctexset}{%
+  % 未加载 ctex，启用简单回退
+  \mathnote@setupsectionsfallback
+}{%
+  % 已加载 ctex，则通过 ctexset 设定彩色章节标题
+  \ctexset{
+    section={
+      name={第,节},
+      format+=\Large\sffamily\bfseries\color{accent},
+      beforeskip=1.2em,
+      afterskip=0.7em
+    },
+    subsection={
+      format+=\large\sffamily\bfseries\color{secondary},
+      beforeskip=1em,
+      afterskip=0.4em
+    },
+    subsubsection={
+      format+=\normalsize\sffamily\bfseries\color{inkgray},
+      beforeskip=0.8em,
+      afterskip=0.2em
+    }
+  }
+}
+
+% --------------------------------------------------
+% Header / footer
+% --------------------------------------------------
+\newcommand{\mathnote@headertext}{\small\sffamily\textcolor{accent}{\notetitle\mathnote@maybeversion\ >\ \nouppercase{\rightmark}}}
+\newcommand{\mathnote@footertext}{\small\sffamily\textcolor{inkgray}{\thepage}\ \textcolor{mathnotePureCyan}{/}\ \textcolor{inkgray}{\pageref{LastPage}}}
+\pagestyle{fancy}
+\fancyhf{}
+\if@twoside
+  \fancyhead[LE]{\mathnote@headertext}
+  \fancyhead[RO]{\mathnote@headertext}
+  \fancyfoot[LE]{\mathnote@footertext}
+  \fancyfoot[RO]{\mathnote@footertext}
+\else
+  % 单面：页眉页脚左右交替，方便装订
+  \fancyhead[L]{\ifodd\value{page}\relax\else \mathnote@headertext\fi}
+  \fancyhead[R]{\ifodd\value{page}\mathnote@headertext\fi}
+  \fancyfoot[L]{\ifodd\value{page}\relax\else \mathnote@footertext\fi}
+  \fancyfoot[R]{\ifodd\value{page}\mathnote@footertext\fi}
+\fi
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\mathnote@footertext}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+

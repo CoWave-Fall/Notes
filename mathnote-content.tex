@@ -1,0 +1,345 @@
+% mathnote-content.tex
+% 数学辅助命令、代码高亮、彩色盒子、流程环境、TikZ 样式、
+% 列表与表格微调，以及若干实用命令。
+
+% --------------------------------------------------
+% Math helpers
+% --------------------------------------------------
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\dv}[2]{\frac{\dd #1}{\dd #2}}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}
+
+% 代码高亮默认主题：浅色背景 + 柔和配色
+\lstset{
+  backgroundcolor=\color{surfacegrid},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{screenTone04}\bfseries,
+  commentstyle=\color{screenTone06},
+  stringstyle=\color{screenTone12},
+  frame=none,
+  columns=fullflexible,
+  showstringspaces=false
+}
+
+% 行内关键字与小提示
+\NewDocumentCommand{\keyword}{m}{%
+  \textcolor{accent}{\textbf{#1}}%
+}
+
+\NewDocumentCommand{\inlinehint}{m}{%
+  \textcolor{secondary}{\sffamily\footnotesize #1}%
+}
+
+% 调色板色块展示：用于说明当前主题色
+\NewDocumentCommand{\MathNotePaletteSwatch}{mm}{%
+  \tikz[baseline=(label.base)]{
+    \node[rounded corners=2pt, draw=#1!65!black, fill=#1, minimum width=0.85cm, minimum height=0.4cm] (chip) {};
+    \node[right=0.28cm of chip, anchor=west, font=\sffamily\scriptsize\color{inkgray}] (label) {#2};
+  }%
+}
+
+% 模式徽章：常用于“例题 / 练习 / 证明”等标记
+\NewDocumentCommand{\ModeBadge}{O{accent}m}{%
+  \tikz[baseline=(label.base)]\node[label/.style={}] (label) [inner xsep=6pt, inner ysep=1.6pt, rounded corners=2pt, fill=#1!12!white, draw=#1!80!black, font=\sffamily\scriptsize\bfseries\color{#1!30!black}] {#2};%
+}
+
+% 工具宏：若参数为空字符串则使用默认文本
+\newcommand{\mathnote@ifblank}[3]{%
+  \if\relax\detokenize{#1}\relax
+    #2%
+  \else
+    #3%
+  \fi
+}
+
+% 关键点列表：自动使用圆点 + 紧凑行距
+\newenvironment{focuspoints}{%
+  \begin{itemize}[label=\tikz{\filldraw[accent] (0,0) circle (2pt);}, leftmargin=1.8em, itemsep=0.2em, topsep=0.1em]
+}{\end{itemize}}
+
+% roadmap：步骤流程图形式的列表
+\newcounter{roadmapstep}
+\newlength{\mathnote@roadmaplabelsep}
+\setlength{\mathnote@roadmaplabelsep}{0.9em}
+\newlength{\mathnote@roadmaplastlabelwidth}
+\newlength{\mathnote@roadmaplastht}
+\newlength{\mathnote@roadmaparrowlen}
+\setlength{\mathnote@roadmaplastlabelwidth}{0pt}
+\setlength{\mathnote@roadmaplastht}{1.2em}
+\setlength{\mathnote@roadmaparrowlen}{1.2em}
+\newsavebox{\mathnote@roadmaplabelbox}
+\newsavebox{\mathnote@roadmapcontentbox}
+\newcommand{\mathnote@roadmaparrow}{%
+  \setlength{\mathnote@roadmaparrowlen}{\mathnote@roadmaplastht}%
+  \ifdim\mathnote@roadmaparrowlen<0.9em
+    \setlength{\mathnote@roadmaparrowlen}{0.9em}%
+  \fi
+  \par\smallskip
+  \noindent\hspace{\dimexpr0.5\mathnote@roadmaplastlabelwidth\relax}%
+  \begin{tikzpicture}[x=1pt,y=1pt]
+    \pgfmathsetlengthmacro{\MathNoteRoadmapArrowLen}{\mathnote@roadmaparrowlen}%
+    \draw[accent, line width=0.85pt, -{Latex[length=3mm]}] (0,0) -- (0,-\MathNoteRoadmapArrowLen);
+  \end{tikzpicture}%
+  \par\smallskip
+}
+\NewDocumentEnvironment{roadmap}{O{}}{%
+  \par\smallskip
+  \setcounter{roadmapstep}{0}%
+  \setlength{\mathnote@roadmaplastlabelwidth}{0pt}%
+  \setlength{\mathnote@roadmaplastht}{1.2em}%
+  \setlength{\mathnote@roadmaparrowlen}{1.2em}%
+}{%
+  \par\smallskip
+}
+\newcommand{\RoadmapStep}[1]{%
+  \stepcounter{roadmapstep}%
+  \sbox{\mathnote@roadmaplabelbox}{\ModeBadge[accent]{第\zhnumber{\arabic{roadmapstep}}步}}%
+  \sbox{\mathnote@roadmapcontentbox}{%
+    \begin{minipage}[t]{\dimexpr\linewidth-\wd\mathnote@roadmaplabelbox-\mathnote@roadmaplabelsep\relax}
+      \raggedright\sloppy #1
+    \end{minipage}%
+  }%
+  \ifnum\value{roadmapstep}>1
+    \mathnote@roadmaparrow
+  \fi
+  \noindent
+  \usebox{\mathnote@roadmaplabelbox}%
+  \hspace{\mathnote@roadmaplabelsep}%
+  \usebox{\mathnote@roadmapcontentbox}\par
+  \setlength{\mathnote@roadmaplastlabelwidth}{\wd\mathnote@roadmaplabelbox}%
+  \setlength{\mathnote@roadmaplastht}{\dimexpr\ht\mathnote@roadmapcontentbox+\dp\mathnote@roadmapcontentbox\relax}%
+}
+
+% 复用模块：总结盒中的步骤 Roadmap
+\NewDocumentEnvironment{NoteRoadmap}{m}{%
+  \begin{summarybox}{#1}%
+    \begin{roadmap}%
+}{%
+    \end{roadmap}%
+  \end{summarybox}%
+}
+
+% 复用模块：总结盒中的考前清单（多栏紧凑列表）
+\NewDocumentEnvironment{NoteChecklist}{m}{%
+  \begin{summarybox}{#1}%
+    \begin{multicols}{2}%
+      \begin{itemize}%
+}{%
+      \end{itemize}%
+    \end{multicols}%
+  \end{summarybox}%
+}
+
+% --------------------------------------------------
+% Box styles
+% --------------------------------------------------
+\tcbset{
+  mathnote box/.style={
+    enhanced,
+    sharp corners,
+    boxrule=0.5pt,
+    colback=surface,
+    coltitle=inkgray,
+    fonttitle=\sffamily\bfseries,
+    left=1em,
+    right=1em,
+    top=0.7em,
+    bottom=0.7em,
+    before skip=10pt,
+    after skip=10pt,
+    breakable,
+    width=\dimexpr\linewidth-\mathnote@boxindent\relax,
+    left skip=\mathnote@boxindent,
+    borderline west={1pt}{0pt}{accentline}
+  }
+}
+
+\newtcolorbox{definitionbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{定义}{#2},
+  colback=surface,
+  colframe=secondary!70!black,
+  coltitle=secondary!15!white,
+  fonttitle=\sffamily\bfseries\color{secondary!35!white},
+  borderline west={2pt}{0pt}{secondary},
+  #1
+}
+
+\newtcolorbox{theorembox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{定理}{#2},
+  colback=surface,
+  colframe=accent!70!black,
+  coltitle=accent!10!white,
+  fonttitle=\sffamily\bfseries\color{accent!35!white},
+  borderline west={2pt}{0pt}{accent},
+  #1
+}
+
+\newtcolorbox{examplebox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{例题}{#2},
+  colback=surface,
+  colframe=highlight!80!black,
+  coltitle=highlight!15!white,
+  fonttitle=\sffamily\bfseries\color{highlight!40!white},
+  borderline west={2pt}{0pt}{highlight},
+  #1
+}
+
+\newtcolorbox{lemmabox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{引理}{#2},
+  colback=surface,
+  colframe=inkline,
+  coltitle=inkgray!30!white,
+  fonttitle=\sffamily\bfseries\color{inkgray!45!white},
+  borderline west={2pt}{0pt}{inkgray},
+  #1
+}
+
+\newtcolorbox{notebox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{提示}{#2},
+  colback=surface,
+  colframe=highlight!60!black,
+  coltitle=highlight!20!white,
+  fonttitle=\sffamily\bfseries\color{highlight!45!white},
+  borderline west={2pt}{0pt}{highlight},
+  #1
+}
+
+\newtcolorbox{summarybox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{总结}{#2},
+  colback=surface,
+  colframe=accent!20!black,
+  borderline west={2pt}{0pt}{accent},
+  coltitle=accent!10!white,
+  fonttitle=\sffamily\bfseries\color{accent!45!white},
+  #1
+}
+
+\newtcolorbox{conceptbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{概念骨架}{#2},
+  colback=surface,
+  colframe=secondary!40!black,
+  coltitle=secondary!15!white,
+  fonttitle=\sffamily\bfseries\color{secondary!40!white},
+  borderline west={2pt}{0pt}{secondary},
+  #1
+}
+
+\newtcolorbox{proofbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{证明}{#2},
+  colback=surface,
+  colframe=inkline,
+  coltitle=inkgray!35!white,
+  fonttitle=\sffamily\bfseries\color{inkgray!60!white},
+  borderline west={2pt}{0pt}{inkline},
+  #1
+}
+
+\newtcolorbox{warningbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{排版警示}{#2},
+  colback=surface,
+  colframe=highlight!80!black,
+  borderline west={2pt}{0pt}{highlight},
+  coltitle=highlight!20!white,
+  fonttitle=\sffamily\bfseries\color{highlight!45!white},
+  #1
+}
+
+\newtcolorbox{sideinfobox}[1][]{%
+  mathnote box,
+  colframe=surface,
+  boxrule=0pt,
+  left=1.6em, % 比普通盒子略多一点内缩
+  borderline west={0pt}{0pt}{surface},% 灰竖线改由 overlay 绘制
+  overlay={%
+    % 灰色细竖线位置：靠近正文一侧
+    \coordinate (SIBlineTop) at ([xshift=-0.2em,yshift=-2.0ex]interior.north west);
+    \coordinate (SIBlineBottom) at ([xshift=-0.2em,yshift=-2.0ex]interior.south west);
+    \draw[inkline, line width=0.6pt] (SIBlineTop) -- (SIBlineBottom);
+    % 蓝色感叹号：相对 interior.north west 固定，基本贴着首行文字
+    \node[anchor=base east, text=accent, font=\sffamily\bfseries\large]
+      at ([xshift=-0.6em,yshift=-4.4ex]interior.north west) {!};
+  },
+  #1
+}
+
+% --------------------------------------------------
+% TikZ styles
+% --------------------------------------------------
+\tikzset{
+  mathnote lines/.style={
+    line width=0.8pt,
+    >=Stealth,
+    draw=accentline,
+    text=inkgray
+  },
+  mathnote grid/.style={
+    color=inkgray!30,
+    line width=0.3pt
+  }
+}
+
+% --------------------------------------------------
+% Tables and lists
+% --------------------------------------------------
+\newcommand{\mathnote@listbarbegin}[2][0.8em]{%
+  \par\noindent
+  \begin{tcolorbox}[
+    blanker,
+    enhanced jigsaw,
+    breakable,
+    sharp corners,
+    boxrule=0pt,
+    colback=surface,
+    left=#1,
+    right=0pt,
+    top=0.25em,
+    bottom=0.25em,
+    borderline west={1.3pt}{0pt}{#2}
+  ]%
+  \ignorespaces
+}
+\newcommand{\mathnote@listbarend}{\end{tcolorbox}\ignorespacesafterend}
+
+\setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\mathnote@listbarbegin{accent}, after=\mathnote@listbarend}
+\setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, label=\textbf{\arabic*.}, before=\mathnote@listbarbegin[1em]{secondary}, after=\mathnote@listbarend}
+\setlist[description]{font=\sffamily\bfseries, labelsep=0.5em}
+
+\renewcommand{\arraystretch}{1.2}
+\captionsetup{font=small, labelfont=bf}
+
+% --------------------------------------------------
+% Utility commands
+% --------------------------------------------------
+\newcommand{\ScreenOnly}[1]{\ifmathnoteprintmode\else #1\fi}
+\newcommand{\PrintOnly}[1]{\ifmathnoteprintmode #1\fi}
+\newcommand{\DualMode}[2]{\ifmathnoteprintmode #2\else #1\fi}
+
+\NewDocumentCommand{\PageTag}{O{accent}m}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north east, xshift=-8mm, yshift=-35mm, fill=#1, text=white, rounded corners=2pt, inner xsep=6pt, inner ysep=2pt, font=\sffamily\footnotesize] at (current page.north east) {#2};
+  \end{tikzpicture}%
+}
+
+\newcommand{\SectionTag}[1]{%
+  \textcolor{accent}{\Large\bfseries\sffamily #1}%
+}

@@ -1,0 +1,780 @@
+% --------------------------------------------------
+% 高中数学·数列 专题复习笔记
+% 依托 mathnote-preamble.tex 与“数学笔记模板”排版风格
+% --------------------------------------------------
+\documentclass[a4paper,11pt]{ctexart}
+\InputIfFileExists{mathnote-preamble.tex}{}{%
+  \InputIfFileExists{../mathnote-preamble.tex}{}{%
+    \InputIfFileExists{../../mathnote-preamble.tex}{}{%
+      \PackageError{mathnote-notes}{mathnote-preamble.tex 未找到}{请确认 mathnote-preamble.tex 与当前文稿的相对路径配置正确。}%
+    }%
+  }%
+}
+
+% 如以打印版为主，可保留；若以屏幕阅读为主，可注释掉
+\MathNoteEnablePrint
+% 如需右上角审核标记，可启用
+\MathNoteEnableReviewStamp
+
+% 印刷模式下略微压缩垂直空白，适配纸质阅读
+\ifmathnoteprintmode
+  \setlength{\parskip}{0.25em}
+  \ctexset{
+    section={
+      beforeskip=1.0em,
+      afterskip=0.5em
+    },
+    subsection={
+      beforeskip=0.8em,
+      afterskip=0.35em
+    },
+    subsubsection={
+      beforeskip=0.6em,
+      afterskip=0.2em
+    }
+  }
+  \tcbset{
+    mathnote box/.style/.append style={
+      top=0.6em,
+      bottom=0.6em,
+      before skip=8pt,
+      after skip=8pt
+    }
+  }
+\fi
+
+\renewcommand{\notetitle}{高中数学数列专题复习}
+\renewcommand{\noteauthor}{生成式人工智能，人工审阅通过}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{通项与求和模型\quad 典型题型全景梳理}
+\renewcommand{\noteversion}{v1.0}
+
+% 本专题中一般列表采用普通样式，避免过多色块
+\setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\relax, after=\relax}
+\setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, before=\relax, after=\relax}
+
+\newcommand{\SeqMiniHeading}[1]{%
+  \par\smallskip
+  \noindent\textbf{#1}\par\smallskip
+}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·数列}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 复习导航}\\
+  \begin{itemize}
+    \item 以 \keyword{知识网络} + \keyword{典型模型} + \keyword{高考风格例题} 的结构构成一张可反复翻阅的数列「工具地图」；
+    \item 贯穿「\inlinehint{通项}–\inlinehint{求和}–\inlinehint{不等式}–\inlinehint{归纳法}」主线，适当衔接高等数学中的极限与级数思想；
+    \item 每一类模型配套「\ModeBadge{常见陷阱}」与「\ModeBadge[highlight]{解题套路}」，方便考前快速回忆。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\clearpage
+% === Part 1: 数列基础与整体认知 ===
+\section{数列基础与整体认知}
+
+\SeqMiniHeading{数列的基本概念}
+数列是按一定\keyword{次序规则}排列的一列数，通常记为 $\{a_n\}$ 或 $\{a_n\}_{n=1}^{\infty}$。
+\begin{itemize}
+  \item \keyword{通项公式}：给出 $a_n$ 关于 $n$ 的显式表示，如 $a_n=f(n)$；
+  \item \keyword{递推关系}：用前若干项表示后面的项，如 $a_{n+1}=g(a_n)$；
+  \item \keyword{前 $n$ 项和}：$S_n = a_1 + a_2 + \cdots + a_n$，常写为 $\{S_n\}$。
+\end{itemize}
+
+\begin{definitionbox}{单调、有界与收敛}
+  设数列 $\{a_n\}$：
+  \begin{itemize}
+    \item 若对任意 $n$，都有 $a_{n+1}\ge a_n$（或 $\le$），则称其为\keyword{单调递增}（或单调递减）；
+    \item 若存在实数 $m,M$，使得对所有 $n$ 都有 $m\le a_n\le M$，称 $\{a_n\}$ \keyword{有界}；
+    \item 若存在实数 $L$，使得当 $n\to\infty$ 时 $a_n\to L$，则称 $\{a_n\}$ \keyword{收敛}到 $L$。
+  \end{itemize}
+  在高等数学中，数列极限是\keyword{函数极限}与\keyword{级数收敛性}的基础。
+\end{definitionbox}
+
+\begin{summarybox}{考试中的常见数列类型}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item 等差数列与其变式（分段、绝对值）；
+      \item 等比数列与其变式（交错、绝对值）；
+      \item 线性递推数列（特征根法）；
+      \item 斐波那契及其推广；
+      \item 含奇偶项的分段递推数列；
+      \item 与函数、导数、极限相关的构造数列。
+    \end{itemize}
+  \end{multicols}
+\end{summarybox}
+
+\SeqMiniHeading{与高等数学的联系}
+\begin{itemize}
+  \item 数列 $\{a_n\}$ 的极限 $\lim_{n\to\infty} a_n$ 是极限与连续性课程中的基本对象；
+  \item 求和 $\sum_{k=1}^n a_k$ 在高等数学中推广为\keyword{无穷级数} $\sum_{k=1}^{\infty} a_k$；
+  \item 一些求和模型（如裂项相消、错位相减）会自然出现在幂级数与泰勒展开的推导中。
+\end{itemize}
+
+\clearpage
+% === Part 2: 等差与等比数列基础 ===
+\section{等差与等比数列基础}
+
+\subsection{等差数列}
+\begin{definitionbox}{等差数列}
+  若数列 $\{a_n\}$ 满足
+  \[
+    a_{n+1}-a_n = d\quad(\text{常数})
+  \]
+  则称其为\keyword{等差数列}，$d$ 为\keyword{公差}。
+  \begin{itemize}
+    \item 通项：$a_n = a_1 + (n-1)d$；
+    \item 前 $n$ 项和：$S_n = \dfrac{n(a_1+a_n)}{2}$ 或 $S_n = \dfrac{n(2a_1+(n-1)d)}{2}$。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{典型题·等差数列基础}
+  已知等差数列 $\{a_n\}$ 满足 $a_1=3,a_5=11$。
+  \begin{enumerate}
+    \item 求公差 $d$ 与通项公式 $a_n$；
+    \item 求 $S_{10}$。
+  \end{enumerate}
+  \textbf{解：}
+  \begin{enumerate}
+    \item 由 $a_5=a_1+4d$ 得 $11=3+4d$，解得 $d=2$，从而 $a_n=3+2(n-1)=2n+1$；
+    \item $S_{10}=\dfrac{10(a_1+a_{10})}{2}=\dfrac{10(3+21)}{2}=120$。
+  \end{enumerate}
+\end{examplebox}
+
+\subsection{等比数列}
+\begin{definitionbox}{等比数列}
+  若数列 $\{b_n\}$ 满足
+  \[
+    \frac{b_{n+1}}{b_n} = q\quad(q\ne0)
+  \]
+  则称其为\keyword{等比数列}，$q$ 为\keyword{公比}。
+  \begin{itemize}
+    \item 通项：$b_n = b_1 q^{n-1}$；
+    \item 前 $n$ 项和（$q\ne1$）：
+    \[
+      S_n = b_1\frac{1-q^{n}}{1-q}.
+    \]
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{典型题·等比数列基础}
+  已知等比数列 $\{b_n\}$ 满足 $b_1=2,b_3=8$。
+  \begin{enumerate}
+    \item 求公比 $q$ 与通项 $b_n$；
+    \item 求 $\displaystyle S_n=\sum_{k=1}^n b_k$。
+  \end{enumerate}
+  \textbf{解：}
+  \begin{enumerate}
+    \item $b_3=b_1q^2\Rightarrow 8=2q^2\Rightarrow q^2=4$。若题目未做额外约束，一般取 $q>0$，故 $q=2$，$b_n=2\cdot2^{n-1}=2^n$；
+    \item $S_n=2\cdot\dfrac{1-2^{n}}{1-2}=2(2^{n}-1)$。
+  \end{enumerate}
+\end{examplebox}
+
+\begin{summarybox}{等差/等比数列对照}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{2.4cm}X}
+    \toprule
+    \textbf{类型} & \textbf{核心特征与常用技巧} \\
+    \midrule
+    等差数列 &
+      $a_{n+1}-a_n=d$，常用\keyword{差分}与\keyword{线性表示}，
+      通常与\keyword{一次函数}、\keyword{线性不等式}建模联系密切。 \\[0.3em]
+    等比数列 &
+      $\dfrac{b_{n+1}}{b_n}=q$，常用\keyword{比值}与\keyword{对数}思想，
+      在高等数学中，对应于\keyword{指数函数}与\keyword{指数型增长/衰减}模型。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\clearpage
+% === Part 3: 通项求法与递推模型 ===
+\section{通项求法与递推模型}
+
+\subsection{利用 \texorpdfstring{$S_n$}{Sn} 与 \texorpdfstring{$a_n$}{an} 的关系求通项}
+
+\begin{definitionbox}{基本关系}
+  设 $S_n$ 为 $\{a_n\}$ 的前 $n$ 项和，则
+  \[
+    a_n = S_n - S_{n-1}\quad(n\ge2),\qquad a_1=S_1.
+  \]
+  若已知 $S_n$ 的解析式，只要能够\keyword{化简} $S_n-S_{n-1}$，即可得到 $a_n$ 的通项。
+\end{definitionbox}
+
+\begin{examplebox}{典型题·由 $S_n$ 求通项}
+  已知数列 $\{a_n\}$ 的前 $n$ 项和为
+  \[
+    S_n = n^2+3n.
+  \]
+  求通项 $a_n$。
+
+  \textbf{解：}
+  \[
+    a_n = S_n - S_{n-1} = (n^2+3n)-\bigl((n-1)^2+3(n-1)\bigr) = 2n+2.
+  \]
+  故 $a_n=2n+2$，是一个等差数列。
+\end{examplebox}
+
+\begin{sideinfobox}{常见结构识别}
+  \begin{itemize}
+    \item $S_n$ 含有 $n,n^2,n^3$ 等多项式时，$a_n$ 往往仍是多项式（等差或二阶差分常数）；
+    \item $S_n$ 含有 $q^n$ 时，$a_n$ 常为等比或等比与等差的\keyword{叠加}；
+    \item 解题时要刻意训练「\keyword{从和到项}」的\inlinehint{差分眼光}。
+  \end{itemize}
+\end{sideinfobox}
+
+\subsection{构造法求通项}
+
+\begin{definitionbox}{构造法的基本思路}
+  构造法的核心是：\keyword{人为创造一个熟悉的结构}。
+  \begin{itemize}
+    \item 通过构造新的数列（如 $b_n=a_n+\lambda$、$b_n=a_n/n$、$b_n=a_n-q a_{n-1}$）简化递推；
+    \item 通过\keyword{差分}或\keyword{比值}将复杂数列还原为等差/等比；
+    \item 通过与\keyword{函数图像}或\keyword{组合模型}建立联系，理解数列变化节奏。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{典型题·构造新数列}
+  数列 $\{a_n\}$ 满足递推关系
+  \[
+    a_{n+1}=a_n+2n,\quad a_1=1.
+  \]
+  求通项 $a_n$。
+
+  \textbf{解法一：累加思想}\\
+  由递推式连加：
+  \[
+    a_n = a_1+\sum_{k=1}^{n-1}2k = 1 + (n-1)n = n^2-n+1.
+  \]
+
+  \textbf{解法二：构造差分}\\
+  注意到 $a_{n+1}-a_n=2n$，即
+  \[
+    a_{n+1}-(n+1)^2 = a_n-n^2.
+  \]
+  令 $b_n=a_n-n^2$，则 $b_{n+1}=b_n$，于是 $b_n\equiv b_1=a_1-1^2=0$。从而 $a_n=n^2$ 与上式对照可修正为 $a_n=n^2-n+1$。
+\end{examplebox}
+
+\begin{sideinfobox}{构造法常见套路}
+  \begin{itemize}
+    \item 将 $a_n$ 与 $n$ 的某个简单函数（$n,n^2,q^n$ 等）组合；
+    \item 对递推式进行\keyword{移项}、\keyword{配方}或\keyword{系数调整}，试图出现「不变式」；
+    \item 与高等数学中\keyword{线性非齐次微分方程}的解法类似（解 = 通解 + 特解）。
+  \end{itemize}
+\end{sideinfobox}
+
+\subsection{特征根法求通项}
+
+\begin{definitionbox}{线性齐次递推与特征方程}
+  设数列 $\{a_n\}$ 满足
+  \[
+    a_{n+2}+p a_{n+1}+q a_n=0,
+  \]
+  其中 $p,q$ 为常数。称其为\keyword{二阶线性齐次递推数列}。其\keyword{特征方程}为
+  \[
+    \lambda^2+p\lambda+q=0.
+  \]
+  \begin{itemize}
+    \item 若有两个不等实根 $\lambda_1,\lambda_2$，则 $a_n=A\lambda_1^n+B\lambda_2^n$；
+    \item 若为重根 $\lambda$，则 $a_n=(A+Bn)\lambda^n$。
+  \end{itemize}
+  在高等数学中，这与线性微分方程 $y''+py'+qy=0$ 的解法是同一套路。
+\end{definitionbox}
+
+\begin{examplebox}{典型题·特征根法}
+  数列 $\{a_n\}$ 满足
+  \[
+    a_{n+2}=5a_{n+1}-6a_n,\quad a_1=2,a_2=5.
+  \]
+  求通项 $a_n$。
+
+  \textbf{解：}特征方程
+  \[
+    \lambda^2-5\lambda+6=0\Rightarrow (\lambda-2)(\lambda-3)=0,
+  \]
+  得 $\lambda_1=2,\lambda_2=3$，故有 $a_n=A\cdot2^n+B\cdot3^n$。
+  利用初值：
+  \[
+    \begin{cases}
+      a_1=2A+3B=2,\\
+      a_2=4A+9B=5,
+    \end{cases}
+    \Rightarrow A=1,B=0.
+  \]
+  故 $a_n=2^n$。
+\end{examplebox}
+
+\begin{sideinfobox}{常见变式}
+  \begin{itemize}
+    \item 当递推式带常数项时，可先求\keyword{齐次方程通解}，再构造\keyword{特解}；
+    \item 若系数含 $n$，通常需结合\keyword{构造法}或\keyword{累加法}，特征根不再直接使用。
+  \end{itemize}
+\end{sideinfobox}
+
+\subsection{斐波那契数列模型}
+
+\begin{definitionbox}{斐波那契数列}
+  经典斐波那契数列定义为
+  \[
+    F_1=1,F_2=1,\quad F_{n+2}=F_{n+1}+F_n.
+  \]
+  它是特征根法的一个重要示例，其特征方程为
+  \[
+    \lambda^2-\lambda-1=0.
+  \]
+\end{definitionbox}
+
+\begin{examplebox}{典型题·斐波那契求通项}
+  利用特征根法求斐波那契数列的通项。
+
+  \textbf{解：}特征方程
+  \[
+    \lambda^2-\lambda-1=0
+  \]
+  的两根为
+  \[
+    \lambda_{1,2}=\frac{1\pm\sqrt{5}}{2}.
+  \]
+  故 $F_n=A\lambda_1^n+B\lambda_2^n$。由 $F_1=1,F_2=1$ 解得
+  \[
+    F_n=\frac{1}{\sqrt{5}}\Bigl(\lambda_1^n-\lambda_2^n\Bigr),
+  \]
+  这就是著名的 Binet 公式。
+\end{examplebox}
+
+\begin{sideinfobox}{斐波那契模型在考试中的常见题型}
+  \begin{itemize}
+    \item 含有斐波那契数列的\keyword{比值极限}，如 $\displaystyle\lim_{n\to\infty}\frac{F_{n+1}}{F_n}$；
+    \item 用斐波那契数列建模\keyword{阶梯走法}、\keyword{铺砖问题}等计数问题；
+    \item 在求和题中，利用递推式和错位相减构造\keyword{相消结构}。
+  \end{itemize}
+\end{sideinfobox}
+
+\clearpage
+% === Part 4: 特殊结构：奇偶项与公共项 ===
+\section{特殊结构：奇偶项与公共项}
+
+\subsection{奇偶项模型}
+
+\begin{definitionbox}{奇偶项分列思想}
+  若数列递推在奇数项与偶数项上呈现不同规律，可以分别考虑子数列：
+  \[
+    \{a_{2n-1}\},\quad\{a_{2n}\}.
+  \]
+  解题时通常将原数列拆成两个\keyword{等差/等比或线性递推}数列。
+\end{definitionbox}
+
+\begin{examplebox}{典型题·奇偶项递推}
+  已知数列 $\{a_n\}$ 满足
+  \[
+    a_{n+2}=a_n+2,\quad a_1=1,a_2=2.
+  \]
+  求通项 $a_n$。
+
+  \textbf{解：}分别考虑奇数项和偶数项：
+  \[
+    a_3=a_1+2=3,\ a_5=a_3+2=5,\dots
+  \]
+  可见
+  \[
+    a_{2n-1}=2n-1;
+  \]
+  同理
+  \[
+    a_4=a_2+2=4,\ a_6=a_4+2=6,\dots
+  \]
+  得
+  \[
+    a_{2n}=2n.
+  \]
+  综合得到
+  \[
+    a_n=
+    \begin{cases}
+      n, & n\text{ 为偶数},\\
+      n, & n\text{ 为奇数},
+    \end{cases}
+  \]
+  即 $a_n=n$。
+\end{examplebox}
+
+\begin{notebox}{解题提示}
+  \begin{itemize}
+    \item 看到「隔一个相加/相减」的递推式时，优先尝试奇偶项分列；
+    \item 对子数列使用等差/等比或特征根法，再合成为原数列；
+    \item 常与\keyword{不等式放缩}结合，分别估计奇偶项的大小。
+  \end{itemize}
+\end{notebox}
+
+\subsection{数列的公共项模型}
+
+\begin{definitionbox}{公共项}
+  若两数列 $\{a_n\}$、$\{b_n\}$ 中存在若干相同的数，这些相同的数称为\keyword{公共项}。
+  \begin{itemize}
+    \item 常见问题：求公共项的\keyword{个数}、\keyword{最大公共项}或\keyword{第 $k$ 个公共项}；
+    \item 解法核心：\keyword{列方程}——令 $a_m=b_n$。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{典型题·等差数列的公共项}
+  已知等差数列
+  \[
+    a_n=2n+1,\quad b_n=5n-4.
+  \]
+  求两数列的所有公共项。
+
+  \textbf{解：}令 $2m+1=5n-4$，得
+  \[
+    2m=5n-5=5(n-1)\Rightarrow m=\frac{5}{2}(n-1).
+  \]
+  要求 $m$ 为正整数，故 $n-1$ 必须为偶数，令 $n-1=2k$，则
+  \[
+    n=2k+1,\quad m=5k.
+  \]
+  公共项为
+  \[
+    a_m=a_{5k}=2(5k)+1=10k+1.
+  \]
+  因此，两数列的公共项构成等差数列 $\{10k+1\}$。
+\end{examplebox}
+
+\clearpage
+% === Part 5: 求和策略总览 ===
+\section{求和策略总览}
+
+\begin{summarybox}{常见求和模型一览表}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3cm}X}
+    \toprule
+    \textbf{模型} & \textbf{核心思路与典型形式} \\
+    \midrule
+    累加模型 &
+      直接利用 $S_n$ 定义，将递推式或通项式累加，常见于形如 $a_{n+1}-a_n=f(n)$。 \\
+    累乘模型 &
+      对乘积 $\prod(1+k_n)$ 常取对数转化为加法，或识别为等比结构。 \\
+    分组求和 &
+      将项按 2 项或多项一组，化简后再求和，例如 $\sum (a_{2k-1}+a_{2k})$。 \\
+    并项求和 &
+      将两个和式合并，如 $\sum a_n+\sum b_n=\sum (a_n+b_n)$，或对齐指标。 \\
+    错位相减 &
+      构造 $S_n$ 与 $qS_n$，再相减得到大量相消项，典型于等比或类等比求和。 \\
+    裂项相消 &
+      将一般项拆成差分形式 $u_n=v_n-v_{n+1}$，从而形成首尾相消结构。 \\
+    归纳求和 &
+      对形如 $\sum f(k)$ 的显式公式，用数学归纳法\keyword{证明或猜测}闭式。 \\
+    不等式放缩 &
+      用单调性、夹逼定理或柯西不等式估计和的范围。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\subsection{累加累乘模型}
+
+\begin{examplebox}{累加模型}
+  数列 $\{a_n\}$ 满足 $a_{n+1}-a_n=\dfrac{1}{n}$，$a_1=0$。求 $a_n$。
+
+  \textbf{解：}
+  \[
+    a_n = a_1+\sum_{k=1}^{n-1}\frac{1}{k} = \sum_{k=1}^{n-1}\frac{1}{k}.
+  \]
+  该式在高等数学中对应于\keyword{调和级数}部分和，常与积分比较法联系。
+\end{examplebox}
+
+\begin{examplebox}{累乘模型}
+  求
+  \[
+    P_n=\prod_{k=1}^{n}\left(1+\frac{1}{k}\right).
+  \]
+
+  \textbf{解：}注意到
+  \[
+    1+\frac{1}{k}=\frac{k+1}{k},
+  \]
+  故
+  \[
+    P_n=\prod_{k=1}^{n}\frac{k+1}{k}=\frac{2}{1}\cdot\frac{3}{2}\cdots\frac{n+1}{n}=n+1.
+  \]
+  这实际上是一个\keyword{裂项相消}的乘积模型。
+\end{examplebox}
+
+\subsection{分组求和与并项求和模型}
+
+\begin{examplebox}{分组求和}
+  求和
+  \[
+    S_n = \sum_{k=1}^{n}(2k-1)(2k+1).
+  \]
+
+  \textbf{解：}先化简一般项：
+  \[
+    (2k-1)(2k+1)=4k^2-1.
+  \]
+  利用\keyword{分组思想}，可写作
+  \[
+    S_n=\sum_{k=1}^n4k^2-\sum_{k=1}^n1
+    =4\sum_{k=1}^n k^2-n
+    =\frac{4n(n+1)(2n+1)}{6}-n.
+  \]
+  若已知 $\displaystyle\sum_{k=1}^n k^2$ 的公式，也可用\keyword{归纳法模型}证明。
+\end{examplebox}
+
+\begin{examplebox}{并项求和}
+  已知
+  \[
+    S_n=\sum_{k=1}^n\left(\frac{1}{k}-\frac{1}{k+1}\right).
+  \]
+  求 $S_n$。
+
+  \textbf{解：}写出前几项：
+  \[
+    S_n=\left(1-\frac{1}{2}\right)+\left(\frac{1}{2}-\frac{1}{3}\right)+\cdots+\left(\frac{1}{n}-\frac{1}{n+1}\right)
+    =1-\frac{1}{n+1}.
+  \]
+  这就是典型的\keyword{裂项相消}模型。
+\end{examplebox}
+
+\subsection{错位相减法求和模型}
+
+\begin{definitionbox}{错位相减法}
+  当求和式中包含等比或近似等比结构时，经常构造
+  \[
+    qS_n-S_n
+  \]
+  以实现\keyword{错位相减}，让中间大部分项相消。
+\end{definitionbox}
+
+\begin{examplebox}{典型题·错位相减}
+  求
+  \[
+    S_n=\frac{1}{2}+\frac{1}{2^2}+\cdots+\frac{1}{2^n}.
+  \]
+
+  \textbf{解：}令 $S_n$ 如上，则
+  \[
+    \frac{1}{2}S_n=\frac{1}{2^2}+\frac{1}{2^3}+\cdots+\frac{1}{2^{n+1}}.
+  \]
+  相减得
+  \[
+    S_n-\frac{1}{2}S_n=\frac{1}{2}-\frac{1}{2^{n+1}}
+    \Rightarrow S_n=1-\frac{1}{2^{n}}.
+  \]
+  在高等数学中，令 $n\to\infty$ 可得到无穷级数 $\sum_{k=1}^{\infty}\frac{1}{2^k}=1$。
+\end{examplebox}
+
+\subsection{裂项相消法求和模型}
+
+\begin{definitionbox}{裂项思想}
+  通过\keyword{部分分式分解}或\keyword{配方}，将一般项写成
+  \[
+    t_n=u_n-u_{n+1},
+  \]
+  从而
+  \[
+    \sum_{k=1}^{n}t_k=(u_1-u_2)+(u_2-u_3)+\cdots+(u_n-u_{n+1})=u_1-u_{n+1}.
+  \]
+\end{definitionbox}
+
+\begin{examplebox}{典型题·裂项相消}
+  求
+  \[
+    S_n=\sum_{k=1}^n\frac{1}{k(k+1)}.
+  \]
+
+  \textbf{解：}先裂项：
+  \[
+    \frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1}.
+  \]
+  故
+  \[
+    S_n=\sum_{k=1}^n\left(\frac{1}{k}-\frac{1}{k+1}\right)=1-\frac{1}{n+1}.
+  \]
+\end{examplebox}
+
+\clearpage
+% === Part 6: 数学归纳法模型 ===
+\section{数学归纳法模型}
+
+\begin{definitionbox}{数学归纳法}
+  对自然数命题 $P(n)$，若
+  \begin{itemize}
+    \item \textbf{起步}：$P(1)$ 成立；
+    \item \textbf{归纳}：对任意 $k\ge1$，由 $P(k)$ 成立可推出 $P(k+1)$ 成立，
+  \end{itemize}
+  则对所有 $n\in\N^*$，命题 $P(n)$ 成立。
+  在数列问题中，常用于证明\keyword{通项公式}或\keyword{求和公式}。
+\end{definitionbox}
+
+\begin{examplebox}{典型题·用归纳法证明求和公式}
+  证明
+  \[
+    1+2+\cdots+n=\frac{n(n+1)}{2}.
+  \]
+
+  \textbf{证：}
+  \begin{enumerate}
+    \item 当 $n=1$ 时，左边为 $1$，右边为 $\dfrac{1\cdot2}{2}=1$，命题成立；
+    \item 假设当 $n=k$ 时命题成立，即
+    \[
+      1+2+\cdots+k=\frac{k(k+1)}{2}.
+    \]
+    则当 $n=k+1$ 时，有
+    \[
+      1+2+\cdots+k+(k+1)=\frac{k(k+1)}{2}+(k+1)
+      =\frac{(k+1)(k+2)}{2},
+    \]
+    即命题对 $k+1$ 亦成立。
+  \end{enumerate}
+  由数学归纳法，结论对一切正整数 $n$ 成立。
+\end{examplebox}
+
+\begin{examplebox}{典型题·归纳证明数列不等式}
+  设 $a_n=2^n$，证明
+  \[
+    a_n\ge n+1,\quad \forall n\in\N^*.
+  \]
+
+  \textbf{证：}
+  \begin{enumerate}
+    \item 当 $n=1$ 时，$a_1=2\ge2$，命题成立；
+    \item 假设对 $n=k$ 成立，即 $2^k\ge k+1$，则
+    \[
+      2^{k+1}=2\cdot2^k\ge2(k+1)=k+1+k+1\ge k+2,
+    \]
+    故对 $n=k+1$ 亦成立。
+  \end{enumerate}
+\end{examplebox}
+
+\clearpage
+% === Part 7: 数列不等式与放缩模型 ===
+\section{数列不等式与放缩模型}
+
+\begin{definitionbox}{放缩的基本思想}
+  放缩就是通过构造\keyword{上下界}或\keyword{等价形式}，把复杂的数列不等式转化为更\keyword{熟悉}的形式。
+  \begin{itemize}
+    \item 对单调数列配合\keyword{夹逼}或\keyword{上、下界}讨论；
+    \item 对和式使用\keyword{柯西不等式}、\keyword{均值不等式}进行估计；
+    \item 与高等数学中\keyword{比较判别法}、\keyword{柯西收敛准则}等思想相通。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{典型题·单调与上界}
+  数列 $a_n=\left(1+\dfrac{1}{n}\right)^n$。证明 $\{a_n\}$ 单调递增且有上界。
+
+  \textbf{提示思路：}
+  \begin{focuspoints}
+    \item 利用
+    \[
+      \left(1+\frac{1}{n}\right)^{n+1}=\left(1+\frac{1}{n}\right)^n\left(1+\frac{1}{n}\right),
+    \]
+    比较 $a_{n+1}$ 与 $a_n$ 的大小；
+    \item 构造上界（如 $a_n<3$），可用二项式展开或函数单调性；
+    \item 在高等数学中，可证明 $\lim_{n\to\infty}a_n=e$。
+  \end{focuspoints}
+\end{examplebox}
+
+\begin{examplebox}{典型题·和式不等式放缩}
+  设 $a_n=\dfrac{1}{\sqrt{n}}$，证明
+  \[
+    \sum_{k=1}^{n}\frac{1}{\sqrt{k}}\le 2\sqrt{n}.
+  \]
+
+  \textbf{证明思路：}
+  \begin{focuspoints}
+    \item 可以利用\keyword{积分比较}：注意到
+    \[
+      \int_{0}^{n}\frac{1}{\sqrt{x+1}}\dd x=2(\sqrt{n+1}-1);
+    \]
+    \item 对每一项构造上界：$\dfrac{1}{\sqrt{k}}\le2(\sqrt{k}-\sqrt{k-1})$，再累加相消；
+    \item 累加后得到 $S_n\le2\sqrt{n}$。
+  \end{focuspoints}
+\end{examplebox}
+
+\clearpage
+% === Part 8: 综合策略与复习路线 ===
+\section{综合策略与复习路线}
+
+\begin{NoteRoadmap}{数列解题 Roadmap}
+  \RoadmapStep{%
+    \textbf{识别数列类型}\\[0.15em]
+    初步判断：是否等差/等比？是否线性递推？是否含有奇偶项结构或公共项问题？
+  }
+  \RoadmapStep{%
+    \textbf{锁定主模型}\\[0.15em]
+    在\keyword{通项}与\keyword{求和}之间切换视角，选择合适的模型（特征根、构造法、S\_n–a\_n 等）。
+  }
+  \RoadmapStep{%
+    \textbf{尝试结构化变形}\\[0.15em]
+    通过\keyword{裂项}、\keyword{错位相减}、\keyword{分组}或\keyword{对数}将复杂表达式拆解。
+  }
+  \RoadmapStep{%
+    \textbf{检查单调性与极限}\\[0.15em]
+    结合不等式放缩，判断数列收敛性或和式大小，联想到高数中的极限定理。
+  }
+  \RoadmapStep{%
+    \textbf{归纳与回顾}\\[0.15em]
+    对重要公式使用\keyword{数学归纳法}或\keyword{极限方法}再次验证，形成稳定记忆。
+  }
+\end{NoteRoadmap}
+
+\begin{examplebox}{综合例题·多模型结合}
+  设数列 $\{a_n\}$ 满足
+  \[
+    a_1=1,\quad a_{n+1}=a_n+\frac{1}{n(n+1)}.
+  \]
+  \begin{enumerate}
+    \item 写出 $a_n$ 的前几项，猜想通项公式；
+    \item 用数学归纳法证明你的猜想；
+    \item 求 $\displaystyle\lim_{n\to\infty}a_n$。
+  \end{enumerate}
+
+  \textbf{思路概览：}
+  \begin{focuspoints}
+    \item 先裂项：$\dfrac{1}{n(n+1)}=\dfrac{1}{n}-\dfrac{1}{n+1}$，识别为\keyword{裂项相消}模型；
+    \item 累加递推式得到 $a_n=1+\sum_{k=1}^{n-1}\dfrac{1}{k(k+1)}$；
+    \item 应用相消得到 $a_n=2-\dfrac{1}{n}$，再用归纳法验证；
+    \item 由 $\displaystyle\lim_{n\to\infty}a_n=2$，自然过渡到高等数学中极限的概念。
+  \end{focuspoints}
+\end{examplebox}
+
+\begin{NoteChecklist}{考前速记清单}
+  \item 等差、等比的\keyword{通项与和公式}；
+  \item $S_n$ 与 $a_n$ 的\keyword{差分关系}；
+  \item 构造法常见变形：$a_n+\lambda$、$a_n/n$、$a_{n+1}-qa_n$；
+  \item 特征根法：二阶线性齐次递推的\keyword{模板型结论}；
+  \item 斐波那契：递推式、比值极限与 Binet 公式；
+  \item 奇偶项与公共项的\keyword{分列与方程}思想；
+  \item 求和模型：分组、错位相减、裂项相消、累乘转对数；
+  \item 数学归纳法的两步：\keyword{起步}与\keyword{归纳}；
+  \item 不等式放缩：单调性、夹逼、比较与积分估计；
+  \item 将每一道题归类到上述某一个或多个模型中。
+\end{NoteChecklist}
+
+\end{document}

@@ -1,0 +1,475 @@
+% mathnote-core.tex
+% 核心配置：编译引擎约束、字体目录自动探测、用户开关、
+% 元信息默认值，以及大部分基础宏包加载（字体 / 中文 / 图形等）。
+%
+% 该文件假定已在 mathnote-preamble.tex 中置于 \makeatletter ... \makeatother 内部，
+% 可单独阅读理解逻辑，但不建议直接独立使用。
+
+\newif\ifmathnote@fontdirfound
+\mathnote@fontdirfoundfalse
+% 尝试在相对路径中查找本地字体目录；若未找到则回退到 fonts/
+\def\mathnote@fontdircandidates{fonts/,./fonts/,../fonts/,../../fonts/,../../../fonts/}
+\def\mathnote@fontdir{}
+\@for\mathnote@cand:=\mathnote@fontdircandidates\do{%
+  \ifmathnote@fontdirfound\else
+    \IfFileExists{\mathnote@cand NotoSerif-VF.ttf}{%
+      \edef\mathnote@fontdir{\mathnote@cand}%
+      \mathnote@fontdirfoundtrue
+    }{%
+      \IfFileExists{\mathnote@cand SourceHanSerifSC-Regular.otf}{%
+        \edef\mathnote@fontdir{\mathnote@cand}%
+        \mathnote@fontdirfoundtrue
+      }{}%
+    }%
+  \fi
+}
+\ifmathnote@fontdirfound\else
+  \edef\mathnote@fontdir{fonts/}%
+\fi
+% 若用户未显式定义 \MathNoteFontDir，则使用自动探测结果
+\@ifundefined{MathNoteFontDir}{%
+  \edef\MathNoteFontDir{\mathnote@fontdir}%
+}{}
+
+% --------------------------------------------------
+% User switches —— 面向用户的开关与模式
+% --------------------------------------------------
+\newif\ifmathnoteprintmode
+\mathnoteprintmodefalse
+% 屏幕 -> 印刷模式切换接口；颜色逻辑见 mathnote-colors.tex
+\newcommand{\MathNoteEnablePrint}{%
+  \mathnoteprintmodetrue
+  \mathnote@applypalette
+}
+
+% 审稿章开关；默认关闭，仅在显式调用时启用
+\newif\ifmathnotereviewstamp
+\mathnotereviewstampfalse
+% 尝试在多级目录中自动寻找审核章图标，兼容根目录与子目录编译
+\newif\ifmathnote@reviewstampfound
+\mathnote@reviewstampfoundfalse
+% 若用户未自定义 \MathNoteReviewStampBase，则留空以使用自动探测
+\@ifundefined{MathNoteReviewStampBase}{%
+  \newcommand{\MathNoteReviewStampBase}{}%
+}{}
+\newcommand{\mathnote@reviewstamppathbase}{}
+\def\mathnote@reviewstampdircandidates{assest/,./assest/,../assest/,../../assest/,../../../assest/,../../../../assest/}
+\@ifundefined{mathnote@rootpath}{}{%
+  \edef\mathnote@reviewstampdircandidates{%
+    \mathnote@rootpath\detokenize{assest/},%
+    \mathnote@rootpath\detokenize{./assest/},%
+    \mathnote@rootpath\detokenize{../assest/},%
+    \mathnote@rootpath\detokenize{../../assest/},%
+    \mathnote@reviewstampdircandidates
+  }%
+}
+\if\relax\detokenize{\MathNoteReviewStampBase}\relax
+  \@for\mathnote@cand:=\mathnote@reviewstampdircandidates\do{%
+    \ifmathnote@reviewstampfound\else
+      \IfFileExists{\mathnote@cand lzlxV-reviewed.pdf}{%
+        \edef\mathnote@reviewstamppathbase{\mathnote@cand lzlxV-reviewed}%
+        \mathnote@reviewstampfoundtrue
+      }{%
+        \IfFileExists{\mathnote@cand lzlxV-reviewed.svg}{%
+          \edef\mathnote@reviewstamppathbase{\mathnote@cand lzlxV-reviewed}%
+          \mathnote@reviewstampfoundtrue
+        }{}%
+      }%
+    \fi
+  }%
+\else
+  \edef\mathnote@reviewstamppathbase{\MathNoteReviewStampBase}%
+  \mathnote@reviewstampfoundtrue
+\fi
+\newcommand{\mathnote@reviewstampsvg}{\mathnote@reviewstamppathbase.svg}
+\newcommand{\mathnote@reviewstamppdf}{\mathnote@reviewstamppathbase.pdf}
+\newcommand{\mathnote@reviewstampinclude}{}
+\newif\ifmathnote@reviewstampplaced
+\mathnote@reviewstampplacedfalse
+\IfFileExists{\mathnote@reviewstamppdf}{%
+  \renewcommand{\mathnote@reviewstampinclude}{%
+    \includegraphics[width=20mm,height=20mm,keepaspectratio]{\mathnote@reviewstamppdf}%
+  }%
+}{%
+  \IfFileExists{\mathnote@reviewstampsvg}{%
+    \renewcommand{\mathnote@reviewstampinclude}{%
+      \includesvg[width=20mm,height=20mm,keepaspectratio]{\mathnote@reviewstamppathbase}%
+    }%
+  }{}%
+}
+% 将审稿章叠加到第一页右上角；若找不到资源则只给出警告
+\newcommand{\mathnote@enablereviewstamp}{%
+  \ifx\mathnote@reviewstampinclude\@empty
+    \PackageWarning{mathnote-preamble}{Review stamp graphic \mathnote@reviewstampsvg\space (or PDF fallback) not found}%
+  \else
+    \mathnote@reviewstampplacedfalse
+    \AddToHook{shipout/foreground}{%
+      \ifmathnote@reviewstampplaced\else
+        \begin{tikzpicture}[remember picture, overlay]
+          \node[anchor=north east, xshift=-8mm, yshift=-8mm] at (current page.north east){%
+            \mathnote@reviewstampinclude
+          };
+        \end{tikzpicture}%
+        \global\mathnote@reviewstampplacedtrue
+      \fi
+    }%
+  \fi
+}
+\newcommand{\MathNoteEnableReviewStamp}{%
+  \mathnotereviewstamptrue
+  \mathnote@enablereviewstamp
+}
+
+% --------------------------------------------------
+% Metadata defaults (can be overwritten in each file)
+% 文档标题/作者等元信息的默认值
+% --------------------------------------------------
+\providecommand{\notetitle}{数学学习笔记}
+\providecommand{\noteauthor}{作者}
+\providecommand{\notedate}{\today}
+\providecommand{\notesubtitle}{现代数学排版示例}
+\providecommand{\noteversion}{v1.0}
+\newcommand{\mathnote@maybeversion}{%
+  \if\relax\detokenize{\noteversion}\relax
+  \else
+    \space(\noteversion)%
+  \fi
+}
+
+% --------------------------------------------------
+% Core packages —— 几何版式、字体系统与常用功能包
+% --------------------------------------------------
+\usepackage{geometry}
+\geometry{
+  paper=a4paper,
+  top=2.35cm,
+  bottom=2.4cm,
+  left=2.1cm,
+  right=2.1cm,
+  headheight=16pt,
+  headsep=14pt
+}
+
+% 字体与编译引擎抽象
+\usepackage{fontspec}
+\usepackage{metalogo}
+\defaultfontfeatures{Ligatures=TeX, Scale=MatchLowercase}
+
+% 本地字体文件探测辅助宏：与 \MathNoteFontDir 拼接使用
+\newcommand{\mathnote@fontfile}[1]{\MathNoteFontDir#1}
+\newif\ifmathnote@haslocalserif
+\newif\ifmathnote@haslocalsans
+\newif\ifmathnote@haslocalmono
+\newif\ifmathnote@haslocalcjkserif
+\newif\ifmathnote@haslocalcjksans
+\newif\ifmathnote@haslocalcjkmono
+\newif\ifmathnote@haslocalkai
+\newif\ifmathnote@haslocalshserif
+\newif\ifmathnote@haslocalshsans
+\IfFileExists{\mathnote@fontfile{NotoSerif-VF.ttf}}{\mathnote@haslocalseriftrue}{\mathnote@haslocalseriffalse}
+\IfFileExists{\mathnote@fontfile{NotoSans-VF.ttf}}{\mathnote@haslocalsanstrue}{\mathnote@haslocalsansfalse}
+\IfFileExists{\mathnote@fontfile{NotoSansMono-VF.ttf}}{\mathnote@haslocalmonotrue}{\mathnote@haslocalmonofalse}
+\IfFileExists{\mathnote@fontfile{NotoSerifCJK-VF.ttc}}{\mathnote@haslocalcjkseriftrue}{\mathnote@haslocalcjkseriffalse}
+\IfFileExists{\mathnote@fontfile{NotoSansCJK-VF.ttc}}{\mathnote@haslocalcjksanstrue}{\mathnote@haslocalcjksansfalse}
+\IfFileExists{\mathnote@fontfile{NotoSansMonoCJK-VF.ttc}}{\mathnote@haslocalcjkmonotrue}{\mathnote@haslocalcjkmonofalse}
+\IfFileExists{\mathnote@fontfile{LXGWWenKaiSC-Regular.ttf}}{\mathnote@haslocalkaitrue}{\mathnote@haslocalkaifalse}
+\IfFileExists{\mathnote@fontfile{SourceHanSerifSC-Regular.otf}}{\mathnote@haslocalshseriftrue}{\mathnote@haslocalshseriffalse}
+\IfFileExists{\mathnote@fontfile{SourceHanSansSC-Regular.otf}}{\mathnote@haslocalshsanstrue}{\mathnote@haslocalshsansfalse}
+
+% CJK 斜体（用于中文“强调体”）优先使用霞鹜文楷
+\newcommand{\mathnote@cjkitalicfont}{}
+\newcommand{\mathnote@cjkitalicfeatures}{Language = Chinese Simplified}
+\ifmathnote@haslocalkai
+  \def\mathnote@cjkitalicfont{LXGWWenKaiSC-Regular}
+  \def\mathnote@cjkitalicfeatures{Path = {\MathNoteFontDir}, Extension = .ttf, Language = Chinese Simplified}
+\else
+  \IfFontExistsTF{LXGW WenKai SC}{%
+    \def\mathnote@cjkitalicfont{LXGW WenKai SC}%
+    \def\mathnote@cjkitalicfeatures{Language = Chinese Simplified}
+  }{%
+    \def\mathnote@cjkitalicfont{}%
+    \def\mathnote@cjkitalicfeatures{Language = Chinese Simplified}
+  }%
+\fi
+\ifx\mathnote@cjkitalicfont\@empty
+  \def\mathnote@cjkitalicfont{FandolKai}
+  \def\mathnote@cjkitalicfeatures{Language = Chinese Simplified}
+\fi
+
+% 西文正文字体族：优先可变 Noto Serif，其次系统字体
+\newcommand{\mathnote@setlatinfonts}{%
+  \ifmathnote@haslocalserif
+    \setmainfont{Noto Serif}[
+      Path = {\MathNoteFontDir},
+      Extension = .ttf,
+      UprightFont = NotoSerif-VF,
+      ItalicFont = NotoSerif-Italic-VF,
+      BoldFont = NotoSerif-VF,
+      BoldFeatures = {RawFeature={+wght=760}},
+      BoldItalicFont = NotoSerif-Italic-VF,
+      BoldItalicFeatures = {RawFeature={+wght=760}}
+    ]%
+  \else
+    \IfFontExistsTF{Noto Serif}{%
+      \setmainfont{Noto Serif}[
+        ItalicFont = {Noto Serif Italic},
+        BoldFont = {Noto Serif Bold},
+        BoldItalicFont = {Noto Serif Bold Italic}
+      ]%
+    }{%
+      \setmainfont{TeX Gyre Pagella}%
+    }%
+  \fi
+  \ifmathnote@haslocalsans
+    \setsansfont{Noto Sans}[
+      Path = {\MathNoteFontDir},
+      Extension = .ttf,
+      UprightFont = NotoSans-VF,
+      ItalicFont = NotoSans-Italic-VF,
+      BoldFont = NotoSans-VF,
+      BoldFeatures = {RawFeature={+wght=760}},
+      BoldItalicFont = NotoSans-Italic-VF,
+      BoldItalicFeatures = {RawFeature={+wght=760}}
+    ]%
+  \else
+    \IfFontExistsTF{Noto Sans}{%
+      \setsansfont{Noto Sans}[
+        ItalicFont = {Noto Sans Italic},
+        BoldFont = {Noto Sans Bold},
+        BoldItalicFont = {Noto Sans Bold Italic}
+      ]%
+    }{%
+      \setsansfont{TeX Gyre Heros}%
+    }%
+  \fi
+  \ifmathnote@haslocalmono
+    \setmonofont{Noto Sans Mono}[
+      Path = {\MathNoteFontDir},
+      Extension = .ttf,
+      UprightFont = NotoSansMono-VF,
+      BoldFont = NotoSansMono-VF,
+      BoldFeatures = {RawFeature={+wght=740}},
+      ItalicFont = NotoSansMono-VF,
+      ItalicFeatures = {FakeSlant=0.2}
+    ]%
+  \else
+    \IfFontExistsTF{Noto Sans Mono}{%
+      \setmonofont{Noto Sans Mono}[
+        BoldFont = {Noto Sans Mono Bold}
+      ]%
+    }{%
+      \setmonofont{TeX Gyre Cursor}%
+    }%
+  \fi
+}
+
+% 中文主字体族：优先思源宋/黑与 Noto CJK，可退回 Fandol 系列
+\newcommand{\mathnote@setcjkfonts}{%
+  \ifmathnote@haslocalshserif
+    \setCJKmainfont{SourceHanSerifSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .otf,
+      Language = Chinese Simplified,
+      BoldFont = SourceHanSerifSC-Bold,
+      ItalicFont = {\mathnote@cjkitalicfont},
+      ItalicFeatures = {\mathnote@cjkitalicfeatures}
+    ]%
+    \setCJKfamilyfont{song}{SourceHanSerifSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .otf,
+      BoldFont = SourceHanSerifSC-Bold
+    ]%
+  \else
+    \IfFontExistsTF{Source Han Serif SC}{%
+      \setCJKmainfont{Source Han Serif SC}[Language=Chinese Simplified, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]%
+      \setCJKfamilyfont{song}{Source Han Serif SC}[Language=Chinese Simplified]
+    }{%
+      \ifmathnote@haslocalcjkserif
+        \setCJKmainfont{NotoSerifCJK-VF}[
+          Path = {\MathNoteFontDir},
+          Extension = .ttc,
+          Language = Chinese Simplified,
+          UprightFont = NotoSerifCJK-VF,
+          UprightFeatures = {FontIndex=2},
+          BoldFont = NotoSerifCJK-VF,
+          BoldFeatures = {FontIndex=2,RawFeature={+wght=780}},
+          AutoFakeSlant = 0.18,
+          ItalicFont = {\mathnote@cjkitalicfont},
+          ItalicFeatures = {\mathnote@cjkitalicfeatures}
+        ]%
+        \setCJKfamilyfont{song}{NotoSerifCJK-VF}[
+          Path = {\MathNoteFontDir},
+          Extension = .ttc,
+          UprightFont = NotoSerifCJK-VF,
+          UprightFeatures = {FontIndex=2},
+          BoldFont = NotoSerifCJK-VF,
+          BoldFeatures = {FontIndex=2,RawFeature={+wght=780}}
+        ]%
+      \else
+        \IfFontExistsTF{Noto Serif CJK SC}{%
+          \setCJKmainfont{Noto Serif CJK SC}[Language=Chinese Simplified, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+          \setCJKfamilyfont{song}{Noto Serif CJK SC}[Language=Chinese Simplified]
+        }{%
+          \setCJKmainfont{FandolSong}[BoldFont={FandolSong-Bold}, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+          \setCJKfamilyfont{song}{FandolSong}[BoldFont={FandolSong-Bold}]
+        }%
+      \fi
+    }%
+  \fi
+  \ifmathnote@haslocalshsans
+    \setCJKsansfont{SourceHanSansSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .otf,
+      Language = Chinese Simplified,
+      BoldFont = SourceHanSansSC-Bold,
+      ItalicFont = {\mathnote@cjkitalicfont},
+      ItalicFeatures = {\mathnote@cjkitalicfeatures}
+    ]%
+    \setCJKfamilyfont{hei}{SourceHanSansSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .otf,
+      BoldFont = SourceHanSansSC-Bold
+    ]%
+  \else
+    \IfFontExistsTF{Source Han Sans SC}{%
+      \setCJKsansfont{Source Han Sans SC}[Language=Chinese Simplified, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+      \setCJKfamilyfont{hei}{Source Han Sans SC}[Language=Chinese Simplified]
+    }{%
+      \ifmathnote@haslocalcjksans
+        \setCJKsansfont{NotoSansCJK-VF}[
+          Path = {\MathNoteFontDir},
+          Extension = .ttc,
+          Language = Chinese Simplified,
+          UprightFont = NotoSansCJK-VF,
+          UprightFeatures = {FontIndex=2},
+          BoldFont = NotoSansCJK-VF,
+          BoldFeatures = {FontIndex=2,RawFeature={+wght=780}},
+          ItalicFont = {\mathnote@cjkitalicfont},
+          ItalicFeatures = {\mathnote@cjkitalicfeatures}
+        ]%
+        \setCJKfamilyfont{hei}{NotoSansCJK-VF}[
+          Path = {\MathNoteFontDir},
+          Extension = .ttc,
+          UprightFont = NotoSansCJK-VF,
+          UprightFeatures = {FontIndex=2},
+          BoldFont = NotoSansCJK-VF,
+          BoldFeatures = {FontIndex=2,RawFeature={+wght=820}}
+        ]%
+      \else
+        \IfFontExistsTF{Noto Sans CJK SC}{%
+          \setCJKsansfont{Noto Sans CJK SC}[Language=Chinese Simplified, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+          \setCJKfamilyfont{hei}{Noto Sans CJK SC}[Language=Chinese Simplified]
+        }{%
+          \setCJKsansfont{FandolHei}[ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+          \setCJKfamilyfont{hei}{FandolHei}
+        }%
+      \fi
+    }%
+  \fi
+  \ifmathnote@haslocalshsans
+    \setCJKmonofont{SourceHanSansSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .otf,
+      Language = Chinese Simplified,
+      BoldFont = SourceHanSansSC-Bold,
+      ItalicFont = {\mathnote@cjkitalicfont},
+      ItalicFeatures = {\mathnote@cjkitalicfeatures}
+    ]%
+  \else
+    \IfFontExistsTF{Source Han Sans SC}{%
+      \setCJKmonofont{Source Han Sans SC}[Language=Chinese Simplified, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+    }{%
+      \ifmathnote@haslocalcjkmono
+        \setCJKmonofont{NotoSansMonoCJK-VF}[
+          Path = {\MathNoteFontDir},
+          Extension = .ttc,
+          Language = Chinese Simplified,
+          UprightFont = NotoSansMonoCJK-VF,
+          UprightFeatures = {FontIndex=2},
+          BoldFont = NotoSansMonoCJK-VF,
+          BoldFeatures = {FontIndex=2,RawFeature={+wght=760}},
+          ItalicFont = {\mathnote@cjkitalicfont},
+          ItalicFeatures = {\mathnote@cjkitalicfeatures}
+        ]%
+      \else
+        \IfFontExistsTF{Noto Sans Mono CJK SC}{%
+          \setCJKmonofont{Noto Sans Mono CJK SC}[Language=Chinese Simplified, ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+        }{%
+          \setCJKmonofont{FandolFang}[ItalicFont={\mathnote@cjkitalicfont}, ItalicFeatures={\mathnote@cjkitalicfeatures}]
+        }%
+      \fi
+    }%
+  \fi
+  \ifmathnote@haslocalkai
+    \setCJKfamilyfont{kai}{LXGWWenKaiSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .ttf,
+      UprightFont = LXGWWenKaiSC-Regular,
+      BoldFont = LXGWWenKaiSC-Medium,
+      Language = Chinese Simplified
+    ]%
+    \setCJKfamilyfont{zhkai}{LXGWWenKaiSC-Regular}[
+      Path = {\MathNoteFontDir},
+      Extension = .ttf,
+      UprightFont = LXGWWenKaiSC-Regular,
+      BoldFont = LXGWWenKaiSC-Medium,
+      Language = Chinese Simplified
+    ]%
+  \else
+    \IfFontExistsTF{LXGW WenKai SC}{%
+      \setCJKfamilyfont{kai}{LXGW WenKai SC}[Language=Chinese Simplified]
+      \setCJKfamilyfont{zhkai}{LXGW WenKai SC}[Language=Chinese Simplified]
+    }{%
+      \setCJKfamilyfont{kai}{FandolKai}[Language=Chinese Simplified]
+      \setCJKfamilyfont{zhkai}{FandolKai}[Language=Chinese Simplified]
+    }%
+  \fi
+}
+
+% 使用 xeCJK 管理中文字体与标点行为
+\usepackage{xeCJK}
+\xeCJKsetup{
+  CheckSingle = true,
+  RubberPunctSkip = true,
+  PunctStyle = plain
+}
+\xeCJKsetwidth{，}{0.5em}
+\xeCJKsetwidth{。}{1em}
+% 避免段首 / 公式孤行
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+% 在导言末尾调用一次字体设置，确保主字体就绪
+\mathnote@setlatinfonts
+\mathnote@setcjkfonts
+\renewcommand{\kaishu}{\CJKfamily{kai}}
+
+% 版面微调与行距
+\usepackage{microtype}
+\usepackage{setspace}
+\setstretch{1.15}
+
+% 数学与图形相关常用宏包
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{calc, arrows.meta, decorations.pathmorphing, positioning}
+\usepackage{xparse}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, hooks, listingsutf8}
+\usepackage{zhnumber}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{bookmark}

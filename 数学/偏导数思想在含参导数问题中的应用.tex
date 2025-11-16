@@ -1,172 +1,94 @@
-\documentclass[a4paper,12pt]{ctexrep}
+\documentclass[a4paper,11pt]{ctexart}
 
-\input{../mathnote-preamble.tex}
+\providecommand{\MathNoteReviewStampBase}{../assest/lzlxV-reviewed}
+\InputIfFileExists{mathnote-preamble.tex}{}{%
+  \InputIfFileExists{../mathnote-preamble.tex}{}{%
+    \InputIfFileExists{../../mathnote-preamble.tex}{}{%
+      \InputIfFileExists{../../../mathnote-preamble.tex}{}{%
+        \PackageError{mathnote-notes}{mathnote-preamble.tex 未找到}{请确认 mathnote-preamble.tex 与当前文稿的相对路径配置正确。}%
+      }%
+    }%
+  }%
+}
 
-% ==================================================
-% Page Layout
-% ==================================================
-\geometry{a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
-\setlength{\headheight}{15pt}
+% 如以打印版为主，可保留；若以屏幕阅读为主，可注释掉
+\MathNoteEnablePrint
+% 如需右上角审核标记，可启用
+\MathNoteEnableReviewStamp
 
-% ==================================================
-% Font Settings
-% ==================================================
-\setCJKmainfont{SimSun} % 宋体
-\setCJKsansfont{SimHei} % 黑体
-\setCJKmonofont{FangSong} % 仿宋
-\XeTeXlinebreaklocale "zh"
-\XeTeXlinebreakskip = 0pt plus 1pt
-
-\newcommand{\heiti}{\sffamily}
-\newcommand{\songti}{\rmfamily}
-\newcommand{\kaishu}{\CJKfamily{kai}}
-
-% ==================================================
-% Header and Footer
-% ==================================================
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\songti \leftmark}
-\fancyfoot[C]{\songti \thepage}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-
-% ==================================================
-% Color Definitions (兼容黑白打印)
-% ==================================================
-\definecolor{iconRed}{HTML}{C72C41}
-\definecolor{iconBlue}{HTML}{4285F4}
-\definecolor{iconGreen}{HTML}{34A853}
-\definecolor{iconYellow}{HTML}{FBBC05}
-\definecolor{iconPurple}{HTML}{9C27B0}
-\definecolor{lightgray}{RGB}{240,240,240}
-\definecolor{textgray}{RGB}{64,64,64}
-
-% ==================================================
-% Icon Commands
-% ==================================================
-\newcommand{\exampleicon}{\textcolor{iconRed}{\faExclamationTriangle}}
-\newcommand{\analysisicon}{\textcolor{iconBlue}{\faSearch}}
-\newcommand{\revisionicon}{\textcolor{iconGreen}{\faCheckCircle}}
-\newcommand{\examicon}{\textcolor{iconYellow}{\faGraduationCap}}
-\newcommand{\tipicon}{\textcolor{iconPurple}{\faLightbulb}}
-\newcommand{\methodicon}{\textcolor{iconBlue}{\faCogs}}
-\newcommand{\keypointicon}{\textcolor{iconGreen}{\faKey}}
-
-% ==================================================
-% Custom Commands
-% ==================================================
-\newcommand{\highlight}[1]{\textcolor{iconRed}{\textbf{#1}}}
-\newcommand{\method}[1]{\textcolor{iconBlue}{\textbf{#1}}}
-\newcommand{\keypoint}[1]{\textcolor{iconGreen}{\textbf{#1}}}
-\newcommand{\warning}[1]{\textcolor{iconRed}{\textbf{注意：#1}}}
 \newcommand{\partialder}[2]{\frac{\partial #1}{\partial #2}}
 
 \theoremstyle{definition}
-\newtheorem{definition}{定义}[chapter]
-\newtheorem{theorem}{定理}[chapter]
-\newtheorem{lemma}{引理}[chapter]
-\newtheorem{corollary}{推论}[chapter]
-\newtheorem{proposition}{命题}[chapter]
+\newtheorem{definition}{定义}[section]
+\newtheorem{theorem}{定理}[section]
+\newtheorem{lemma}{引理}[section]
+\newtheorem{corollary}{推论}[section]
+\newtheorem{proposition}{命题}[section]
 
 \theoremstyle{remark}
-\newtheorem{remark}{注记}[chapter]
-\newtheorem{example}{例题}[chapter]
-\newtheorem{exercise}{练习}[chapter]
+\newtheorem{remark}{注记}[section]
+\newtheorem{example}{例题}[section]
+\newtheorem{exercise}{练习}[section]
+
+\makeatletter
+\newtcolorbox{methodbox}[2][]{%
+  mathnote box,
+  title=\mathnote@ifblank{#2}{方法}{#2},
+  colback=surface,
+  colframe=accent!70!black,
+  coltitle=accent!15!white,
+  fonttitle=\sffamily\bfseries\color{accent!45!white},
+  borderline west={2pt}{0pt}{accent},
+  #1
+}
+\makeatother
 
 \renewcommand{\notetitle}{偏导数思想在含参导数问题中的应用}
 \renewcommand{\noteauthor}{Gemini 数学组}
 \renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{含参导数题型的统一分析框架}
+\renewcommand{\noteversion}{v1.0}
 
-\newtcolorbox{conceptbox}[1][]{
-    colback=lightgray,
-    colframe=iconBlue,
-    colbacktitle=iconBlue,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    boxrule=0.5pt,
-    arc=3pt
-}
-
-\newtcolorbox{examplebox}[1][]{
-    colback=white,
-    colframe=iconRed,
-    colbacktitle=iconRed,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    boxrule=0.5pt,
-    arc=3pt
-}
-
-\newtcolorbox{methodbox}[1][]{
-    colback=white,
-    colframe=iconGreen,
-    colbacktitle=iconGreen,
-    coltitle=white,
-    title=#1,
-    fonttitle=\bfseries,
-    boxrule=0.5pt,
-    arc=3pt
-}
-
-\newtcolorbox{warningbox}[1][]{
-    colback=white,
-    colframe=iconYellow,
-    colbacktitle=iconYellow,
-    coltitle=black,
-    title=#1,
-    fonttitle=\bfseries,
-    boxrule=0.5pt,
-    arc=3pt
-}
-
-% ==================================================
-% Hyperref Setup
-% ==================================================
-\hypersetup{
-    colorlinks=true,
-    linkcolor=iconBlue,
-    filecolor=iconPurple,
-    urlcolor=iconGreen,
-    pdftitle={偏导数思想在含参导数问题中的应用},
-    pdfpagemode=UseOutlines,
-    bookmarksnumbered=true,
-}
-
-% ==================================================
-% Document Title
-% ==================================================
-\title{\heiti 偏导数思想在含参导数问题中的应用}
-\author{\songti}
-\date{\today}
-
-\renewcommand{\chaptername}{第}
-\renewcommand{\thechapter}{\arabic{chapter} 章}
-\renewcommand{\appendixname}{附录}
-
-% ==================================================
-% Main Document
-% ==================================================
 \begin{document}
 
-\begin{titlepage}
-    \centering
-    \vspace*{\stretch{1.0}}
-    \Huge\heiti 偏导数思想在含参导数问题中的应用
-    \vspace*{\stretch{0.5}}
-    \Large\songti 综合性·指导性·详细性·复习式·工具与应用风格
-    \vspace*{\stretch{2.0}}
-    \large \today
-    \vfill
-\end{titlepage}
+\thispagestyle{empty}
+\PageTag[secondary]{含参导数}
+\setcounter{page}{1}
 
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 研读提示}\\
+  \begin{itemize}
+    \item 将含参函数视作二元函数，利用 \keyword{偏导数} 统一单调性、极值与最值的分析路径；
+    \item 通过 \ModeBadge{方法盒} 与 \ModeBadge[highlight]{典型例题} 串联「概念 $\rightarrow$ 模型 $\rightarrow$ 题型」；
+    \item 在每个专题节点加入参数视角的 \inlinehint{分类讨论}，帮助建立更具拓展性的复习框架。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
 \tableofcontents
 
-\chapter*{\heiti 前言}
-\addcontentsline{toc}{chapter}{前言}
+\clearpage
+\section*{\heiti 前言}
+\addcontentsline{toc}{section}{前言}
 
 在高中数学的导数学习中，含参导数问题是一个重要的难点和考点。传统的解题方法往往需要大量的分类讨论，计算复杂且容易出错。本笔记引入偏导数的思想，为含参导数问题提供一种新的视角和更系统的解决方法。
 
@@ -174,17 +96,17 @@
 
 本笔记采用彩色设计，重要概念和方法用不同颜色标注，同时确保黑白打印时的清晰度。每个知识点都配有详细的例题和解析，旨在帮助读者深入理解并掌握偏导数思想在含参导数问题中的应用。
 
-\chapter{偏导数思想引入}
+\section{偏导数思想引入}
 
-\section{含参函数的基本概念}
+\subsection{含参函数的基本概念}
 
 在高中数学中，我们经常遇到形如 $f(x,a) = x^2 + ax + 1$ 的函数，其中 $x$ 是自变量，$a$ 是参数。传统的处理方法是把 $a$ 当作常数，只对 $x$ 求导。但如果我们换个角度思考，把 $a$ 也看作一个变量，那么 $f(x,a)$ 就是一个二元函数。
 
-\begin{conceptbox}[核心概念]
-\textbf{含参函数}：形如 $f(x,a)$ 的函数，其中 $x$ 是自变量，$a$ 是参数。从偏导数的角度看，我们可以将 $a$ 也视为变量，这样 $f(x,a)$ 就是一个二元函数。
+\begin{conceptbox}{核心概念}
+含参函数：形如 $f(x,a)$ 的函数，其中 $x$ 是自变量，$a$ 是参数。从偏导数的角度看，我们可以将 $a$ 也视为变量，这样 $f(x,a)$ 就是一个二元函数。
 \end{conceptbox}
 
-\section{偏导数的直观理解}
+\subsection{偏导数的直观理解}
 
 偏导数的基本思想是：固定一个变量，对另一个变量求导。
 
@@ -197,7 +119,7 @@
 \end{enumerate}
 \end{definition}
 
-\begin{examplebox}[例题1：理解偏导数]
+\begin{examplebox}{例题1：理解偏导数}
 设 $f(x,a) = x^2 + ax + 1$，求 $\partialder{f}{x}$ 和 $\partialder{f}{a}$。
 
 \textbf{解：}
@@ -213,9 +135,9 @@
 \end{itemize}
 \end{examplebox}
 
-\section{为什么高中生需要了解偏导数思想}
+\subsection{为什么高中生需要了解偏导数思想}
 
-\begin{methodbox}[偏导数思想的优势]
+\begin{methodbox}{偏导数思想的优势}
 \begin{enumerate}
     \item \textbf{统一视角}：将含参问题统一为多元函数问题，提供系统的解题框架
     \item \textbf{简化计算}：避免复杂的分类讨论，通过偏导数直接分析参数影响
@@ -224,9 +146,9 @@
 \end{enumerate}
 \end{methodbox}
 
-\section{偏导数与普通导数的区别与联系}
+\subsection{偏导数与普通导数的区别与联系}
 
-\begin{conceptbox}[偏导数 vs 普通导数]
+\begin{conceptbox}{偏导数 vs 普通导数}
 \begin{itemize}
     \item \textbf{普通导数}：$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$，只考虑 $x$ 的变化
     \item \textbf{偏导数}：$\partialder{f}{x} = \lim_{h \to 0} \frac{f(x+h,a) - f(x,a)}{h}$，在固定 $a$ 的情况下考虑 $x$ 的变化
@@ -234,13 +156,13 @@
 \end{itemize}
 \end{conceptbox}
 
-\chapter{含参导数问题的基本类型}
+\section{含参导数问题的基本类型}
 
-\section{参数影响单调性问题}
+\subsection{参数影响单调性问题}
 
 这类问题的核心是：参数 $a$ 如何影响函数 $f(x,a)$ 的单调性？
 
-\begin{examplebox}[例题2：参数影响单调性]
+\begin{examplebox}{例题2：参数影响单调性}
 讨论函数 $f(x) = x^3 + ax^2 + bx + c$ 的单调性，其中 $a, b, c$ 为参数。
 
 \textbf{分析思路：}
@@ -252,11 +174,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{参数影响极值问题}
+\subsection{参数影响极值问题}
 
 参数不仅影响函数的单调性，还影响极值点的位置和性质。
 
-\begin{examplebox}[例题3：参数影响极值]
+\begin{examplebox}{例题3：参数影响极值}
 设 $f(x) = x^3 - 3ax$，讨论参数 $a$ 对函数极值的影响。
 
 \textbf{解：}
@@ -272,11 +194,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{参数影响最值问题}
+\subsection{参数影响最值问题}
 
 在闭区间上，参数不仅影响极值点，还影响端点处的函数值。
 
-\begin{examplebox}[例题4：参数影响最值]
+\begin{examplebox}{例题4：参数影响最值}
 求函数 $f(x) = x^2 + ax$ 在区间 $[0,2]$ 上的最值。
 
 \textbf{解：}
@@ -292,11 +214,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{恒成立与存在性问题}
+\subsection{恒成立与存在性问题}
 
 这类问题通常涉及不等式恒成立或存在性条件。
 
-\begin{examplebox}[例题5：恒成立问题]
+\begin{examplebox}{例题5：恒成立问题}
 已知函数 $f(x) = x^2 + ax + 1$，若 $f(x) \geq 0$ 对所有 $x \in \mathbb{R}$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -309,13 +231,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{单调性问题中的偏导数思想}
+\section{单调性问题中的偏导数思想}
 
-\section{对x求导分析单调性}
+\subsection{对x求导分析单调性}
 
 这是最基础的应用，将参数视为常数，对自变量求导。
 
-\begin{methodbox}[单调性分析的基本步骤]
+\begin{methodbox}{单调性分析的基本步骤}
 \begin{enumerate}
     \item 计算偏导数 $\partialder{f}{x}$
     \item 令 $\partialder{f}{x} = 0$，求驻点
@@ -325,7 +247,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题6：二次函数的单调性]
+\begin{examplebox}{例题6：二次函数的单调性}
 讨论函数 $f(x) = x^2 + ax + 1$ 的单调性。
 
 \textbf{解：}
@@ -341,11 +263,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{对a求偏导分析参数影响}
+\subsection{对a求偏导分析参数影响}
 
 这是偏导数思想的核心应用，分析参数变化对函数性质的影响。
 
-\begin{examplebox}[例题7：参数对单调性的影响]
+\begin{examplebox}{例题7：参数对单调性的影响}
 分析参数 $a$ 对函数 $f(x) = x^3 + ax^2$ 单调性的影响。
 
 \textbf{解：}
@@ -361,11 +283,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{分类讨论的策略}
+\subsection{分类讨论的策略}
 
 基于导数零点的分类讨论是处理含参导数问题的关键。
 
-\begin{methodbox}[分类讨论策略]
+\begin{methodbox}{分类讨论策略}
 \begin{enumerate}
     \item \textbf{确定关键点}：找出导数等于零的点
     \item \textbf{参数分类}：根据参数的不同取值，确定关键点的个数和位置
@@ -374,7 +296,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题8：三次函数的分类讨论]
+\begin{examplebox}{例题8：三次函数的分类讨论}
 讨论函数 $f(x) = x^3 + ax^2 + bx + c$ 的单调性。
 
 \textbf{解：}
@@ -390,9 +312,9 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{典型例题：指数对数函数}
+\subsection{典型例题：指数对数函数}
 
-\begin{examplebox}[例题9：指数函数的含参问题]
+\begin{examplebox}{例题9：指数函数的含参问题}
 讨论函数 $f(x) = e^x - ax$ 的单调性。
 
 \textbf{解：}
@@ -411,13 +333,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{极值问题中的偏导数思想}
+\section{极值问题中的偏导数思想}
 
-\section{一阶导数求极值点}
+\subsection{一阶导数求极值点}
 
 通过偏导数等于零的条件，可以找到函数的驻点。
 
-\begin{methodbox}[极值点求解步骤]
+\begin{methodbox}{极值点求解步骤}
 \begin{enumerate}
     \item 计算偏导数 $\partialder{f}{x}$
     \item 令 $\partialder{f}{x} = 0$，求解驻点
@@ -426,7 +348,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题10：含参极值点]
+\begin{examplebox}{例题10：含参极值点}
 求函数 $f(x) = x^3 - 3ax^2 + 3a^2x$ 的极值点。
 
 \textbf{解：}
@@ -438,7 +360,7 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{二阶导数判断极值性质}
+\subsection{二阶导数判断极值性质}
 
 利用二阶偏导数可以判断极值点的性质。
 
@@ -450,7 +372,7 @@
 \end{align}
 \end{definition}
 
-\begin{examplebox}[例题11：二阶导数判断极值]
+\begin{examplebox}{例题11：二阶导数判断极值}
 判断函数 $f(x) = x^3 - 3ax$ 在 $x = \pm\sqrt{a}$ 处的极值性质。
 
 \textbf{解：}
@@ -462,11 +384,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{参数对极值点位置的影响}
+\subsection{参数对极值点位置的影响}
 
 参数的变化会改变极值点的位置。
 
-\begin{examplebox}[例题12：参数影响极值点位置]
+\begin{examplebox}{例题12：参数影响极值点位置}
 分析参数 $a$ 对函数 $f(x) = x^3 + ax^2 + bx$ 极值点位置的影响。
 
 \textbf{解：}
@@ -483,11 +405,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{参数对极值大小的影响}
+\subsection{参数对极值大小的影响}
 
 参数不仅影响极值点的位置，还影响极值的大小。
 
-\begin{examplebox}[例题13：参数影响极值大小]
+\begin{examplebox}{例题13：参数影响极值大小}
 分析参数 $a$ 对函数 $f(x) = x^2 + ax + 1$ 极值大小的影响。
 
 \textbf{解：}
@@ -505,13 +427,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{最值问题中的偏导数思想}
+\section{最值问题中的偏导数思想}
 
-\section{闭区间上的最值}
+\subsection{闭区间上的最值}
 
 在闭区间上，最值可能在端点或极值点处取得。
 
-\begin{methodbox}[闭区间最值求解步骤]
+\begin{methodbox}{闭区间最值求解步骤}
 \begin{enumerate}
     \item 计算偏导数 $\partialder{f}{x}$
     \item 令 $\partialder{f}{x} = 0$，求区间内的驻点
@@ -521,7 +443,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题14：闭区间最值]
+\begin{examplebox}{例题14：闭区间最值}
 求函数 $f(x) = x^3 - 3ax^2 + 3a^2x$ 在区间 $[0,2]$ 上的最值。
 
 \textbf{解：}
@@ -542,11 +464,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{开区间上的最值}
+\subsection{开区间上的最值}
 
 开区间上的最值问题需要特别注意边界行为。
 
-\begin{examplebox}[例题15：开区间最值]
+\begin{examplebox}{例题15：开区间最值}
 求函数 $f(x) = x^2 + ax + 1$ 在区间 $(0,+\infty)$ 上的最小值。
 
 \textbf{解：}
@@ -566,11 +488,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{含参最值的分类讨论}
+\subsection{含参最值的分类讨论}
 
 参数的不同取值会导致不同的最值情况。
 
-\begin{examplebox}[例题16：含参最值分类讨论]
+\begin{examplebox}{例题16：含参最值分类讨论}
 求函数 $f(x) = x^3 + ax^2 + bx$ 在区间 $[-1,1]$ 上的最值。
 
 \textbf{解：}
@@ -586,11 +508,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{最值随参数变化的规律}
+\subsection{最值随参数变化的规律}
 
 分析参数变化对最值的影响规律。
 
-\begin{examplebox}[例题17：最值随参数变化]
+\begin{examplebox}{例题17：最值随参数变化}
 分析参数 $a$ 对函数 $f(x) = x^2 + ax + 1$ 在 $[0,1]$ 上最小值的影响。
 
 \textbf{解：}
@@ -612,13 +534,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{恒成立问题的偏导数方法}
+\section{恒成立问题的偏导数方法}
 
-\section{f(x) ≥ 0恒成立问题}
+\subsection{f(x) \texorpdfstring{$\geq$}{>=} 0恒成立问题}
 
 恒成立问题的核心是找到参数的范围，使得不等式对所有 $x$ 都成立。
 
-\begin{methodbox}[恒成立问题求解策略]
+\begin{methodbox}{恒成立问题求解策略}
 \begin{enumerate}
     \item 将问题转化为最值问题：$f(x) \geq 0$ 恒成立 $\Leftrightarrow$ $\min f(x) \geq 0$
     \item 利用偏导数求最值
@@ -627,7 +549,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题18：二次函数恒成立]
+\begin{examplebox}{例题18：二次函数恒成立}
 已知函数 $f(x) = x^2 + ax + 1$，若 $f(x) \geq 0$ 对所有 $x \in \mathbb{R}$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -640,11 +562,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{参变分离法的本质}
+\subsection{参变分离法的本质}
 
 参变分离法本质上是通过偏导数分析参数对函数的影响。
 
-\begin{conceptbox}[参变分离的偏导数视角]
+\begin{conceptbox}{参变分离的偏导数视角}
 参变分离 $f(x,a) \geq 0$ 恒成立，可以理解为：
 \begin{itemize}
     \item 对固定的 $x$，分析 $f(x,a)$ 关于参数 $a$ 的变化
@@ -653,7 +575,7 @@
 \end{itemize}
 \end{conceptbox}
 
-\begin{examplebox}[例题19：参变分离的偏导数分析]
+\begin{examplebox}{例题19：参变分离的偏导数分析}
 已知 $x^2 + ax + 1 \geq 0$ 对所有 $x \in [0,1]$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -667,11 +589,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{最值法求解恒成立问题}
+\subsection{最值法求解恒成立问题}
 
 通过分析函数的最值来确定参数范围。
 
-\begin{examplebox}[例题20：最值法求解恒成立]
+\begin{examplebox}{例题20：最值法求解恒成立}
 已知函数 $f(x) = x^3 - 3ax + 1$，若 $f(x) \geq 0$ 对所有 $x \geq 0$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -689,11 +611,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{二次求导法}
+\subsection{二次求导法}
 
 当一阶导数分析不够时，可以使用二阶导数。
 
-\begin{examplebox}[例题21：二次求导法]
+\begin{examplebox}{例题21：二次求导法}
 已知函数 $f(x) = x^4 - 4ax^2 + 4a^2$，若 $f(x) \geq 0$ 对所有 $x \in \mathbb{R}$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -714,13 +636,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{存在性问题与不等式证明}
+\section{存在性问题与不等式证明}
 
-\section{存在x使f(x) ≥ 0成立}
+\subsection{存在x使f(x) \texorpdfstring{$\geq$}{>=} 0成立}
 
 存在性问题与恒成立问题相反，只需要找到至少一个 $x$ 使得条件成立。
 
-\begin{methodbox}[存在性问题求解策略]
+\begin{methodbox}{存在性问题求解策略}
 \begin{enumerate}
     \item 将问题转化为最值问题：存在 $x$ 使 $f(x) \geq 0$ $\Leftrightarrow$ $\max f(x) \geq 0$
     \item 利用偏导数求最值
@@ -729,7 +651,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题22：存在性问题]
+\begin{examplebox}{例题22：存在性问题}
 已知函数 $f(x) = x^2 + ax + 1$，若存在 $x \in \mathbb{R}$ 使 $f(x) \geq 0$ 成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -744,11 +666,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{双变量不等式证明}
+\subsection{双变量不等式证明}
 
 涉及两个变量的不等式证明，可以固定一个变量，分析另一个变量的影响。
 
-\begin{examplebox}[例题23：双变量不等式]
+\begin{examplebox}{例题23：双变量不等式}
 证明：对任意 $x, y \in \mathbb{R}$，有 $x^2 + y^2 \geq 2xy$。
 
 \textbf{证明：}
@@ -765,11 +687,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{构造辅助函数的技巧}
+\subsection{构造辅助函数的技巧}
 
 通过构造辅助函数，将复杂问题转化为简单的函数分析问题。
 
-\begin{examplebox}[例题24：构造辅助函数]
+\begin{examplebox}{例题24：构造辅助函数}
 证明：对任意 $x > 0$，有 $e^x > 1 + x + \frac{x^2}{2}$。
 
 \textbf{证明：}
@@ -785,11 +707,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{切线放缩与偏导数}
+\subsection{切线放缩与偏导数}
 
 切线放缩是证明不等式的重要方法，其本质是偏导数在特定点的应用。
 
-\begin{conceptbox}[切线放缩的偏导数本质]
+\begin{conceptbox}{切线放缩的偏导数本质}
 切线放缩 $f(x) \geq f(a) + f'(a)(x-a)$ 可以理解为：
 \begin{itemize}
     \item 在点 $a$ 处，函数的一阶泰勒展开
@@ -798,7 +720,7 @@
 \end{itemize}
 \end{conceptbox}
 
-\begin{examplebox}[例题25：切线放缩证明]
+\begin{examplebox}{例题25：切线放缩证明}
 证明：对任意 $x > 0$，有 $\ln x \leq x - 1$。
 
 \textbf{证明：}
@@ -812,13 +734,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{参变分离与参数范围}
+\section{参变分离与参数范围}
 
-\section{参变分离的标准流程}
+\subsection{参变分离的标准流程}
 
 参变分离是处理含参导数问题的重要方法，其核心思想是将参数和变量分离。
 
-\begin{methodbox}[参变分离标准流程]
+\begin{methodbox}{参变分离标准流程}
 \begin{enumerate}
     \item \textbf{识别参数}：确定问题中的参数和变量
     \item \textbf{分离参数}：将参数移到不等式的一边，变量移到另一边
@@ -828,7 +750,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题26：参变分离标准流程]
+\begin{examplebox}{例题26：参变分离标准流程}
 已知 $x^2 + ax + 1 \geq 0$ 对所有 $x \in [1,2]$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -843,11 +765,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{何时使用参变分离}
+\subsection{何时使用参变分离}
 
 参变分离适用于特定的问题类型。
 
-\begin{conceptbox}[参变分离适用条件]
+\begin{conceptbox}{参变分离适用条件}
 \begin{itemize}
     \item \textbf{参数线性出现}：参数在不等式中以线性形式出现
     \item \textbf{变量范围明确}：变量的取值范围已知
@@ -856,7 +778,7 @@
 \end{itemize}
 \end{conceptbox}
 
-\begin{examplebox}[例题27：判断是否使用参变分离]
+\begin{examplebox}{例题27：判断是否使用参变分离}
 判断以下问题是否适合参变分离：
 \begin{enumerate}
     \item $x^2 + ax + 1 \geq 0$ 对所有 $x \in [0,1]$ 恒成立
@@ -872,11 +794,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{参变分离后的函数分析}
+\subsection{参变分离后的函数分析}
 
 分离参数后，需要深入分析构造的函数。
 
-\begin{examplebox}[例题28：参变分离后的函数分析]
+\begin{examplebox}{例题28：参变分离后的函数分析}
 已知 $e^x - ax \geq 0$ 对所有 $x \geq 0$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -891,9 +813,9 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{典型题型与易错点}
+\subsection{典型题型与易错点}
 
-\begin{warningbox}[常见易错点]
+\begin{warningbox}{常见易错点}
 \begin{enumerate}
     \item \textbf{忽略定义域}：分离参数时要注意函数的定义域
     \item \textbf{方向错误}：不等号方向在分离时可能改变
@@ -902,7 +824,7 @@
 \end{enumerate}
 \end{warningbox}
 
-\begin{examplebox}[例题29：易错点分析]
+\begin{examplebox}{例题29：易错点分析}
 已知 $x^2 + ax + 1 > 0$ 对所有 $x \in (0,1)$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{解：}
@@ -922,13 +844,13 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{综合应用与解题策略}
+\section{综合应用与解题策略}
 
-\section{多参数问题的处理}
+\subsection{多参数问题的处理}
 
 当问题涉及多个参数时，需要系统分析各参数的影响。
 
-\begin{methodbox}[多参数问题处理策略]
+\begin{methodbox}{多参数问题处理策略}
 \begin{enumerate}
     \item \textbf{参数优先级}：确定哪个参数的影响更关键
     \item \textbf{固定参数法}：先固定部分参数，分析其他参数
@@ -937,7 +859,7 @@
 \end{enumerate}
 \end{methodbox}
 
-\begin{examplebox}[例题30：多参数问题]
+\begin{examplebox}{例题30：多参数问题}
 已知函数 $f(x) = x^3 + ax^2 + bx + c$，若 $f(x) \geq 0$ 对所有 $x \geq 0$ 恒成立，求参数 $a, b, c$ 应满足的条件。
 
 \textbf{解：}
@@ -955,11 +877,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{隐含参数的识别}
+\subsection{隐含参数的识别}
 
 有些参数可能隐含在问题中，需要仔细识别。
 
-\begin{conceptbox}[隐含参数识别技巧]
+\begin{conceptbox}{隐含参数识别技巧}
 \begin{itemize}
     \item \textbf{区间端点}：区间的端点可能隐含参数
     \item \textbf{函数形式}：函数中的常数项可能隐含参数
@@ -968,7 +890,7 @@
 \end{itemize}
 \end{conceptbox}
 
-\begin{examplebox}[例题31：隐含参数识别]
+\begin{examplebox}{例题31：隐含参数识别}
 已知函数 $f(x) = x^2 + 2x + a$ 在区间 $[0, b]$ 上的最小值为 0，求参数 $a, b$ 的关系。
 
 \textbf{解：}
@@ -986,11 +908,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{数形结合思想}
+\subsection{数形结合思想}
 
 结合函数图像分析参数的影响。
 
-\begin{examplebox}[例题32：数形结合分析]
+\begin{examplebox}{例题32：数形结合分析}
 分析参数 $a$ 对函数 $f(x) = x^3 - 3ax$ 图像的影响。
 
 \textbf{分析：}
@@ -1010,11 +932,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{偏导数思想的拓展应用}
+\subsection{偏导数思想的拓展应用}
 
 将偏导数思想应用到更广泛的问题中。
 
-\begin{examplebox}[例题33：偏导数思想拓展]
+\begin{examplebox}{例题33：偏导数思想拓展}
 在优化问题中，分析参数对目标函数的影响。
 
 \textbf{问题：} 在矩形 $[0,a] \times [0,b]$ 内，求函数 $f(x,y) = x^2 + y^2$ 的最大值。
@@ -1032,11 +954,11 @@
 \end{enumerate}
 \end{examplebox}
 
-\chapter{解题方法论}
+\section{解题方法论}
 
-\section{含参导数问题的解题流程图}
+\subsection{含参导数问题的解题流程图}
 
-\begin{methodbox}[含参导数问题解题流程图]
+\begin{methodbox}{含参导数问题解题流程图}
 \begin{enumerate}
     \item \textbf{问题识别}
     \begin{itemize}
@@ -1073,9 +995,9 @@
 \end{enumerate}
 \end{methodbox}
 
-\section{常见错误与规避方法}
+\subsection{常见错误与规避方法}
 
-\begin{warningbox}[常见错误类型]
+\begin{warningbox}{常见错误类型}
 \begin{enumerate}
     \item \textbf{偏导数计算错误}
     \begin{itemize}
@@ -1104,9 +1026,9 @@
 \end{enumerate}
 \end{warningbox}
 
-\section{快速判断题型的技巧}
+\subsection{快速判断题型的技巧}
 
-\begin{conceptbox}[题型快速识别]
+\begin{conceptbox}{题型快速识别}
 \begin{itemize}
     \item \textbf{单调性问题}：关键词"单调"、"递增"、"递减"
     \item \textbf{极值问题}：关键词"极值"、"极大值"、"极小值"
@@ -1116,9 +1038,9 @@
 \end{itemize}
 \end{conceptbox}
 
-\section{考试答题规范}
+\subsection{考试答题规范}
 
-\begin{methodbox}[考试答题规范]
+\begin{methodbox}{考试答题规范}
 \begin{enumerate}
     \item \textbf{审题阶段}
     \begin{itemize}
@@ -1141,11 +1063,11 @@
 \end{enumerate}
 \end{methodbox}
 
-\chapter{典型例题精讲与练习}
+\section{典型例题精讲与练习}
 
-\section{高考真题分析}
+\subsection{高考真题分析}
 
-\begin{examplebox}[2023年高考真题]
+\begin{examplebox}{2023年高考真题}
 已知函数 $f(x) = x^3 + ax^2 + bx + c$，若 $f(x)$ 在 $(-\infty, 0)$ 上单调递减，在 $(0, +\infty)$ 上单调递增，求参数 $a, b$ 应满足的条件。
 
 \textbf{解：}
@@ -1168,9 +1090,9 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{竞赛题选讲}
+\subsection{竞赛题选讲}
 
-\begin{examplebox}[数学竞赛题]
+\begin{examplebox}{数学竞赛题}
 设函数 $f(x) = x^4 - 4ax^3 + 6a^2x^2 - 4a^3x + a^4$，其中 $a$ 为参数。讨论函数 $f(x)$ 的极值性质。
 
 \textbf{解：}
@@ -1187,7 +1109,7 @@
 \end{enumerate}
 \end{examplebox}
 
-\section{综合练习题}
+\subsection{综合练习题}
 
 \begin{exercise}[综合练习1]
 已知函数 $f(x) = x^3 - 3ax^2 + 3a^2x - a^3$，其中 $a$ 为参数。
@@ -1206,9 +1128,9 @@
 \end{enumerate}
 \end{exercise}
 
-\section{详细解答与多种方法对比}
+\subsection{详细解答与多种方法对比}
 
-\begin{examplebox}[方法对比：恒成立问题]
+\begin{examplebox}{方法对比：恒成立问题}
 问题：已知 $x^2 + ax + 1 \geq 0$ 对所有 $x \in \mathbb{R}$ 恒成立，求参数 $a$ 的取值范围。
 
 \textbf{方法一：判别式法}
@@ -1234,9 +1156,9 @@
 \end{examplebox}
 
 \appendix
-\chapter{附录}
+\section{附录}
 
-\section{常用函数导数表}
+\subsection{常用函数导数表}
 
 \begin{table}[h]
 \centering
@@ -1258,7 +1180,7 @@
 \caption{常用函数偏导数表}
 \end{table}
 
-\section{含参导数问题速查表}
+\subsection{含参导数问题速查表}
 
 \begin{table}[h]
 \centering
@@ -1280,9 +1202,9 @@
 \caption{含参导数问题速查表}
 \end{table}
 
-\section{参数分类讨论决策树}
+\subsection{参数分类讨论决策树}
 
-\begin{conceptbox}[参数分类讨论决策树]
+\begin{conceptbox}{参数分类讨论决策树}
 \begin{enumerate}
     \item \textbf{识别关键参数}
     \begin{itemize}
@@ -1305,7 +1227,7 @@
 \end{enumerate}
 \end{conceptbox}
 
-\section{学习资源推荐}
+\subsection{学习资源推荐}
 
 \begin{itemize}
     \item \textbf{教材资源}
@@ -1333,7 +1255,5 @@
         \item 在线练习平台
     \end{itemize}
 \end{itemize}
-
-\end{document}
 
 \end{document}
