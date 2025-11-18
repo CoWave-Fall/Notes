@@ -1,3 +1,4 @@
+\ifdefined\MathNoteBookMode\else
 \documentclass[a4paper,11pt]{ctexart}
 
 \input{../mathnote-preamble.tex}
@@ -12,6 +13,9 @@
 
 % --- 图像与 PGFPlots 设置 ---
 \usepackage{pgfplots}
+\begin{document}
+\fi
+
 \pgfplotsset{compat=1.18}
 \pgfplotsset{
     miniplot/.style={
@@ -25,8 +29,6 @@
         axis line style={-}, % 简洁的坐标轴样式
     }
 }
-
-\begin{document}
 
 \PageTag[secondary]{切线放缩·单页速览}
 
@@ -173,4 +175,6 @@
 \end{minipage}
 \end{tcolorbox}
 
+\ifdefined\MathNoteBookMode\else
 \end{document}
+\fi

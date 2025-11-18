@@ -2,6 +2,7 @@
 % 高中数学·数列 专题复习笔记
 % 依托 mathnote-preamble.tex 与“数学笔记模板”排版风格
 % --------------------------------------------------
+\ifdefined\MathNoteBookMode\else
 \documentclass[a4paper,11pt]{ctexart}
 \InputIfFileExists{mathnote-preamble.tex}{}{%
   \InputIfFileExists{../mathnote-preamble.tex}{}{%
@@ -14,7 +15,7 @@
 % 如以打印版为主，可保留；若以屏幕阅读为主，可注释掉
 \MathNoteEnablePrint
 % 如需右上角审核标记，可启用
-\MathNoteEnableReviewStamp
+% \MathNoteEnableReviewStamp
 
 % 印刷模式下略微压缩垂直空白，适配纸质阅读
 \ifmathnoteprintmode
@@ -52,6 +53,7 @@
   第一版\quad|\quad2025年11月16日\\
   第二版\quad|\quad2025年11月18日
 }
+\fi
 
 % 本专题中一般列表采用普通样式，避免过多色块
 \setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\relax, after=\relax}
@@ -62,6 +64,7 @@
   \noindent\textbf{#1}\par\smallskip
 }
 
+\ifdefined\MathNoteBookMode\else
 \begin{document}
 
 % 封面
@@ -101,6 +104,7 @@
 \tableofcontents
 
 \clearpage
+\fi
 % === Part 1: 数列基础与整体认知 ===
 \section{数列基础与整体认知}
 
@@ -892,4 +896,6 @@
   \item 将每一道题归类到上述某一个或多个模型中。
 \end{NoteChecklist}
 
+\ifdefined\MathNoteBookMode\else
 \end{document}
+\fi

@@ -1,3 +1,4 @@
+\ifdefined\MathNoteBookMode\else
 \documentclass[a4paper,11pt]{ctexart}
 \usepackage{mathnote-preamble}
 \MathNoteEnablePrint % 如需印刷版可取消本行注释
@@ -11,6 +12,7 @@
 \begin{document}
 \maketitle
 \tableofcontents
+\fi
 
 \section{整体观：函数与方程是一体的}
 
@@ -634,5 +636,6 @@
   \end{enumerate}
 \end{notebox}
 
+\ifdefined\MathNoteBookMode\else
 \end{document}
-
+\fi

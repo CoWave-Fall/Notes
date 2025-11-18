@@ -1,3 +1,4 @@
+\ifdefined\MathNoteBookMode\else
 % 高中数学：导数与微积分 笔记
 % 使用 mathnote-preamble.tex 模板，建议用 XeLaTeX 编译两次
 
@@ -18,7 +19,7 @@
 \PageTag[secondary]{高中数学·导数与微积分}
 \setcounter{page}{1}
 
-\MathNoteEnableReviewStamp
+% \MathNoteEnableReviewStamp
 \MathNoteEnablePrint
 
 \noindent
@@ -53,6 +54,7 @@
 \phantomsection
 \tableofcontents
 \newpage
+\fi
 
 %==========================
 \section{导学与整体结构}
@@ -593,5 +595,7 @@ $\cos x$ & $\sin x+C$ \\
 \end{center}
 \end{summarybox}
 
+\ifdefined\MathNoteBookMode\else
 \end{document}
+\fi
 

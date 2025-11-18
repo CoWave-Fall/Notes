@@ -1,3 +1,4 @@
+\ifdefined\MathNoteBookMode\else
 % !TEX program = xelatex
 \documentclass[a4paper,11pt]{ctexart}
 \usepackage{mathnote-preamble}
@@ -51,6 +52,7 @@
 \tableofcontents
 
 \clearpage
+\fi
 
 \section{三角函数的基本概念与图像}
 \label{sec:basic}
@@ -632,4 +634,6 @@ f(x) = \sin(2x+\omega) + \sqrt{3}\cos(2x+\omega),
 建议根据上述层次画出自己的思维导图，每个节点配上 1--2 个典型例题，以实现“结构化记忆 + 题型训练”的统一。
 \end{summarybox}
 
+\ifdefined\MathNoteBookMode\else
 \end{document}
+\fi

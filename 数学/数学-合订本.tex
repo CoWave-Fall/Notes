@@ -1,0 +1,106 @@
+\documentclass[a4paper,11pt]{ctexart}
+
+% 在子目录中编译时，通过相对路径寻找 mathnote-preamble
+\InputIfFileExists{mathnote-preamble.tex}{}{%
+  \InputIfFileExists{../mathnote-preamble.tex}{}{%
+    \InputIfFileExists{../../mathnote-preamble.tex}{}{%
+      \PackageError{mathnote-notes}{mathnote-preamble.tex 未找到}{请确认 mathnote-preamble.tex 与当前文稿的相对路径配置正确。}%
+    }%
+  }%
+}
+
+% \MathNoteEnablePrint % 如主要用于纸质打印，可取消注释
+
+% 一些专题中用到的绘图宏包（如切线放缩与导数可视化）
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% 告诉各单册笔记：当前处于“合订本模式”，不要再各自开启 document/class/目录
+\newcommand{\MathNoteBookMode}{}
+
+% 合订本元信息
+\renewcommand{\notetitle}{高中数学笔记·合订本}
+\renewcommand{\noteauthor}{（自填姓名）}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{集合·函数·导数·三角·数列·几何·概率}
+\renewcommand{\noteversion}{v1.0}
+
+% 在合订本中，把单册里的 section 降一级使用
+\newcommand{\InputMathNoteAsSubsections}[1]{%
+  \begingroup
+    \let\MathNoteOrigSection\section
+    \let\MathNoteOrigSubsection\subsection
+    \let\MathNoteOrigSubsubsection\subsubsection
+    \renewcommand{\section}{\subsection}
+    \renewcommand{\subsection}{\subsubsection}
+    \input{#1}%
+  \endgroup
+}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·合订本}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  \MathNoteVersionBlock
+  \vspace*{\fill}
+\end{minipage}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\clearpage
+
+% 1. 集合与不等式
+\section{集合与不等式}
+\InputMathNoteAsSubsections{集合与不等式.tex}
+
+% 2. 函数与方程
+\section{函数与方程}
+\InputMathNoteAsSubsections{函数与方程.tex}
+
+% 3. 导数与应用
+\section{导数与应用}
+\InputMathNoteAsSubsections{高中数学-导数与微积分.tex}
+
+% 4. 三角函数与解三角形
+\section{三角函数与解三角形}
+\InputMathNoteAsSubsections{三角函数与解三角形.tex}
+
+% 5. 平面向量与复数（占位，内容待补充）
+\section{平面向量与复数}
+本章内容尚在整理中，可在后续将对应专题笔记按与前几章相同的方式接入。
+
+% 6. 数列
+\section{数列}
+\InputMathNoteAsSubsections{高中数学-数列复习笔记.tex}
+
+% 7. 立体几何与空间向量（占位）
+\section{立体几何与空间向量}
+本章目前作为占位节，待你整理立体几何与空间向量的 tex 笔记后，可在此处通过
+\verb|\InputMathNoteAsSubsections{...}| 接入。
+
+% 8. 解析几何（占位）
+\section{解析几何}
+本章目前为空白结构，用于未来整合圆锥曲线、直线与圆、空间直角坐标系等解析几何专题。
+
+% 9. 概率（占位）
+\section{概率}
+本章预留给离散与几何概率、古典概率模型以及随机变量的基础内容。
+
+\end{document}

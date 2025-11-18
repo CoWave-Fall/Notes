@@ -1,3 +1,4 @@
+\ifdefined\MathNoteBookMode\else
 \documentclass[a4paper,11pt]{ctexart}
 \usepackage{mathnote-preamble}
 % \MathNoteEnablePrint % 如需印刷版可打开
@@ -9,6 +10,7 @@
 \renewcommand{\noteversion}{v1.0}
 
 \begin{document}
+\fi
 
 % 封面
 \thispagestyle{empty}
@@ -29,11 +31,13 @@
   \vspace*{\fill}
 \end{minipage}
 
+\ifdefined\MathNoteBookMode\else
 \clearpage
 \thispagestyle{plain}
 \phantomsection
 \tableofcontents
 \newpage
+\fi
 
 \section{学习导读}
 
@@ -887,3 +891,7 @@ y^2+2xy+m\ge 0.
   \end{tikzpicture}
   \captionof{figure}{一元二次不等式“恒号”时的图像示意}
   \end{center}
+
+\ifdefined\MathNoteBookMode\else
+\end{document}
+\fi

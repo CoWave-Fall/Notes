@@ -1,10 +1,9 @@
 \documentclass[a4paper,11pt]{ctexart}
 
-\input{../mathnote-preamble.tex}
-
+\usepackage{mathnote-preamble}
 % 若主要用于纸质打印，可启用印刷模式配色
 \MathNoteEnablePrint
-\MathNoteEnableReviewStamp
+% \MathNoteEnableReviewStamp
 
 % 使用模板提供的主题色重新定义行内强调命令
 \newcommand{\highlight}[1]{\textcolor{highlight}{\textbf{#1}}}
@@ -157,6 +156,7 @@
 
 \textbf{解}：
 \begin{enumerate}
+
     \item \keypoint{选取特殊值}：选择端点 $x = 0$ 和 $x = 1$
     \item \keypoint{建立必要条件}：
     \begin{align}

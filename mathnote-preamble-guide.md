@@ -57,7 +57,7 @@
 
 ## 4. 审稿章与页标签
 
-- 调用 `\MathNoteEnableReviewStamp` 会在导出的 PDF 第一页面叠加 `assest/lzlxV-reviewed.(svg|pdf)` 图章；若文件不存在会给出 `PackageWarning`，可按需替换为你自己的文件路径。
+- 调用 `% \MathNoteEnableReviewStamp` 会在导出的 PDF 第一页面叠加 `assest/lzlxV-reviewed.(svg|pdf)` 图章；若文件不存在会给出 `PackageWarning`，可按需替换为你自己的文件路径。
 - `\PageTag[highlight]{No.05}` 可在任意页面角落绘制一个彩色圆角页签；颜色参数可省略（默认 `accent`）。
 - `\SectionTag{学习目标}` 会在段落中插入大号无衬线标签，可用于手写式章节标题或重点说明。
 
@@ -200,7 +200,7 @@
 
 ## 4. 审稿章与页标签
 
-- `\MathNoteEnableReviewStamp` 会在导出的 PDF 首次页面叠加 `assest/lzlxV-reviewed.(svg|pdf)` 图章；若文件不存在会给出 `PackageWarning`（可按需替换成你自己的文件路径）。
+- `% \MathNoteEnableReviewStamp` 会在导出的 PDF 首次页面叠加 `assest/lzlxV-reviewed.(svg|pdf)` 图章；若文件不存在会给出 `PackageWarning`（可按需替换成你自己的文件路径）。
 - `\PageTag[highlight]{No.05}` 可于任意页面角落绘制一个彩色圆角页签；颜色参数可省略（默认 `accent`）。
 - `\SectionTag{学习目标}` 在段落中插入大号无衬线标签，可用于手写式章节标题或点缀说明。
 
