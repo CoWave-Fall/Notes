@@ -1,9 +1,9 @@
 % mathnote-colors.tex
-% 屏幕 / 印刷双模式配色与色板定义，以及
-% 与 hyperref / PDF 元信息相关的颜色同步逻辑。
+% 屏幕 / 印刷双模式的颜色与调色板定义，
+% 以及与 hyperref / PDF 元信息配色的联动。
 
 % --------------------------------------------------
-% Colors
+% 基础色
 % --------------------------------------------------
 \definecolor{screenAccent}{HTML}{1565C0}
 \definecolor{screenSecondary}{HTML}{00897B}
@@ -18,7 +18,7 @@
 \definecolor{printSurface}{cmyk}{0,0,0,0}
 \definecolor{mathnotePureCyan}{cmyk}{1,0,0,0}
 
-% 16 色屏幕主题（sRGB）
+% 16 色屏幕调色板（sRGB）
 \definecolor{screenTone01}{HTML}{0D47A1}
 \definecolor{screenTone02}{HTML}{1565C0}
 \definecolor{screenTone03}{HTML}{1A73E8}
@@ -36,7 +36,7 @@
 \definecolor{screenTone15}{HTML}{8E24AA}
 \definecolor{screenTone16}{HTML}{6A1B9A}
 
-% 16 色印刷主题（CMYK 近似）
+% 16 色印刷调色板（CMYK，适合激光/数码印刷）
 \definecolor{printTone01}{cmyk}{1,0.72,0,0.35}
 \definecolor{printTone02}{cmyk}{0.9,0.5,0,0.2}
 \definecolor{printTone03}{cmyk}{0.85,0.45,0,0.12}
@@ -54,57 +54,60 @@
 \definecolor{printTone15}{cmyk}{0.45,0.9,0,0}
 \definecolor{printTone16}{cmyk}{0.6,1,0,0.1}
 
-% 主色系别名：其他模块只依赖这些命名即可
-\colorlet{accent}{screenAccent}
-\colorlet{secondary}{screenSecondary}
-\colorlet{highlight}{screenHighlight}
-\colorlet{inkgray}{screenInfo}
-\colorlet{surface}{screenSurface}
-
 \newif\ifmathnote@docstarted
 \mathnote@docstartedfalse
 \AtBeginDocument{\mathnote@docstartedtrue}
 
-% 根据当前模式将颜色状态同步给 hyperref 链接
+% --------------------------------------------------
+% hyperref 颜色联动
+% --------------------------------------------------
 \newcommand{\mathnote@applyhypercolors}{%
   \ifmathnoteprintmode
-    \hypersetup{
+    \hypersetup{%
       colorlinks=false,
       hidelinks,
       pdfborderstyle={/S/U/W 0},
-      pdfborder={0 0 0}
+      pdfborder={0 0 0}%
     }%
   \else
-    \hypersetup{
+    \hypersetup{%
       colorlinks=true,
       linkcolor=accent,
       citecolor=secondary,
       urlcolor=accent,
-      pdfborder={0 0 0}
+      pdfborder={0 0 0}%
     }%
   \fi
 }
 
-% 在屏幕 / 印刷模式之间切换整体色板
+% --------------------------------------------------
+% 主调色逻辑（基础语义色）
+% --------------------------------------------------
 \newcommand{\mathnote@applypalette}{%
   \ifmathnoteprintmode
+    % 基础语义色（印刷 CMYK）
     \colorlet{accent}{printAccent}%
     \colorlet{secondary}{printSecondary}%
     \colorlet{highlight}{printHighlight}%
     \colorlet{inkgray}{printInfo}%
     \colorlet{surface}{printSurface}%
   \else
+    % 基础语义色（屏幕 sRGB）
     \colorlet{accent}{screenAccent}%
     \colorlet{secondary}{screenSecondary}%
     \colorlet{highlight}{screenHighlight}%
     \colorlet{inkgray}{screenInfo}%
     \colorlet{surface}{screenSurface}%
   \fi
+  % 盒子和网格的派生色
   \colorlet{accentline}{accent!65!black}%
   \colorlet{accentbg}{accent!8!white}%
   \colorlet{secondarybg}{secondary!10!white}%
   \colorlet{highlightbg}{highlight!10!white}%
   \colorlet{inkline}{inkgray!60!black}%
+  % colframe Ϊ tcolorbox �Ļ�����ɫ��Ϊ�������� coverage=soft/solid
+  % �����漰 colframe!x!white ��ɫ����ʧ�ҳ���һ��ȱʡֵ
+  \colorlet{colframe}{accentline}%
   \colorlet{surfacegrid}{inkgray!6!white}%
   \ifmathnote@docstarted
     \mathnote@applyhypercolors
@@ -113,12 +116,61 @@
   \fi
 }
 
-% 初始化为屏幕模式色板
-\mathnote@applypalette
-% 用户可在外部手动调用以刷新颜色（在自行 \colorlet 之后）
-\newcommand{\MathNoteRefreshColors}{\mathnote@applypalette}
+% --------------------------------------------------
+% 高层接口：16 色调色板 + 标题用色
+% --------------------------------------------------
+\newcommand{\MathNoteApplyPalette}{%
+  \mathnote@applypalette
+  % 16 色预置调色板：tone01–tone16 统一语义名，
+  % 根据屏幕/印刷模式自动映射到 RGB / CMYK。
+  \ifmathnoteprintmode
+    \colorlet{tone01}{printTone01}%
+    \colorlet{tone02}{printTone02}%
+    \colorlet{tone03}{printTone03}%
+    \colorlet{tone04}{printTone04}%
+    \colorlet{tone05}{printTone05}%
+    \colorlet{tone06}{printTone06}%
+    \colorlet{tone07}{printTone07}%
+    \colorlet{tone08}{printTone08}%
+    \colorlet{tone09}{printTone09}%
+    \colorlet{tone10}{printTone10}%
+    \colorlet{tone11}{printTone11}%
+    \colorlet{tone12}{printTone12}%
+    \colorlet{tone13}{printTone13}%
+    \colorlet{tone14}{printTone14}%
+    \colorlet{tone15}{printTone15}%
+    \colorlet{tone16}{printTone16}%
+  \else
+    \colorlet{tone01}{screenTone01}%
+    \colorlet{tone02}{screenTone02}%
+    \colorlet{tone03}{screenTone03}%
+    \colorlet{tone04}{screenTone04}%
+    \colorlet{tone05}{screenTone05}%
+    \colorlet{tone06}{screenTone06}%
+    \colorlet{tone07}{screenTone07}%
+    \colorlet{tone08}{screenTone08}%
+    \colorlet{tone09}{screenTone09}%
+    \colorlet{tone10}{screenTone10}%
+    \colorlet{tone11}{screenTone11}%
+    \colorlet{tone12}{screenTone12}%
+    \colorlet{tone13}{screenTone13}%
+    \colorlet{tone14}{screenTone14}%
+    \colorlet{tone15}{screenTone15}%
+    \colorlet{tone16}{screenTone16}%
+  \fi
+  % 标题文字颜色：略降饱和度，更“克制”
+  \colorlet{accenttitle}{accent!25!black}%
+  \colorlet{secondarytitle}{secondary!25!black}%
+  \colorlet{highlighttitle}{highlight!25!black}%
+  \colorlet{inktitle}{inkgray!25!black}%
+}
 
-% PDF 元信息：标题 / 作者 / 副标题等
+% 初始化为屏幕/印刷对应的完整调色板
+\MathNoteApplyPalette
+% 用户在外部修改 \colorlet 后，可显式调用以刷新
+\newcommand{\MathNoteRefreshColors}{\MathNoteApplyPalette}
+
+% PDF 元信息颜色
 \AtBeginDocument{%
   \hypersetup{%
     pdftitle=\notetitle,
@@ -127,4 +179,3 @@
     pdfcreator={MathNote dual-medium template}%
   }%
 }
-

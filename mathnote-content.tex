@@ -144,12 +144,20 @@
 % --------------------------------------------------
 % Box styles
 % --------------------------------------------------
+% 颜色覆盖率：仅左侧线条 / 轻度着色 / 较实的色块
+\tcbset{
+  mathnote coverage/.is choice,
+  mathnote coverage/line/.style={colback=surface},
+  mathnote coverage/soft/.style={colback=colframe!4!white},
+  mathnote coverage/solid/.style={colback=colframe!10!white},
+}
+
 \tcbset{
   mathnote box/.style={
     enhanced,
     sharp corners,
     boxrule=0.5pt,
-    colback=surface,
+    mathnote coverage=line,
     coltitle=inkgray,
     fonttitle=\sffamily\bfseries,
     left=1em,
@@ -171,7 +179,7 @@
   colback=surface,
   colframe=secondary!70!black,
   coltitle=secondary!15!white,
-  fonttitle=\sffamily\bfseries\color{secondary!35!white},
+  fonttitle=\sffamily\bfseries\color{secondarytitle},
   borderline west={2pt}{0pt}{secondary},
   #1
 }
@@ -182,7 +190,7 @@
   colback=surface,
   colframe=accent!70!black,
   coltitle=accent!10!white,
-  fonttitle=\sffamily\bfseries\color{accent!35!white},
+  fonttitle=\sffamily\bfseries\color{accenttitle},
   borderline west={2pt}{0pt}{accent},
   #1
 }
@@ -193,7 +201,7 @@
   colback=surface,
   colframe=highlight!80!black,
   coltitle=highlight!15!white,
-  fonttitle=\sffamily\bfseries\color{highlight!40!white},
+  fonttitle=\sffamily\bfseries\color{highlighttitle},
   borderline west={2pt}{0pt}{highlight},
   #1
 }
@@ -204,7 +212,7 @@
   colback=surface,
   colframe=inkline,
   coltitle=inkgray!30!white,
-  fonttitle=\sffamily\bfseries\color{inkgray!45!white},
+  fonttitle=\sffamily\bfseries\color{inktitle},
   borderline west={2pt}{0pt}{inkgray},
   #1
 }
@@ -215,7 +223,7 @@
   colback=surface,
   colframe=highlight!60!black,
   coltitle=highlight!20!white,
-  fonttitle=\sffamily\bfseries\color{highlight!45!white},
+  fonttitle=\sffamily\bfseries\color{highlighttitle},
   borderline west={2pt}{0pt}{highlight},
   #1
 }
@@ -227,7 +235,7 @@
   colframe=accent!20!black,
   borderline west={2pt}{0pt}{accent},
   coltitle=accent!10!white,
-  fonttitle=\sffamily\bfseries\color{accent!45!white},
+  fonttitle=\sffamily\bfseries\color{accenttitle},
   #1
 }
 
@@ -237,7 +245,7 @@
   colback=surface,
   colframe=secondary!40!black,
   coltitle=secondary!15!white,
-  fonttitle=\sffamily\bfseries\color{secondary!40!white},
+  fonttitle=\sffamily\bfseries\color{secondarytitle},
   borderline west={2pt}{0pt}{secondary},
   #1
 }
@@ -248,7 +256,7 @@
   colback=surface,
   colframe=inkline,
   coltitle=inkgray!35!white,
-  fonttitle=\sffamily\bfseries\color{inkgray!60!white},
+  fonttitle=\sffamily\bfseries\color{inktitle},
   borderline west={2pt}{0pt}{inkline},
   #1
 }
@@ -260,7 +268,7 @@
   colframe=highlight!80!black,
   borderline west={2pt}{0pt}{highlight},
   coltitle=highlight!20!white,
-  fonttitle=\sffamily\bfseries\color{highlight!45!white},
+  fonttitle=\sffamily\bfseries\color{highlighttitle},
   #1
 }
 
@@ -320,9 +328,32 @@
 }
 \newcommand{\mathnote@listbarend}{\end{tcolorbox}\ignorespacesafterend}
 
-\setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\mathnote@listbarbegin{accent}, after=\mathnote@listbarend}
-\setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, label=\textbf{\arabic*.}, before=\mathnote@listbarbegin[1em]{secondary}, after=\mathnote@listbarend}
-\setlist[description]{font=\sffamily\bfseries, labelsep=0.5em}
+\newif\ifmathnote@colorlists
+\mathnote@colorliststrue
+
+\newcommand{\mathnote@applyliststyle}{%
+  \ifmathnote@colorlists
+    \setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\mathnote@listbarbegin{accent}, after=\mathnote@listbarend}%
+    \setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, label=\textbf{\arabic*.}, before=\mathnote@listbarbegin[1em]{secondary}, after=\mathnote@listbarend}%
+  \else
+    \setlist[itemize]{leftmargin=1.8em, itemsep=0.25em}%
+    \setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, label=\textbf{\arabic*.}}%
+  \fi
+  \setlist[description]{font=\sffamily\bfseries, labelsep=0.5em}%
+}
+
+\newcommand{\MathNoteUseColorLists}{%
+  \mathnote@colorliststrue
+  \mathnote@applyliststyle
+}
+
+\newcommand{\MathNoteUsePlainLists}{%
+  \mathnote@colorlistsfalse
+  \mathnote@applyliststyle
+}
+
+% Ĭ��ʹ�õ�ɫ��б��������б�
+\MathNoteUseColorLists
 
 \renewcommand{\arraystretch}{1.2}
 \captionsetup{font=small, labelfont=bf}

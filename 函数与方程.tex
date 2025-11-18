@@ -1,0 +1,638 @@
+\documentclass[a4paper,11pt]{ctexart}
+\usepackage{mathnote-preamble}
+\MathNoteEnablePrint % 如需印刷版可取消本行注释
+
+\renewcommand{\notetitle}{高中数学：函数与方程模型笔记}
+\renewcommand{\noteauthor}{自学整理}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{函数观、方程观与典型模型}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{整体观：函数与方程是一体的}
+
+\begin{summarybox}[mathnote coverage=line]{本章要点}
+  \begin{itemize}
+    \item 函数是“输入 — 处理 — 输出”的对应关系，方程是“输出等于某个值”的条件。
+    \item 方程的解就是函数图像与水平直线的交点；不等式的解就是“在某侧区域”的点集。
+    \item 抽象函数模型与各种典型图像（对勾函数、飘带函数等）是解题的“通用语言”。
+  \end{itemize}
+\end{summarybox}
+
+\begin{definitionbox}{函数的抽象定义}
+  给定非空集合 $D$ 与 $E$，若对每个 $x\in D$，都有唯一的 $y\in E$ 与之对应，我们称
+  这是一个从 $D$ 到 $E$ 的\emph{函数}，记作
+  \[
+    f\colon D\to E,\quad x\mapsto f(x).
+  \]
+  其中：
+  \begin{itemize}
+    \item $D$ 是\emph{定义域}，记作 $D_f$；
+    \item $E$ 是陪域，$f(D)$ 是\emph{值域}（实际能取到的函数值的集合）。
+  \end{itemize}
+\end{definitionbox}
+
+\subsection{方程视角：交点与零点}
+
+对于函数 $y=f(x)$：
+
+\begin{itemize}
+  \item 方程 $f(x)=k$ 的解 $\Leftrightarrow$ 图像 $y=f(x)$ 与水平直线 $y=k$ 的交点对应的横坐标；
+  \item 特殊地，方程 $f(x)=0$ 的解 $\Leftrightarrow$ 图像 $y=f(x)$ 与 $x$ 轴的交点（\emph{零点}）；
+  \item 不等式 $f(x)\ge k$ 的解集 $\Leftrightarrow$ 图像在直线 $y=k$ 之上（含）部分的横坐标集合。
+\end{itemize}
+
+\begin{summarybox}[mathnote coverage=line]{函数—方程—不等式统一观}
+  \begin{itemize}
+    \item \textbf{函数}给出“图像”和“整体形状”；
+    \item \textbf{方程}给出“具体高度/水平线”；
+    \item \textbf{不等式}给出“在水平线之上/之下的区域”。
+  \end{itemize}
+  所有“解方程、解不等式、讨论零点分布”的问题都可以统一到“研究函数图像与直线的相对位置”这一模型上。
+\end{summarybox}
+
+\section{函数基本概念与抽象函数模型}
+
+\subsection{函数的基本概念与表示方法}
+
+常见表示方式：
+
+\begin{itemize}
+  \item \textbf{解析式}：$y=f(x)$，例如 $y=x^2+1$；
+  \item \textbf{列表}：给若干 $(x,y)$ 对，常用于离散型函数；
+  \item \textbf{图像}：在直角坐标系中描点连线，观察整体形状；
+  \item \textbf{文字描述}：例如“把每个实数 $x$ 映到它的绝对值 $|x|$”。
+\end{itemize}
+
+学习函数时要时刻问自己三个问题：
+
+\begin{enumerate}
+  \item \textbf{它的定义域是什么？}（允许哪些输入）
+  \item \textbf{它的值域大致是什么？}（输出范围、最大最小值）
+  \item \textbf{它的图像形状和性质如何？}（单调、奇偶、周期等）
+\end{enumerate}
+
+\subsection{抽象函数定义域模型}
+
+\begin{definitionbox}{抽象函数定义域模型}
+  当函数 $f(x)$ 的表达式较复杂时，我们不急于具体计算，而是先把它看作一个\emph{黑盒子}：
+  \[
+    f(x) = \Phi(x),
+  \]
+  用表达式结构来系统地列出“允许的 $x$”的条件，从而建立一个\textbf{抽象定义域模型}：
+  \[
+    D_f = \{x\in\mathbb{R}\mid \text{满足所有结构性约束}\}.
+  \]
+\end{definitionbox}
+
+常见的结构性约束包括（列出并联立）：
+
+\begin{itemize}
+  \item \textbf{根式}：$\sqrt{A(x)}$ 中必须有 $A(x)\ge0$；
+  \item \textbf{分式}：$\dfrac{P(x)}{Q(x)}$ 中必须有 $Q(x)\ne0$；
+  \item \textbf{对数}：$\log_a B(x)$ 中必须有 $B(x)>0,a>0,a\ne1$；
+  \item \textbf{复合}：$f(g(x))$ 中必须有 $x\in D_g$ 且 $g(x)\in D_f$。
+\end{itemize}
+
+\begin{examplebox}[mathnote coverage=line]{抽象定义域模型示例}
+  求函数
+  \[
+    f(x)=\sqrt{\dfrac{x-1}{x+2}}+\ln(3-x)
+  \]
+  的定义域。
+
+  \textbf{结构性约束}：
+  \begin{enumerate}
+    \item 根式部分：$\dfrac{x-1}{x+2}\ge0$ 且 $x+2\ne0$；
+    \item 对数部分：$3-x>0$ 即 $x<3$。
+  \end{enumerate}
+
+  第一步先解决分式不等式：
+  \[
+    \dfrac{x-1}{x+2}\ge0,\quad x\ne-2.
+  \]
+  做符号表（或画数轴）可得 $x\le-2$ 或 $x\ge1$，再排除 $x=-2$，得到
+  \[
+    x\in(-\infty,-2)\cup[1,+\infty).
+  \]
+
+  结合对数条件 $x<3$，最终定义域为
+  \[
+    D_f = (-\infty,-2)\cup[1,3).
+  \]
+\end{examplebox}
+
+小结：\textbf{先看结构，再写约束，最后联立求交集}，这是“抽象函数定义域模型”的基本步骤。
+
+\subsection{抽象函数模型：用函数统一看方程与不等式}
+
+把复杂的表达式（例如含参数、含根式、含绝对值的）统统看成一个函数 $f(x)$：
+
+\begin{itemize}
+  \item \textbf{解方程} $F(x)=0$：令 $f(x)=F(x)$，问题等价于研究 $y=f(x)$ 与 $x$ 轴的交点个数与位置；
+  \item \textbf{解不等式} $F(x)\ge0$：等价于 $y=f(x)$ 在 $x$ 轴上方的横坐标集合；
+  \item \textbf{参数问题}：$F(x,m)=0$ 中 $m$ 的取值范围，常化为“给定 $m$ 时交点情况如何”。
+\end{itemize}
+
+在后面的各类模型中，我们都坚持这个统一观点：\textbf{先想函数，再下手算}。
+
+\section{典型图像模型与值域模型}
+
+\subsection{对勾函数与飘带函数模型}
+
+\subsubsection{对勾函数模型}
+
+\begin{definitionbox}{对勾函数模型（本笔记中的约定）}
+  若函数 $f(x)$ 在某个区间 $I$ 上：
+  \begin{itemize}
+    \item 要么先减后增，要么先增后减；
+    \item 只有\textbf{唯一的极值点}；
+    \item 图像整体形状类似“对号”或“V 字形/∧ 字形”，
+  \end{itemize}
+  则称其在 $I$ 上构成一个\emph{对勾函数模型}。
+\end{definitionbox}
+
+典型例子：
+
+\begin{itemize}
+  \item $y=x^2$ 在 $\mathbb{R}$ 上：先减后增，有唯一最小值点 $(0,0)$；
+  \item $y=|x|$ 在 $\mathbb{R}$ 上：V 字形，也是典型对勾；
+  \item $y=x+\dfrac{1}{x}$ 在 $(0,+\infty)$ 上：先减后增。
+\end{itemize}
+
+\textbf{对勾函数模型的作用}（尤其在竞赛与压轴题中）：
+
+\begin{itemize}
+  \item 用来讨论方程 $f(x)=k$ 的解的个数：$k$ 在最值之上/之下/等于最值时交点个数不同；
+  \item 用来求值域：只要确定唯一极值，即可得到区间形式的值域；
+  \item 用来解含参数不等式：参数决定水平线 $y=k$ 的高低，从而决定解集长短。
+\end{itemize}
+
+\subsubsection{飘带函数模型}
+
+\begin{definitionbox}{飘带函数模型（本笔记中的约定）}
+  若函数 $f(x)$ 的图像：
+  \begin{itemize}
+    \item 在某些直线附近渐近（如两条互相垂直的渐近线）；
+    \item 图像像一条“飘动的丝带”贴着渐近线前行；
+  \end{itemize}
+  则称其为\emph{飘带函数模型}。常见于一次分式与一般有理函数，例如
+  \[
+    y = \frac{ax+b}{cx+d},\quad
+    y = a + \frac{b}{x-c}.
+  \]
+\end{definitionbox}
+
+飘带函数模型的关键点：
+
+\begin{itemize}
+  \item 垂直渐近线 $x=x_0$ 来自分母为零；
+  \item 水平（或斜）渐近线来自“$x\to\pm\infty$ 时的趋势”；
+  \item 值域通常是 $\mathbb{R}$ 除去一条水平/斜渐近线对应的函数值。
+\end{itemize}
+
+在下一节“一次分式型函数值域模型”中，我们会具体利用这一图像直观来求值域。
+
+\subsection{一次分式型函数值域模型}
+
+考虑函数
+\[
+  f(x) = \frac{ax+b}{cx+d},\quad c\ne0,\ ad-bc\ne0.
+\]
+
+\subsubsection{代数法求值域}
+
+\textbf{步骤}：令 $y=f(x)$，把 $x$ 看成未知数，讨论方程有解的条件。
+
+\begin{align*}
+  y &= \frac{ax+b}{cx+d} \\
+  \Rightarrow (cx+d)y &= ax + b \\
+  \Rightarrow (cy-a)x &= b - dy \\
+  \Rightarrow x &= \frac{b-dy}{cy-a}.
+\end{align*}
+
+要使 $x$ 为实数，需要：
+
+\begin{itemize}
+  \item 分母 $cy-a\ne0$，否则无定义；
+  \item 只要 $cy-a\ne0$，上式总有实数解 $x$，但仍需保证 $x\ne -\dfrac{d}{c}$（原函数定义域要求）。
+\end{itemize}
+
+考察 $x=-\dfrac{d}{c}$ 是否会出现：由
+\[
+  x = \frac{b-dy}{cy-a} = -\frac{d}{c}
+\]
+得到一元一次方程，最终可以验证：当 $y=\dfrac{a}{c}$ 时，原方程无解。于是
+\[
+  \text{值域} = \mathbb{R}\setminus\left\{\frac{a}{c}\right\}.
+\]
+
+\subsubsection{图像法理解}
+
+把 $f(x)$ 改写成
+\[
+  f(x) = \frac{a}{c} + \frac{ad-bc}{c(cx+d)},
+\]
+可看出：
+
+\begin{itemize}
+  \item 垂直渐近线：$x=-\dfrac{d}{c}$；
+  \item 水平渐近线：$y=\dfrac{a}{c}$；
+  \item 图像为两支双曲线，始终不会取到 $y=\dfrac{a}{c}$，从而值域去掉一个点。
+\end{itemize}
+
+这就是“一次分式型函数值域模型”：\textbf{值域 = 实数集减去水平渐近线对应的函数值}。
+
+\subsection{二次分式型函数值域模型}
+
+典型形式：
+\[
+  f(x) = \frac{ax^2+bx+c}{dx+e},\quad d\ne0.
+\]
+
+\subsubsection{判别式法（把 $x$ 看成未知数）}
+
+令 $y=f(x)$，得
+\[
+  y(dx+e) = ax^2+bx+c
+\]
+整理为关于 $x$ 的二次方程：
+\[
+  (a-yd)x^2 + (b-ye)x + (c-ye) = 0.
+\]
+为了某个 $y$ 能成为函数值，必须存在 $x$ 使上式有实数解，即判别式
+\[
+  \Delta(y) = (b-ye)^2 - 4(a-yd)(c-ye) \ge 0.
+\]
+
+\textbf{模型要点}：
+
+\begin{itemize}
+  \item $\Delta$ 是关于 $y$ 的二次函数：$\Delta(y)=Ay^2+By+C$；
+  \item $Ay^2+By+C\ge0$ 的解集就是 $f(x)$ 的值域；
+  \item 最后还需排除让 $x$ 落在分母为零的情形（若会带来额外限制）。
+\end{itemize}
+
+这就是“二次分式型函数值域模型”：\textbf{把“$x$ 的方程有解”转为“判别式关于 $y$ 的不等式”}。
+
+\subsection{双根式函数值域模型}
+
+考虑
+\[
+  f(x) = \sqrt{u(x)} + \sqrt{v(x)}.
+\]
+
+\begin{definitionbox}{双根式函数值域模型}
+  将两个根式部分视作两个“非负变量”：
+  \[
+    s = \sqrt{u(x)}\ge0,\quad t=\sqrt{v(x)}\ge0,\quad f(x)=s+t.
+  \]
+  若能确定 $s,t$ 的范围，再在平面上用几何方式分析 $s+t$ 的取值范围，就得到 $f(x)$ 的值域。
+\end{definitionbox}
+
+典型情形：已知
+\[
+  m_1\le u(x)\le M_1,\quad m_2\le v(x)\le M_2,\quad m_1,m_2\ge0,
+\]
+则
+\[
+  \sqrt{m_1}\le s\le\sqrt{M_1},\quad \sqrt{m_2}\le t\le\sqrt{M_2}.
+\]
+于是
+\[
+  \sqrt{m_1}+\sqrt{m_2}\le f(x)\le\sqrt{M_1}+\sqrt{M_2},
+\]
+在达到端点时需结合具体函数验证是否能取到。
+
+\begin{examplebox}[mathnote coverage=line]{简单示例}
+  若 $0\le u(x)\le4,\ 1\le v(x)\le9$，则
+  \[
+    0\le\sqrt{u(x)}\le2,\quad 1\le\sqrt{v(x)}\le3,
+  \]
+  故
+  \[
+    1\le f(x)\le5.
+  \]
+\end{examplebox}
+
+很多奥赛与压轴题中的复杂根式，其本质都可以抽象为“多变量非负和的范围问题”。
+
+\subsection{二次函数最值模型}
+
+\begin{definitionbox}{二次函数最值模型}
+  一般二次函数 $y=ax^2+bx+c,\ a\ne0$ 的图像是一条抛物线。
+  \begin{itemize}
+    \item 若 $a>0$，开口向上，有\textbf{最小值}；
+    \item 若 $a<0$，开口向下，有\textbf{最大值}。
+  \end{itemize}
+  其顶点坐标
+  \[
+    x_0=-\frac{b}{2a},\quad y_0=f(x_0)= -\frac{\Delta}{4a},\quad\Delta=b^2-4ac.
+  \]
+\end{definitionbox}
+
+\textbf{模型应用}：
+
+\begin{itemize}
+  \item 求整体最值：直接用顶点坐标；
+  \item 求区间最值：结合单调性分析，考察端点和顶点；
+  \item 与方程、不等式结合：如 $f(x)\ge k$ 是否有解，取决于 $k$ 与最值的大小关系。
+\end{itemize}
+
+\section{函数性质与图像综合模型}
+
+\subsection{复合函数单调性模型}
+
+考虑 $h(x)=f(g(x))$。设 $g$ 在区间 $I$ 上单调，$f$ 在 $g(I)$ 上单调。
+
+\begin{summarybox}[mathnote coverage=line]{复合函数单调性的“同增异减”规则}
+  \begin{itemize}
+    \item 若 $g$ 增、$f$ 增，则 $h$ 增；
+    \item 若 $g$ 减、$f$ 减，则 $h$ 增；
+    \item 若 $g$ 增、$f$ 减，则 $h$ 减；
+    \item 若 $g$ 减、$f$ 增，则 $h$ 减。
+  \end{itemize}
+  记忆：\textbf{“同号为增，异号为减”。}
+\end{summarybox}
+
+这个模型广泛用于：
+
+\begin{itemize}
+  \item 分析复杂函数（含指数、对数、根式）的单调区间；
+  \item 解形如 $f(g(x))\ge k$ 的不等式，配合“脱壳法”使用。
+\end{itemize}
+
+\subsection{函数对称性模型}
+
+\subsubsection{关于原点、坐标轴与直线的对称}
+
+\begin{itemize}
+  \item \textbf{偶函数}：$f(-x)=f(x)$，图像关于 $y$ 轴对称，如 $y=x^2, y=\cos x$；
+  \item \textbf{奇函数}：$f(-x)=-f(x)$，图像关于原点对称，如 $y=x^3,y=\sin x$；
+  \item \textbf{关于直线 $x=a$ 对称}：
+    \[
+      f(2a-x)=f(x),
+    \]
+    图像关于直线 $x=a$ 对称；
+  \item \textbf{关于点 $(a,b)$ 对称}：
+    \[
+      f(2a-x)+f(x)=2b.
+    \]
+\end{itemize}
+
+\subsubsection{模型应用}
+
+\begin{itemize}
+  \item 已知一半图像（如 $x\ge0$ 部分），利用对称性补全整体；
+  \item 利用对称性简化零点分析：例如偶函数的零点要么成对，要么只在 $x=0$；
+  \item 利用对称性构造函数：例如
+    \[
+      f(x)=
+      \begin{cases}
+        g(x), & x\ge0,\\
+        \phantom{-}g(-x), & x<0
+      \end{cases}
+    \]
+    是偶函数；若改为 $-g(-x)$，则为奇函数。
+\end{itemize}
+
+\subsection{函数周期性模型}
+
+\begin{definitionbox}{周期函数}
+  若存在非零常数 $T$，使得对定义域内一切 $x$ 都有
+  \[
+    f(x+T)=f(x),
+  \]
+  则称 $f$ 为\emph{周期函数}，$T$ 为一个周期。
+\end{definitionbox}
+
+常见例子：
+
+\begin{itemize}
+  \item $y=\sin x,\ y=\cos x$ 的最小正周期为 $2\pi$；
+  \item $y=\tan x$ 的最小正周期为 $\pi$。
+\end{itemize}
+
+\textbf{模型要点}：
+
+\begin{itemize}
+  \item 解方程 $f(x)=k$ 时，可先在一个基本周期内求解，再用加上整周期推广；
+  \item 判断周期：若 $f(x)$ 已知周期为 $T$，
+    \[
+      f(\omega x+\varphi)\ \text{的周期} = \frac{T}{|\omega|}.
+    \]
+\end{itemize}
+
+\subsection{图像变换模型}
+
+基本变换：
+
+\begin{itemize}
+  \item 上下平移：$y=f(x)+k$（$k>0$ 向上，$k<0$ 向下）；
+  \item 左右平移：$y=f(x-h)$（$h>0$ 向右，$h<0$ 向左）；
+  \item 纵向伸缩：$y=af(x)$（$|a|>1$ 拉伸，$0<|a|<1$ 压缩）；
+  \item 横向伸缩：$y=f(bx)$（$|b|>1$ 水平压缩，$0<|b|<1$ 水平拉伸）；
+  \item 轴对称：$y=-f(x)$ 关于 $x$ 轴对称，$y=f(-x)$ 关于 $y$ 轴对称。
+\end{itemize}
+
+\textbf{图像变换模型}是处理“已知基本函数，写出变换后的解析式”和“已知图像，猜解析式”的核心工具。
+
+\subsection{半区间求解析式模型}
+
+\begin{definitionbox}{半区间求解析式模型}
+  已知函数在某个\textbf{半区间}（如 $[0,+\infty)$ 或 $[0,T)$）上的图像或表达式，
+  再配合\emph{对称性、周期性或拼接规则}，构造出整个实数轴上的解析式。
+\end{definitionbox}
+
+典型做法：
+
+\begin{itemize}
+  \item 利用奇偶性：
+    \[
+      f(x)=
+      \begin{cases}
+        g(x), & x\ge0,\\
+        g(-x)\ \text{或}\ -g(-x), & x<0;
+      \end{cases}
+    \]
+  \item 利用周期性：先在 $[0,T)$ 上给出 $f(x)$，再定义
+    \[
+      f(x+T)=f(x),
+    \]
+    得到周期函数；
+  \item 利用分段与图像变换：将不同区间的图像视作若干基本函数的平移/翻折组合。
+\end{itemize}
+
+这个模型在题目“已知函数图像的一部分，写出 $f(x)$ 的解析式”中尤其常见。
+
+\section{方程与不等式中的函数思想}
+
+\subsection{“脱壳法”解不等式模型}
+
+\begin{definitionbox}{“脱壳法”基本思想}
+  处理形如 $F(g(x))\ge k$ 的不等式时，把外层函数 $F$ 看成“壳”，先引入中间量
+  \[
+    t=g(x),
+  \]
+  解外层不等式 $F(t)\ge k$（得到关于 $t$ 的条件）然后再回到 $x$ 的层面解 $g(x)$ 满足的范围。
+\end{definitionbox}
+
+典型例子：
+
+\begin{itemize}
+  \item $\sqrt{g(x)}\ge a$，$a\ge0$：先设 $t=\sqrt{g(x)}$，有 $t\ge a$ 且 $t\ge0$，得到 $g(x)\ge a^2$；
+  \item $\log_a g(x)\ge k$，$a>1$：设 $t=\log_a g(x)$，$t\ge k\Rightarrow g(x)\ge a^k$；
+  \item $e^{g(x)}\ge m$，$m>0$：设 $t=g(x)$，则 $e^t\ge m\Rightarrow t\ge\ln m\Rightarrow g(x)\ge\ln m$。
+\end{itemize}
+
+\textbf{关键}：外层函数 $F$ 的\emph{单调性}。若 $F$ 单调增加，则不等号方向保持；若单调减少，不等号方向需要翻转。
+
+\subsection{“机场”模型：绝对值与距离}
+
+\begin{definitionbox}{“机场”模型的几何解释}
+  在数轴上，$|x-a|$ 表示点 $x$ 到点 $a$ 的距离。
+  于是
+  \[
+    |x-a|+|x-b|
+  \]
+  表示点 $x$ 到两个“机场” $a,b$ 的路程之和。“机场模型”把含绝对值的不等式转化为\emph{距离关系}。
+\end{definitionbox}
+
+基本结论（可视为模型核心）：
+
+\[
+  |x-a|+|x-b|\ge|a-b|,\quad\text{对任意实数 }x\成立。
+\]
+\[
+  |x-a|+|x-b|=|a-b|\iff x\in[a,b]\ \text{或}\ [b,a].
+\]
+
+应用：
+
+\begin{itemize}
+  \item 解不等式 $|x-a|+|x-b|\le k$ 时，可理解为“点 $x$ 到两点的路程和不超过 $k$”，从图像或数轴上求解；
+  \item 更一般的含多个绝对值不等式，可分段或用几何直观帮助理解与检验。
+\end{itemize}
+
+\subsection{二次方程的零点分布模型}
+
+考虑 $ax^2+bx+c=0,\ a\ne0$。
+
+\begin{summarybox}[mathnote coverage=line]{判别式与图像统一视角}
+  \begin{itemize}
+    \item 判别式：$\Delta=b^2-4ac$；
+    \item $\Delta>0$：有两个不等实根，抛物线与 $x$ 轴有两个交点；
+    \item $\Delta=0$：有一个重根，抛物线与 $x$ 轴相切；
+    \item $\Delta<0$：无实根，抛物线与 $x$ 轴无交点。
+  \end{itemize}
+\end{summarybox}
+
+\textbf{零点分布模型}常见应用：
+
+\begin{itemize}
+  \item 与区间结合：例如“方程在 $(\alpha,\beta)$ 内有两个不同实根”，可以用“顶点位置 + 判别式”来刻画；
+  \item 与参数结合：例如 $ax^2+bx+c-m=0$ 的根随 $m$ 的变化，可视为抛物线整体上下平移；
+  \item 与不等式结合：如 $ax^2+bx+c\ge0$ 的解集形态，对应“抛物线在 $x$ 轴上方/下方的区域”。
+\end{itemize}
+
+\subsection{嵌套函数零点模型}
+
+\begin{definitionbox}{嵌套函数零点模型}
+  对形如
+  \[
+    f(f(x))=0,\quad\text{或一般地 }f(g(x))=0
+  \]
+  的方程，先求出“外层函数的零点集合”，再求“内层函数取这些零点的解集”，两者嵌套。
+\end{definitionbox}
+
+基本步骤：
+
+\begin{enumerate}
+  \item 求 $A=\{t\mid f(t)=0\}$；
+  \item 对每个 $t\in A$，求解 $g(x)=t$ 的解集；
+  \item 总解集为上述各解集的并。
+\end{enumerate}
+
+示意例：若 $f(x)=x^2-1$，方程 $f(f(x))=0$ 等价于
+\[
+  f(x)^2-1=0\Rightarrow f(x)=\pm1.
+\]
+即
+\[
+  x^2-1=1\quad\text{或}\quad x^2-1=-1,
+\]
+得到四个解 $x=\pm\sqrt{2},\pm0$（再逐个检验）。整个过程体现了“外层零点 $\to$ 内层方程”的嵌套结构。
+
+\section{与高等数学的关联}
+
+\subsection{极限与连续：从图像平滑性到“无跳跃”}
+
+在高等数学中：
+
+\begin{itemize}
+  \item \emph{极限}刻画函数在某点附近的“趋近行为”；
+  \item \emph{连续}大致对应图像“不抬笔能画完”的性质；
+  \item 高中中的“左右极限相等、不存在可去间断点”等直观，其实都是微积分中更严谨概念的影子。
+\end{itemize}
+
+很多高中函数题（例如“函数值域的极限定性”、“零点存在性”）背后都隐含着\emph{极限与连续}的思想。
+
+\subsection{导数与单调性：对勾函数的微积分视角}
+
+若函数可导，则：
+
+\begin{itemize}
+  \item $f'(x)>0$ 的区间上，$f$ 单调递增；
+  \item $f'(x)<0$ 的区间上，$f$ 单调递减；
+  \item $f'(x_0)=0$ 且左右导数号相反时，$x_0$ 为极值点。
+\end{itemize}
+
+\textbf{对勾函数模型}在高等数学里，可以用导数来刻画“先负后正”或“先正后负”的变化趋势，这也是很多竞赛题在极限、导数部分的延伸。
+
+\subsection{函数空间与抽象函数模型}
+
+在更高层次的数学中，“函数集”本身会被当作一个新的空间来研究：
+
+\begin{itemize}
+  \item 把函数看作“向量”，可以做加法、数量乘法，形成函数空间；
+  \item 把函数看作“算子”，可以有更抽象的方程（如函数方程、微分方程）；
+  \item 高中里对“抽象函数”的练习，是通往这些领域的第一步。
+\end{itemize}
+
+\begin{summarybox}[mathnote coverage=soft]{从高中到“高能数学”的桥梁}
+  \begin{itemize}
+    \item 定义域、值域 $\Rightarrow$ 后续的\emph{定义域、像集、值域、函数空间}；
+    \item 单调性、最值 $\Rightarrow$ 后续的\emph{导数、极值、凸性}；
+    \item 零点、交点 $\Rightarrow$ 后续的\emph{方程、方程组、非线性分析}；
+    \item 图像变换 $\Rightarrow$ 后续的\emph{坐标变换、线性变换、仿射变换}。
+  \end{itemize}
+\end{summarybox}
+
+\section{总结与自学建议}
+
+\begin{summarybox}[mathnote coverage=line]{本笔记结构回顾}
+  \begin{itemize}
+    \item 通过\textbf{抽象函数定义域模型}，系统处理复杂表达式的合法输入；
+    \item 利用\textbf{对勾函数、飘带函数}等典型图像模型，直观把握值域与解的个数；
+    \item 对\textbf{一次分式型、二次分式型、双根式}等重要类型建立统一的值域模型；
+    \item 通过\textbf{复合函数单调性、对称性、周期性、图像变换、半区间构造}，搭建函数性质的整体框架；
+    \item 在\textbf{“脱壳法”、机场模型、零点分布、嵌套函数零点}中体验“用函数看方程与不等式”的思想；
+    \item 初步感受这些内容与\textbf{高等数学}之间的联系，为后续学习打基础。
+  \end{itemize}
+\end{summarybox}
+
+\begin{notebox}{自学时可尝试的练习方向}
+  \begin{enumerate}
+    \item 自己设计若干函数，练习用“抽象函数定义域模型”写出定义域；
+    \item 针对每一种值域模型（一次分式、二次分式、双根式），至少完成 3--5 道带参数的自编题；
+    \item 为某个你熟悉的函数（如 $y=\sin x$）画出多种“图像变换版本”，并写出对应解析式；
+    \item 自己编一道含绝对值的不等式，用“机场模型”的距离观来解释解集；
+    \item 找几道竞赛或压轴题，尝试用本笔记中“函数—方程—不等式统一观”的语言给出二次解读。
+  \end{enumerate}
+\end{notebox}
+
+\end{document}
+

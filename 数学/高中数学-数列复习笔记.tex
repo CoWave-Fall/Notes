@@ -47,7 +47,11 @@
 \renewcommand{\noteauthor}{生成式人工智能，人工审阅通过}
 \renewcommand{\notedate}{\today}
 \renewcommand{\notesubtitle}{通项与求和模型\quad 典型题型全景梳理}
-\renewcommand{\noteversion}{v1.0}
+
+\renewcommand{\noteversionmark}{%
+  第一版\quad|\quad2025年11月16日\\
+  第二版\quad|\quad2025年11月18日
+}
 
 % 本专题中一般列表采用普通样式，避免过多色块
 \setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\relax, after=\relax}
@@ -85,7 +89,7 @@
   \begin{itemize}
     \item 以 \keyword{知识网络} + \keyword{典型模型} + \keyword{高考风格例题} 的结构构成一张可反复翻阅的数列「工具地图」；
     \item 贯穿「\inlinehint{通项}–\inlinehint{求和}–\inlinehint{不等式}–\inlinehint{归纳法}」主线，适当衔接高等数学中的极限与级数思想；
-    \item 每一类模型配套「\ModeBadge{常见陷阱}」与「\ModeBadge[highlight]{解题套路}」，方便考前快速回忆。
+    \item 每一类模型配套「\ModeBadge{常见陷阱}」与「\ModeBadge[highlight]{解题形式}」，方便考前快速回忆。
   \end{itemize}
 \end{minipage}
 \end{center}
@@ -214,6 +218,21 @@
   \end{center}
 \end{summarybox}
 
+\begin{notebox}{关于 $a_{n+1}-a_n=f(n)$ 中的 $f(n)$ 与连乘号}
+  在累加模型中，$f(n)$ 的形式直接决定了 $a_n$ 与 $S_n$ 的「增长阶数」：
+  \begin{itemize}
+    \item 若 $f(n)$ 为常数，则 $a_n$ 通常是一阶多项式，$S_n$ 是二阶多项式；
+    \item 若 $f(n)$ 为一次多项式，则 $a_n$ 往往是二阶多项式，$S_n$ 是三阶多项式；
+    \item 若 $f(n)$ 为二次多项式，可以预期 $a_n$ 是三次多项式，以此类推，这是「离散积分」的直观对应；
+    \item 若 $f(n)$ 为 $q^n$ 等比型，则 $a_n$ 常含有 $q^n$，和式 $S_n$ 与等比数列求和紧密相关；
+    \item 若 $f(n)$ 为 $\dfrac{1}{n^p}$ 之类的「调和型」，则 $a_n$ 常与对数或幂函数的弱增长相联系，在高等数学中会用到比较判别法来判断其和的敛散性。
+  \end{itemize}
+  表中出现的 $\displaystyle\prod(1+k_n)$ 中的大写 $\prod$ 读作「连乘号」，含义与大写 $\displaystyle\sum$（连加号）类似：
+  \[
+    \prod_{k=1}^{n}\bigl(1+k_k\bigr)=(1+k_1)(1+k_2)\cdots(1+k_n).
+  \]
+\end{notebox}
+
 \clearpage
 % === Part 3: 通项求法与递推模型 ===
 \section{通项求法与递推模型}
@@ -282,7 +301,7 @@
   令 $b_n=a_n-n^2$，则 $b_{n+1}=b_n$，于是 $b_n\equiv b_1=a_1-1^2=0$。从而 $a_n=n^2$ 与上式对照可修正为 $a_n=n^2-n+1$。
 \end{examplebox}
 
-\begin{sideinfobox}{构造法常见套路}
+\begin{sideinfobox}{构造法常见形式}
   \begin{itemize}
     \item 将 $a_n$ 与 $n$ 的某个简单函数（$n,n^2,q^n$ 等）组合；
     \item 对递推式进行\keyword{移项}、\keyword{配方}或\keyword{系数调整}，试图出现「不变式」；
@@ -301,12 +320,47 @@
   \[
     \lambda^2+p\lambda+q=0.
   \]
+  之所以会得到这样的二次方程，可以从「猜一个形如\keyword{等比数列}的解」出发：假设存在常数 $\sigma$ 使得
+  \[
+    a_n=\sigma^n,
+  \]
+  代入原递推式
+  \[
+    \sigma^{n+2}+p\sigma^{n+1}+q\sigma^n=0,
+  \]
+  把 $\sigma^n$ 提出得
+  \[
+    \sigma^n(\sigma^2+p\sigma+q)=0.
+  \]
+  若希望数列不恒为零，就必须有
+  \[
+    \sigma^2+p\sigma+q=0,
+  \]
+  这个关于「比值」$\sigma$ 的方程就叫做\keyword{特征方程}；习惯上也常用 $\lambda$ 记根，本质相同。
   \begin{itemize}
     \item 若有两个不等实根 $\lambda_1,\lambda_2$，则 $a_n=A\lambda_1^n+B\lambda_2^n$；
     \item 若为重根 $\lambda$，则 $a_n=(A+Bn)\lambda^n$。
   \end{itemize}
-  在高等数学中，这与线性微分方程 $y''+py'+qy=0$ 的解法是同一套路。
+  在高等数学中，这与线性微分方程 $y''+py'+qy=0$ 的解法是同一形式。
 \end{definitionbox}
+
+\begin{sideinfobox}{与线性微分方程的对应}
+  在高等数学中，常系数线性齐次微分方程
+  \[
+    y''+py'+qy=0
+  \]
+  也采用「猜指数型解」的思路：设 $y=e^{rx}$，代入可得到特征方程 $r^2+pr+q=0$。
+  若其有两个不同实根 $r_1,r_2$，通解为
+  \[
+    y(x)=C_1e^{r_1x}+C_2e^{r_2x};
+  \]
+  若为重根 $r$，则通解为
+  \[
+    y(x)=(C_1+C_2x)e^{rx}.
+  \]
+  与本节中数列的结论 $a_n=A\lambda_1^n+B\lambda_2^n$ 或 $(A+Bn)\lambda^n$ 完全对应：
+  把「连续变量」 $x$ 换成「离散变量」 $n$，把指数函数 $e^{rx}$ 换成等比数列 $\lambda^n$，就从微分方程世界来到了线性递推数列的世界。
+\end{sideinfobox}
 
 \begin{examplebox}{典型题·特征根法}
   数列 $\{a_n\}$ 满足
@@ -425,6 +479,14 @@
   即 $a_n=n$。
 \end{examplebox}
 
+\begin{sideinfobox}{奇偶项与不等式结合的常见形式}
+  \begin{itemize}
+    \item 证明关于 $\{a_n\}$ 的不等式时，可以先将命题拆成对奇数项 $\{a_{2n-1}\}$ 与偶数项 $\{a_{2n}\}$ 的两个不等式，分别分析后再合并结论；
+    \item 在估计和式 $\sum a_n$ 时，可以把奇数项与偶数项拆开：$\sum_{n=1}^{2m}a_n=\sum_{n=1}^{m}a_{2n-1}+\sum_{n=1}^{m}a_{2n}$，分别与两个更简单的和比较，从而得到整体的上下界；
+    \item 若奇数项与偶数项两条子数列都收敛到同一极限 $L$，则原数列也收敛到 $L$，这在处理带有「交错奇偶」结构的不等式或极限题时非常有用。
+  \end{itemize}
+\end{sideinfobox}
+
 \begin{notebox}{解题提示}
   \begin{itemize}
     \item 看到「隔一个相加/相减」的递推式时，优先尝试奇偶项分列；
@@ -508,6 +570,18 @@
   该式在高等数学中对应于\keyword{调和级数}部分和，常与积分比较法联系。
 \end{examplebox}
 
+\begin{sideinfobox}{调和级数的进一步认识}
+  令
+  \[
+    H_n=\sum_{k=1}^{n}\frac{1}{k},
+  \]
+  则 $\{H_n\}$ 称为\keyword{调和级数的部分和}。它不会收敛到某个有限极限，而是随着 $n$ 缓慢增大，大致满足
+  \[
+    H_n\approx\ln n+\gamma\quad(\gamma\text{ 为常数}).
+  \]
+  在高等数学中，常将 $\sum\dfrac{1}{k}$ 看作「临界参照级数」，用\keyword{比较判别法}说明很多级数与它比较后发散或收敛；在本专题中，可以把它记作一个「典型的慢速发散模型」，用于估计类似 $\sum\dfrac{1}{ak+b}$ 的和式大小。
+\end{sideinfobox}
+
 \begin{examplebox}{累乘模型}
   求
   \[
@@ -560,6 +634,22 @@
   \]
   这就是典型的\keyword{裂项相消}模型。
 \end{examplebox}
+
+\begin{sideinfobox}{关于 $\sum_{k=1}^n k^2$ 的一个推导}
+  利用恒等式
+  \[
+    (k+1)^3-k^3=3k^2+3k+1,
+  \]
+  对 $k=1,2,\dots,n$ 逐项相加，左边得到 $(n+1)^3-1$，右边得到
+  \[
+    3\sum_{k=1}^n k^2+3\sum_{k=1}^n k+\sum_{k=1}^n1.
+  \]
+  再代入已知的 $\displaystyle\sum_{k=1}^n k=\frac{n(n+1)}{2}$ 和 $\sum_{k=1}^n1=n$，便可解出
+  \[
+    \sum_{k=1}^n k^2=\frac{n(n+1)(2n+1)}{6},
+  \]
+  从而解释了「平方和是一个三次多项式」的规律，也为分组求和中经常出现的 $n(n+1)(2n+1)$ 形式提供了来源。
+\end{sideinfobox}
 
 \subsection{错位相减法求和模型}
 
@@ -632,6 +722,17 @@
   在数列问题中，常用于证明\keyword{通项公式}或\keyword{求和公式}。
 \end{definitionbox}
 
+\begin{notebox}{数学归纳法的标准书写步骤}
+  在正式解答中，可以按照如下模板来组织文字：
+  \begin{itemize}
+    \item \textbf{第一步（写明命题）}：先清楚地写出 $P(n)$ 的内容，例如「$P(n)$：$1+2+\cdots+n=\dfrac{n(n+1)}{2}$」；
+    \item \textbf{第二步（验证起步）}：代入 $n=1$（或题目指定的起始值），计算左右两边，说明 $P(1)$ 成立；
+    \item \textbf{第三步（写归纳假设）}：写成「设当 $n=k$ 时命题成立，即 …… 」并把等式/不等式完整写出；
+    \item \textbf{第四步（证明 $k+1$）}：在上一步的等式/不等式基础上，通过运算推出命题对 $n=k+1$ 也成立；
+    \item \textbf{第五步（写总结语）}：最后加上一句「由数学归纳法，命题对一切正整数 $n$（或 $n\ge n_0$）成立」，完成整体论证。
+  \end{itemize}
+\end{notebox}
+
 \begin{examplebox}{典型题·用归纳法证明求和公式}
   证明
   \[
@@ -684,6 +785,20 @@
     \item 与高等数学中\keyword{比较判别法}、\keyword{柯西收敛准则}等思想相通。
   \end{itemize}
 \end{definitionbox}
+
+\begin{sideinfobox}{比较判别法的基本图像（与高数的联系）}
+  在高等数学中，判断无穷级数 $\sum a_n$ 的收敛性时，常用\keyword{比较判别法}：
+  \begin{itemize}
+    \item 若 $0\le a_n\le b_n$，且 $\sum b_n$ 收敛，则 $\sum a_n$ 也收敛；
+    \item 若 $0\le b_n\le a_n$，且 $\sum b_n$ 发散，则 $\sum a_n$ 也发散；
+    \item 典型的比较对象包括等比级数 $\sum q^n$ 和调和级数 $\sum\dfrac{1}{n}$，它们分别给出了「快速收敛」和「极慢发散」的两种典型行为；
+    \item 在本节的数列不等式与和式估计中，可以把要处理的和 $S_n$ 放在两个已知和之间，例如
+    \[
+      \sum_{k=1}^{n}b_k\le S_n\le\sum_{k=1}^{n}c_k,
+    \]
+    再利用 $\sum b_k$ 与 $\sum c_k$ 的性质来夹逼或比较 $S_n$ 的大小及极限，这实际上就是比较判别思想在高中阶段的离散版本。
+  \end{itemize}
+\end{sideinfobox}
 
 \begin{examplebox}{典型题·单调与上界}
   数列 $a_n=\left(1+\dfrac{1}{n}\right)^n$。证明 $\{a_n\}$ 单调递增且有上界。

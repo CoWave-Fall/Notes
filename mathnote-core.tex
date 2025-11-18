@@ -142,15 +142,18 @@
 % Core packages —— 几何版式、字体系统与常用功能包
 % --------------------------------------------------
 \usepackage{geometry}
-\geometry{
-  paper=a4paper,
+% �ʼǱ�ʽĬ��ֵ��ͨ�� \MathNoteGeometry �ṩ������ͨ�����µ��ļ��� renew
+% �ο� AGENTS.md �еı�ע���Ƽ�ͨ���˽ӿڸ���版式��
+\providecommand{\MathNoteGeometry}{%
+  a4paper,% ʹ�� geometry �ṩ�ı�׼ֽ��� alias
   top=2.35cm,
   bottom=2.4cm,
   left=2.1cm,
   right=2.1cm,
   headheight=16pt,
-  headsep=14pt
+  headsep=14pt,
 }
+\geometry{\MathNoteGeometry}
 
 % 字体与编译引擎抽象
 \usepackage{fontspec}
@@ -430,6 +433,13 @@
   \fi
 }
 
+% �ۺ�һ�������û��ɿ����ĵ����壬�Ա㹻��ʱ�ص�
+\newcommand{\MathNoteSetupFonts}{%
+  \mathnote@setlatinfonts
+  \mathnote@setcjkfonts
+  \renewcommand{\kaishu}{\CJKfamily{kai}}%
+}
+
 % 使用 xeCJK 管理中文字体与标点行为
 \usepackage{xeCJK}
 \xeCJKsetup{
@@ -445,14 +455,14 @@
 \displaywidowpenalty=10000
 
 % 在导言末尾调用一次字体设置，确保主字体就绪
-\mathnote@setlatinfonts
-\mathnote@setcjkfonts
-\renewcommand{\kaishu}{\CJKfamily{kai}}
+\MathNoteSetupFonts
 
 % 版面微调与行距
 \usepackage{microtype}
 \usepackage{setspace}
-\setstretch{1.15}
+\providecommand{\MathNoteLineSpread}{1.15}
+\setstretch{\MathNoteLineSpread}
+% \setstretch{1.15} % moved to \MathNoteLineSpread for customization
 
 % 数学与图形相关常用宏包
 \usepackage{amsmath, amssymb, amsthm, mathtools}

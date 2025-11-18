@@ -1,0 +1,671 @@
+\documentclass[a4paper,11pt]{ctexart}
+\usepackage{mathnote-preamble}
+% \MathNoteEnablePrint % 如需印刷版可取消注释
+
+\renewcommand{\notetitle}{高中数学导数与不等式模型笔记}
+\renewcommand{\notesubtitle}{从切线、公切线到泰勒与不等式}
+\renewcommand{\noteauthor}{自学版}
+\renewcommand{\notedate}{\today}
+\renewcommand{\noteversion}{v1.1}
+
+\setcounter{tocdepth}{2}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{导数与不等式模型}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  \MathNoteVersionBlock
+  \vspace*{\fill}
+\end{minipage}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+\newpage
+
+\section{导言：从“题型”到“模型”}
+
+高中阶段的导数与不等式题目，看似千变万化，实则大多可以归入少数几个\emph{模型族}：
+\emph{切线模型、公切线模型、含参讨论模型、知极值 / 最值求参模型、导数研究零点模型、
+洛必达法则模型、泰勒公式近似模型、不等式函数化模型} 等。
+
+\begin{summarybox}{本笔记的学习目标}
+  \begin{enumerate}
+    \item 建立导数应用题与不等式题背后的\emph{统一模型框架}；
+    \item 熟悉：切线模型、公切线模型、含参讨论模型、知极值 / 最值求参模型；
+    \item 掌握：导数研究函数零点模型、隐零点模型、极值点偏移与端点效应；
+    \item 会用：洛必达法则、泰勒展开处理极限与不等式估计；
+    \item 理解：构造函数法、放缩、凹凸反转、主元法、数列模型等不等式思路；
+    \item 建立：与高等数学（微积分、凸分析、数值分析）的\emph{联系意识}。
+  \end{enumerate}
+\end{summarybox}
+
+本笔记按“模型 $\Rightarrow$ 原理 $\Rightarrow$ 模板 $\Rightarrow$ 例题 $\Rightarrow$ 总结”的方式展开，
+适合作为自学或考前系统梳理的参考材料。
+
+\section{切线模型与公切线模型}
+
+\subsection{切线模型：局部线性与几何接触}
+
+\subsubsection{基本思想}
+
+设函数 $y=f(x)$ 在 $x_0$ 处可导，则
+\begin{align*}
+  f'(x_0)=\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}
+\end{align*}
+表示函数在 $x_0$ 处的瞬时变化率，也就是图像在该点的\emph{切线斜率}。
+
+\begin{definitionbox}{切线方程的三种常用形式}
+  对 $y=f(x)$ 在点 $(x_0,f(x_0))$ 的切线，可以写成
+  \begin{enumerate}
+    \item 斜截式：$y = f'(x_0)(x-x_0)+f(x_0)$；
+    \item 点斜式：$y - f(x_0) = f'(x_0)(x-x_0)$；
+    \item 一般式：$f'(x_0)x - y + f(x_0)-f'(x_0)x_0 = 0$。
+  \end{enumerate}
+\end{definitionbox}
+
+切线模型常出现在：
+\begin{enumerate}
+  \item \textbf{切线求参：} 一族直线与曲线相切，求参数或参数范围；
+  \item \textbf{最短距离 / 最值：} “点到曲线的最短距离”常对应“过该点的一条切线”；
+  \item \textbf{局部近似：} 在 $x_0$ 附近用切线近似函数：$f(x)\approx f(x_0)+f'(x_0)(x-x_0)$。
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \draw[mathnote grid] (-0.2,-0.2) grid (4.2,4.2);
+    \draw[mathnote lines,->] (-0.2,0) -- (4.3,0) node[below] {$x$};
+    \draw[mathnote lines,->] (0,-0.2) -- (0,4.3) node[left] {$y$};
+    % 曲线示意：抛物线 y=(x-1)^2+1 的变形
+    \draw[mathnote lines,domain=-0.1:3.3,smooth,samples=100]
+      plot(\x,{0.6*(\x-1)^2+1});
+    \coordinate (A) at (1,1);
+    \filldraw[accent] (A) circle (1.1pt) node[above right] {$(x_0,f(x_0))$};
+    % 在 x_0 处的切线
+    \draw[mathnote lines,line width=0.9pt]
+      (0,0.4) -- (3.4,1.8);
+    \node[anchor=south east,inner sep=2pt,text=inkgray]
+      at (3.2,1.9) {$y=f'(x_0)(x-x_0)+f(x_0)$};
+  \end{tikzpicture}
+  \caption{切线模型示意：在 $x_0$ 处用切线近似曲线}
+\end{figure}
+
+\subsubsection{解题模板：切线求参}
+
+典型题型：给定曲线 $y=f(x)$ 与直线 $y=kx+b$ 相切，求 $k,b$ 或 $k$ 的范围。
+
+\begin{summarybox}{切线求参的一般步骤}
+  \begin{enumerate}
+    \item \textbf{列接触方程：} 解联立
+      \[
+        \begin{cases}
+          f(x)=kx+b\\
+          f'(x)=k
+        \end{cases}
+      \]
+      消去 $k$ 或 $b$，得到关于 $x$ 的方程；
+    \item \textbf{保证“刚好一解”：} 通常等价于判别式为零、顶点落在 $x$ 轴上等条件；
+    \item \textbf{反求参数：} 利用判别式、不等式、单调性等得到 $k,b$ 的取值范围。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：抛物线的切线族}
+  已知函数 $f(x)=x^2-2x+3$，求与其图像相切且与直线 $x=1$ 交于点 $P$ 的切线方程。
+\end{examplebox}
+
+\textbf{思路概述：}
+切线过点 $P(1,y_P)$，又在曲线 $y=x^2-2x+3$ 上。
+设切点为 $(x_0,f(x_0))$，切线斜率 $k=f'(x_0)=2x_0-2$。
+切线方程
+\[
+  y-f(x_0)=k(x-x_0)
+\]
+代入点 $(1,y_P)$，再利用 $P$ 在曲线上（$y_P=f(1)$），消去 $y_P$，得到关于 $x_0$ 的方程，
+解出 $x_0$ 后即可写出切线方程。
+
+\subsection{公切线模型：两曲线的“共同接触”}
+
+\subsubsection{公切线条件}
+
+设两条曲线 $y=f(x)$ 与 $y=g(x)$ 在 $x_0$ 处有公共切线，则必须满足
+\[
+  f(x_0)=g(x_0),\qquad f'(x_0)=g'(x_0).
+\]
+若公切线为 $y=kx+b$，则还有
+\[
+  k=f'(x_0)=g'(x_0),\quad f(x_0)=kx_0+b=g(x_0).
+\]
+
+\begin{conceptbox}{公切线模型的典型场景}
+  \begin{enumerate}
+    \item 圆与抛物线、圆与直线之间的公切线问题；
+    \item 两个函数图像之间“恰好一个交点”的问题；
+    \item 用公切线逼近“最大 / 最小间距”的问题。
+  \end{enumerate}
+\end{conceptbox}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \draw[mathnote lines,->] (-3,0) -- (3.2,0) node[below] {$x$};
+    \draw[mathnote lines,->] (0,-3) -- (0,3.2) node[left] {$y$};
+    % 圆 x^2+y^2=4
+    \draw[mathnote lines] (0,0) circle [radius=2];
+    % 抛物线 y=x^2-2 的示意（略做缩放）
+    \draw[mathnote lines,domain=-2:2,smooth,samples=120]
+      plot(\x,{0.6*(\x*\x)-2});
+    % 一条公切线示意
+    \draw[mathnote lines,line width=0.9pt]
+      (-2.6,2.1) -- (2.6,0.1);
+    \node[anchor=south west,inner sep=1.5pt,text=inkgray]
+      at (1.4,0.5) {公切线};
+  \end{tikzpicture}
+  \caption{圆与抛物线之间的公切线示意图}
+\end{figure}
+
+\subsubsection{解题模板：公切线求参 / 范围}
+
+\begin{summarybox}{公切线求参的一般步骤}
+  \begin{enumerate}
+    \item 设待求公切线为 $y=kx+b$，或设切点为 $(x_0,y_0)$；
+    \item 对每条曲线分别写出切线方程，并与 $y=kx+b$ 对应；
+    \item 利用 $k,b$ 相等，构成关于 $x_0,k,b$ 的方程组；
+    \item 消元，得到参数的取值条件或范围；
+    \item 若题目要求“恰有一条公切线”，通常还要用判别式或单调性保证“唯一性”。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：圆与抛物线的公切线}
+  已知圆 $x^2+y^2=4$ 与抛物线 $y=x^2-2$，求二者的公切线方程。
+\end{examplebox}
+
+\textbf{思路概述：}
+\begin{enumerate}
+  \item 设公切线为 $y=kx+b$，分别与圆、抛物线相切；
+  \item “圆与直线相切”：点到直线距离 $d=\dfrac{|b|}{\sqrt{1+k^2}}=2$；
+  \item “抛物线与直线相切”：联立 $x^2-2=kx+b$，得到一元二次方程，其判别式为零；
+  \item 联立两条件，解出 $k,b$。
+\end{enumerate}
+
+\section{含参讨论与知极值求参模型}
+
+\subsection{含参讨论模型：一题多面}
+
+\subsubsection{基本结构}
+
+含参函数一般写作 $f(x;m)$，其中 $m$ 为参数。常见任务有：
+\begin{enumerate}
+  \item 对不同 $m$，讨论方程 $f(x;m)=0$ 的根的个数与位置；
+  \item 对不同 $m$，讨论函数的单调性、极值个数与最值大小；
+  \item 对不同 $m$，使不等式 $f(x;m)\ge 0$（或 $\le 0$）对 $x$ 恒成立 / 有解。
+\end{enumerate}
+
+\begin{summarybox}{含参讨论的一条主线}
+  \begin{enumerate}
+    \item \textbf{固定 $m$ 看 $x$：} 把 $m$ 当常数，先分析 $f(\cdot;m)$ 的图像与性质；
+    \item \textbf{抓关键函数：} 找极值点函数 $x_0(m)$、零点函数 $\xi(m)$ 等；
+    \item \textbf{随 $m$ 变化：} 看极值和零点如何随 $m$ 移动，找出“转折参数”；
+    \item \textbf{分类讨论：} 以临界参数为界，逐区间讨论并总结结论。
+  \end{enumerate}
+\end{summarybox}
+
+\subsubsection{例：含参函数零点个数}
+
+例如：讨论方程
+\[
+  f(x;m)=x^3-3x+m=0
+\]
+的实根个数。
+
+\textbf{思路：}
+\begin{enumerate}
+  \item 求导：$f'(x;m)=3x^2-3=3(x-1)(x+1)$，得到极值点 $x=-1,1$；
+  \item 计算函数值：$f(-1;m)=2+m$，$f(1;m)=m-2$；
+  \item 结合“左下右上”的整体趋势与极值点的符号，分类讨论 $m$：
+    \begin{itemize}
+      \item $m<-2$：两极值点都在 $x$ 轴下方，只有一实根；
+      \item $m=-2$：左极值点在 $x$ 轴上，有两个实根（其中一个为重根）；
+      \item $-2<m<2$：左极值点在轴上方、右极值点在轴下方，三实根；
+      \item $m=2$：右极值点在 $x$ 轴上，两实根；
+      \item $m>2$：两极值点都在 $x$ 轴上方，一实根。
+    \end{itemize}
+\end{enumerate}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=0.9]
+    \draw[mathnote grid] (-2.2,-3.2) grid (2.2,3.2);
+    \draw[mathnote lines,->] (-2.2,0) -- (2.4,0) node[below] {$x$};
+    \draw[mathnote lines,->] (0,-3.2) -- (0,3.4) node[left] {$y$};
+    % 立方函数 x^3-3x
+    \draw[mathnote lines,domain=-2:2,smooth,samples=200]
+      plot(\x,{(\x*\x*\x-3*\x)/1.3});
+    \filldraw[accent] (-1,2/1.3) circle (1pt) node[above left] {$A(-1,f(-1))$};
+    \filldraw[accent] (1,-2/1.3) circle (1pt) node[below right] {$B(1,f(1))$};
+  \end{tikzpicture}
+  \caption{函数 $x^3-3x+m$ 的极值点与零点结构示意}
+\end{figure}
+
+这类问题本质上就是“导数研究函数零点模型”，只是多了参数 $m$。
+
+\subsection{知极值 / 最值求参模型}
+
+\subsubsection{常见表述}
+
+题目往往给出：
+\begin{itemize}
+  \item “函数在某区间上有且仅有一个极大值 / 极小值”；
+  \item “函数在实数范围上的最小值为 $K$”；
+  \item “函数有两个相等极值”等，要求求出参数 $m$ 的值或范围。
+\end{itemize}
+
+\begin{summarybox}{知极值 / 最值求参的一般步骤}
+  \begin{enumerate}
+    \item 求导：$f'(x;m)=0$ 得到候选极值点 $x_i(m)$；
+    \item 通过判别式或导数符号变化，判断极值点的\emph{存在个数与类型}；
+    \item 将极值函数 $f(x_i(m);m)$ 与“已知极值大小”匹配，得到关于 $m$ 的方程；
+    \item 若题目限制极值点在某区间内，再用不等式约束 $x_i(m)\in[a,b]$；
+    \item 若是闭区间最值问题，还必须比较端点函数值。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：知最小值求参}
+  已知函数 $f(x)=x^2+2(m-1)x+3$ 在实数范围上的最小值为 $1$，求 $m$。
+\end{examplebox}
+
+\textbf{思路：}
+\begin{enumerate}
+  \item 抛物线开口向上，最小值在顶点 $x_0=1-m$ 处；
+  \item 最小值 $f(x_0)=1$，代入得
+  \[
+    f(1-m)=(1-m)^2+2(m-1)(1-m)+3=1;
+  \]
+  \item 化简方程，求出 $m$。
+\end{enumerate}
+
+\subsection{极值点偏移模型与端点效应}
+
+当函数带有参数 $m$ 时，极值点 $x_0(m)$ 会随 $m$ 的变化而\emph{移动}，这会带来：
+\begin{itemize}
+  \item 极值点是否落在给定区间的判定问题；
+  \item 极值点移动导致零点个数发生变化的问题；
+  \item 极值点“跑出区间”时，最值点跳到端点上的现象。
+\end{itemize}
+
+\begin{warningbox}[mathnote coverage=soft]{端点效应：不能只看导数}
+  在闭区间 $[a,b]$ 上的最值问题中：
+  \begin{enumerate}
+    \item 必须把 $x=a,b$ 与导数为零的点一起比较；
+    \item “导数为零”只是极值点的\emph{必要条件之一}，并非充分条件；
+    \item 端点上的函数值往往直接决定参数范围，是含参题的重要信息来源。
+  \end{enumerate}
+\end{warningbox}
+
+\section{导数逆向构建与指数对数同构模型}
+
+\subsection{导数逆向构建模型}
+
+\subsubsection{问题类型}
+
+与“已知函数求导”相反，这类题通常给出：
+\begin{itemize}
+  \item 函数的导数形式 $f'(x)$、单调区间、极值大小；
+  \item 图像上切线斜率的分布情况；
+  \item 某种“变化率关系”（如速度、增长率等）。
+\end{itemize}
+要求\emph{构造}出函数 $f(x)$，或判断某函数是否存在。
+
+\begin{summarybox}{导数逆向构建的三条主线}
+  \begin{enumerate}
+    \item 从 $f'(x)$ 的符号变化 $\Rightarrow$ 构造单调性与极值结构；
+    \item 需要显式 $f(x)$ 时，可用积分或分段线性拼接（高中常用代数方式）；
+    \item 通过调整常数项，使边界条件（如 $f(x_0)=y_0$）得以满足。
+  \end{enumerate}
+\end{summarybox}
+
+例如：已知 $f'(x)=2x-1$，且 $f(0)=3$，求 $f(x)$。
+
+由积分得
+\[
+  f(x)=\int(2x-1)\,\mathrm{d}x=x^2-x+C,\quad f(0)=3\Rightarrow C=3,
+\]
+所以 $f(x)=x^2-x+3$。
+
+\subsection{指数—对数同构模型}
+
+\subsubsection{同构思想}
+
+很多看似不同的函数结构，可以通过\emph{代换}互相转化。
+指数与对数是最典型的一对：
+\[
+  y=a^x \quad\Longleftrightarrow\quad x=\log_a y.
+\]
+
+通过代换 $x=\ln t$、$t=e^x$ 等，可以把指数型问题化为多项式型或线性型。
+
+\begin{conceptbox}{指数—对数同构的常见操作}
+  \begin{enumerate}
+    \item 把 $a^x$ 写成 $e^{x\ln a}$，方便求导与求极限；
+    \item 把 $x^\alpha$ 写成 $e^{\alpha\ln x}$，化幂指数问题为对数问题；
+    \item 在不等式中对正数取对数，把乘积转化为加法，借助凸凹性处理。
+  \end{enumerate}
+\end{conceptbox}
+
+\subsubsection{典型公式}
+
+\[
+  \frac{\mathrm{d}}{\mathrm{d}x}a^x=a^x\ln a,\quad
+  \frac{\mathrm{d}}{\mathrm{d}x}\ln x=\frac{1}{x},\quad
+  \frac{\mathrm{d}}{\mathrm{d}x}x^{\alpha}=\alpha x^{\alpha-1}.
+\]
+
+这些是很多极限与不等式模型的基础公式。
+
+\subsection{对数指数均值不等式模型}
+
+经典均值不等式包括：
+\[
+  \text{算术—几何平均不等式（AM-GM）},\quad
+  \text{Cauchy 不等式},\quad
+  \text{Jensen 不等式}。
+\]
+从\emph{函数视角}看，许多均值不等式都来源于某个函数的\emph{凸性或凹性}。
+
+\begin{definitionbox}{典型均值不等式的函数版本}
+  \begin{enumerate}
+    \item 若 $f$ 在区间上为\emph{凸}，则
+      \[
+        f(\lambda x+(1-\lambda)y)
+        \le
+        \lambda f(x)+(1-\lambda)f(y).
+      \]
+    \item 若 $f$ 为\emph{凹}，则上述不等号方向反转。
+  \end{enumerate}
+\end{definitionbox}
+
+例如 $f(x)=\ln x$ 在 $(0,+\infty)$ 上是凹函数，可得
+\[
+  \ln\frac{x_1+\cdots+x_n}{n}
+  \ge
+  \frac{1}{n}\sum_{i=1}^n\ln x_i,
+\]
+两边取指数就得到 AM-GM。
+
+\section{导数研究函数零点模型与隐零点模型}
+
+\subsection{导数研究函数零点模型}
+
+\subsubsection{核心思想}
+
+\emph{零点问题}：解方程 $f(x)=0$ 的实根个数与位置。
+若 $f$ 连续可导，可以利用导数研究单调性，从而：
+\begin{itemize}
+  \item 判断零点个数（最多几个、至少几个、恰好几个）；
+  \item 确定零点所在区间；
+  \item 粗略估计零点大小。
+\end{itemize}
+
+\begin{summarybox}{导数研究零点的基本流程}
+  \begin{enumerate}
+    \item 明确定义域并保证连续性；
+    \item 求导 $f'(x)$，划分单调区间；
+    \item 在每个单调区间上，用“值域只能出现一次”结合\emph{介值定理}判断零点个数；
+    \item 利用 $f(a)f(b)<0$ 判定 $(a,b)$ 内存在零点；
+    \item 用单调性保证“至多一个零点”，从而得到“恰有一个零点”的结论。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：再看三次函数的零点个数}
+  设 $f(x)=x^3-3x+m$，讨论方程 $f(x)=0$ 的实根个数（见前文含参讨论部分）。
+  实际上，我们就是用导数分解了函数的图像结构，再用“跨轴次数”数零点。
+\end{examplebox}
+
+\subsection{隐零点模型}
+
+\subsubsection{“零点”被隐藏在哪里？}
+
+有时零点并不是直接给出的方程，而是：
+\begin{itemize}
+  \item 某个表达式由负变正（或反之）的位置；
+  \item 两个函数 $f(x)$ 与 $g(x)$ 的交点（即 $f(x)-g(x)=0$ 的零点）；
+  \item 某个极值点条件（如 $f'(x)=0$）对应的解；
+  \item 某个数列的极限值 $L$，满足方程 $L=\varphi(L)$。
+\end{itemize}
+
+\begin{notebox}{识别隐零点的几个信号}
+  \begin{enumerate}
+    \item 出现“由负变正 / 由大于变为小于”的描述；
+    \item 出现“恰好一个交点 / 唯一解”；
+    \item 出现“极小值处 / 极大值点”，可联想到 $f'(x)=0$；
+    \item 数列极限 $L$ 满足递推 $L=\varphi(L)$。
+  \end{enumerate}
+\end{notebox}
+
+\subsubsection{常用技巧}
+
+\begin{enumerate}
+  \item 将“交点”转化为差函数 $F(x)=f(x)-g(x)$ 的零点；
+  \item 将“不等式成立范围”视为 $F(x)\ge 0$ 的区域，边界就是 $F(x)=0$ 的零点；
+  \item 将数列极限问题变成方程 $L=\varphi(L)$ 的解的问题。
+\end{enumerate}
+
+\section{极限模型：洛必达法则与泰勒公式}
+
+\subsection{洛必达法则模型}
+
+\subsubsection{适用形式与条件}
+
+洛必达法则用于处理 $\dfrac{0}{0}$ 或 $\dfrac{\infty}{\infty}$ 型未定式。
+设
+\[
+  \lim_{x\to x_0}f(x)=\lim_{x\to x_0}g(x)=0
+  \quad\text{或}\quad
+  \lim_{x\to x_0}f(x)=\lim_{x\to x_0}g(x)=\pm\infty,
+\]
+且在 $x_0$ 附近 $f,g$ 可导并有 $g'(x)\ne 0$，若
+\[
+  \lim_{x\to x_0}\frac{f'(x)}{g'(x)}
+\]
+极限存在或为 $\pm\infty$，则
+\[
+  \lim_{x\to x_0}\frac{f(x)}{g(x)}=\lim_{x\to x_0}\frac{f'(x)}{g'(x)}.
+\]
+
+\begin{warningbox}[mathnote coverage=soft]{常见误用}
+  \begin{enumerate}
+    \item 未确认极限形式为 $\dfrac{0}{0}$ 或 $\dfrac{\infty}{\infty}$ 就直接上洛必达；
+    \item 忽视了 $g'(x)$ 在邻域内不为零的条件；
+    \item 多次使用洛必达使表达式越来越复杂，反而不如代数化简；
+    \item 忘记检查求出的极限是否真正存在。
+  \end{enumerate}
+\end{warningbox}
+
+\subsection{泰勒公式模型}
+
+\subsubsection{一阶与二阶近似}
+
+在高中层面，主要用到一阶与二阶泰勒展开：
+\begin{align*}
+  f(x)&\approx f(x_0)+f'(x_0)(x-x_0) &&(\text{一阶近似})\\
+  f(x)&\approx f(x_0)+f'(x_0)(x-x_0)+\frac{f''(x_0)}{2}(x-x_0)^2 &&(\text{二阶近似})
+\end{align*}
+
+典型用途：
+\begin{itemize}
+  \item 近似计算：在 $x_0$ 附近，用简单多项式替代复杂函数；
+  \item 研究极值：用二阶项符号判断极大 / 极小性质；
+  \item 推导不等式：分析 $f(x)$ 与多项式的差的符号得到估计。
+\end{itemize}
+
+\begin{examplebox}[mathnote coverage=soft]{例：用泰勒估计对数}
+  研究 $x>0$ 时 $\ln(1+x)$ 与 $x-\dfrac{x^2}{2}$ 的大小关系。
+\end{examplebox}
+
+\textbf{思路概述：}
+\begin{enumerate}
+  \item 对 $f(x)=\ln(1+x)$ 在 $x=0$ 展开：
+  \[
+    \ln(1+x)=x-\frac{x^2}{2}+o(x^2);
+  \]
+  \item 分析余项符号，可得在一定范围内 $\ln(1+x)\le x-\dfrac{x^2}{2}$；
+  \item 从而得到常用的不等式估计，为极限与不等式题打基础。
+\end{enumerate}
+
+\section{不等式证明的函数化模型}
+
+\subsection{构造函数法模型}
+
+要证关于 $x$ 的不等式 $A(x)\ge B(x)$（或 $\le$），常构造
+\[
+  f(x)=A(x)-B(x),
+\]
+把不等式转化为“证明 $f(x)\ge 0$（或 $\le 0$）”。
+
+\begin{summarybox}{构造函数法的一般步骤}
+  \begin{enumerate}
+    \item 明确自变量范围（如 $x\in[a,b]$ 或 $x>0$ 等）；
+    \item 写出 $f(x)$ 并尽量化简（通分、配方、代换等）；
+    \item 求导 $f'(x)$，分析单调性与极值；
+    \item 比较最小值与 $0$ 的大小：若最小值 $\ge 0$，则不等式成立；
+    \item 若含参数，再与“知极值 / 最值求参模型”结合。
+  \end{enumerate}
+\end{summarybox}
+
+\subsection{放缩模型}
+
+“放缩”指使用更容易处理的表达式对原表达式作上、下界估计。
+在函数视角中，常表现为：
+\begin{itemize}
+  \item 利用已知不等式（如 $\sin x < x$）进行放缩；
+  \item 利用单调性或凸凹性进行放缩；
+  \item 在极限问题中与夹逼定理配合使用。
+\end{itemize}
+
+\subsection{凹凸反转模型}
+
+当 $f$ 为凸函数时，一般有
+\[
+  f\Big(\frac{x_1+x_2}{2}\Big)
+  \le\frac{f(x_1)+f(x_2)}{2},
+\]
+即“平均值在函数内小于等于函数值的平均”。当 $f$ 为凹函数时，不等号方向反转。
+
+\begin{notebox}{高中可操作的凹凸判断}
+  对可二次求导的函数：
+  \begin{itemize}
+    \item 若 $f''(x)\ge 0$，则 $f$ 凸；
+    \item 若 $f''(x)\le 0$，则 $f$ 凹。
+  \end{itemize}
+  常见：$e^x$ 凸，$\ln x$ 凹，$x^2$ 凸，$\sqrt{x}$ 凹。
+\end{notebox}
+
+\subsection{主元法模型}
+
+多元不等式中，常可以选出“主元”（主变量），将其他变量写成它的函数，从而降维。
+常见做法：
+\begin{itemize}
+  \item 用条件（如 $x+y$ 固定）把 $y$ 写成 $y=C-x$，转化为单变量不等式；
+  \item 在对称不等式中，假设 $x\ge y\ge z$，以 $x$ 为主元讨论；
+  \item 将某个复杂表达式视为主元 $t$，构造关于 $t$ 的函数。
+\end{itemize}
+
+\subsection{数列模型}
+
+很多不等式可以理解为某数列的单调性或有界性问题。例如：
+\begin{itemize}
+  \item 构造数列 $a_n$，证明其单调有界，从而极限存在；
+  \item 用极限值 $L$ 满足 $L=\varphi(L)$ 的关系，回到函数零点问题；
+  \item 用 $a_{n+1}-a_n$ 的符号确立不等式方向。
+\end{itemize}
+
+\section{综合视角：极值点偏移、端点效应与模型联动}
+
+前文已经多次出现“极值点偏移模型”和“端点效应 / 必要性探路模型”，本节从整体角度再梳理一次。
+
+\begin{summarybox}{综合模型作答的一般框架}
+  \begin{enumerate}
+    \item 明确函数 $f(x;m)$ 与区间（可能也含参数） $[a(m),b(m)]$；
+    \item 求导，分析极值点 $x_0(m)$ 与极值大小 $M(m)$；
+    \item 比较 $x_0(m)$ 与 $a(m),b(m)$ 的相对位置，进行分类讨论；
+    \item 在每一类中，比较 $f(a(m))$、$f(b(m))$ 与 $M(m)$ 的大小；
+    \item 若涉及零点，再用单调性与介值定理判断根的个数与位置。
+  \end{enumerate}
+\end{summarybox}
+
+\section{与高等数学的联系}
+
+高中导数、极限与不等式模型，与大学高等数学中的很多概念有直接联系。
+
+\subsection{切线模型与微分、线性近似}
+
+\begin{itemize}
+  \item 在高数中，$f'(x_0)$ 被解释为导数或微分系数；
+  \item “切线近似”就是一阶泰勒展开，是多元微分中“线性化”的一维版本；
+  \item 在多元情形中，切线推广为\emph{切平面}和\emph{梯度向量}。
+\end{itemize}
+
+\subsection{零点模型与连续性、介值定理}
+
+\begin{itemize}
+  \item 高中用“连续 + 单调 $\Rightarrow$ 零点唯一”，高数中有\emph{介值定理}等更一般的表述；
+  \item 隐零点模型对应高数中的\emph{隐函数定理}与\emph{不动点定理}的思想；
+  \item 数列极限与零点之间的联系，在高数中体现在\emph{迭代法}与\emph{数值解方程}。
+\end{itemize}
+
+\subsection{不等式与凸分析、泛函}
+
+\begin{itemize}
+  \item 凹凸反转模型在高数中对应\emph{凸函数理论}与\emph{Jensen 不等式}；
+  \item 构造函数法在泛函分析中升级为“构造泛函、利用范数与内积”；
+  \item 各种均值不等式可以系统地由凸性与\emph{Legendre 变换}等理论统一解释。
+\end{itemize}
+
+\subsection{泰勒公式与数值近似}
+
+\begin{itemize}
+  \item 高数中的泰勒公式配有\emph{余项估计}，可以定量描述近似误差；
+  \item 数值分析中的多项式逼近、插值、数值积分都建立在泰勒思想之上；
+  \item 高中阶段熟练使用一阶、二阶展开，有助于以后理解更高阶情形。
+\end{itemize}
+
+\section{自学建议与训练路径}
+
+\begin{summarybox}{推荐的自学顺序}
+  \begin{enumerate}
+    \item 切线模型、公切线模型（几何感强，最易上手）；
+    \item 导数研究函数零点模型、隐零点模型；
+    \item 含参讨论与知极值 / 最值求参模型；
+    \item 极限部分：基本极限 $\rightarrow$ 洛必达法则 $\rightarrow$ 简单泰勒展开；
+    \item 不等式部分：构造函数法 $\rightarrow$ 放缩 $\rightarrow$ 凹凸反转
+      $\rightarrow$ 主元法与数列模型；
+    \item 最后整体整理“极值点偏移”“端点效应”等综合模型。
+  \end{enumerate}
+\end{summarybox}
+
+\begin{notebox}{日常训练的小建议}
+  \begin{enumerate}
+    \item 做题时先判断属于哪类模型，再下手计算；
+    \item 为每个模型整理 2–3 个\emph{经典例题}和 1–2 个\emph{错题}；
+    \item 尝试用不同方法解决同一题目，并比较优劣；
+    \item 适当画出函数与直线的大致图像，强化直观；
+    \item 每隔一段时间，用一页纸画出所有模型之间的联系图。
+  \end{enumerate}
+\end{notebox}
+
+\end{document}
+

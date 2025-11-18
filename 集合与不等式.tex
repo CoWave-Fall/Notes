@@ -1,0 +1,889 @@
+\documentclass[a4paper,11pt]{ctexart}
+\usepackage{mathnote-preamble}
+% \MathNoteEnablePrint % 如需印刷版可打开
+
+\renewcommand{\notetitle}{高中数学专题笔记：集合与不等式}
+\renewcommand{\notesubtitle}{从基础概念到典型模型}
+\renewcommand{\noteauthor}{（自填姓名）}
+\renewcommand{\notedate}{\today}
+\renewcommand{\noteversion}{v1.0}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学：集合与不等式}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  \MathNoteVersionBlock
+  \vspace*{\fill}
+\end{minipage}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+\newpage
+
+\section{学习导读}
+
+\begin{summarybox}{本讲结构与目标}
+本讲围绕“集合与不等式”展开，既复习必修内容中的基本概念与性质，也系统整理竞赛与高考压轴中常见的若干不等式模型。整体结构分为三部分：
+\begin{enumerate}
+  \item 集合的基本概念与运算：为后续“集合—不等式—参数”模型打基础；
+  \item 不等式的基础性质与常用放缩：搭建“估计”与“求范围”的工具箱；
+  \item 典型模型讲解：已知集合关系求参数、容斥原理、小充大必、糖水不等式、不等式的性质求范围、均值换“1”、基本不等式链、柯西不等式、一元二次不等式能成立/恒成立、双变量任意与存在。
+\end{enumerate}
+学习建议：
+\begin{itemize}
+  \item 先整体浏览目录，形成框架，再按节细读；
+  \item 每个模型至少亲手做完文中的代表例题，尝试“改题”；
+  \item 将“结论”与“做题步骤”写成自己的“小卡片”，方便考前快速复习。
+\end{itemize}
+\end{summarybox}
+
+\section{集合的基本概念与运算}
+
+\subsection{集合与元素}
+
+\begin{definitionbox}{集合与元素}
+在高中数学中，\emph{集合}是一些确定的、互不重复的对象的整体，这些对象叫作\emph{元素}。
+\begin{itemize}
+  \item 记号：集合常用大写字母 $A,B,C,\dots$ 表示，元素常用小写字母 $a,b,x,\dots$ 表示。
+  \item 关系：若 $a$ 是集合 $A$ 的元素，记作 $a\in A$；否则记作 $a\notin A$。
+  \item “确定性”与“互异性”：判断一个对象是否属于集合必须有明确标准；同一元素在集合中只出现一次。
+\end{itemize}
+\end{definitionbox}
+
+集合的常见表示方式：
+\begin{itemize}
+  \item 列举法：如 $A=\{1,2,3\}$；
+  \item 描述法：如 $B=\{x\in\mathbb{R}\mid x^2\le 4\}$；
+  \item 区间表示：如 $[a,b]=\{x\in\mathbb{R}\mid a\le x\le b\}$。
+\end{itemize}
+
+\begin{examplebox}{集合的表示与判断}
+判断下列各数是否属于相应集合：
+\begin{enumerate}
+  \item $A=\{x\in\mathbb{R}\mid x^2-1=0\}$，判断 $x=1,-1,0$ 是否属于 $A$；
+  \item $B=\{x\in\mathbb{R}\mid -2<x\le 3\}$，判断 $x=-2,0,3,4$ 是否属于 $B$。
+\end{enumerate}
+\textbf{思路提示}：
+\begin{itemize}
+  \item 对于描述法，先解出满足条件的 $x$，再代入判定；
+  \item 对于区间，注意开闭端点的区别。
+\end{itemize}
+\end{examplebox}
+
+\subsection{常用数集与区间}
+
+常用数集：
+\[
+\mathbb{N}\ (\text{自然数}),\quad
+\mathbb{Z}\ (\text{整数}),\quad
+\mathbb{Q}\ (\text{有理数}),\quad
+\mathbb{R}\ (\text{实数}).
+\]
+
+常见区间：
+\[
+[a,b],\ (a,b),\ [a,b),\ (a,b],\quad (-\infty,a),\ (a,+\infty) \text{ 等}.
+\]
+
+\begin{notebox}{区间与不等式的一一对应}
+\begin{itemize}
+  \item $x\in[a,b]\iff a\le x\le b$；
+  \item $x\in(a,b)\iff a<x<b$；
+  \item $x>a\iff x\in(a,+\infty)$。
+\end{itemize}
+之后在“集合—不等式模型”中，我们常用这种对应关系在“集合条件”和“不等式条件”之间来回转换。
+\end{notebox}
+
+\subsection{集合之间的关系}
+
+\begin{definitionbox}{子集、真子集、相等}
+设 $A,B$ 是两个集合：
+\begin{itemize}
+  \item 若对于任意 $x\in A$ 均有 $x\in B$，记作 $A\subseteq B$，称 $A$ 是 $B$ 的\emph{子集}；
+  \item 若 $A\subseteq B$ 且 $A\ne B$，称 $A$ 是 $B$ 的\emph{真子集}；
+  \item 若 $A\subseteq B$ 且 $B\subseteq A$，则 $A=B$。
+\end{itemize}
+\end{definitionbox}
+
+对“集合关系”进行“翻译”是后续求参数的关键技能：
+
+\begin{examplebox}{集合关系的代数翻译}
+设
+\[
+A=\{x\in\mathbb{R}\mid x^2-4x+3>0\},\quad
+B=\{x\in\mathbb{R}\mid x>1\}.
+\]
+\begin{enumerate}
+  \item 写出 $A$ 的区间表示；
+  \item 把 $A\subseteq B$ 翻译成关于 $x$ 的不等式关系，再化成区间关系。
+\end{enumerate}
+\textbf{思路}：先独立求出 $A,B$ 各自对应的区间，再从“集合关系”转化为“区间包含”。
+\end{examplebox}
+
+\subsection{集合的运算}
+
+\begin{definitionbox}{并、交、补}
+在给定的\emph{全集} $U$ 下，设 $A,B\subseteq U$：
+\begin{itemize}
+  \item 并集：$A\cup B=\{x\in U\mid x\in A\text{ 或 }x\in B\}$；
+  \item 交集：$A\cap B=\{x\in U\mid x\in A\text{ 且 }x\in B\}$；
+  \item 补集：$A$ 在 $U$ 内的补集为 $\complement_U A=\{x\in U\mid x\notin A\}$。
+\end{itemize}
+\end{definitionbox}
+
+常用的恒等式（集合版“公式”）：
+\[
+\begin{aligned}
+A\cup B &= B\cup A,&\qquad A\cap B &= B\cap A;\\
+(A\cup B)\cup C &= A\cup(B\cup C),&
+(A\cap B)\cap C &= A\cap(B\cap C);\\
+A\cup(A\cap B) &= A,& A\cap(A\cup B)&=A;\\
+\complement_U(A\cup B)&=\complement_U A\cap\complement_U B,&
+\complement_U(A\cap B)&=\complement_U A\cup\complement_U B.
+\end{aligned}
+\]
+
+\begin{examplebox}{集合运算与不等式}
+设全集 $U=\mathbb{R}$，
+\[
+A=\{x\mid x\ge 1\},\quad B=\{x\mid x<3\}.
+\]
+求：
+\begin{enumerate}
+  \item $A\cap B$，并写成不等式形式；
+  \item $\complement_U A$，并写成不等式形式；
+  \item $A\cup B$ 是否等于 $U$？说明理由。
+\end{enumerate}
+\end{examplebox}
+
+\section{不等式的基础与常用放缩}
+
+\subsection{不等式的基本性质}
+
+\begin{summarybox}{实数不等式的四条基本性质}
+设 $a,b,c\in\mathbb{R}$。
+\begin{enumerate}
+  \item 若 $a>b$，则 $a+c>b+c$（同加减同数，不等号方向不变）；
+  \item 若 $a>b$ 且 $c>0$，则 $ac>bc$；若 $c<0$，则 $ac<bc$（同乘正数不变，同乘负数方向改变）；
+  \item 若 $a>b>0$，则 $\dfrac{1}{a}<\dfrac{1}{b}$；
+  \item 传递性：若 $a>b$ 且 $b>c$，则 $a>c$。
+\end{enumerate}
+上述性质是“变形不等式”“求范围”的基础，在解题中要熟练应用。
+\end{summarybox}
+
+\subsection{常见基本不等式}
+
+\begin{theorembox}{平方非负与二次型}
+对任意实数 $x$，都有 $x^2\ge 0$，等号当且仅当 $x=0$。由此得到：
+\[
+(a-b)^2\ge 0\iff a^2+b^2\ge 2ab.
+\]
+\end{theorembox}
+
+\begin{theorembox}{算术—几何平均不等式（两数）}
+若 $a,b>0$，则
+\[
+\frac{a+b}{2}\ge\sqrt{ab},\quad
+\text{等号当且仅当 } a=b.
+\]
+\end{theorembox}
+
+\begin{theorembox}{柯西不等式（Cauchy-Schwarz）}
+对任意实数 $a_i,b_i\ (i=1,2,\dots,n)$，有
+\[
+\left(\sum_{i=1}^n a_i^2\right)\left(\sum_{i=1}^n b_i^2\right)\ge
+\left(\sum_{i=1}^n a_i b_i\right)^2.
+\]
+等号当且仅当 $(a_1,a_2,\dots,a_n)$ 与 $(b_1,b_2,\dots,b_n)$ 成比例。
+\end{theorembox}
+
+这些不等式将在后面的“均值换‘1’模型”“基本不等式链模型”“柯西不等式模型”中频繁出现。
+
+\section{集合与不等式的典型模型}
+
+本节是全讲的核心内容。建议：\emph{每个模型按“思想—步骤—例题—小结”的顺序学习}。
+
+\subsection{模型一：已知集合关系求参数}
+
+\subsubsection*{基本思想}
+
+给定含参不等式（或方程）：
+\[
+A=\{x\mid f(x,\lambda)\ \text{满足某条件}\},\quad
+B=\{x\mid g(x,\lambda)\ \text{满足某条件}\},
+\]
+已知 $A\subseteq B$、$A=B$、$A\cap B=\varnothing$ 等集合关系，求参数 $\lambda$ 的取值范围。
+
+\begin{summarybox}{“集合关系 $\Longrightarrow$ 不等式组”三步法}
+\begin{enumerate}
+  \item \textbf{翻译集合}：先求出 $A,B$ 对应的区间（或若干子区间的并）；
+  \item \textbf{翻译关系}：把 $A\subseteq B$ 等翻译成“区间包含/相等”的关系；
+  \item \textbf{化为不等式}：用端点大小关系转化为关于参数的（组）不等式，求解参数范围。
+\end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：已知集合关系求参数}
+设
+\[
+A=\{x\in\mathbb{R}\mid x^2-2mx+m^2-1>0\},\quad
+B=\{x\in\mathbb{R}\mid x>1\}.
+\]
+已知 $A\subseteq B$，求实数 $m$ 的取值范围。
+
+\textbf{步骤1：求集合 $A,B$ 的区间表示}
+
+对 $A$ 中的不等式：
+\[
+x^2-2mx+m^2-1>0
+\iff (x-m)^2>1
+\iff x-m>1\ \text{或}\ x-m<-1.
+\]
+于是
+\[
+A=(-\infty,m-1)\cup(m+1,+\infty).
+\]
+集合 $B=(1,+\infty)$。
+
+\textbf{步骤2：翻译 $A\subseteq B$}
+
+\[
+(-\infty,m-1)\cup(m+1,+\infty)\subseteq(1,+\infty).
+\]
+
+对于并集，要整体被 $(1,+\infty)$ 包含：
+\begin{itemize}
+  \item 左侧分支 $(-\infty,m-1)$ 若非空，则必须全部落在 $(1,+\infty)$ 内，这是不可能的；故只能让左分支“消失”：$(-\infty,m-1)=\varnothing$，即 $m-1\le -\infty$ 不可能，只能要求这支在 $A$ 中根本不存在；
+  \item 实际上，更简便：要求 $(-\infty,m-1)\subseteq(1,+\infty)$ 必然不成立，所以只能要求该分支无实际元素，即 $m-1\le -\infty$ 不现实，只好通过判定法：观察 $A$ 的结构，若要 $A$ 中不存在小于等于 $1$ 的点，就应要求 $m+1>1$ 且 $m-1\ge 1$ 的情况排除。更安全的做法是：直接从“元素视角”出发。
+\end{itemize}
+
+\textbf{更稳妥的做法：从“点”出发}
+
+$A\subseteq B$ 等价于：
+\[
+\forall x\in\mathbb{R},\quad x\in A\Rightarrow x>1.
+\]
+也就是：若 $x\le 1$，则 $x\notin A$。即
+\[
+\forall x\le 1,\quad x^2-2mx+m^2-1\le 0.
+\]
+把这看成关于 $x$ 的二次函数
+\[
+F(x)=x^2-2mx+m^2-1.
+\]
+在区间 $(-\infty,1]$ 上要求 $F(x)\le 0$。
+
+二次函数开口向上，顶点在 $x=m$。分情况：
+\begin{itemize}
+  \item 若 $m\le 1$，则 $F(x)$ 在 $(-\infty,1]$ 上的最大值为 $F(1)$；
+  \item 若 $m>1$，则最大值为 $F(m)$。
+\end{itemize}
+
+计算：
+\[
+F(1)=1-2m+m^2-1=(m-1)^2,\quad
+F(m)=m^2-2m^2+m^2-1=-1.
+\]
+
+\textbf{情况一}：$m\le 1$.  
+要 $F(x)\le 0$ 对所有 $x\le 1$ 成立，需 $F(1)\le 0$，即 $(m-1)^2\le 0$，故 $m=1$。
+
+\textbf{情况二}：$m>1$.  
+最大值 $F(m)=-1<0$，自然满足 $F(x)\le 0$，因此 $m>1$ 皆可。
+
+综合得 $m\ge 1$。
+\end{examplebox}
+
+\begin{summarybox}{小结：集合关系—函数图像—参数}
+\begin{itemize}
+  \item 用“集合 $\rightarrow$ 区间/图像”再“区间/图像 $\rightarrow$ 参数不等式”是通用思路；
+  \item 只要出现“$\forall x\in\text{某集合}$，某不等式成立”，都可以看成“函数在该集合上恒 $\ge0$ 或恒 $\le0$”的问题；
+  \item 二次函数、绝对值函数、简单分式函数是最常见的载体。
+\end{itemize}
+\end{summarybox}
+
+\subsection{模型二：容斥原理模型（集合视角）}
+
+\subsubsection*{基本思想}
+
+在解题中，常用到
+\[
+|A\cup B|=|A|+|B|-|A\cap B|.
+\]
+这里的“大小”可以是元素个数（离散问题），也可以是“长度”“面积”等（连续问题）。在不等式与集合问题中，多用来处理“满足某个或某些条件的 $x$ 的集合”。
+
+\begin{examplebox}[mathnote coverage=soft]{例：两个条件的“或”}
+设
+\[
+A=\{x\mid x^2-4x+3\le 0\},\quad
+B=\{x\mid x^2-2x-3\ge 0\}.
+\]
+求 $A\cup B$，并用数轴图表示。
+
+\textbf{解}：
+\[
+x^2-4x+3\le 0\iff (x-1)(x-3)\le 0\iff x\in[1,3],
+\]
+\[
+x^2-2x-3\ge 0\iff (x-3)(x+1)\ge 0\iff x\in(-\infty,-1]\cup[3,+\infty).
+\]
+于是
+\[
+A\cup B=(-\infty,-1]\cup[1,+\infty).
+\]
+从图像可见，“或”对应着“并集”，数轴上可以直观判断。
+\end{examplebox}
+
+在更复杂的问题中，会出现“满足至少一个条件”“满足恰好一个条件”等表达，都可以借助容斥原理转化为集合运算，再转化为不等式。
+
+\subsection{模型三：小充大必模型}
+
+\subsubsection*{观点澄清}
+
+\begin{notebox}{“小充大必”的含义（必要条件思想）}
+若命题：“对任意 $x\in S$，性质 $P(x)$ 成立” 要成立，那么对任意 $x\in S_1$，性质 $P(x)$ 也必须成立，其中 $S_1\subseteq S$。  
+\emph{把较小的集合 $S_1$ 当作 $S$ 来检验，只能得到必要条件。}  
+——这就是“小充大必”的含义。
+\end{notebox}
+
+常见操作：当要求“不等式对区间 $[a,b]$ 内所有 $x$ 成立”时，可以先只在一些特殊点（如端点、对称点、整点）上检验，从而得到 \emph{必要条件}，再结合其他条件得到最终的 \emph{充要条件}。
+
+\begin{examplebox}[mathnote coverage=soft]{例：先检验“关键点”}
+设实数 $m$ 满足：对任意 $x\in[0,2]$，不等式
+\[
+x^2-2mx+3\ge 0
+\]
+成立。求 $m$ 的取值范围。
+
+\textbf{小充大（必要条件）}  
+先只在 $x=0,2$ 上检验：
+\[
+x=0:\ 3\ge 0 \quad(\text{恒真})；
+\]
+\[
+x=2:\ 4-4m+3\ge 0\iff 7-4m\ge 0\iff m\le \frac{7}{4}.
+\]
+得到必要条件：$m\le\frac{7}{4}$。
+
+\textbf{再从二次函数整体分析（充分性）}  
+令
+\[
+f(x)=x^2-2mx+3.
+\]
+在 $[0,2]$ 上要求 $f(x)\ge 0$。  
+若顶点 $x=m$ 在区间内（$0\le m\le 2$），则最小值为 $f(m)=m^2-2m^2+3=3-m^2$，要 $3-m^2\ge 0$，即 $|m|\le\sqrt{3}$。结合 $0\le m\le 2$，得 $0\le m\le\sqrt{3}$。  
+若 $m<0$，则区间内最大下降在左端点附近，最小值为 $f(0)=3>0$，可行；  
+若 $m>2$，最小值在 $x=2$，要 $f(2)\ge 0$，即 $m\le\frac{7}{4}$，与 $m>2$ 矛盾，不可。
+
+综合可得：$m\le\sqrt{3}$。与前面必要条件合并，最终解为：
+\[
+m\le\sqrt{3}.
+\]
+
+\textbf{说明}：小充大先给出“粗略”的上界，再用整体分析（函数极值）精确化。
+\end{examplebox}
+
+\subsection{模型四：糖水不等式模型（浓度类应用题）}
+
+\subsubsection*{基本思想}
+
+“糖水”类问题通常符合：
+\[
+\text{糖量}=\text{溶液质量}\times\text{含糖率}。
+\]
+题目往往给出几种糖水的溶液质量与含糖率，要求混合后的含糖率满足某个条件（不等式）。解题关键是：
+\begin{itemize}
+  \item 正确列出“糖量守恒”；
+  \item 把“含糖率 $\ge$ 或 $\le$ 某值”转化为不等式。
+\end{itemize}
+
+\begin{examplebox}[mathnote coverage=soft]{例：混合糖水的含糖率}
+有 $10\%$ 的糖水 $x$ 克，$40\%$ 的糖水 $y$ 克。混合后希望得到含糖率不低于 $25\%$ 的糖水。求 $x,y$ 需满足的不等式关系。
+
+\textbf{列方程（守恒）}：
+\[
+\text{总糖量}=0.10x+0.40y,
+\quad
+\text{总质量}=x+y.
+\]
+混合后的含糖率不低于 $25\%$，即
+\[
+\frac{0.10x+0.40y}{x+y}\ge 0.25,\quad x>0,y>0.
+\]
+
+\textbf{整理不等式}：
+\[
+0.10x+0.40y\ge 0.25x+0.25y
+\iff
+0.15y\ge 0.15x
+\iff
+y\ge x.
+\]
+即只要高浓度糖水的质量不少于低浓度的，就能使混合后含糖率不低于 $25\%$。
+\end{examplebox}
+
+类似模型也出现在“资金投入”“学科平均成绩”等情境中，本质都是“加权平均 $\ge$ 或 $\le$ 某值”的不等式。
+
+\subsection{模型五：不等式的性质求范围模型}
+
+\subsubsection*{基本思想}
+
+很多题目给出形如
+\[
+a<\frac{ax+b}{cx+d}<b
+\]
+或
+\[
+|f(x)|\le g(x)
+\]
+之类的题，要求求出 $x$ 或参数的范围。这类题主要依靠不等式的基本性质与函数的单调性。
+
+\begin{examplebox}[mathnote coverage=soft]{例：利用性质解分式不等式}
+解不等式
+\[
+1<\frac{2x+1}{x-1}\le 3.
+\]
+
+\textbf{讨论分母正负}。令
+\[
+y=\frac{2x+1}{x-1}.
+\]
+分两类：
+
+\textbf{(1) $x-1>0$（即 $x>1$）}  
+此时不等式保持方向：
+\[
+1<\frac{2x+1}{x-1}\le 3
+\iff
+\begin{cases}
+2x+1> x-1,\\[2pt]
+2x+1\le 3(x-1).
+\end{cases}
+\]
+解得
+\[
+\begin{cases}
+x>-2,\\
+2x+1\le 3x-3\iff x\ge 4.
+\end{cases}
+\]
+再加上 $x>1$，得 $x\ge 4$。
+
+\textbf{(2) $x-1<0$（即 $x<1$）}  
+此时乘不等式要\emph{反向}：
+\[
+1<\frac{2x+1}{x-1}\le 3
+\iff
+\begin{cases}
+2x+1<x-1,\\[2pt]
+2x+1\ge 3(x-1).
+\end{cases}
+\]
+解得
+\[
+\begin{cases}
+x<-2,\\
+2x+1\ge 3x-3\iff x\le 4.
+\end{cases}
+\]
+连同 $x<1$，得 $x<-2$。
+
+综上：
+\[
+x\in(-\infty,-2)\cup[4,+\infty).
+\]
+\end{examplebox}
+
+\begin{summarybox}{求范围的常用技巧}
+\begin{itemize}
+  \item 分式不等式：先确定分母符号，再成段求解；
+  \item 绝对值不等式：拆分为两种情况（内部非负/负）；
+  \item 复合函数：通过单调性，将不等式转化到自变量上；
+  \item 多重不等式：按“同加同乘”的性质，逐步化简。
+\end{itemize}
+\end{summarybox}
+
+\subsection{模型六：均值换“1”模型}
+
+\subsubsection*{核心想法}
+
+当不等式中出现许多“1”或常数时，可以尝试把 $1$ 写成某些变量的平均或和，从而运用基本不等式（如算术—几何平均）。
+
+\[
+1=\frac{a+b}{a+b},\quad 1=\frac{a}{a}=\frac{(x-1)^2+1}{(x-1)^2+1},\ \text{等}.
+\]
+
+\begin{examplebox}[mathnote coverage=soft]{例：均值换“1”}
+设 $a,b>0$，求证
+\[
+\frac{a}{a+1}+\frac{b}{b+1}<2.
+\]
+
+\textbf{思路一：直接代数变形}  
+\[
+\frac{a}{a+1}=1-\frac{1}{a+1},\quad
+\frac{b}{b+1}=1-\frac{1}{b+1}.
+\]
+则
+\[
+\frac{a}{a+1}+\frac{b}{b+1}=2-\left(\frac{1}{a+1}+\frac{1}{b+1}\right)<2.
+\]
+因为 $a,b>0$，故 $a+1>1,b+1>1$，有 $\dfrac{1}{a+1},\dfrac{1}{b+1}>0$，因此和大于 $0$。
+
+\textbf{思路二：用均值换“1”}  
+注意到
+\[
+\frac{a}{a+1}=1-\frac{1}{a+1}.
+\]
+我们把 $1$ 看作 $\dfrac{(a+1)+(b+1)}{(a+1)+(b+1)}$ 的一种“均值形式”，再与 $\dfrac{1}{a+1}+\dfrac{1}{b+1}$ 比较，可以引导出类似于 AM-GM 或调和平均的应用。
+\end{examplebox}
+
+均值换“1”的本质是：\emph{利用基本不等式中的“平均”结构，把常数写成与变量相关的形式，从而加入到不等式链中。}
+
+\subsection{模型七：基本不等式链模型}
+
+\subsubsection*{思想概括}
+
+所谓“不等式链”，就是构造
+\[
+A\ge B\ge C\ge\cdots\ge k
+\]
+或
+\[
+k\le C\le B\le A
+\]
+这样的多步放缩过程。常见构造来源：平方非负、AM-GM、不等式两边同加/同乘等。
+
+\begin{examplebox}[mathnote coverage=soft]{例：构造不等式链}
+设 $x>0$，求证
+\[
+x+\frac{1}{x}\ge 2.
+\]
+
+\textbf{方法一：平方非负}
+\[
+(x-1)^2\ge 0\iff x^2-2x+1\ge 0.
+\]
+两边同除以 $x>0$，
+\[
+x-2+\frac{1}{x}\ge 0\iff x+\frac{1}{x}\ge 2.
+\]
+
+\textbf{方法二：AM-GM}
+\[
+\frac{x+\frac{1}{x}}{2}\ge\sqrt{x\cdot\frac{1}{x}}=1
+\Rightarrow x+\frac{1}{x}\ge 2.
+\]
+
+可视作不等式链：
+\[
+x+\frac{1}{x}\ge 2\sqrt{x\cdot\frac{1}{x}}=2.
+\]
+\end{examplebox}
+
+在竞赛题或压轴题中，不等式链往往更长，需要你对常见放缩步骤非常熟练。
+
+\subsection{模型八：柯西不等式模型}
+
+\subsubsection*{核心公式与常见形式}
+
+常用的两项柯西（$n=2$）：
+\[
+(a^2+b^2)(c^2+d^2)\ge(ac+bd)^2.
+\]
+
+\begin{examplebox}[mathnote coverage=soft]{例：柯西不等式估值}
+设 $a,b>0$，试比较
+\[
+S=\frac{a}{b}+\frac{b}{a}
+\]
+与 $2$ 的大小，并给出下界。
+
+\textbf{解}：把分子分母看作柯西结构：
+\[
+\left(a^2+b^2\right)\left(\frac{1}{b^2}+\frac{1}{a^2}\right)\ge
+\left(\frac{a}{b}+\frac{b}{a}\right)^2.
+\]
+左边：
+\[
+\left(a^2+b^2\right)\left(\frac{1}{a^2}+\frac{1}{b^2}\right)
+=\left(\frac{a^2}{a^2}+\frac{b^2}{b^2}\right)
++\left(\frac{a^2}{b^2}+\frac{b^2}{a^2}\right)\ge 2+2=4.
+\]
+因此
+\[
+\left(\frac{a}{b}+\frac{b}{a}\right)^2\le\left(a^2+b^2\right)\left(\frac{1}{a^2}+\frac{1}{b^2}\right),
+\]
+故
+\[
+\frac{a}{b}+\frac{b}{a}\ge 2.
+\]
+
+这里实际上也可以用 AM-GM，但通过柯西可以处理更一般的形态。
+\end{examplebox}
+
+在参数不等式、求最值中，经常需要灵活选择 $a_i,b_i$ 来套用柯西，使目标表达式的分子、分母或平方项能“对上”。
+
+\subsection{模型九：一元二次不等式能成立/恒成立模型}
+
+\subsubsection*{基本结论}
+
+设 $f(x)=ax^2+bx+c$，$a\ne 0$。
+
+\begin{summarybox}{一元二次不等式的图像判定法}
+\begin{itemize}
+  \item $f(x)\ge 0$ 对所有 $x\in\mathbb{R}$ 成立 $\iff$
+  \begin{cases}
+    a>0,\\
+    \Delta=b^2-4ac\le 0;
+  \end{cases}
+  \item $f(x)\le 0$ 对所有 $x\in\mathbb{R}$ 成立 $\iff$
+  \begin{cases}
+    a<0,\\
+    \Delta\le 0.
+  \end{cases}
+  \item $f(x)\ge 0$ 对某些 $x$ 成立（即有解），则要么抛物线与 $x$ 轴有交点，要么整体在轴上方，具体可通过解不等式或图像观察。
+\end{itemize}
+\end{summarybox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：恒成立的一元二次不等式}
+设实数 $m$ 满足：对任意 $x\in\mathbb{R}$，有
+\[
+x^2-2mx+m^2+1\ge 0.
+\]
+求 $m$ 的取值范围。
+
+\textbf{解}：令
+\[
+f(x)=x^2-2mx+m^2+1.
+\]
+显然 $a=1>0$，要对全体实数恒 $\ge 0$，只需判别式 $\Delta\le 0$。
+\[
+\Delta=(-2m)^2-4\cdot 1\cdot (m^2+1)=4m^2-4m^2-4=-4<0.
+\]
+恒小于 $0$，与 $m$ 无关，因此对于任意实数 $m$，不等式都恒成立。  
+（观察也可：$f(x)=(x-m)^2+1\ge 1>0$。）
+\end{examplebox}
+
+\begin{examplebox}{例：有解条件}
+设实数 $m$ 满足：不等式
+\[
+x^2-2x+m<0
+\]
+在 $\mathbb{R}$ 中有解。求 $m$ 的取值范围。
+
+\textbf{分析}：抛物线 $y=x^2-2x+m$ 开口向上，要 $y<0$ 有解，图像必须与 $x$ 轴有交点且存在在下方的区间，即：
+\[
+\Delta=b^2-4ac>0,\quad\text{且 } a>0\ \text{（已知）}.
+\]
+这里
+\[
+\Delta=(-2)^2-4\cdot 1\cdot m=4-4m>0\iff m<1.
+\]
+于是 $m<1$。
+\end{examplebox}
+
+\subsection{模型十：双变量任意与存在模型}
+
+\subsubsection*{量词的含义}
+
+在含两个变量的不等式中，经常出现：
+\[
+\forall x\in S_1,\ \forall y\in S_2,\quad P(x,y)\ \text{成立},
+\]
+或
+\[
+\forall x\in S_1,\ \exists y\in S_2,\quad P(x,y)\ \text{成立}.
+\]
+
+\begin{notebox}{“任意”与“存在”的直观理解}
+\begin{itemize}
+  \item $\forall x$：你选任何一个 $x$，命题都要真；
+  \item $\exists x$：只要能找到一个 $x$，命题就算真。
+\end{itemize}
+在双变量情形，要特别注意量词的顺序：
+\[
+\forall x,\exists y\ P(x,y)
+\]
+与
+\[
+\exists y,\forall x\ P(x,y)
+\]
+含义完全不同。
+\end{notebox}
+
+\begin{examplebox}[mathnote coverage=soft]{例：$\forall x,\forall y$ 型}
+设实数 $m$ 满足：对任意 $x,y\in\mathbb{R}$，有
+\[
+x^2+y^2+2mxy\ge 0.
+\]
+求 $m$ 的取值范围。
+
+\textbf{解}：记
+\[
+Q(x,y)=x^2+2mxy+y^2.
+\]
+把它看作关于 $x$ 的二次函数：
+\[
+Q(x,y)=x^2+2myx+y^2
+\]
+的判别式
+\[
+\Delta_x=(2my)^2-4\cdot 1\cdot y^2=4y^2(m^2-1).
+\]
+要对\emph{任意} $x,y$ 恒有 $Q(x,y)\ge 0$，可从二次型角度考虑：$Q$ 对任意 $(x,y)\ne(0,0)$ 非负，当且仅当相应的矩阵
+\[
+\begin{pmatrix} 1 & m\\ m & 1\end{pmatrix}
+\]
+正定或半正定。高一可用代数方法：
+
+取 $y=1$，则
+\[
+x^2+2mx+1\ge 0\quad\forall x\in\mathbb{R}.
+\]
+由“一元二次恒 $\ge0$”判别：
+\[
+\Delta_x=(2m)^2-4\cdot1\cdot 1\le 0\iff m^2-1\le 0\iff -1\le m\le 1.
+\]
+再取 $x=1$ 可得到同样的条件，因此
+\[
+m\in[-1,1].
+\]
+\end{examplebox}
+
+\begin{examplebox}{例：$\forall x,\exists y$ 型（思路）}
+设 $a>0$，求实数 $m$ 的范围，使得：对任意 $x\in\mathbb{R}$，都存在 $y\in\mathbb{R}$，使
+\[
+y^2+2xy+m\ge 0.
+\]
+
+\textbf{分析思路}：
+\begin{itemize}
+  \item 对固定 $x$，把不等式看作关于 $y$ 的一元二次：$y^2+2xy+m\ge 0$；
+  \item “存在 $y$” 等价于“这个不等式对 $y$ 有解”，即对该 $x$，抛物线与 $y$ 轴有交点在下方，或判别式 $\ge 0$；
+  \item 于是 $\Delta_y=(2x)^2-4\cdot 1\cdot m=4x^2-4m\ge 0$，即 $x^2\ge m$；
+  \item 但这是对“任意 $x$”都要有解，根据“小充大必”，先看 $x=0$，得 $-m\ge 0$，即 $m\le 0$；再看 $|x|\to +\infty$，$x^2$ 任意大，总可以满足 $x^2\ge m$，因此综合得 $m\le 0$。
+\end{itemize}
+详细严谨证明较长，这里重点是展示“先定一个变量，再对另一个变量用一元二次不等式判别”的思路。
+\end{examplebox}
+
+\section{总结与自测建议}
+
+\begin{summarybox}[mathnote coverage=soft]{全讲小结}
+\begin{itemize}
+  \item \textbf{集合部分}：掌握集合表示、子集关系、并交补运算，能自如地在“集合语言”和“不等式/区间语言”之间转换；
+  \item \textbf{不等式基础}：熟练使用不等式基本性质、平方非负、AM-GM、柯西等工具；
+  \item \textbf{模型观}：
+  \begin{itemize}
+    \item 已知集合关系求参数 $\Rightarrow$ 集合翻译为函数图像与区间；
+    \item 容斥原理模型 $\Rightarrow$ 熟练理解“或/且/非”与并交补；
+    \item 小充大必模型 $\Rightarrow$ 先从“关键点”“子集”得到必要条件，再配合整体分析；
+    \item 糖水不等式模型 $\Rightarrow$ 把实际问题抽象为加权平均不等式；
+    \item 不等式的性质求范围 $\Rightarrow$ 善用分段讨论、单调性和分式、绝对值处理；
+    \item 均值换“1”模型 $\Rightarrow$ 通过把“1”写成均值，嵌入基本不等式链；
+    \item 基本不等式链模型 $\Rightarrow$ 连续多步放缩，构造完整链条；
+    \item 柯西不等式模型 $\Rightarrow$ 灵活选择 $a_i,b_i$，让目标表达式对上结构；
+    \item 一元二次不等式能成立/恒成立模型 $\Rightarrow$ 图像+判别式；
+    \item 双变量任意与存在模型 $\Rightarrow$ 把一个变量视作参数，另一变量用一元二次判别。
+  \end{itemize}
+\end{itemize}
+\end{summarybox}
+
+\begin{examplebox}{自测与扩展思考}
+\begin{enumerate}
+  \item 自拟一个“已知集合关系求参数”的题目，并尝试用“函数图像+区间包含”解法；
+  \item 找一类“糖水浓度”题，抽象出通用不等式模型；
+  \item 选一条你最不熟悉的不等式模型（如“均值换‘1’”），写一页专门笔记，总结常见变形与典型例题；
+  \item 尝试从一道压轴题中，分析它分别用了哪些不等式模型，把题目“拆解”为若干标准模型的组合。
+\end{enumerate}
+\end{examplebox}
+
+% ==========================
+  \section{图表整理与扩展}
+  % ==========================
+
+  \begin{summarybox}{本节用途}
+  本节把前文零散出现的几个重要对应关系和模型，用表格和简化图像的形式集中整理，便于考前快速翻阅与横向对比。阅读建议：先看表格的“名称/形式/条件/等号成立”，再回想对应的小节与典型例题，把“文字—公式—图像”三者对上号。
+  \end{summarybox}
+
+  \begin{table}[htbp]
+    \centering
+    \caption{常见不等式与区间的对应}
+    \begin{tabularx}{0.96\textwidth}{>{\raggedright\arraybackslash}p{3cm} X X}
+      \toprule
+      \textbf{不等式形式} & \textbf{对应区间} & \textbf{备注} \\
+      \midrule
+      $a\le x\le b$ & $[a,b]$ & 两端都取到，闭区间（含端点） \\
+      $a<x<b$ & $(a,b)$ & 两端都不取到，开区间（只取中间） \\
+      $x\ge a$ & $[a,+\infty)$ & 左端闭，向右无穷延伸 \\
+      $x>a$ & $(a,+\infty)$ & 左端开，向右无穷延伸 \\
+      $x\le a$ & $(-\infty,a]$ & 向左无穷延伸，到 $a$ 为止（含 $a$） \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \begin{table}[htbp]
+    \centering
+    \caption{常见基本不等式汇总}
+    \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{2.8cm} X X X}
+      \toprule
+      \textbf{名称} & \textbf{典型形式} & \textbf{适用条件} & \textbf{等号成立} \\
+      \midrule
+      平方非负 & $x^2\ge 0$，$(a-b)^2\ge 0$ & 任意实数 $x$，或任意实数 $a,b$ & $x=0$；或 $a=b$ \\
+      算术–几何平均不等式 & $\dfrac{a+b}{2}\ge\sqrt{ab}$ & $a,b>0$ & $a=b$ \\
+      柯西不等式 & $(\sum a_i^2)(\sum b_i^2)\ge(\sum a_ib_i)^2$ & 任意实数列 $a_i,b_i$ & 向量 $(a_i)$ 与 $(b_i)$ 成比例 \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \begin{table}[htbp]
+    \centering
+    \caption{常见量词组合的含义}
+    \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3.4cm} X}
+      \toprule
+      \textbf{量词形式} & \textbf{直观解释} \\
+      \midrule
+      $\forall x\in S_1,\ \forall y\in S_2,\ P(x,y)$
+        & 对 $S_1$ 里的每一个 $x$ 和 $S_2$ 里的每一个 $y$，命题 $P$ 都成立——“对任何 $x$、任何 $y$ 都要真”。 \\
+      $\forall x\in S_1,\ \exists y\in S_2,\ P(x,y)$
+        & 你任意给一个 $x$，总能（至少）找到一个 $y$ 让 $P$ 成立——“先手出题，后手总能应对”。 \\
+      $\exists y\in S_2,\ \forall x\in S_1,\ P(x,y)$
+        & 存在一个“万能的” $y$，对所有 $x$ 都能使 $P$ 成立——比上一行要求更强。 \\
+      $\exists x\in S_1,\ \exists y\in S_2,\ P(x,y)$
+        & 只要能找到一对 $(x,y)$ 让 $P$ 成立就算真——最弱的存在型命题。 \\
+      \bottomrule
+    \end{tabularx}
+  \end{table}
+
+  \begin{center}
+  \begin{tikzpicture}[mathnote lines,scale=0.9]
+    % 坐标轴
+    \draw[->,thick] (-3.2,0) -- (3.2,0) node[right] {$x$};
+    \draw[->,thick] (0,-2.2) -- (0,2.2) node[above] {$y$};
+
+    % 情形一：a>0, Δ≤0，整条在 x 轴上方
+    \draw[accent,thick,domain=-1.7:1.7,samples=100]
+      plot (\x,{0.5*(\x)^2+0.8});
+    \node[accent,above] at (0,0.9) {$a>0,\ \Delta\le 0$};
+
+    % 情形二：a<0, Δ≤0，整条在 x 轴下方
+    \draw[secondary,thick,domain=-1.7:1.7,samples=100]
+      plot (\x,{-0.5*(\x)^2-0.8});
+    \node[secondary,below] at (0,-0.9) {$a<0,\ \Delta\le 0$};
+  \end{tikzpicture}
+  \captionof{figure}{一元二次不等式“恒号”时的图像示意}
+  \end{center}

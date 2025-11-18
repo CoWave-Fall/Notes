@@ -69,8 +69,10 @@
 % Header / footer
 % --------------------------------------------------
 % 页眉仅显示笔记标题与当前节名，不再附加版本号
-\newcommand{\mathnote@headertext}{\small\sffamily\textcolor{accent}{\notetitle\ >\ \nouppercase{\rightmark}}}
-\newcommand{\mathnote@footertext}{\small\sffamily\textcolor{inkgray}{\thepage}\ \textcolor{mathnotePureCyan}{/}\ \textcolor{inkgray}{\pageref{LastPage}}}
+\providecommand{\MathNoteHeaderFormat}{\small\sffamily\textcolor{accent}{\notetitle\ >\ \nouppercase{\rightmark}}}
+\providecommand{\MathNoteFooterFormat}{\small\sffamily\textcolor{inkgray}{\thepage}\ \textcolor{mathnotePureCyan}{/}\ \textcolor{inkgray}{\pageref{LastPage}}}
+\newcommand{\mathnote@headertext}{\MathNoteHeaderFormat}
+\newcommand{\mathnote@footertext}{\MathNoteFooterFormat}
 \pagestyle{fancy}
 \fancyhf{}
 \if@twoside

@@ -1,0 +1,635 @@
+% !TEX program = xelatex
+\documentclass[a4paper,11pt]{ctexart}
+\usepackage{mathnote-preamble}
+% \MathNoteEnablePrint % 如需印刷版请取消注释
+
+% 元信息设置
+\renewcommand{\notetitle}{高中数学笔记：三角函数与解三角形}
+\renewcommand{\noteauthor}{自学与竞赛参考稿}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{函数视角下的模型与方法}
+\renewcommand{\noteversion}{v0.1}
+
+\setcounter{tocdepth}{2}
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\PageTag[secondary]{Trig \& Triangle}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  \MathNoteVersionBlock
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+\textcolor{inkgray}{\sffamily\small 导读}\\
+\begin{itemize}
+  \item 面向已经学习过高中三角函数与解三角形基本内容的同学，在“概念—公式—模型—应用”的脉络下系统整理知识。
+  \item 通过“知一求二、齐次化切、凑角求值、辅助角、万能公式、和差化积与积化和差”等高频模型，统一常见题型背后的方法。
+  \item 推荐阅读路径：第~\ref{sec:basic} 章打基础；第~\ref{sec:models-func} 章看函数模型；第~\ref{sec:triangles} 章学解三角形；第~\ref{sec:advanced} 章了解与高等数学的联系。
+\end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\clearpage
+
+\section{三角函数的基本概念与图像}
+\label{sec:basic}
+
+\subsection{角与弧度制}
+
+\begin{definitionbox}{角与弧度}
+\begin{itemize}
+  \item \textbf{角}：由两条有公共端点的射线组成，公共端点为顶点，射线为边。
+  \item \textbf{度数制}：以 $1^\circ$ 为基本单位，一周角为 $360^\circ$。
+  \item \textbf{弧度制}：在单位圆中，以弧长等于半径所对的圆心角为 $1$ 弧度，一周角为 $2\pi$。
+  \item \textbf{度与弧度互化}：
+  \[
+    180^\circ \leftrightarrow \pi,\quad
+    1^\circ = \frac{\pi}{180},\quad
+    1 = \frac{180^\circ}{\pi}.
+  \]
+\end{itemize}
+\end{definitionbox}
+
+常用典型角：$30^\circ=\dfrac{\pi}{6}$，$45^\circ=\dfrac{\pi}{4}$，$60^\circ=\dfrac{\pi}{3}$，$90^\circ=\dfrac{\pi}{2}$ 等，应熟练掌握。
+
+\subsection{任意角的三角函数与象限}
+
+\begin{definitionbox}{任意角三角函数}
+在单位圆上，以 $x$ 轴正向为起始边，逆时针为正方向。设角 $\alpha$ 的终边与单位圆交于点 $P(x,y)$，则：
+\[
+\sin\alpha = y,\quad \cos\alpha = x,\quad \tan\alpha = \frac{y}{x}\ (x\neq 0),\quad
+\cot\alpha = \frac{x}{y}\ (y\neq 0).
+\]
+\end{definitionbox}
+
+\begin{summarybox}{象限与符号}
+\begin{center}
+\begin{tabular}{c|cccc}
+象限    & $\sin\alpha$ & $\cos\alpha$ & $\tan\alpha$ & $\cot\alpha$ \\
+\hline
+第一象限 & $+$        & $+$        & $+$        & $+$        \\
+第二象限 & $+$        & $-$        & $-$        & $-$        \\
+第三象限 & $-$        & $-$        & $+$        & $+$        \\
+第四象限 & $-$        & $+$        & $-$        & $-$        \\
+\end{tabular}
+\end{center}
+记忆：\textbf{“ASTC”原则}——从第一象限逆时针，“All, Sin, Tan, Cos”为正。
+\end{summarybox}
+
+\subsection{同角三角函数关系与诱导公式}
+
+\begin{theorembox}{同角三角函数基本关系}
+对于任意角 $\alpha$（相应分母不为零）：
+\begin{align*}
+&\sin^2\alpha + \cos^2\alpha = 1,\\
+&1 + \tan^2\alpha = \sec^2\alpha = \frac{1}{\cos^2\alpha},\quad
+1 + \cot^2\alpha = \csc^2\alpha = \frac{1}{\sin^2\alpha},\\
+&\tan\alpha = \frac{\sin\alpha}{\cos\alpha},\quad
+\cot\alpha = \frac{\cos\alpha}{\sin\alpha}.
+\end{align*}
+\end{theorembox}
+
+\begin{theorembox}{常用诱导公式}
+设 $k\in\mathbb{Z}$：
+\begin{align*}
+\sin(\alpha + 2k\pi) &= \sin\alpha,\quad &\cos(\alpha + 2k\pi) &= \cos\alpha,\\
+\sin(-\alpha) &= -\sin\alpha,\quad &\cos(-\alpha) &= \cos\alpha,\quad &\tan(-\alpha) &= -\tan\alpha,\\
+\sin(\pi - \alpha) &= \sin\alpha,\quad &\cos(\pi - \alpha) &= -\cos\alpha,\\
+\sin(\pi + \alpha) &= -\sin\alpha,\quad &\cos(\pi + \alpha) &= -\cos\alpha,\\
+\sin\left(\frac{\pi}{2} - \alpha\right) &= \cos\alpha,\quad
+&\cos\left(\frac{\pi}{2} - \alpha\right) &= \sin\alpha.
+\end{align*}
+\end{theorembox}
+
+\subsection{三角函数的图像与性质}
+
+\begin{summarybox}{基本三角函数图像与性质}
+\begin{enumerate}
+  \item $\sin x$：周期 $2\pi$，奇函数，值域 $[-1,1]$，在 $\left[-\dfrac{\pi}{2},\dfrac{\pi}{2}\right]$ 上单调增。
+  \item $\cos x$：周期 $2\pi$，偶函数，值域 $[-1,1]$，在 $\left[0,\pi\right]$ 上单调减。
+  \item $\tan x$：周期 $\pi$，奇函数，定义域去掉 $x=\dfrac{\pi}{2}+k\pi$，值域为 $\mathbb{R}$。
+  \item 一般形式 $y=A\sin(\omega x+\varphi)+k$ 的几何意义：
+  \begin{itemize}
+    \item $|A|$：振幅，对应图像的“高度”； 
+    \item $\omega$：角频率，周期 $T=\dfrac{2\pi}{|\omega|}$；
+    \item $\varphi$：相位，决定图像水平平移；
+    \item $k$：纵向平移（中线位置）。
+  \end{itemize}
+  \item 常见图像变换：平移、伸缩、对称，可统一理解为对自变量或函数值的线性变换。
+\end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}{例：由图像读参数}
+已知函数 $y=2\sin(\omega x-\dfrac{\pi}{3})+1$ 的图像在 $x=0$ 处取值 $y=2$，且在 $x=\dfrac{\pi}{6}$ 处第一次达到最大值 $3$。求 $\omega$。
+\par\textbf{思路提示：} 利用“中线、振幅、初相位、周期”四要素：
+\begin{enumerate}
+  \item 最大值为 $1+|2|=3$，与条件一致；
+  \item $x=\dfrac{\pi}{6}$ 是第一次达最大值点，满足
+  \[
+    \omega\cdot \frac{\pi}{6}-\frac{\pi}{3} = \frac{\pi}{2}
+    \Rightarrow \omega=\frac{5}{2}.
+  \]
+\end{enumerate}
+\end{examplebox}
+
+\section{公式体系：和差、倍角、万能与辅助角}
+\label{sec:formulas}
+
+\subsection{和差公式与倍角、半角}
+
+\begin{theorembox}{和差公式}
+\begin{align*}
+\sin(\alpha\pm\beta) &= \sin\alpha\cos\beta \pm \cos\alpha\sin\beta,\\
+\cos(\alpha\pm\beta) &= \cos\alpha\cos\beta \mp \sin\alpha\sin\beta,\\
+\tan(\alpha\pm\beta) &= \dfrac{\tan\alpha\pm\tan\beta}{1\mp\tan\alpha\tan\beta}.
+\end{align*}
+\end{theorembox}
+
+\begin{theorembox}{倍角与半角公式}
+\begin{align*}
+\sin2\alpha &= 2\sin\alpha\cos\alpha,\\
+\cos2\alpha &= \cos^2\alpha - \sin^2\alpha
+            = 2\cos^2\alpha-1
+            = 1-2\sin^2\alpha,\\
+\tan2\alpha &= \dfrac{2\tan\alpha}{1-\tan^2\alpha},\\[0.3em]
+\sin^2\frac{\alpha}{2} &= \frac{1-\cos\alpha}{2},\quad
+\cos^2\frac{\alpha}{2} = \frac{1+\cos\alpha}{2}.
+\end{align*}
+\end{theorembox}
+
+\subsection{积化和差与和差化积}
+
+\begin{theorembox}{和差化积公式}
+\begin{align*}
+\sin\alpha + \sin\beta &= 2\sin\frac{\alpha+\beta}{2}\cos\frac{\alpha-\beta}{2},\\
+\sin\alpha - \sin\beta &= 2\cos\frac{\alpha+\beta}{2}\sin\frac{\alpha-\beta}{2},\\
+\cos\alpha + \cos\beta &= 2\cos\frac{\alpha+\beta}{2}\cos\frac{\alpha-\beta}{2},\\
+\cos\alpha - \cos\beta &= -2\sin\frac{\alpha+\beta}{2}\sin\frac{\alpha-\beta}{2}.
+\end{align*}
+\end{theorembox}
+
+\begin{theorembox}{积化和差公式}
+\begin{align*}
+\sin\alpha\sin\beta &= \frac{1}{2}\bigl[\cos(\alpha-\beta)-\cos(\alpha+\beta)\bigr],\\
+\cos\alpha\cos\beta &= \frac{1}{2}\bigl[\cos(\alpha-\beta)+\cos(\alpha+\beta)\bigr],\\
+\sin\alpha\cos\beta &= \frac{1}{2}\bigl[\sin(\alpha+\beta)+\sin(\alpha-\beta)\bigr].
+\end{align*}
+\end{theorembox}
+
+\subsection{万能公式模型}
+
+\begin{theorembox}{万能公式}
+令 $t=\tan\dfrac{x}{2}$，则
+\begin{align*}
+\sin x &= \frac{2t}{1+t^2},\\
+\cos x &= \frac{1-t^2}{1+t^2},\\
+\tan x &= \frac{2t}{1-t^2}.
+\end{align*}
+\end{theorembox}
+
+\begin{examplebox}{例：利用万能公式求解方程}
+解方程
+\[
+  \sin x + \cos x = 1,\quad x\in(0,2\pi).
+\]
+\textbf{思路一（推荐）：辅助角公式}\\
+写成
+\[
+\sin x + \cos x = \sqrt{2}\sin\left(x+\frac{\pi}{4}\right)=1,
+\]
+两边同时除以 $\sqrt{2}$，得
+\[
+\sin\left(x+\frac{\pi}{4}\right)=\frac{1}{\sqrt{2}}.
+\]
+解得
+\[
+x+\frac{\pi}{4}=\frac{\pi}{4}+2k\pi\ \text{或}\ x+\frac{\pi}{4}=\frac{3\pi}{4}+2k\pi.
+\]
+在 $(0,2\pi)$ 中可得：$x=0,\ \frac{\pi}{2},\ \frac{3\pi}{2}$. （注意端点的讨论）
+
+\medskip
+\textbf{思路二：万能公式}\\
+设 $t=\tan\dfrac{x}{2}$，得到关于 $t$ 的有理方程，也可求解。
+\end{examplebox}
+
+\subsection{辅助角公式模型}
+
+\begin{theorembox}{辅助角公式}
+对任意实数 $a,b$（不全为零），存在角 $\varphi$ 使得
+\[
+a\sin x + b\cos x = \sqrt{a^2+b^2}\,\sin(x+\varphi),
+\]
+其中
+\[
+\cos\varphi = \frac{a}{\sqrt{a^2+b^2}},\quad
+\sin\varphi = \frac{b}{\sqrt{a^2+b^2}}.
+\]
+\end{theorembox}
+
+\begin{summarybox}{辅助角模型的典型用途}
+\begin{itemize}
+  \item 将 $a\sin x + b\cos x$ 化为单一正弦，便于求最大值、最小值；
+  \item 将三角函数表示为“振幅 $\times$ 单一三角函数”，有利于研究函数图像与周期；
+  \item 在解三角方程时，减少未知三角项的种类。
+\end{itemize}
+\end{summarybox}
+
+\section{函数视角下的常见解题模型}
+\label{sec:models-func}
+
+\subsection{“知一求二”模型}
+
+\begin{summarybox}{“知一求二”基本思路}
+题型特征：已知某个三角函数的值（或某个组合），求同一角的另外一个或两个三角函数值。
+\begin{enumerate}
+  \item 根据题设判断角所在象限（符号非常重要）；
+  \item 利用 $\sin^2\alpha+\cos^2\alpha=1$ 或 $1+\tan^2\alpha=\sec^2\alpha$ 等关系；
+  \item 注意根号与正负符号的选择，结合象限信息；
+  \item 若出现复合角，如 $\sin2\alpha$，先用倍角公式再代入。
+\end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}{例：由 $\sin\alpha$ 求 $\cos2\alpha$ 与 $\tan\alpha$}
+已知 $\alpha$ 为第二象限角，且 $\sin\alpha=\dfrac{3}{5}$，求 $\cos2\alpha$ 与 $\tan\alpha$。
+\par\textbf{解析：}
+\[
+\cos\alpha = -\sqrt{1-\sin^2\alpha} = -\frac{4}{5},
+\]
+\[
+\tan\alpha = \frac{\sin\alpha}{\cos\alpha} = -\frac{3}{4},
+\]
+\[
+\cos2\alpha = 1-2\sin^2\alpha = 1-2\cdot\frac{9}{25}=\frac{7}{25}.
+\]
+\end{examplebox}
+
+\subsection{齐次化切模型}
+
+\begin{definitionbox}{齐次化切模型}
+\begin{itemize}
+  \item \textbf{齐次化}：把含有 $\sin x,\cos x$ 的式子化为“同次数”形式（例如都二次），从而便于整体除以某一项；
+  \item \textbf{“切”模型}：通过整体除以 $\cos^n x$（或 $\sin^n x$），将式子转化为关于 $\tan x$（或 $\cot x$）的代数式。
+\end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{例：利用齐次化切解方程}
+解方程
+\[
+\sin^2x + 3\sin x\cos x + 2\cos^2x = 0.
+\]
+\textbf{思路：} 整体除以 $\cos^2x$（要求 $\cos x\neq0$，即 $x\neq \frac{\pi}{2}+k\pi$）：
+\[
+\tan^2x + 3\tan x + 2 = 0.
+\]
+解得 $\tan x = -1$ 或 $\tan x = -2$，进而求出 $x$ 的通解，再根据题目给定范围取值。若 $\cos x=0$ 时，需要单独代入原方程检验。
+\end{examplebox}
+
+\subsection{凑角求值模型}
+
+\begin{summarybox}{凑角模型要点}
+题型特征：出现多个角的三角函数，如 $\sin20^\circ,\sin40^\circ,\cos60^\circ$ 等，目标是求一个看似复杂的数值。
+\begin{itemize}
+  \item 利用和差公式，将角度“凑”成容易计算的特殊角；
+  \item 常见凑法：$30^\circ,45^\circ,60^\circ,90^\circ,120^\circ,150^\circ$ 等；
+  \item 配合和差化积或积化和差，化简乘积或和差。
+\end{itemize}
+\end{summarybox}
+
+\begin{examplebox}{例：求 $\sin20^\circ\cos40^\circ+\cos20^\circ\sin40^\circ$}
+由和角公式
+\[
+\sin(20^\circ+40^\circ) = \sin20^\circ\cos40^\circ + \cos20^\circ\sin40^\circ,
+\]
+故
+\[
+\sin20^\circ\cos40^\circ+\cos20^\circ\sin40^\circ = \sin60^\circ = \frac{\sqrt{3}}{2}.
+\]
+\end{examplebox}
+
+\subsection{辅助角公式模型（函数最值）}
+
+\begin{examplebox}{例：求 $y=3\sin x-4\cos x$ 的最值}
+写成
+\[
+3\sin x - 4\cos x = \sqrt{3^2+(-4)^2}\,\sin(x-\varphi)=5\sin(x-\varphi),
+\]
+其中
+\[
+\cos\varphi=\frac{3}{5},\quad \sin\varphi=-\frac{4}{5}.
+\]
+于是 $y_{\max}=5,\ y_{\min}=-5$。
+\end{examplebox}
+
+\subsection{万能公式模型（代数化三角方程）}
+
+万能公式的优势在于：\emph{把三角方程代数化}，尤其适合含有多个角度的方程或不能轻易拆成和差式的场景。
+
+常规步骤：
+\begin{enumerate}
+  \item 令 $t=\tan\dfrac{x}{2}$，将 $\sin x,\cos x$ 用 $t$ 表示；
+  \item 将方程化为关于 $t$ 的有理方程，求出所有实根 $t$；
+  \item 利用 $x=2\arctan t$，回到原角 $x$，并根据题目给定范围筛选。
+\end{enumerate}
+
+\subsection{\texorpdfstring{$\omega$}{omega} 取值范围模型}
+
+\begin{definitionbox}{\texorpdfstring{$\omega$}{omega} 取值范围问题}
+研究形如
+\[
+y = A\sin(\omega x + \varphi) + k
+\]
+中参数 $\omega$ 对周期、零点个数、振荡频率等性质的影响，或在题目中“反求”使某性质成立的 $\omega$ 的取值范围。
+\end{definitionbox}
+
+\begin{summarybox}{常见问题类型}
+\begin{enumerate}
+  \item 给定区间内零点个数与位置，反求 $\omega$ 范围；
+  \item 通过周期 $T=\dfrac{2\pi}{|\omega|}$，建立不等式；
+  \item 函数在区间上的单调性与极值点个数也常用于限制 $\omega$。
+\end{enumerate}
+\end{summarybox}
+
+\subsection{三角函数求最值 / 求范围模型}
+
+\begin{summarybox}{求最值 / 范围的常用策略}
+\begin{itemize}
+  \item 纯正弦（或余弦）型：利用振幅直接读出最大、最小值；
+  \item 含多个三角项：用辅助角公式、齐次化切或常见不等式（如柯西、均方根不等式）；
+  \item 含参数：先化简结构，再转化为关于参数的一元二次不等式；
+  \item 利用范围传递：已知 $\sin x\in[a,b]$，可推出 $\cos x,\tan x$ 的范围。
+\end{itemize}
+\end{summarybox}
+
+\begin{examplebox}{例：含参数的三角最值问题}
+设 $y = \sin x + a\cos x$，$x\in\mathbb{R}$。求 $y$ 的取值范围。
+\par\textbf{解：} 用辅助角公式：
+\[
+y = \sqrt{1+a^2}\,\sin(x+\varphi),
+\]
+故
+\[
+y_{\min} = -\sqrt{1+a^2},\quad y_{\max} = \sqrt{1+a^2}.
+\]
+\end{examplebox}
+
+\section{解三角形专题：定理、范围与模型}
+\label{sec:triangles}
+
+\subsection{正弦定理与余弦定理}
+
+\begin{theorembox}{正弦定理}
+设三角形 $ABC$ 的边长分别为 $a,b,c$（对应角 $A,B,C$ 的对边），外接圆半径为 $R$，则
+\[
+\frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} = 2R.
+\]
+\end{theorembox}
+
+\begin{theorembox}{余弦定理}
+对三角形 $ABC$：
+\begin{align*}
+a^2 &= b^2 + c^2 - 2bc\cos A,\\
+b^2 &= a^2 + c^2 - 2ac\cos B,\\
+c^2 &= a^2 + b^2 - 2ab\cos C.
+\end{align*}
+\end{theorembox}
+
+\begin{summarybox}{几何含义与常见用途}
+\begin{itemize}
+  \item 正弦定理：解决“边角混合已知”求另一边或角；涉及外接圆半径；
+  \item 余弦定理：可视为“带角度的平方差公式”，适合求边、判定三角形形状（锐角、直角、钝角）。
+\end{itemize}
+\end{summarybox}
+
+\subsection{解三角形中的范围或最值模型}
+
+\begin{summarybox}{基本思路}
+\begin{enumerate}
+  \item \textbf{从角方面}：利用 $0^\circ<A,B,C<180^\circ$ 与 $A+B+C=180^\circ$，借助正弦、余弦单调性；
+  \item \textbf{从边方面}：利用三角形不等式 $a+b>c$ 等，以及余弦定理中 $\cos$ 的范围 $[-1,1]$；
+  \item \textbf{从面积方面}：面积公式 $S=\dfrac{1}{2}bc\sin A$，用 $\sin A$ 的范围求 $S$ 的范围或极值。
+\end{enumerate}
+\end{summarybox}
+
+\begin{examplebox}{例：三角形面积的最大值}
+在三角形 $ABC$ 中，边长 $b,c$ 固定，求面积 $S$ 的最大值。
+\par\textbf{解：} 由
+\[
+S = \frac{1}{2}bc\sin A,
+\]
+且 $0^\circ<A<180^\circ$，故 $\sin A\le1$，等号在 $A=90^\circ$ 时取到。于是
+\[
+S_{\max} = \frac{1}{2}bc.
+\]
+\end{examplebox}
+
+\subsection{“鸡爪模型”}
+
+\begin{definitionbox}{鸡爪模型（几何型三角应用）}
+“鸡爪模型”指的是：若有三条线段从同一点 $O$ 向外伸出（好似鸡爪），分别连接到三点 $A,B,C$，常需利用
+\[
+OA^2,\,OB^2,\,OC^2
+\]
+与夹角的余弦关系，建立多个余弦定理方程，进而求边长或角度。
+\end{definitionbox}
+
+\begin{examplebox}{例：鸡爪模型的常规操作}
+设 $OA,OB,OC$ 分别为 $a,b,c$，且已知 $\angle AOB,\angle BOC,\angle COA$，求三角形 $ABC$ 的边长。
+\par\textbf{思路：} 分别在三角形 $AOB,BOC,COA$ 中应用余弦定理：
+\[
+AB^2 = a^2+b^2-2ab\cos\angle AOB,
+\]
+其余类似。这样就能把几何图形中的未知转换为“代数型”问题。
+\end{examplebox}
+
+\subsection{张角定理模型}
+
+\begin{definitionbox}{张角定理（圆周角视角）}
+在同一圆上，若弦 $AB$ 所对的圆周角为 $\theta$，则其所对的圆心角为 $2\theta$，弧长与弦长可表示为
+\[
+\wideparen{AB} = 2R\theta,\quad AB = 2R\sin\theta,
+\]
+其中 $R$ 为圆的半径。这一事实常被简称为“张角定理”或“弦长公式”。
+\end{definitionbox}
+
+\begin{summarybox}{张角定理在解三角形中的用法}
+\begin{itemize}
+  \item 把“弦长/边长”转化为“半径 + 所对角”的组合，利用 $\sin$；
+  \item 将平面几何中的角度关系转化为三角函数等式；
+  \item 与正弦定理本质一致：$\dfrac{a}{\sin A}=2R$。
+\end{itemize}
+\end{summarybox}
+
+\subsection{倍角定理模型}
+
+\begin{summarybox}{倍角在解三角形中的典型出现}
+\begin{itemize}
+  \item 当出现 $2A,2B,2C$ 时，可利用 $\cos2A=1-2\sin^2A$ 等，将问题转化为 $\sin A,\cos A$ 的范围问题；
+  \item 常见题型：已知某边或面积，用 $\cos2A$ 表示“边的平方差”，从而求角的范围。
+\end{itemize}
+\end{summarybox}
+
+\begin{examplebox}{例：利用倍角判断三角形形状}
+在三角形 $ABC$ 中，设
+\[
+\cos2A+\cos2B+\cos2C = 1.
+\]
+求证：三角形 $ABC$ 为直角三角形。
+\par\textbf{思路提示：} 利用恒等式
+\[
+\cos2A+\cos2B+\cos2C = 1-4\sin A\sin B\sin C,
+\]
+并对直角三角形进行代入试探（如 $C=90^\circ$）。
+\end{examplebox}
+
+\subsection{三角平方差模型}
+
+\begin{theorembox}{三角平方差公式}
+\begin{align*}
+\sin^2\alpha - \sin^2\beta &= \sin(\alpha+\beta)\sin(\alpha-\beta),\\
+\cos^2\alpha - \cos^2\beta &= -\sin(\alpha+\beta)\sin(\alpha-\beta).
+\end{align*}
+\end{theorembox}
+
+\begin{summarybox}{三角平方差模型的常用场景}
+\begin{itemize}
+  \item 在涉及 $a^2,b^2,c^2$ 的几何题中，与余弦定理结合；
+  \item 在解含有 $\sin^2x,\cos^2x$ 的方程、不等式时，通过平方差转化为和差型；
+  \item 在“三角形边平方和差”问题中，用 $\cos A,\cos B$ 表达。
+\end{itemize}
+\end{summarybox}
+
+\section{与高等数学的联系}
+\label{sec:advanced}
+
+\subsection{极限中的三角函数}
+
+\begin{theorembox}{重要极限}
+在高等数学中，以下极限是基础：
+\[
+\lim_{x\to 0}\frac{\sin x}{x} = 1,\quad
+\lim_{x\to 0}\frac{1-\cos x}{x^2} = \frac{1}{2}.
+\]
+\end{theorembox}
+
+\begin{summarybox}{与高中知识的呼应}
+\begin{itemize}
+  \item 小角近似：当 $x$ 较小时，
+  \[
+  \sin x \approx x,\quad \tan x \approx x,\quad \cos x \approx 1-\frac{x^2}{2}.
+  \]
+  \item 这些近似在物理学（如简单摆、波动）、竞赛题中经常出现；
+  \item 高中阶段可以把它们理解为“函数在 $x=0$ 附近的局部线性/二次近似”。
+\end{itemize}
+\end{summarybox}
+
+\subsection{导数与三角函数}
+
+在高等数学中，基本三角函数的导数为：
+\[
+(\sin x)' = \cos x,\quad
+(\cos x)' = -\sin x,\quad
+(\tan x)' = \sec^2 x.
+\]
+
+\begin{summarybox}{导数视角下的三角函数}
+\begin{itemize}
+  \item 函数的单调性与极值可以通过导数研究，这与高中利用“导数符号表”的方法完全一致；
+  \item 辅助角公式提供了“分解”与“合成”的工具，有利于复杂函数的求导与积分；
+  \item 在竞赛中，常通过构造 $f(x)=\sin x + a\cos x$ 等函数，利用导数求不等式最值。
+\end{itemize}
+\end{summarybox}
+
+\subsection{三角积分与面积、长度}
+
+高等数学中的定积分与三角函数有紧密联系，例如：
+\[
+\int_0^\pi \sin x\,\mathrm{d}x = 2,\quad
+\int_0^{\pi/2} \cos x\,\mathrm{d}x = 1.
+\]
+
+这些积分可以看作“曲边梯形的面积”，本质上是高中“求面积”的连续化推广，同时解释了许多几何公式（例如扇形面积、弧长公式）背后的“极限思想”。
+
+\section{综合例题与思维整理}
+
+\subsection{函数综合题示例}
+
+\begin{examplebox}[mathnote coverage=soft]{例：综合多种模型的函数题}
+设函数
+\[
+f(x) = \sin(2x+\omega) + \sqrt{3}\cos(2x+\omega),
+\quad x\in\left[0,\frac{\pi}{2}\right].
+\]
+\begin{enumerate}
+  \item 将 $f(x)$ 化为单一正弦函数的形式；
+  \item 讨论当 $\omega$ 变化时，$f(x)$ 在给定区间内的最大值。
+\end{enumerate}
+\par\textbf{解析要点：}
+\begin{itemize}
+  \item 利用辅助角公式：$f(x)=2\sin(2x+\omega+\frac{\pi}{3})$；
+  \item 最大值 $2$ 一定能取到吗？要考察 $2x+\omega+\frac{\pi}{3}$ 是否能取得 $\frac{\pi}{2}$；
+  \item 从而得到关于 $\omega$ 的不等式范围。
+\end{itemize}
+\end{examplebox}
+
+\subsection{解三角形综合题示例}
+
+\begin{examplebox}[mathnote coverage=soft]{例：解三角形中的范围与最值}
+在 $\triangle ABC$ 中，边 $a,b$ 固定，角 $C$ 可变。记周长为 $p=a+b+c$，面积为 $S$。
+\begin{enumerate}
+  \item 用 $C$ 表示 $c$ 与 $S$；
+  \item 讨论周长 $p$ 与面积 $S$ 的关系，求 $S$ 的最大值。
+\end{enumerate}
+\par\textbf{解析要点：}
+\begin{itemize}
+  \item 由余弦定理：$c^2=a^2+b^2-2ab\cos C$；
+  \item 由面积公式：$S=\dfrac{1}{2}ab\sin C$；
+  \item 当 $C=90^\circ$ 时，$S$ 取最大值 $\dfrac{1}{2}ab$，此时可进一步分析周长 $p$ 的变化情形。
+\end{itemize}
+\end{examplebox}
+
+\subsection{本章小结与思维导图}
+
+\begin{summarybox}[mathnote coverage=soft]{三角函数与解三角形的知识网络}
+可以将本笔记内容整理为以下层次：
+\begin{enumerate}
+  \item \textbf{概念层}：角与弧度、任意角三角函数、象限与符号；
+  \item \textbf{公式层}：诱导公式、同角关系、和差与倍角、积化和差、万能公式、辅助角公式、三角平方差；
+  \item \textbf{函数模型层}：
+  \begin{itemize}
+    \item “知一求二”、齐次化切、凑角求值；
+    \item 辅助角与万能公式模型；
+    \item 和差化积与积化和差模型；
+    \item $\omega$ 取值范围、三角函数最值/范围模型。
+  \end{itemize}
+  \item \textbf{几何与解三角层}：
+  \begin{itemize}
+    \item 正弦定理、余弦定理、面积公式；
+    \item 范围与最值、鸡爪模型、张角定理模型、倍角与平方差模型；
+  \end{itemize}
+  \item \textbf{提高与延伸层}：与极限、导数、积分的联系，为后续高等数学学习打下基础。
+\end{enumerate}
+建议根据上述层次画出自己的思维导图，每个节点配上 1--2 个典型例题，以实现“结构化记忆 + 题型训练”的统一。
+\end{summarybox}
+
+\end{document}

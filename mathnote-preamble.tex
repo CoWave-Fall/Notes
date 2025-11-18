@@ -1,43 +1,5 @@
-\ProvidesFile{mathnote-preamble.tex}[2024/11/13 Math note modern preamble]
-\RequirePackage{iftex}
-% 强制使用 XeLaTeX / LuaLaTeX，避免在 pdfTeX 下出现字体与中文支持问题
-\ifPDFTeX
-  \PackageError{mathnote-preamble}{请使用 \XeLaTeX\ 或 LuaLaTeX 编译该模板}{在 MikTeX / TeX Live 中切换到 \XeLaTeX\ (推荐) 或 LuaLaTeX 后重新编译。}
-\fi
-\makeatletter
-% 自动检测 mathnote-* 核心文件的相对路径，兼容子目录与根目录编译
-\newif\ifmathnote@rootfound
-\mathnote@rootfoundfalse
-\def\mathnote@rootpath{}
-\newcommand*\MathNote@TestRoot[1]{%
-  \IfFileExists{#1mathnote-core.tex}{%
-    \gdef\mathnote@rootpath{#1}%
-    \mathnote@rootfoundtrue
-  }{}%
-}
-\MathNote@TestRoot{}
-\ifmathnote@rootfound\else\MathNote@TestRoot{../}\fi
-\ifmathnote@rootfound\else\MathNote@TestRoot{../../}\fi
-\ifmathnote@rootfound\else\MathNote@TestRoot{../../../}\fi
-\ifmathnote@rootfound\else\MathNote@TestRoot{../../../../}\fi
-\ifmathnote@rootfound\else\MathNote@TestRoot{../../../../../}\fi
-\ifmathnote@rootfound\else
-  \PackageError{mathnote-preamble}{mathnote-core.tex 未找到}{请确认 mathnote 核心文件与当前文稿的相对路径配置正确。}
-\fi
-\newcommand*\MathNoteInputFromRoot[1]{%
-  \input{\mathnote@rootpath#1}%
-}
+\ProvidesFile{mathnote-preamble.tex}[2024/11/13 Math note modern preamble (legacy wrapper)]
+% �����ļ�ֻ�����������棬ʹ�ϰ汾�ıʼ��Խ��� \input{mathnote-preamble.tex}
+% ʱ��Ȼʹ�� mathnote-preamble.sty �ṩ�ĵ��������塣
+\RequirePackage{mathnote-preamble}
 
-% 核心：字体目录自动探测、用户开关、元信息与基础宏包
-\MathNoteInputFromRoot{mathnote-core.tex}
-
-% 配色：屏幕 / 印刷双模式与超链接颜色同步
-\MathNoteInputFromRoot{mathnote-colors.tex}
-
-% 结构：段落、章节标题以及页眉页脚
-\MathNoteInputFromRoot{mathnote-structure.tex}
-
-% 内容：数学命令、代码高亮、彩色盒子与实用工具
-\MathNoteInputFromRoot{mathnote-content.tex}
-
-\makeatother

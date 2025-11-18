@@ -10,19 +10,20 @@
 % 8. club/widow penalty 10000，TikZ/盒子线宽 0.4pt。
 % --------------------------------------------------
 \documentclass[a4paper,11pt]{ctexart}
-\input{mathnote-preamble.tex}
+\usepackage{mathnote-preamble}
 
 
 % 可选：如果主输出介质为 CMYK，请解除注释
-\MathNoteEnablePrint
+%\MathNoteEnablePrint
 % 可选：解除注释以显示右上角审核标记
-\MathNoteEnableReviewStamp
+%\MathNoteEnableReviewStamp
 
 \renewcommand{\notetitle}{现代数学笔记模板}
 \renewcommand{\noteauthor}{示例编写者}
 \renewcommand{\notedate}{\today}
 \renewcommand{\notesubtitle}{sRGB 屏幕 / CMYK 印刷 双栈工作流}
 \renewcommand{\noteversion}{Release~0.0.1}
+\renewcommand{\noteversionmark}{第一版\quad|\quad2024~年~11~月~13~日\\第二版\quad|\quad2025~年~01~月~01~日}
 \newcommand{\TemplateMiniHeading}[1]{%
   \par\smallskip%
   \noindent\textbf{#1}\par\smallskip%
@@ -45,7 +46,7 @@
   \vspace{0.5em}
   {\large\color{inkgray}\noteauthor\par}
   \vspace{0.4em}
-  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \MathNoteVersionBlock
   \vspace*{\fill}
 \end{minipage}
 
