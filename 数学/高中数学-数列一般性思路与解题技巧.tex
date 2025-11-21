@@ -1,0 +1,570 @@
+% --------------------------------------------------
+% 高中数学·数列 一般性思路与解题技巧
+% 依托 mathnote-preamble.tex 与“数学笔记模板”排版风格
+% --------------------------------------------------
+\documentclass[a4paper,11pt]{ctexart}
+\InputIfFileExists{mathnote-preamble.tex}{}{%
+  \InputIfFileExists{../mathnote-preamble.tex}{}{%
+    \InputIfFileExists{../../mathnote-preamble.tex}{}{%
+      \PackageError{mathnote-notes}{mathnote-preamble.tex 未找到}{请确认 mathnote-preamble.tex 与当前文稿的相对路径配置正确。}%
+    }%
+  }%
+}
+
+% 以纸质打印 + 课堂讲解为主；若仅屏幕阅读，可注释掉
+\MathNoteEnablePrint
+\MathNoteEnableReviewStamp
+
+% 印刷模式下略微压缩垂直空白，适配纸质阅读
+\ifmathnoteprintmode
+  \setlength{\parskip}{0.25em}
+  \ctexset{
+    section={
+      beforeskip=1.0em,
+      afterskip=0.5em
+    },
+    subsection={
+      beforeskip=0.8em,
+      afterskip=0.35em
+    },
+    subsubsection={
+      beforeskip=0.6em,
+      afterskip=0.2em
+    }
+  }
+  \tcbset{
+    mathnote box/.style/.append style={
+      top=0.6em,
+      bottom=0.6em,
+      before skip=8pt,
+      after skip=8pt
+    }
+  }
+\fi
+
+\renewcommand{\notetitle}{高中数学数列一般性思路与解题技巧}
+\renewcommand{\noteauthor}{生成式人工智能，人工审阅通过}
+\renewcommand{\notedate}{\today}
+\renewcommand{\notesubtitle}{模型识别\quad 通项与求和\quad 策略模板}
+\renewcommand{\noteversion}{v1.0}
+
+% 列表整体略收缩，避免与彩色边条叠加产生视觉负担
+\setlist[itemize]{leftmargin=1.8em, itemsep=0.25em, before=\relax, after=\relax}
+\setlist[enumerate]{leftmargin=2.1em, itemsep=0.3em, before=\relax, after=\relax}
+
+% 小节内的行内小标题
+\newcommand{\SeqGuideMiniHeading}[1]{%
+  \par\smallskip
+  \noindent\textbf{#1}\par\smallskip
+}
+
+\begin{document}
+
+% 封面
+\thispagestyle{empty}
+\PageTag[secondary]{高中数学·数列思路}
+\setcounter{page}{1}
+
+\noindent
+\begin{minipage}[t][0.7\textheight][c]{\textwidth}
+  \raggedleft
+  \vspace*{\fill}
+  {\sffamily\bfseries\Huge\color{accent}\notetitle\par}
+  \vspace{0.6em}
+  {\Large\color{inkgray}\notesubtitle\par}
+  \vspace{0.5em}
+  {\large\color{inkgray}\noteauthor\par}
+  \vspace{0.4em}
+  {\normalsize\color{inkgray}\noteversion\quad|\quad\notedate\par}
+  \vspace*{\fill}
+\end{minipage}
+
+\begin{center}
+\begin{minipage}{0.84\textwidth}
+  \textcolor{inkgray}{\sffamily\small 学习导航}\\
+  \begin{itemize}
+    \item 围绕\keyword{模型识别}、\keyword{通项与递推}、\keyword{求和与极限}三条主线，构建数列题目的「通用解题框架」；
+    \item 通过\inlinehint{对照表}、\inlinehint{Roadmap 流程图}与\inlinehint{离散点图示}，一页内兼顾定义、方法与典型思路；
+    \item 强调「\ModeBadge{先看结构，再套方法}」的\keyword{结构化解题习惯}，兼具复习指导性与做题时随手翻查的工具性。
+  \end{itemize}
+\end{minipage}
+\end{center}
+\vspace{1em}
+
+\clearpage
+\thispagestyle{plain}
+\phantomsection
+\tableofcontents
+
+\clearpage
+% === 导读 ===
+\section*{导读：如何使用本笔记}
+\addcontentsline{toc}{section}{导读：如何使用本笔记}
+
+\begin{summarybox}{本笔记的定位}
+  \begin{itemize}
+    \item \keyword{针对性}：聚焦高中范围内所有主流数列题型，特别是「求通项」「求和」「单调性与极限」「构造数列解题」四大板块；
+    \item \keyword{方法论}：每一章先给\inlinehint{总体思路模板}，再用\ModeBadge{例题}展示落地过程，避免只记结论不懂使用场景；
+    \item \keyword{工具性}：表格与 Roadmap 尽量做成「可查阅」的形式，考前翻一遍即可快速唤醒解题感觉。
+  \end{itemize}
+\end{summarybox}
+
+\begin{NoteRoadmap}{使用建议：从概念到套路的两轮学习}
+  \RoadmapStep{第一轮：按章节顺序阅读，将所有\keyword{定义}与\keyword{常见模型表}过一遍，保证「题目大概属于哪一类」能一眼看出。}
+  \RoadmapStep{第二轮：针对「通项」「求和」「极限」三类题，各挑一两道典型例题，跟着 Roadmap 复盘每一步的理由。}
+  \RoadmapStep{整理个人错题时，尝试把错题归类到本笔记的某个\keyword{模型格子}里，补充在对应小节后方。}
+  \RoadmapStep{考前一周，重点翻看各章末尾的\ModeBadge[highlight]{小结表}与\ModeBadge{自查清单}，对照勾选掌握情况。}
+\end{NoteRoadmap}
+
+\clearpage
+% === 第一章 整体视角：从“数列”看一类题 ===
+\section{整体视角：从“数列”看一类题}
+
+\subsection{数列的基本角色与典型任务}
+
+\begin{definitionbox}{数列与前 $n$ 项和}
+  \begin{itemize}
+    \item 按照一定\keyword{次序规则}排列的一列数，记为 $\{a_n\}$ 或 $\{a_n\}_{n=1}^{\infty}$，称为\keyword{数列}；
+    \item 直接给出 $a_n$ 关于 $n$ 的解析式（显式公式），称为\keyword{通项公式}；
+    \item 用前几项表示后项的关系式，如 $a_{n+1}=f(a_n)$，称为\keyword{递推关系}；
+    \item $S_n = a_1+a_2+\dots+a_n$ 称为\keyword{前 $n$ 项和}，常写成数列 $\{S_n\}$。
+  \end{itemize}
+\end{definitionbox}
+
+\SeqGuideMiniHeading{数列在高中中的四种“出场方式”}
+\begin{summarybox}{数列题目的常见任务视角}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3cm}X}
+    \toprule
+    \textbf{任务视角} & \textbf{典型提问方式与核心工具} \\
+    \midrule
+    求通项 &
+      已知递推式或若干项，问 $a_n$ 的解析式。\newline
+      核心：\keyword{模型识别}（等差/等比/线性递推/构造）、\keyword{差分与比值}、\keyword{由 $S_n$ 反推 $a_n$}。 \\
+    求和 &
+      已知 $a_n$，求 $S_n$ 或极限 $\lim\limits_{n\to\infty}S_n$。\newline
+      核心：\keyword{公式}、\keyword{分组}、\keyword{裂项相消}、\keyword{错位相减}、\keyword{构造新和式}。 \\
+    性质（单调、有界、极限） &
+      判断数列是否\keyword{单调}、\keyword{有界}，求极限或求参数范围。\newline
+      核心：\keyword{差分号} $\Delta a_n$、\keyword{不等式放缩}、\keyword{夹逼}、与函数图像联想。 \\
+    工具型构造 &
+      用数列刻画方程根、几何长度、概率过程等。\newline
+      核心：\keyword{把复杂问题拆成一步一步可递推的过程}，再利用前面三类方法。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{sideinfobox}{把「题型」记成「任务 + 工具」}
+  与其记「这是等差数列求和题」，不如在脑中先问两件事：
+  \begin{itemize}
+    \item \keyword{任务是什么？}——求通项 / 求和 / 求极限 / 求参数范围 / 构造数列……
+    \item \keyword{最顺手的工具是哪个？}——差分、比值、裂项、错位、构造、归纳……
+  \end{itemize}
+  这样做的好处是：遇到新题时，也能快速对照「任务–工具」表，避免只会套熟悉模板。
+\end{sideinfobox}
+
+\subsection{用图像理解数列的变化节奏}
+
+\SeqGuideMiniHeading{离散点图示：把数列当作「离散函数」}
+在许多思想上，$\{a_n\}$ 可以看作定义在正整数上的函数 $f(n)$。利用简单的 TikZ 图可以直观感受单调性与极限。
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines, scale=0.9]
+  % 坐标轴
+  \draw[->, thick] (0,0) -- (6.2,0) node[below right] {$n$};
+  \draw[->, thick] (0,0) -- (0,4.2) node[left] {$a_n$};
+  % 等差数列示意
+  \foreach \x/\y in {1/1,2/1.6,3/2.2,4/2.8,5/3.4}{
+    \fill[accent] (\x,\y) circle (1.4pt);
+  }
+  \node[anchor=west,accent] at (3.3,3.5) {\small 单调递增（类似等差）};
+  % 交错数列示意
+  \foreach \x/\y in {1/1,2/2.6,3/1.2,4/2.8,5/1.4}{
+    \fill[secondary] (\x,\y-0.5) circle (1.4pt);
+  }
+  \node[anchor=west,secondary] at (3.3,1.2) {\small 交错变化（含 $(-1)^n$）};
+\end{tikzpicture}
+\captionof{figure}{数列的离散点图示：单调递增与交错变化}
+\end{center}
+
+\begin{notebox}{从图像出发的三个问题}
+  观察上图中的点列，可以迅速联想到：
+  \begin{itemize}
+    \item \keyword{单调性}：点的高度是否整体上升或下降？对应到解析式，就是看 $\Delta a_n=a_{n+1}-a_n$ 的符号；
+    \item \keyword{有界性}：点是否被夹在两条水平线之间？对应到不等式 $m\le a_n\le M$；
+    \item \keyword{极限}：点是否越来越靠近某一水平线？对应到极限 $\lim a_n=L$。
+  \end{itemize}
+\end{notebox}
+
+\clearpage
+% === 第二章 模型识别：一眼看出是什么数列 ===
+\section{模型识别：一眼看出是什么数列}
+
+\subsection{从差分与比值切入}
+
+\SeqGuideMiniHeading{差分 $\Delta a_n$ 与比值 $\dfrac{a_{n+1}}{a_n}$}
+\begin{summarybox}{常见数列模型识别表}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}X}
+    \toprule
+    \textbf{现象/结构} & \textbf{可能的模型与建议操作} \\
+    \midrule
+    $a_{n+1}-a_n$ 为常数或一次多项式 &
+      通常是等差数列或「二阶差分常数」的多项式数列。\newline
+      建议：计算 $\Delta a_n$、$\Delta^2 a_n$，尝试写成 $a_n=\alpha n^2+\beta n+\gamma$ 等形式。 \\
+    $\dfrac{a_{n+1}}{a_n}$ 为常数或与 $n$ 无关 &
+      等比数列或带指数因子的模型。\newline
+      建议：令 $b_n=\dfrac{a_n}{q^n}$ 或对数化简，寻找等差结构。 \\
+    递推式中出现 $a_{n+1}-a_n=f(n)$ &
+      典型的\keyword{累加型}模型。\newline
+      建议：对递推式从 $1$ 到 $n-1$ 连加，把问题转化为一个求和。 \\
+    递推式中出现 $a_{n+1}=p a_n+q$ &
+      一阶线性非齐次递推。\newline
+      建议：拆成「齐次部分 $a_{n+1}=p a_n$」加「特解」，可类比高数中的线性微分方程。 \\
+    由 $S_n$ 求 $a_n$ &
+      典型的「由和反推项」模型。\newline
+      建议：先写出 $a_n=S_n-S_{n-1}$，再代入具体解析式化简。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\begin{examplebox}{例：通过差分判断模型}
+  已知数列 $\{a_n\}$ 满足
+  \[
+    a_1=1,\quad a_{n+1}-a_n=2n+1.
+  \]
+  求 $a_n$ 的通项。
+
+  \textbf{思路提示：}
+  \begin{focuspoints}
+    \item 递推式呈现「差分 $=$ 一次多项式」结构，优先考虑\keyword{累加}或\keyword{构造法}；
+    \item 连续求和 $\sum_{k=1}^{n-1}(2k+1)$，自然出现平方数；
+    \item 观察小样本：$a_1=1,a_2=4,a_3=9,\dots$，猜测 $a_n=n^2$，再用归纳法验证。
+  \end{focuspoints}
+
+  \textbf{解：}由递推式
+  \[
+    a_n = a_1+\sum_{k=1}^{n-1}(2k+1)=1+\sum_{k=1}^{n-1}(2k+1)
+    =1+(n-1)^2=n^2.
+  \]
+  亦可直接从数值观察得到猜想，再用数学归纳法严格证明。
+\end{examplebox}
+
+\subsection{从结构符号识别：奇偶、绝对值与 $(-1)^n$}
+
+\SeqGuideMiniHeading{看到「交错」「分段」时要做的第一件事}
+\begin{notebox}{含奇偶结构时的常见操作}
+  当通项或递推中出现 $(-1)^n$、$(-1)^{n+1}$、绝对值 $\lvert a_n\rvert$、按奇偶分段定义等结构时，可以优先：
+  \begin{itemize}
+    \item 将数列拆成\keyword{两条子数列}：$\{a_{2n-1}\}$ 与 $\{a_{2n}\}$，分别判断模型；
+    \item 用\keyword{图像}或表格直观感受「奇数位」「偶数位」的变化节奏；
+    \item 最后再把两个子数列合并成统一的通项表达。
+  \end{itemize}
+\end{notebox}
+
+\begin{center}
+\begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}X}
+  \toprule
+  \textbf{表：含奇偶结构数列的常见处理} & \textbf{操作建议} \\
+  \midrule
+  $a_n=(-1)^n\cdot f(n)$ &
+    先研究 $f(n)$ 的单调性与大小，再分别考虑偶数项、奇数项的符号，必要时画出若干点辅助理解。 \\
+  递推式 $a_{n+2}=a_n+g(n)$ &
+    一般拆成两条数列：$\{a_{2n-1}\}$、$\{a_{2n}\}$，分别写出递推并求通项，最后综合。 \\
+  $a_n=\lvert b_n\rvert$ &
+    重点研究 $b_n$ 的符号变化点，把区间切分成若干段，每一段上 $\lvert b_n\rvert$ 的表达式固定。 \\
+  \bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{examplebox}{例：奇偶拆分求通项}
+  已知数列 $\{a_n\}$ 满足
+  \[
+    a_{n+2}=a_n+2,\quad a_1=1,a_2=2.
+  \]
+  求 $a_n$ 的通项。
+
+  \textbf{思路：}递推跨一步联系，优先考虑奇偶拆分。
+
+  \textbf{解：}对奇数项：
+  \[
+    a_3=a_1+2=3,\ a_5=a_3+2=5,\dots
+  \]
+  得 $a_{2n-1}=2n-1$；对偶数项：
+  \[
+    a_4=a_2+2=4,\ a_6=a_4+2=6,\dots
+  \]
+  得 $a_{2n}=2n$。综上，
+  \[
+    a_n=n.
+  \]
+\end{examplebox}
+
+\clearpage
+% === 第三章 通项求法的常见套路 ===
+\section{通项求法的常见套路}
+
+\subsection{递推 $\Rightarrow$ 通项的一般 Roadmap}
+
+\begin{NoteRoadmap}{从递推到通项的四步模板}
+  \RoadmapStep{先\keyword{识别结构}：判断是「差分型」$a_{n+1}-a_n=f(n)$、「比值型」$a_{n+1}=q a_n$，还是「线性组合型」$a_{n+2}+p a_{n+1}+q a_n=0$。}
+  \RoadmapStep{根据结构选择工具：差分型用\inlinehint{累加与构造}，比值型用\inlinehint{等比与对数}，线性组合型用\inlinehint{特征根法}。}
+  \RoadmapStep{写出通项的一般形式（含待定常数），再利用已知的首项或若干项\keyword{确定常数}。}
+  \RoadmapStep{必要时，用\keyword{数学归纳法}或\keyword{反向代入}检查通项是否真正满足递推与初值。}
+\end{NoteRoadmap}
+
+\subsection{由 $S_n$ 反推 $a_n$}
+
+\begin{definitionbox}{基本关系}
+  对任意数列 $\{a_n\}$ 及其前 $n$ 项和 $S_n$，有
+  \[
+    a_n=S_n-S_{n-1}\quad(n\ge2),\qquad a_1=S_1.
+  \]
+  因此，只要 $S_n$ 有解析式，就可以通过\keyword{差分}求出 $a_n$ 的通项。
+\end{definitionbox}
+
+\begin{examplebox}{例：从 $S_n$ 求通项}
+  已知数列 $\{a_n\}$ 的前 $n$ 项和为
+  \[
+    S_n=n^2+3n.
+  \]
+  求 $a_n$。
+
+  \textbf{解：}由定义
+  \[
+    a_n=S_n-S_{n-1}=(n^2+3n)-\bigl((n-1)^2+3(n-1)\bigr)=2n+2.
+  \]
+  故 $a_n=2n+2$，是一个等差数列。
+\end{examplebox}
+
+\subsection{构造法与不变式思维}
+
+\begin{definitionbox}{构造法的核心思想}
+  \begin{itemize}
+    \item 为了简化递推或求和，\keyword{主动构造}一个新的数列 $\{b_n\}$，使其结构更简单；
+    \item 常见构造：$b_n=a_n+\lambda$、$b_n=\dfrac{a_n}{q^n}$、$b_n=a_n-\alpha n^2-\beta n$ 等；
+    \item 核心目标：让 $\{b_n\}$ 满足更简单的递推，或者成为等差/等比数列。
+  \end{itemize}
+\end{definitionbox}
+
+\begin{examplebox}{例：构造新数列简化递推}
+  数列 $\{a_n\}$ 满足
+  \[
+    a_{n+1}=a_n+2n,\quad a_1=1.
+  \]
+  求通项 $a_n$。
+
+  \textbf{方法一：累加思想}
+  \[
+    a_n=a_1+\sum_{k=1}^{n-1}2k=1+(n-1)n=n^2-n+1.
+  \]
+
+  \textbf{方法二：构造不变式}
+  \[
+    a_{n+1}- (n+1)^2 = a_n-n^2.
+  \]
+  令 $b_n=a_n-n^2$，则 $b_{n+1}=b_n$，故 $b_n\equiv b_1=a_1-1^2=0$，从而 $a_n=n^2$，再与原式比较修正为 $a_n=n^2-n+1$。
+\end{examplebox}
+
+\clearpage
+% === 第四章 求和策略：裂项、错位、分组与构造 ===
+\section{求和策略：裂项、错位、分组与构造}
+
+\subsection{常见求和模型总览}
+
+\begin{summarybox}{求和策略一览表}
+  \begin{center}
+  \begin{tabularx}{0.98\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}X}
+    \toprule
+    \textbf{策略名称} & \textbf{典型形式与操作要点} \\
+    \midrule
+    公式法 &
+      适用于等差、等比及其线性组合。\newline
+      操作：先拆成基本等差/等比再代入公式。 \\
+    裂项相消 &
+      通过恒等变形把 $a_n$ 写成 $u_n-u_{n+1}$ 或 $u_{n+1}-u_n$。\newline
+      特征：求和后只剩首尾两项。 \\
+    错位相减 &
+      常见于接近等比的和：先构造 $qS_n$ 再用 $qS_n-S_n$，大量中间项相消。 \\
+    分组求和 &
+      按两项或多项一组，如 $\sum (a_{2k-1}+a_{2k})$，每一组化简后再整体求和。 \\
+    构造与归纳 &
+      当直接闭式难以写出时，可以先猜测再用归纳法证明，或构造 $S_n$ 的递推。 \\
+    \bottomrule
+  \end{tabularx}
+  \end{center}
+\end{summarybox}
+
+\subsection{裂项与错位：两种「相消」思路}
+
+\begin{examplebox}{例：裂项相消}
+  求和
+  \[
+    S_n=\sum_{k=1}^{n}\frac{1}{k(k+1)}.
+  \]
+
+  \textbf{解：}裂项
+  \[
+    \frac{1}{k(k+1)}=\frac{1}{k}-\frac{1}{k+1}.
+  \]
+  故
+  \[
+    S_n=\sum_{k=1}^{n}\left(\frac{1}{k}-\frac{1}{k+1}\right)
+      =1-\frac{1}{n+1}.
+  \]
+\end{examplebox}
+
+\begin{examplebox}{例：错位相减}
+  已知
+  \[
+    S_n=1+2q+3q^2+\cdots+nq^{n-1}\quad(0<q<1).
+  \]
+  求 $S_n$。
+
+  \textbf{解：}构造 $qS_n$：
+  \[
+    qS_n = q+2q^2+3q^3+\cdots+nq^{n}.
+  \]
+  两式相减：
+  \[
+    S_n-qS_n = 1+q+q^2+\cdots+q^{n-1}-nq^{n}
+    =\frac{1-q^{n}}{1-q}-nq^{n}.
+  \]
+  故
+  \[
+    S_n=\frac{1}{(1-q)^2}\left(1-(n+1)q^{n}+nq^{n+1}\right).
+  \]
+\end{examplebox}
+
+\clearpage
+% === 第五章 单调性、有界性与极限 ===
+\section{单调性、有界性与极限}
+
+\subsection{差分法与放缩法}
+
+\SeqGuideMiniHeading{差分法的基本思路}
+判断单调性时，常先计算
+\[
+  \Delta a_n = a_{n+1}-a_n.
+\]
+\begin{itemize}
+  \item 若对所有充分大的 $n$，都有 $\Delta a_n>0$，则数列最终\keyword{单调递增}；
+  \item 若 $\Delta a_n<0$，则最终单调递减；
+  \item 若 $\Delta a_n$ 的符号不稳定，则可结合图像与不等式放缩进一步讨论。
+\end{itemize}
+
+\begin{examplebox}{例：差分判断单调性}
+  设 $a_n=\dfrac{n}{n+1}$。判断其单调性，并求极限。
+
+  \textbf{解：}
+  \[
+    \Delta a_n = a_{n+1}-a_n=\frac{n+1}{n+2}-\frac{n}{n+1}
+    =\frac{1}{(n+1)(n+2)}>0.
+  \]
+  故 $\{a_n\}$ 单调递增；又有
+  \[
+    0<a_n<1,\quad \lim_{n\to\infty}a_n=1.
+  \]
+  因此数列单调递增且有上界 $1$，极限为 $1$。
+\end{examplebox}
+
+\subsection{用图像理解极限：点列逼近水平线}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines, scale=0.9]
+  % 坐标轴
+  \draw[->, thick] (0,0) -- (6.2,0) node[below right] {$n$};
+  \draw[->, thick] (0,0) -- (0,4.2) node[left] {$a_n$};
+  % 极限水平线
+  \draw[accent, dashed] (0,3) -- (6.1,3) node[anchor=west,accent] {\small 极限 $L$};
+  % 点列
+  \foreach \x/\y in {1/1.5,2/2.2,3/2.6,4/2.85,5/2.95}{
+    \fill[secondary] (\x,\y) circle (1.4pt);
+  }
+\end{tikzpicture}
+\captionof{figure}{点列逐渐逼近水平线的极限示意}
+\end{center}
+
+\begin{notebox}{极限题的常见思路}
+  \begin{itemize}
+    \item 优先判断数列是否单调、有界，若是，则可用\keyword{单调有界必收敛}的结论；
+    \item 若 $a_{n+1}$ 与 $a_n$ 有递推关系，可令 $L=\lim a_n$，对递推式两边同时取极限解出 $L$；
+    \item 与函数极限相似的形式，可尝试配方、乘以共轭、泰勒展开等高阶技巧。
+  \end{itemize}
+\end{notebox}
+
+\clearpage
+% === 第六章 综合题型模板 ===
+\section{综合题型模板}
+
+\subsection{求通项类综合题}
+
+\begin{summarybox}{求通项常用模板回顾}
+  \begin{itemize}
+    \item \keyword{等差/等比}：先识别，再直接套公式或利用已知项建立方程；
+    \item \keyword{差分型递推}：连加或构造与 $n$ 的多项式相减，寻找不变式；
+    \item \keyword{线性齐次递推}：写出特征方程，求根后用待定系数法；
+    \item \keyword{由 $S_n$ 反推 $a_n$}：$a_n=S_n-S_{n-1}$，注意化简与结构识别；
+    \item \keyword{奇偶拆分/绝对值}：先分段或拆子数列，再统一表达。
+  \end{itemize}
+\end{summarybox}
+
+\begin{examplebox}{综合例：多步骤求通项}
+  已知数列 $\{a_n\}$ 满足
+  \[
+    a_1=1,\quad a_{n+1}-a_n=\frac{1}{n(n+1)}.
+  \]
+  求 $a_n$ 的通项，并讨论其极限。
+
+  \textbf{解：}
+  \[
+    a_n=a_1+\sum_{k=1}^{n-1}\frac{1}{k(k+1)}
+    =1+\sum_{k=1}^{n-1}\left(\frac{1}{k}-\frac{1}{k+1}\right)
+    =1+\left(1-\frac{1}{n}\right)=2-\frac{1}{n}.
+  \]
+  故 $a_n=2-\dfrac{1}{n}$，单调递增且 $\lim a_n=2$。
+\end{examplebox}
+
+\subsection{求和与极限类综合题}
+
+\begin{examplebox}{综合例：先求通项再求和}
+  数列 $\{a_n\}$ 满足 $a_1=1,a_{n+1}=2a_n+1$。求 $a_n$ 与 $S_n$。
+
+  \textbf{解：}递推式为一阶线性非齐次：
+  \[
+    a_{n+1}-2a_n=1.
+  \]
+  令 $b_n=a_n+\lambda$，求 $\lambda$ 使得 $b_{n+1}=2b_n$，得到 $\lambda=-1$，于是
+  \[
+    b_{n+1}=a_{n+1}-1=2a_n+1-1=2(a_n-1)=2b_n,
+  \]
+  故 $b_n=2^{n-1}b_1=2^{n-1}(a_1-1)=0$，从而 $a_n\equiv1$。再求和得 $S_n=n$。
+  （注：本题中构造结果较简单，实际应用中 $b_n$ 往往为非零等比数列。）
+\end{examplebox}
+
+\clearpage
+% === 第七章 自查清单与练习建议 ===
+\section{自查清单与练习建议}
+
+\begin{summarybox}{考前自查：我是否已经掌握？}
+  \begin{itemize}
+    \item 是否能根据 $a_{n+1}-a_n$、$\dfrac{a_{n+1}}{a_n}$ 快速判断数列属于哪一类模型？
+    \item 遇到由 $S_n$ 给出的问题，是否能在草稿上第一时间写出 $a_n=S_n-S_{n-1}$ 并熟练化简？
+    \item 面对含奇偶、绝对值或 $(-1)^n$ 的结构，是否会先拆分子数列再处理？
+    \item 是否掌握至少两种求和思路（裂项相消、错位相减、分组等），并能在题目中识别对应结构？
+    \item 能否用差分 + 放缩判断常见数列的单调性与极限，并联想到函数极限的类似技巧？
+  \end{itemize}
+\end{summarybox}
+
+\begin{notebox}{练习建议}
+  \begin{itemize}
+    \item \keyword{纵向}：选一类模型（如等差、线性递推、裂项求和），连续做 10 道，同一方法用到手感非常熟；
+    \item \keyword{横向}：把不同模型混合成「综合卷」，强迫自己先分类再选择方法，训练识别能力；
+    \item 每做完一份练习，尝试在本笔记对应章节后\inlinehint{补充一行小结}：「本题属于哪一类，关键操作是什么，哪里容易出错」。
+  \end{itemize}
+\end{notebox}
+
+\end{document}
+

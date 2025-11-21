@@ -33,3 +33,5 @@
 *.figlist.makefile.out
 *.figlist.makefile.toc
 *.figlist.makefile.aux
+*.pdf
+*.xdv

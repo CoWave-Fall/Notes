@@ -91,35 +91,34 @@
 \begin{minipage}{0.96\textwidth}
   \centering
   \ModeBadge[highlight]{总览表格}
-  \begin{table}[h]
-    \centering
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{lll}
-      \toprule
-      底端初速度条件 & 运动特点 & 关键结论 \\
-      \midrule
-      $0 < v_0 < \sqrt{2gR}$ &
-      上升不到 $\pi/2$ 即停止回落 &
-      始终贴轨，不会飞离 \\
-      $v_0 = \sqrt{2gR}$ &
-      恰在 $\theta=\pi/2$ 处速度为 $0$ &
-      最高侧边停住后原路滑回 \\
-      $\sqrt{2gR} < v_0 < \sqrt{5gR}$ &
-      在 $\pi/2 < \theta_1 < \pi$ 处离轨 &
-      无法整周，离轨后为抛体运动 \\
-      $v_0 = \sqrt{5gR}$ &
-      最小整周速度 &
-      最高点速度 $\sqrt{gR}$，$N_{\text{top}} = 0$ \\
-      $v_0 > \sqrt{5gR}$ &
-      高速整周 &
-      $N>0$ 始终贴轨，$N_{\text{top}}>0$ \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
+
+  \vspace{0.5em}
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{lll}
+    \toprule
+    底端初速度条件 & 运动特点 & 关键结论 \\
+    \midrule
+    $0 < v_0 < \sqrt{2gR}$ &
+    上升不到 $\pi/2$ 即停止回落 &
+    始终贴轨，不会飞离 \\
+    $v_0 = \sqrt{2gR}$ &
+    恰在 $\theta=\pi/2$ 处速度为 $0$ &
+    最高侧边停住后原路滑回 \\
+    $\sqrt{2gR} < v_0 < \sqrt{5gR}$ &
+    在 $\pi/2 < \theta_1 < \pi$ 处离轨 &
+    无法整周，离轨后为抛体运动 \\
+    $v_0 = \sqrt{5gR}$ &
+    最小整周速度 &
+    最高点速度 $\sqrt{gR}$，$N_{\text{top}} = 0$ \\
+    $v_0 > \sqrt{5gR}$ &
+    高速整周 &
+    $N>0$ 始终贴轨，$N_{\text{top}}>0$ \\
+    \bottomrule
+  \end{tabular}
 \end{minipage}
 \end{center}
 
-\clearpage
+
 \section{基本模型与受力分析}
 
 \subsection{几何与符号约定}
@@ -214,14 +213,14 @@
   \end{itemize}
 \end{summarybox}
 
-\clearpage
+
 \section{不同初速度下的运动情况}
 
 本节关注同一条竖直圆轨道上，小球在\keyword{不同底端初速度} $v_0$ 下的典型运动情形，并给出统一的判断流程。
 
 \subsection{第一类：上去又回来的贴轨运动}
 
-\begin{ModeBadge}{情形 I：$0 < v_0 \le \sqrt{2gR}$}
+\ModeBadge[secondary]{情形 I：$0 < v_0 \le \sqrt{2gR}$}
 
 当 $0 < v_0 \le \sqrt{2gR}$ 时，由式\eqref{eq:energy-v-theta}，在某一转折点 $\theta_{\text{turn}}$ 处速度 $v=0$：
 \[
@@ -258,11 +257,9 @@
   此时 $\theta_{\text{turn}}<\dfrac{\pi}{2}$，说明小球无法上到水平位置就已经停下。
 \end{proofbox}
 
-\end{ModeBadge}
-
 \subsection{第二类：离轨的“半周运动”}
 
-\begin{ModeBadge[highlight]{情形 II：$\sqrt{2gR} < v_0 < \sqrt{5gR}$}}
+\ModeBadge[highlight]{情形 II：$\sqrt{2gR} < v_0 < \sqrt{5gR}$}
 
 在此区间内，小球首先\keyword{不回滑}，通过 $\theta=\dfrac{\pi}{2}$ 处后进入上半圆；随后由于速度不断减小，支持力 $N$ 有可能减小到 $0$，出现离轨点。
 
@@ -301,7 +298,86 @@
   \item 飞行过程中最高点的高度与轨道顶点的高度关系。
 \end{itemize}
 具体求解时，可将离轨点作为原点，建立直角坐标系，用分解后的初速度分量和匀加速运动公式处理。
-\end{ModeBadge}
+
+\begin{summarybox}{离轨后的抛体运动统一模型}
+  设小球在 $P(\theta_1)$ 处以速度 $v_1$ 离开轨道。以 $P$ 为原点，水平向右为 $x$ 轴、竖直向上为 $y$ 轴，则：
+  \begin{itemize}
+    \item 离轨点相对于圆心 $O$ 的坐标为
+          \[
+            P:\ (x_P,y_P) = (R\sin\theta_1,\,-R\cos\theta_1);
+          \]
+    \item 切线方向单位向量
+          \[
+            \mathbf{t} = (\cos\theta_1,\ \sin\theta_1),\quad
+            \vec v_1 = v_1\mathbf{t};
+          \]
+    \item 以 $P$ 为原点的抛体轨迹方程为
+          \[
+            x(t) = v_1\cos\theta_1\,t,\qquad
+            y(t) = v_1\sin\theta_1\,t - \frac12 gt^2.
+          \]
+  \end{itemize}
+  由前文 $N=0$ 条件知
+  \[
+    v_1^2 = -gR\cos\theta_1\quad\left(\frac{\pi}{2}<\theta_1<\pi,\ \cos\theta_1<0\right),
+  \]
+  因此竖直方向初速度分量与最大高度分别为
+  \[
+    v_{1y} = v_1\sin\theta_1,\qquad
+    H_{\max} = \frac{v_{1y}^2}{2g}
+            = \frac{v_1^2\sin^2\theta_1}{2g}.
+  \]
+  常用结论：
+  \[
+    t_{\text{回到离轨高度}} = \frac{2v_1\sin\theta_1}{g},\qquad
+    L_{\text{水平位移}} = \frac{2v_1^2\sin\theta_1\cos\theta_1}{g}.
+  \]
+\end{summarybox}
+
+\begin{center}
+\begin{tikzpicture}[mathnote lines, scale=1.05]
+  \def\R{1.6}
+  \coordinate (O) at (0,0);
+  \draw[accent, thick] (O) circle (\R);
+
+  \def\thetaone{130}
+  \coordinate (P) at ({\R*sin(\thetaone)}, -{\R*cos(\thetaone)});
+  \fill (O) circle (0.5pt) node[below right=1pt] {$O$};
+  \fill (P) circle (1.1pt) node[above left=-1pt] {$P(\theta_1)$};
+
+  % 离轨点的切线方向速度
+  \draw[highlight, -{Latex[length=2mm]}] (P) -- ++({0.9*cos(\thetaone)},{0.9*sin(\thetaone)}) node[above right] {$\vec v_1$};
+
+  % 抛物线大致轨迹
+  \draw[secondary, thick, domain=0:1.4,samples=60]
+    plot ({\R*sin(\thetaone) + 1.0*\x},
+          {-\R*cos(\thetaone) + 0.9*sin(\thetaone)*\x - 0.8*\x*\x});
+
+  % 最高点 C 对应高度示意（虚线）
+  \coordinate (C) at (0,\R);
+  \fill (C) circle (0.9pt) node[above] {$C$};
+  \draw[densely dashed, inkgray] (P) -- ++(0,{1.2*\R});
+  \draw[densely dashed, inkgray] (C) -- ++({1.1*\R},0);
+\end{tikzpicture}
+\captionof{figure}{离轨点处的抛体运动示意}
+\end{center}
+
+\begin{summarybox}{一条有趣的结论：抛体高度小于轨道最高点}
+  以离轨点 $P(\theta_1)$ 为高度零点，轨道最高点 $C$ 的高度为
+  \[
+    h_{C} = R(1+\cos\theta_1),
+  \]
+  而抛体的最大高度为
+  \[
+    H_{\max} = \frac{v_1^2\sin^2\theta_1}{2g}
+             = -\frac{R}{2}\cos\theta_1(1-\cos^2\theta_1).
+  \]
+  在 $\tfrac{\pi}{2}<\theta_1<\pi$ 区间内有 $-1<\cos\theta_1<0$，可证明
+  \[
+    H_{\max} < h_{C},
+  \]
+  即\keyword{离轨后的小球抛起的最高点总是低于圆轨道的最高点}。因此，当 $v_0<\sqrt{5gR}$ 时，小球不可能飞越轨道顶端。
+\end{summarybox}
 
 \begin{examplebox}{例 2：已知离轨角度求初速度}
   小球从竖直圆轨道的最低点出发，运动到 $\theta_1$ 处刚好离开轨道。测得 $\theta_1 = \frac{2\pi}{3}$。求底端初速度 $v_0$ 与 $g,R$ 的关系。
@@ -326,7 +402,7 @@
 
 \subsection{第三类：整周运动与临界速度}
 
-\begin{ModeBadge[secondary]{情形 III：$v_0 \ge \sqrt{5gR}$}
+\ModeBadge[secondary]{情形 III：$v_0 \ge \sqrt{5gR}$}
 
 若小球需要\keyword{绕完整竖直圆且始终与轨道接触}，关键是考察最高点 $C$ 处的受力情况。
 
@@ -363,7 +439,6 @@
   v_{\mathrm{C}}^2 = gR,\quad N_{\mathrm{C}} = 0,
 \]
 小球在最高点时恰好失重，是\keyword{整周运动的最小初速度}。若 $v_0>\sqrt{5gR}$，则 $v_{\mathrm{C}}^2>gR$，得到 $N_{\mathrm{C}}>0$，小球在整条轨道上都压紧轨道。
-\end{ModeBadge}
 
 \begin{examplebox}{例 3：整周运动的受力判断}
   一竖直圆轨道半径为 $R$，小球从最低点以 $v_0=\sqrt{6gR}$ 出发。求：
@@ -430,4 +505,3 @@
 \end{summarybox}
 
 \end{document}
-
